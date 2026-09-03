@@ -1,18 +1,13 @@
 """
-模块六+九：聊天主循环 v4（导师情报 + 论文拆解 + M5思考批改 + M2导师深潜）
+模块六+九：聊天主循环 v4.1（导师情报 + 论文拆解 + M5思考批改 + M2导师深潜）
+v1.0 改动：工具层报错附带 traceback 尾部，提升可观测性
 用法：python main.py
       然后直接用中文提问，输入 quit 退出
 多行输入：/m 回车后逐行粘贴，最后单独一行输入 EOF 结束
 文件输入：/f D:\path\thinking.txt  （读取整个文件当一条消息）
-示例：现在收录了哪些学院？
-      人工智能学院有哪些研究大模型安全的老师？
-      帮我查查董胤蓬最近发了什么论文
-      第3篇值不值得读？  →  精读
-      （精读后）/m → 粘贴整篇思考 → EOF → 批改
-      （批改后）我不认可批改，帮我复核
-      深挖一下王童  →  导师深潜
 """
 import json
+import traceback
 import sys
 import subprocess
 from pathlib import Path
@@ -139,7 +134,8 @@ def tool_search_papers(author_en: str) -> str:
     try:
         papers = search_papers(author_en)
     except Exception as e:
-        return json.dumps({"error": f"检索失败：{e}"}, ensure_ascii=False)
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"检索失败：{e}", "traceback": tb}, ensure_ascii=False)
     out = PAPERS_DIR / f"search_{author_en.replace(' ', '_')}.json"
     out.write_text(json.dumps(papers, ensure_ascii=False, indent=2), encoding="utf-8")
     brief = [{"序号": i, "id": p["arxiv_id"], "发表": p["published"],
@@ -153,9 +149,14 @@ def tool_paper_decision(arxiv_id: str) -> str:
     try:
         txt_file, _, _ = fetch_paper(arxiv_id)
     except Exception as e:
-        return json.dumps({"error": f"论文下载失败：{e}"}, ensure_ascii=False)
-    text = txt_file.read_text(encoding="utf-8")
-    card = ap.step0_decision_card(CLIENT, P["fast"], text)
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"论文下载失败：{e}", "traceback": tb}, ensure_ascii=False)
+    try:
+        text = txt_file.read_text(encoding="utf-8")
+        card = ap.step0_decision_card(CLIENT, P["fast"], text)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"决策卡生成失败：{e}", "traceback": tb}, ensure_ascii=False)
     return json.dumps(card, ensure_ascii=False)
 
 
@@ -164,10 +165,15 @@ def tool_deep_dive(arxiv_id: str) -> str:
     try:
         txt_file, _, _ = fetch_paper(arxiv_id)
     except Exception as e:
-        return json.dumps({"error": f"论文下载失败：{e}"}, ensure_ascii=False)
-    text = txt_file.read_text(encoding="utf-8")
-    analysis = ap.full_analysis(CLIENT, P["long"], text)
-    warnings = ap.verify_quotes(analysis, text)
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"论文下载失败：{e}", "traceback": tb}, ensure_ascii=False)
+    try:
+        text = txt_file.read_text(encoding="utf-8")
+        analysis = ap.full_analysis(CLIENT, P["long"], text)
+        warnings = ap.verify_quotes(analysis, text)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"精读失败：{e}", "traceback": tb}, ensure_ascii=False)
     out = PAPERS_DIR / f"{arxiv_id.replace('/', '_')}_analysis.json"
     out.write_text(json.dumps({"analysis": analysis, "verification_warnings": warnings},
                               ensure_ascii=False, indent=2), encoding="utf-8")
@@ -183,13 +189,19 @@ def tool_critique_thinking(arxiv_id: str, thinking: str) -> str:
     try:
         result = ct.run_grading(CLIENT, arxiv_id, thinking)
     except Exception as e:
-        return json.dumps({"error": f"批改失败：{e}"}, ensure_ascii=False)
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"批改失败：{e}", "traceback": tb}, ensure_ascii=False)
     return json.dumps(result, ensure_ascii=False)
 
 
 def tool_appeal_grading(arxiv_id: str) -> str:
     """申诉复核：用户不认可批改时调用，重新核对每条引用并返回原文上下文"""
-    return json.dumps(ct.appeal(arxiv_id), ensure_ascii=False)
+    try:
+        result = ct.appeal(arxiv_id)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"申诉复核失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(result, ensure_ascii=False)
 
 
 # ============ 工具四：M2 导师深潜 ============
@@ -199,7 +211,8 @@ def tool_advisor_deepdive(name: str, site: str = "", url: str = "") -> str:
     try:
         result = ad.run_deepdive(CLIENT, name, site, url)
     except Exception as e:
-        return json.dumps({"error": f"深潜失败：{e}"}, ensure_ascii=False)
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"深潜失败：{e}", "traceback": tb}, ensure_ascii=False)
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -284,7 +297,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 
 铁律：
 1. 你只能通过调用工具获取信息，禁止凭自己的知识回答任何关于具体老师或论文的事实；
-2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；
+2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记（🟢🟡⚪）和 evidence 原文引用；
 4. 用户问未收录的学校时，主动说明并请他提供该校师资页网址；
 5. 论文流程：用户给中文老师名 → 你转成拼音调 search_papers → 展示结果（重点推荐"末位作者"的论文，那是他主导的）→ 用户选定后先调 paper_decision 出决策卡 → 用户明确说"精读/拆解"才调 deep_dive；
