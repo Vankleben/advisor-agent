@@ -1,6 +1,7 @@
 """
-模块六+九：聊天主循环 v4.1（导师情报 + 论文拆解 + M5思考批改 + M2导师深潜）
-v1.0 改动：工具层报错附带 traceback 尾部，提升可观测性
+模块六+九：聊天主循环 v4.3（导师情报 + 论文拆解 + M5思考批改 + M2导师深潜 + M4进组路径 + M1.5对比视图）
+v4.3 改动：新增 M1.5 对比视图（panorama 全景表 + deep_compare 深度对比）
+v4.2 改动：新增 M4 进组路径分析工具 path_analysis
 用法：python main.py
       然后直接用中文提问，输入 quit 退出
 多行输入：/m 回车后逐行粘贴，最后单独一行输入 EOF 结束
@@ -23,6 +24,8 @@ from paper_tools import search_papers, fetch_paper
 import analyze_paper as ap
 import critique_thinking as ct
 import advisor_deepdive as ad
+import path_analysis as pa
+import compare_advisors as ca
 
 PROVIDERS = {
     "moonshot": {"base_url": "https://api.moonshot.cn/v1",
@@ -185,7 +188,7 @@ def tool_deep_dive(arxiv_id: str) -> str:
 # ============ 工具三：M5 思考批改 ============
 
 def tool_critique_thinking(arxiv_id: str, thinking: str) -> str:
-    """M5：对照论文批改用户思考 → 纠错/偏题/追问/凝练，错误回流知识档案"""
+    """M5：对照论文批改用户思考"""
     try:
         result = ct.run_grading(CLIENT, arxiv_id, thinking)
     except Exception as e:
@@ -207,12 +210,49 @@ def tool_appeal_grading(arxiv_id: str) -> str:
 # ============ 工具四：M2 导师深潜 ============
 
 def tool_advisor_deepdive(name: str, site: str = "", url: str = "") -> str:
-    """M2：抓取老师个人主页等信源，产出带逐字证据的深潜报告（近期研究/组内风格/招生/去向/动态）"""
+    """M2：抓取老师个人主页等信源，产出带逐字证据的深潜报告"""
     try:
         result = ad.run_deepdive(CLIENT, name, site, url)
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"深潜失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(result, ensure_ascii=False)
+
+
+# ============ 工具五：M4 进组路径分析 ============
+
+def tool_path_analysis(name: str) -> str:
+    """M4：进组路径分析——基于深潜报告+用户画像，产出需求侧/供给侧/敲门砖方案"""
+    try:
+        result = pa.run_path_analysis(CLIENT, P["fast"], name)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"路径分析失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(result, ensure_ascii=False)
+
+
+# ============ 工具六：M1.5 对比视图 ============
+
+def tool_panorama() -> str:
+    """档一：全景表——列出所有已收录老师的精简信息"""
+    try:
+        result = ca.panorama()
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"全景表生成失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return result
+
+
+def tool_deep_compare(names) -> str:
+    """档二：深度对比——选2-5位老师，读卡片+深潜报告，调LLM打七项指标分"""
+    # names 可能从 function calling 传来 list 或字符串
+    if isinstance(names, str):
+        names = [n.strip() for n in names.split(",") if n.strip()]
+    try:
+        result = ca.deep_compare(CLIENT, P["fast"], names)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"深度对比失败：{e}", "traceback": tb}, ensure_ascii=False)
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -224,11 +264,11 @@ TOOLS = [
         "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {
         "name": "list_teachers",
-        "description": "列出某站点的老师，可按研究方向关键词、招生信号（🟢/🟡/⚪）筛选",
+        "description": "列出某站点的老师，可按研究方向关键词、招生信号筛选",
         "parameters": {"type": "object", "properties": {
             "site": {"type": "string", "description": "站点代号，如 collegeai / life"},
             "keyword": {"type": "string", "description": "研究方向关键词，可省略", "default": ""},
-            "level": {"type": "string", "description": "招生信号 🟢/🟡/⚪，可省略", "default": ""}},
+            "level": {"type": "string", "description": "招生信号，可省略", "default": ""}},
             "required": ["site"]}}},
     {"type": "function", "function": {
         "name": "get_card",
@@ -252,7 +292,7 @@ TOOLS = [
             "required": ["author_en"]}}},
     {"type": "function", "function": {
         "name": "paper_decision",
-        "description": "对某篇论文出【阅读决策卡】：定位/匹配度/建议/前置缺口。用户选定一篇论文后先调这个",
+        "description": "对某篇论文出阅读决策卡：定位/匹配度/建议/前置缺口。用户选定一篇论文后先调这个",
         "parameters": {"type": "object", "properties": {
             "arxiv_id": {"type": "string", "description": "arXiv id，如 2605.18309v1"}},
             "required": ["arxiv_id"]}}},
@@ -264,7 +304,7 @@ TOOLS = [
             "required": ["arxiv_id"]}}},
     {"type": "function", "function": {
         "name": "critique_thinking",
-        "description": "M5思考批改：用户读完一篇【已精读过】的论文后提交了自己写的思考文字时调用。做事实纠错/偏题检测/费曼追问/凝练段落。thinking 必须原样传入用户写的思考全文，禁止改写删减",
+        "description": "M5思考批改：用户读完一篇已精读过的论文后提交了自己写的思考文字时调用。做事实纠错/偏题检测/费曼追问/凝练段落。thinking 必须原样传入用户写的思考全文，禁止改写删减",
         "parameters": {"type": "object", "properties": {
             "arxiv_id": {"type": "string", "description": "该论文的 arXiv id，须是用户已精读过的"},
             "thinking": {"type": "string", "description": "用户提交的思考全文"}},
@@ -277,12 +317,29 @@ TOOLS = [
             "required": ["arxiv_id"]}}},
     {"type": "function", "function": {
         "name": "advisor_deepdive",
-        "description": "M2导师深潜：用户想深入了解某位【已收录】老师时调用。抓取其个人主页/实验室页，产出带逐字证据的深潜报告（近期研究/组内风格/招生意向/学生去向/近期动态/该问的问题）",
+        "description": "M2导师深潜：用户想深入了解某位已收录老师时调用。抓取其个人主页/实验室页，产出带逐字证据的深潜报告",
         "parameters": {"type": "object", "properties": {
             "name": {"type": "string", "description": "老师中文名，须已在卡片库中"},
             "site": {"type": "string", "description": "站点代号，可省略，省略时全库搜索", "default": ""},
-            "url": {"type": "string", "description": "手动指定的个人主页网址，可省略；卡片里没有外链时请用户提供", "default": ""}},
+            "url": {"type": "string", "description": "手动指定的个人主页网址，可省略", "default": ""}},
             "required": ["name"]}}},
+    {"type": "function", "function": {
+        "name": "path_analysis",
+        "description": "M4进组路径分析：用户想为某位老师制定进组计划（怎么进组/该做什么项目/帮我规划进组）时调用。需该老师已有M2深潜报告，否则提示先深潜。输出老师缺什么人/用户技能三档清单/带设备标注的敲门砖项目",
+        "parameters": {"type": "object", "properties": {
+            "name": {"type": "string", "description": "老师中文名，须已有深潜报告"}},
+            "required": ["name"]}}},
+    {"type": "function", "function": {
+        "name": "panorama",
+        "description": "M1.5全景表：用户想看所有已收录老师的总览/全览/有哪些老师/一览表时调用。无需参数，返回所有老师的精简列表（姓名/职称/方向/招生信号/有无深潜报告）",
+        "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {
+        "name": "deep_compare",
+        "description": "M1.5深度对比：用户想对比/比较几位老师时调用。传入2-5位老师中文名列表，读取卡片+深潜报告打七项指标分（方向匹配/招生信号/计算相关度/信息透明度/进组可行性/组内活跃度/竞争门槛），输出打分矩阵+推荐建议",
+        "parameters": {"type": "object", "properties": {
+            "names": {"type": "array", "items": {"type": "string"},
+                       "description": "2-5位老师中文名列表"}},
+            "required": ["names"]}}},
 ]
 
 DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
@@ -291,25 +348,30 @@ DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "deep_dive": tool_deep_dive,
             "critique_thinking": tool_critique_thinking,
             "appeal_grading": tool_appeal_grading,
-            "advisor_deepdive": tool_advisor_deepdive}
+            "advisor_deepdive": tool_advisor_deepdive,
+            "path_analysis": tool_path_analysis,
+            "panorama": tool_panorama,
+            "deep_compare": tool_deep_compare}
 
 SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想找实验室的计算机大三学生。
 
 铁律：
 1. 你只能通过调用工具获取信息，禁止凭自己的知识回答任何关于具体老师或论文的事实；
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
-3. 展示老师信息时保留招生信号标记（🟢🟡⚪）和 evidence 原文引用；
+3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
 4. 用户问未收录的学校时，主动说明并请他提供该校师资页网址；
-5. 论文流程：用户给中文老师名 → 你转成拼音调 search_papers → 展示结果（重点推荐"末位作者"的论文，那是他主导的）→ 用户选定后先调 paper_decision 出决策卡 → 用户明确说"精读/拆解"才调 deep_dive；
+5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers -> 展示结果（重点推荐末位作者的论文，那是他主导的）-> 用户选定后先调 paper_decision 出决策卡 -> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
-7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知"以下批改未通过原文校验，可申诉"；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
-8. M2深潜流程：用户说"深挖/深入了解某位老师"时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；
-9. 回答用简洁中文，列表用表格。"""
+7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
+8. M2深潜流程：用户说深挖/深入了解某位老师时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；
+9. M4路径分析流程：用户说怎么进某老师的组/该做什么项目/帮我规划进组时调 path_analysis（name 传老师中文名）；返回的 path 中 demand 每条保留 evidence 原句，supply 三档分列展示，actions 逐个展示并标注设备A/B；如果返回 error 说没有深潜报告，引导用户先做深潜；
+10. M1.5对比视图流程：用户说全览/有哪些老师/一览时调 panorama（无参数），结果展示为表格（姓名/职称/方向/招生信号/有无深潜）；用户说对比/比较几位老师时调 deep_compare（names 传中文名列表，2-5人），结果展示为七项打分矩阵表格 + 总结建议；无深潜报告的老师如实标注；用户只选了1人时提示至少选2人才能对比；
+11. 回答用简洁中文，列表用表格。"""
 
 
 def main():
     messages = [{"role": "system", "content": SYSTEM}]
-    print("导师情报 Agent（论文拆解 + 思考批改 + 导师深潜）已启动，输入 quit 退出")
+    print("导师情报 Agent（论文拆解 + 思考批改 + 导师深潜 + 进组路径分析 + 对比视图）已启动，输入 quit 退出")
     print("长文本技巧：/m 进入多行模式（EOF 结束）；/f 文件路径 读取整个文件\n")
 
     while True:

@@ -1,0 +1,47 @@
+{
+  "matrix": [
+    {
+      "name": "俞立",
+      "scores": {
+        "direction_match": 1,
+        "recruitment_signal": 1,
+        "computational_relevance": 1,
+        "info_transparency": 2,
+        "entry_feasibility": 1,
+        "group_activity": 1,
+        "competition_level": 2
+      },
+      "reasons": {
+        "direction_match": "研究方向为“细胞生物学、遗传学、生物化学、分子生物学”，与用户画像（ML/LLM/CV/具身智能/AI4Science）完全不匹配，无计算/ML成分。",
+        "recruitment_signal": "卡片注明“原文未提及招生信息”，深潜报告仅显示“网页有Join Us板块，但未提供具体内容”，无明确招生意向，故给1分。",
+        "computational_relevance": "研究内容为“新细胞器迁移体的机制与功能”，属于纯湿实验生物学，无任何计算/ML成分。",
+        "info_transparency": "深潜报告显示“Finally, we have our lab website! 2020-9-18”且仅有春游动态，无具体招生要求或研究细节，信息量极少。",
+        "entry_feasibility": "用户无细胞生物学/遗传学/生物化学实验基础，且研究内容不涉及计算，CS学生几乎无法切入。",
+        "group_activity": "深潜报告显示“无近期论文或获奖信息”，最新动态为“Spring outing 2021-4-27”，距今已超3年，活跃度极低。",
+        "competition_level": "清华生命科学教授，但研究方向与用户背景完全不匹配，竞争门槛对CS学生而言极高（需补大量生物实验技能），给2分。"
+      }
+    },
+    {
+      "name": "王童",
+      "scores": {
+        "direction_match": 5,
+        "recruitment_signal": 1,
+        "computational_relevance": 5,
+        "info_transparency": 4,
+        "entry_feasibility": 4,
+        "group_activity": 5,
+        "competition_level": 4
+      },
+      "reasons": {
+        "direction_match": "研究方向为“人工智能+生物结构”、“几何深度学习算法和生物结构基础模型”，与用户AI4Science兴趣高度匹配，且用户有ESM-IF1蛋白质逆向折叠项目经验。",
+        "recruitment_signal": "卡片注明“原文未提及招生信息”，深潜报告中recruitment板块为空，无明确招生意向，故给1分。",
+        "computational_relevance": "研究核心为“开发人工智能和深度学习算法和技术对生物和药物分子进行表征学习、性质预测、动态模拟和结构设计”，100%计算驱动。",
+        "info_transparency": "深潜报告详细列出了三个具体研究方向（模拟/建模/应用）及近期论文列表（Nature/Nat Commun/ICLR/NeurIPS），信息较透明，但无招生页或组内文化描述，扣1分。",
+        "entry_feasibility": "用户具备“ESM-IF1蛋白质逆向折叠：完整流水线，序列恢复率45.8%”经验，且熟悉HuggingFace/Transformer，可直接迁移至几何深度学习；但需补生物分子基础，给4分。",
+        "group_activity": "深潜报告显示近期发表“Nature, 2024”、“Nat Commun, 2024”、“ICLR, 2024”、“NeurIPS, 2023”等多篇顶刊顶会论文，产出极高。",
+        "competition_level": "新PI（助理教授）且成果发表在Nature/ICLR/NeurIPS，方向热门且与AI4Science契合，预计竞争激烈；但新课题组可能更愿意招有计算背景的学生，给4分。"
+      }
+    }
+  ],
+  "summary": "对比结论：推荐主攻王童老师，备选俞立老师，放弃俞立老师（若仅考虑AI方向）。理由：王童老师研究方向（AI+生物结构）与用户AI4Science兴趣及ESM-IF1项目经验高度匹配，且近期论文产出极强（Nature/ICLR/NeurIPS），切入可行性高；俞立老师为纯湿实验生物学，与用户计算背景完全不匹配且组内活跃度极低（2021年后无更新），建议放弃。"
+}

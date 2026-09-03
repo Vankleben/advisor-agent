@@ -1,0 +1,101 @@
+{
+  "decision_card": null,
+  "analysis": {
+    "goal": {
+      "text": "解决现有空间推理基准无法评估多模态智能体在真实世界任务中交互式空间理解能力的问题，提出一个统一的、跨平台的基准来评估智能体在部分可观测环境下的主动探索和决策能力。",
+      "quotes": [
+        "Spatial reasoning is a foundational capability for multimodal large language models (MLLMs) to perceive and operate within the physical world.",
+        "Existing benchmarks for spatial reasoning predominantly adopt a passive evaluation paradigm, such as static Visual Question Answering (VQA) or the understanding of pre-recorded videos.",
+        "We introduce SPATIALWORLD, a unified benchmark designed specifically for evaluating the interactive spatial understanding of multimodal agents in complex real-world tasks."
+      ]
+    },
+    "background": {
+      "text": "现有空间推理基准分为静态VQA/视频QA和模拟器耦合的具身基准两类，前者缺乏交互性，后者依赖特定模拟器接口和特权状态信息，难以评估通用MLLM的交互式空间推理能力。",
+      "quotes": [
+        "Existing benchmarks for spatial reasoning predominantly adopt a passive evaluation paradigm, such as static Visual Question Answering (VQA) [30, 28, 16, 71, 47] or the understanding of pre-recorded videos [79, 41, 69].",
+        "Existing embodied benchmarks [54, 80, 11, 35] provide important interactive testbeds for navigation, manipulation, and task execution, yet many of them are designed around simulator-specific embodiments [54, 85, 80], sensor assumptions [53, 34, 35], action interfaces [85, 11, 35, 44], or execution pipelines [54, 85, 80].",
+        "This makes it difficult to determine whether task success reflects general interactive spatial reasoning or adaptation to a particular simulator or action space [56]."
+      ]
+    },
+    "setup": {
+      "text": "数据集包含760个人工标注任务，覆盖8个模拟后端（AI2-THOR, ProcTHOR, VirtualHome, CARLA, EmbodiedCity, 多智能体变体, 3D游戏），评估15个先进MLLM，使用TSR和SE指标，温度τ=1.0，历史窗口w=30，步数预算为2g+10。",
+      "quotes": [
+        "SPATIALWORLD contains 760 human-annotated tasks that span household routines, work and study, entertainment, travel, social collaboration, and digital spatial games.",
+        "These tasks are instantiated across eight simulation backends, including AI2-THOR [32], ProcTHOR [13], VirtualHome [50], CARLA [14], EmbodiedCity [21], their multi-agent variants, and lightweight environments for 3D games.",
+        "We benchmark 15 state-of-the-art MLLMs spanning open-source and proprietary families: Qwen series [3, 78, 64]; GLM series [26, 61]; Kimi series [62, 63]; Gemini series [60, 57, 58]; GPT series [55, 49]; Seed Series [5].",
+        "We use temperature τ = 1.0 and retain the latest w = 30 turns of interaction as context for all main experiments.",
+        "The step budget for each task is dynamically determined as 2g + 10, where g denotes the golden action count annotated by human annotators."
+      ]
+    },
+    "method": {
+      "text": "方法流程：1) 将任务形式化为视觉-only POMDP；2) 设计统一观察接口（仅egocentric RGB）和统一动作空间（四类高层动作：导航、视角/姿态、交互、任务控制）；3) 通过动作到代码映射将统一动作翻译为各模拟器特定命令；4) 使用终端状态验证器评估TSR和SE；5) 数据构建采用三阶段流程：任务设计、人工执行、交叉验证。",
+      "quotes": [
+        "Each task in SPATIALWORLD is formulated as a partially observable Markov decision process (POMDP) defined by the tuple ⟨S, O, A, T , Ω, R⟩.",
+        "At each step, the agent receives a single egocentric RGB screenshot at the simulator’s native resolution.",
+        "Rather than requiring low-level continuous motor commands (e.g., joint torques or velocity vectors), we expose a unified high-level action space A that abstracts heterogeneous simulator backends behind a common symbolic interface.",
+        "Concretely, as shown in Fig. 3, A encompasses four high-level functional categories: (i) Navigation (e.g., Move), (ii) Viewpoint & Posture (e.g., Rotate), (iii) Interaction (e.g., Pick/Place), and (iv) Task-Control & Coordination (e.g., EndTask).",
+        "The Action Interface translates these unified primitives into simulator-specific execution calls, ensuring that a single agent policy generalizes across diverse environments without modification.",
+        "Following OSWorld [75] and Spider2-V [8], SPATIALWORLD adopts terminal-state verification rather than static trajectory matching.",
+        "For each task, the construction process consists of three stages: (i) task design, where annotators define the natural-language instruction and configure the initial environment state; (ii) human execution, where trained annotators independently solve each task in the simulator, recording the ground-truth terminal state and reference action sequence; and (iii) verification, where separate expert reviewers cross-check the task feasibility, instruction clarity, and evaluation script correctness."
+      ]
+    },
+    "concepts": [
+      {
+        "term": "POMDP",
+        "known": false,
+        "explanation": "部分可观测马尔可夫决策过程。定义：元组⟨S, O, A, T, Ω, R⟩，其中S是隐藏状态集，O是观测集，A是动作集，T是状态转移概率，Ω是观测函数，R是奖励。动机：真实环境中智能体无法获得完整状态信息，只能通过部分观测进行决策。数学形式：状态转移 st+1∼T(st+1|st,at)，观测生成 ot+1∼Ω(ot+1|st+1)。"
+      },
+      {
+        "term": "MLLM",
+        "known": true,
+        "explanation": "多模态大语言模型，读者已了解Transformer和注意力机制，此处指能处理图像和文本输入的大模型，如GPT-5、Qwen-VL等。"
+      },
+      {
+        "term": "TSR",
+        "known": false,
+        "explanation": "任务成功率。定义：完成任务的比例，TSR = (1/N) Σ 1[Vi(sT)=1]，其中Vi是任务i的验证器，sT是终端状态。动机：衡量智能体是否真正达成目标状态，而非仅执行动作序列。"
+      },
+      {
+        "term": "SE",
+        "known": false,
+        "explanation": "步骤效率。定义：SE = (1/|S|) Σ (n*_i / n_i)，其中S是成功任务集合，n_i是智能体实际步数，n*_i是人工标注参考步数。动机：区分高效智能体与通过试错达到成功的智能体。"
+      },
+      {
+        "term": "Vision-only partial observability",
+        "known": false,
+        "explanation": "视觉-only部分可观测性。定义：智能体仅接收第一人称RGB图像，无深度、语义分割、全局地图等特权信息。动机：模拟真实人类操作条件，确保评估的是视觉感知与空间推理的耦合。数学形式：观测ot∈O，且O仅包含RGB图像。"
+      },
+      {
+        "term": "Simulator-agnostic protocol",
+        "known": false,
+        "explanation": "模拟器无关协议。定义：统一接口抽象不同模拟器的差异，使同一智能体策略无需修改即可跨环境部署。动机：避免任务成功反映的是对特定模拟器的适应而非通用空间推理。实现：通过统一动作空间和动作到代码映射实现。"
+      },
+      {
+        "term": "Terminal-state verifier",
+        "known": false,
+        "explanation": "终端状态验证器。定义：查询环境最终状态，判断任务目标是否满足的自动化脚本。动机：相比轨迹匹配，允许开放式的探索路径，更符合真实场景。数学形式：Vi(sT)返回1或0，表示任务i是否成功。"
+      }
+    ],
+    "results_limits": {
+      "text": "结果：最强模型GPT-5平均TSR仅17.4%，开源最佳Qwen-3.5-397B-A17B达14.1%；TSR与SE不匹配，高TSR模型不一定高效；不同领域模型排名差异大。局限：任务成功率普遍低，模型在动态物理环境中表现差，存在空间迷失、物体幻觉、过早终止、动作循环等失败模式。",
+      "quotes": [
+        "the strongest model, GPT-5, achieves an average task success rate (TSR) of only 17.4%, while the leading open-source model, Qwen-3.5-397B-A17B, reaches 14.1%.",
+        "there is a clear mismatch between task success and execution efficiency: models with a higher TSR do not necessarily achieve higher efficiency, which suggests that success is often accompanied by redundant exploration or shortcuts dependent on the task.",
+        "the rankings of models vary substantially across domains: GPT-5 leads daily household, travel, and social collaboration tasks, Qwen-3.5-397B-A17B ties GPT-5 in Work & Study and leads physical entertainment, and Gemini-3.1-Pro achieves the highest scores in digital games.",
+        "while current models excel at static scene perception, they struggle profoundly with dynamic physical environments—exhibiting low task success rates, severe execution inefficiencies, and high domain variance."
+      ]
+    },
+    "reproduction": {
+      "text": "复现可行性：不可行。理由：SPATIALWORLD需要运行8个不同的3D模拟器（AI2-THOR、ProcTHOR、VirtualHome、CARLA、EmbodiedCity等），这些模拟器通常需要高性能GPU和大量内存，且需要安装复杂的依赖环境。读者设备A（核显笔记本16GB内存）无法运行这些模拟器；设备B（RTX3060 12GB+32GB内存）虽然可以运行部分轻量级模拟器，但完整复现需要处理760个任务和15个模型，计算资源远超设备B。此外，评估的模型如GPT-5、Qwen-3.5-397B-A17B等均为超大模型，设备B无法加载。因此，复现不可行。",
+      "quotes": [
+        "SPATIALWORLD contains 760 human-annotated tasks that span household routines, work and study, entertainment, travel, social collaboration, and digital spatial games.",
+        "These tasks are instantiated across eight simulation backends, including AI2-THOR [32], ProcTHOR [13], VirtualHome [50], CARLA [14], EmbodiedCity [21], their multi-agent variants, and lightweight environments for 3D games.",
+        "We benchmark 15 state-of-the-art MLLMs spanning open-source and proprietary families: Qwen series [3, 78, 64]; GLM series [26, 61]; Kimi series [62, 63]; Gemini series [60, 57, 58]; GPT series [55, 49]; Seed Series [5]."
+      ]
+    }
+  },
+  "verification_warnings": [
+    "⚠️ [goal] 引句在原文找不到：Existing benchmarks for spatial reasoning predominantly adop...",
+    "⚠️ [results_limits] 引句在原文找不到：the strongest model, GPT-5, achieves an average task success..."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "demand": [
+    {
+      "need": "老师需要能处理迁移体（migrasome）生物图像数据、做信号通路分析或跨尺度建模的人",
+      "evidence": "We investigate the biogenesis, function, and pathophysiological roles of migrasomes — migration-dependent organelles discovered by our lab in 2014. / Signaling molecules are packaged into migrasomes and released at defined locations, activating surrounding cells with spatiotemporal precision.",
+      "note": "报告显示研究聚焦迁移体的生物发生与功能，涉及信号分子时空释放，需要图像识别（迁移体形态）、时空动态建模或组学数据分析能力。"
+    },
+    {
+      "need": "老师需要能处理活体成像/显微图像、做器官发育时空动态分析的人",
+      "evidence": "Our recent work reveals that migrasomes play key roles in zebrafish organogenesis. Signaling molecules are packaged into migrasomes and released at defined locations, activating surrounding cells with spatiotemporal precision.",
+      "note": "斑马鱼器官发生研究涉及活体成像视频/图像序列，需要CV目标检测/跟踪、时序建模技能。"
+    },
+    {
+      "need": "老师需要能理解细胞生物学机制、做跨学科协作的人",
+      "evidence": "Migrasomes also participate in organelle quality control (mitocytosis), lateral transfer of cellular contents, and unconventional secretion — expanding the functional repertoire of these remarkable organelles.",
+      "note": "涉及线粒体质量控制、胞间物质转移等机制，需要AI4Science方向的交叉背景。"
+    }
+  ],
+  "supply": {
+    "ready": [
+      "CV目标检测（YOLO迁移学习，mAP50 0.803）——可直接用于迁移体/细胞器图像识别",
+      "Transformer/RNN架构理解与微调——可用于时空序列建模",
+      "HuggingFace全流程工程能力——可用于数据标注/评测pipeline搭建",
+      "CLIP多模态理解——可用于图像-文本关联分析"
+    ],
+    "quick": [
+      "斑马鱼胚胎显微图像/视频数据集处理（需1-2周熟悉生物图像格式与标注工具）",
+      "细胞轨迹追踪/时序分割（基于已有YOLO+跟踪算法扩展，需2-3周）",
+      "基础细胞生物学概念（迁移体、线粒体、自噬等，需1周文献速览）"
+    ],
+    "gap": [
+      "湿实验技能（细胞培养、显微成像、基因编辑）——短期无法补齐",
+      "生物信息学深度（单细胞测序、空间转录组分析）——需系统学习",
+      "活体成像专用算法（光片显微镜数据处理、3D+t分割）——需专门训练"
+    ]
+  },
+  "actions": [
+    {
+      "project": "迁移体/细胞器显微图像检测与计数工具",
+      "device": "B",
+      "basis": "对应demand第1条（迁移体形态识别）和第2条（图像分析）",
+      "steps": [
+        "从公开数据库（如Cell Image Library、BioImage Archive）收集迁移体或类似细胞器（外泌体/线粒体）电镜/荧光显微图像，构建小型标注集（100-200张）",
+        "用YOLO11（已有经验）训练迁移体检测模型，输出数量/尺寸/分布统计",
+        "将模型封装为简单GUI或脚本工具，标注'可用于迁移体定量分析'，作为进组demo"
+      ]
+    },
+    {
+      "project": "斑马鱼胚胎发育时序图像的迁移体动态追踪（概念验证）",
+      "device": "B",
+      "basis": "对应demand第2条（zebrafish organogenesis时空分析）",
+      "steps": [
+        "找公开斑马鱼胚胎发育延时摄影数据集（如FishAtlas、ZFIN），截取时间序列帧",
+        "用YOLO检测迁移体候选信号点 + 简单IoU/卡尔曼滤波做帧间关联，输出轨迹热图",
+        "写一份2页报告说明'迁移体释放位置与器官发生区域的时空相关性分析框架'，展示给老师"
+      ]
+    }
+  ],
+  "summary": "俞立实验室是迁移体研究先驱，但深潜报告显示其近期无AI相关论文产出，招生意向不明确。你的CV/检测能力是直接可用的敲门砖，建议以'迁移体图像分析工具'切入，先通过邮件附demo争取面谈，再确认是否有计算生物学方向的具体需求。值得一试，但需做好老师可能暂无AI项目准备的预期。"
+}
