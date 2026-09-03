@@ -1,11 +1,11 @@
 """
-工具九：M2 导师深潜
+工具九：M2 导师深潜 v1.3
+改动：1. 兼容旧格式卡片（homepage_candidates 为字符串数组时，直接跳过，走 fallback）
+      2. fallback 触发条件改为"candidates 为空 *或* 全部抓取失败"，不再被 candidates 非空挡住
 用法：python tools/advisor_deepdive.py 董胤蓬
       python tools/advisor_deepdive.py 董胤蓬 --url https://xxx.github.io
 产出：data/deepdive/{name}_report.json        深潜报告
       data/deepdive/{name}_src{i}.txt         信源原文缓存
-依赖：data/cards_*.json 中卡片须含 homepage_candidates 字段（batch_cards.py 已生成）
-注意：prompt 含 JSON 示例，禁止用 .format()，统一用 .replace("{sources}", ...) 填变量
 """
 import json
 import re
@@ -20,7 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 OUT_DIR = DATA_DIR / "deepdive"
 sys.path.insert(0, str(BASE_DIR))
-sys.path.insert(0, str(BASE_DIR / "tools"))
 from config import PROVIDER, API_KEY
 
 PROVIDERS = {
@@ -31,7 +30,7 @@ P = PROVIDERS[PROVIDER]
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                          "AppleWebKit/537.36 (KHTML, like Gecko) "
                          "Chrome/120.0 Safari/537.36"}
-MAX_SRC_CHARS = 8000   # 单个信源截断长度，防止撑爆上下文
+MAX_SRC_CHARS = 8000
 
 DEEP_PROMPT = """你是导师深潜分析员，服务对象是一名想找实验室的 CS 大三学生。
 我会给你某位老师多个网页的正文（已编号），请提取对学生选导师真正有用的深度情报。
@@ -60,7 +59,6 @@ DEEP_PROMPT = """你是导师深潜分析员，服务对象是一名想找实验
 # ============ 通用层：抓取与校验 ============
 
 def fetch_text(url: str) -> str:
-    """抓取网页并抽正文：去 script/style/标签，压空白。失败抛异常由上层处理"""
     r = requests.get(url, headers=HEADERS, timeout=20)
     r.raise_for_status()
     if not r.encoding or r.encoding.lower() == "iso-8859-1":
@@ -87,8 +85,19 @@ def load_card(name: str, site: str = "") -> dict:
     raise LookupError(f"卡片库中找不到 {name}，请先收录并生成卡片")
 
 
+def load_enriched(name: str, site: str = "") -> dict:
+    files = [DATA_DIR / f"faculty_{site}_enriched.json"] if site else sorted(DATA_DIR.glob("faculty_*_enriched.json"))
+    for f in files:
+        if not f.exists():
+            continue
+        with open(f, encoding="utf-8") as fp:
+            for t in json.load(fp).get("teachers", []):
+                if t.get("name") == name:
+                    return t
+    return {}
+
+
 def verify_report(report: dict, src_texts: list) -> list:
-    """反幻觉校验：每条 evidence 必须能在其 source 指向的原文中原样搜到"""
     flats = [flatten(t) for t in src_texts]
     warnings = []
     for section in ("research_now", "lab_culture", "recruitment",
@@ -108,31 +117,57 @@ def verify_report(report: dict, src_texts: list) -> list:
 # ============ 主流程 ============
 
 def run_deepdive(client: OpenAI, name: str, site: str = "", url: str = "") -> dict:
-    # 1. 组置信源：手动 URL 优先，其次卡片里的 homepage_candidates（已按可信度排序）
     card = load_card(name, site)
-    candidates = ([url] if url else []) + (card.get("homepage_candidates") or [])
-    candidates = list(dict.fromkeys(candidates))[:3]
-    if not candidates:
-        return {"error": f"{name} 的卡片里没有 homepage_candidates，"
-                         f"请用 --url 手动提供个人主页网址"}
 
-    # 2. 逐个抓取（编号 = 信源优先级），缓存原文
+    # 1. 提取 homepage_candidates（兼容新旧两种格式）
+    #    新格式：[{url, label, type}] —— 跳过 type=other
+    #    旧格式：["url"] —— 无法判断 type，全部跳过（交给 fallback）
+    hpc = card.get("homepage_candidates") or []
+    if hpc and isinstance(hpc[0], dict):
+        hpc_urls = [c["url"] for c in hpc if c.get("type") != "other" and c.get("url")]
+    else:
+        hpc_urls = []   # 旧格式或空，全走 fallback
+
+    candidates = ([url] if url else []) + hpc_urls
+    candidates = list(dict.fromkeys(candidates))[:3]
+
+    # 2. 逐个抓取 candidates（编号 = 信源优先级）
     OUT_DIR.mkdir(exist_ok=True)
-    src_texts, failed = [], []
-    for i, u in enumerate(candidates, 1):
+    src_texts, src_urls, failed = [], [], []
+    for u in candidates:
         try:
             t = fetch_text(u)[:MAX_SRC_CHARS]
-            (OUT_DIR / f"{name}_src{i}.txt").write_text(f"[{u}]\n{t}", encoding="utf-8")
             src_texts.append(t)
+            src_urls.append(u)
         except Exception as e:
-            failed.append(f"来源{i} {u} 抓取失败：{e}")
+            failed.append(f"{u} 抓取失败：{e}")
+
+    # 3. fallback：candidates 为空，或全部抓取失败时，从 enriched 读 detail_text
+    used_fallback = False
     if not src_texts:
-        return {"error": "所有信源均抓取失败", "details": failed}
+        enriched = load_enriched(name, site)
+        detail = (enriched.get("detail") or {})
+        detail_text = detail.get("detail_text", "")
+        detail_url = enriched.get("detail_url", "")
+        if detail_text and not detail.get("error"):
+            src_texts.append(detail_text[:MAX_SRC_CHARS])
+            src_urls.append(detail_url or "学校官网详情页（已缓存正文）")
+            used_fallback = True
+
+    if not src_texts:
+        return {"error": f"{name} 的卡片里没有 homepage_candidates，enriched 文件里也没找到详情页正文，"
+                         f"请用 --url 手动提供个人主页网址",
+                "fetch_failures": failed}
+
+    # 4. 缓存原文
+    for i, t in enumerate(src_texts, 1):
+        (OUT_DIR / f"{name}_src{i}.txt").write_text(
+            f"[{src_urls[i-1]}]\n{t}", encoding="utf-8")
+
     sources_block = "\n".join(
         f"【来源{i + 1}】{t}" for i, t in enumerate(src_texts))
 
-    # 3. LLM 深潜提取 + 反幻觉校验
-    # 注意：prompt 内含 JSON 示例花括号，必须用 replace 而不是 format
+    # 5. LLM 深潜提取 + 反幻觉校验
     prompt = DEEP_PROMPT.replace("{sources}", sources_block)
     resp = client.chat.completions.create(
         model=P["model"], temperature=0.1,
@@ -141,14 +176,16 @@ def run_deepdive(client: OpenAI, name: str, site: str = "", url: str = "") -> di
     report = json.loads(resp.choices[0].message.content)
     warnings = verify_report(report, src_texts)
 
-    # 4. 存档
+    # 6. 存档
     result = {"name": name, "date": datetime.date.today().isoformat(),
-              "sources": candidates[:len(src_texts)], "report": report,
+              "sources": src_urls, "report": report,
               "verification_warnings": warnings,
-              "fetch_failures": failed}
+              "fetch_failures": failed,
+              "used_fallback": used_fallback}
     out = OUT_DIR / f"{name}_report.json"
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[M2] 深潜完成 → {out.name}；{len(warnings)} 条引句未过校验；{len(failed)} 个信源抓取失败")
+    print(f"[M2] 深潜完成 → {out.name}；{len(warnings)} 条引句未过校验；{len(failed)} 个信源抓取失败"
+          f"{'；使用 fallback（学校详情页正文）' if used_fallback else ''}")
     return result
 
 

@@ -1,0 +1,64 @@
+{
+  "name": "俞立",
+  "date": "2026-09-03",
+  "sources": [
+    "https://liyu-lab-tsinghua.github.io/"
+  ],
+  "report": {
+    "research_now": [
+      {
+        "point": "近期研究重点",
+        "evidence": [
+          "We investigate the biogenesis, function, and pathophysiological roles of migrasomes — migration-dependent organelles discovered by our lab in 2014.",
+          "Our recent work reveals that migrasomes play key roles in zebrafish organogenesis . Signaling molecules are packaged into migrasomes and released at defined locations, activating surrounding cells with spatiotemporal precision.",
+          "Migrasomes also participate in organelle quality control (mitocytosis), lateral transfer of cellular contents, and unconventional secretion — expanding the functional repertoire of these remarkable organelles."
+        ],
+        "source": 1,
+        "note": ""
+      }
+    ],
+    "lab_culture": [
+      {
+        "point": "组内风格线索（会议/作息/氛围）",
+        "evidence": [
+          "Spring outing 2021-4-27 Miyun, Beijing"
+        ],
+        "source": 1,
+        "note": "仅显示有春游活动，无更多文化细节。"
+      }
+    ],
+    "recruitment": [
+      {
+        "point": "招生意向与要求",
+        "evidence": [
+          "Join Us"
+        ],
+        "source": 1,
+        "note": "网页有Join Us链接，但未提供具体内容。"
+      }
+    ],
+    "career_outcomes": [],
+    "recent_activity": [
+      {
+        "point": "近期动态（论文/获奖/新闻）",
+        "evidence": [
+          "Spring outing 2021-4-27 Miyun, Beijing",
+          "Finally, we have our lab website! 2020-9-18"
+        ],
+        "source": 1,
+        "note": "无近期论文或获奖信息。"
+      }
+    ],
+    "fit_questions": [
+      "实验室目前主要关注migrasome的哪些具体功能？是否有适合本科生参与的项目？",
+      "实验室的日常组会频率和形式是怎样的？",
+      "对于新加入的本科生，实验室通常提供哪些培训或指导？",
+      "实验室与国内外其他研究组有哪些合作？",
+      "实验室的经费和资源情况如何？"
+    ],
+    "summary": "俞立实验室是migrasome研究的先驱，但网页信息有限，需进一步联系获取招生意向和实验室文化细节。"
+  },
+  "verification_warnings": [],
+  "fetch_failures": [],
+  "used_fallback": false
+}
