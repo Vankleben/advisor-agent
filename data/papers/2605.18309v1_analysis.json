@@ -1,0 +1,111 @@
+{
+  "decision_card": {
+    "定位": "代表作 提出统一框架解释LLM微调中的对齐动态，含理论推导与实验验证",
+    "方向匹配度": "中 涉及大模型对齐与微调，但非读者核心兴趣（机器学习/大模型相关，但偏理论）",
+    "建议": "速读",
+    "预计耗时": "1小时",
+    "前置知识缺口": [
+      "对齐（alignment）概念",
+      "RLHF细节",
+      "贝叶斯后验"
+    ]
+  },
+  "analysis": {
+    "goal": {
+      "text": "解决什么问题：提出一个统一的理论框架，解释LLM在微调过程中对齐（alignment）如何演化、退化与恢复，弥合参数空间学习动态与函数空间对齐行为之间的鸿沟。",
+      "quotes": [
+        "Existing explanations either attribute alignment fragility to gradient geometry or characterize it as a distributional shift in model outputs, yet few provide a unified account that bridges parameter-space learning dynamics with function-space alignment behavior during fine-tuning.",
+        "In this work, we introduce a tractable alignment score and derive its closed-form update during fine-tuning, yielding a unified framework for alignment dynamics."
+      ]
+    },
+    "background": {
+      "text": "实际背景与前人不足：LLM通过SFT和RLHF获得的对齐在后续微调中脆弱易失。现有解释分为基于梯度和基于分布两类，前者未将参数更新映射到输出概率变化，后者静态描述分布偏移而未解释优化动态。",
+      "quotes": [
+        "Gradient-based analyses [11, 12, 13] base on first-order geometry to decompose fine-tuning gradients into safety-relevant subspaces, attributing degradation to insufficient projection onto safety-aligned directions.",
+        "On the other hand, distribution-based studies characterize alignment as a shallow modification of the model’s output distribution.",
+        "However, this line of work remains largely static: it describes the resulting distributional shift, but does not explain the optimization dynamics through which misalignment emerges during fine-tuning."
+      ]
+    },
+    "setup": {
+      "text": "数据集/基线/指标/算力：使用BeaverTails、Emergent Misalignment、IMDb、HEx-PHI等数据集，在Llama-3.1-8B、Gemma-2-2B、Qwen3-8B-Base上做全参数SFT，评估指标为Safety Rate、Misalignment Rate、Positive Score，训练在4×A800 80GB上进行。",
+      "quotes": [
+        "We evaluate our theory on three representative base LLMs: Llama-3.1-8B [25], Gemma-2-2B [26], and Qwen3-8B2 [27].",
+        "Safety Rate: The percentage of safe responses on sampled malicious prompts, judged by ShieldGemma-9B [23].",
+        "Training was executed on 4 × NVIDIA A800 (80GB) GPUs, with a maximum sequence length of 512 tokens."
+      ]
+    },
+    "method": {
+      "text": "方法流程逐步拆解：1) 定义对齐分数S为模型生成对齐完成的期望概率；2) 通过token级分解将S的变化分解为前缀概率与未来对齐势的乘积；3) 在logit空间利用softmax雅可比将更新投影到对齐与非对齐条件分布之差的方向；4) 结合eNTK与RSK假设，推导SFT下S的闭式演化，分解为Rebound Force和Driving Force；5) 预测并验证Rebound Effect与Rehearsal Priming Effect。",
+      "quotes": [
+        "We address this challenge by introducing a precise alignment score S and deriving its closed-form evolution under learning dynamics.",
+        "The resulting decomposition reveals a non-trivial relationship between alignment change and outcome-conditioned posterior distributions over aligned and non-aligned completions.",
+        "In the case of supervised fine-tuning, this decomposition further exposes two competing forces, a Rebound Force and a Driving Force, as shown in Figure 1."
+      ]
+    },
+    "concepts": [
+      {
+        "term": "Alignment Score",
+        "known": false,
+        "explanation": "定义：给定策略πθ和对齐子集A，对齐分数S(θ) = E_{x~p(x)}[Σ_{y∈Y} I_{(x,y)∈A} · πθ(y|x)]，即模型生成满足对齐标准的完成的期望概率。动机：提供一个可量化、可微的标量来衡量模型对齐程度，以便推导其动态变化。数学形式：S(θ) = E_x[Σ_y I_A(x,y) πθ(y|x)]。"
+      },
+      {
+        "term": "Rebound Force",
+        "known": false,
+        "explanation": "定义：对齐动态中抵抗外部驱动力的内在自交互项，公式为F_rebound = Σ_l [ -π+_S (π~+ - π~-)^T K π~+ + π-_S (π~- - π~+)^T K π~- ]。动机：解释为何对齐状态在后续微调中容易逆转，即模型自身分布对变化的惯性。数学形式：当K=I时，F_rebound = -π+_S Σ_i (π~+_i)^2 + π-_S Σ_j (π~-_j)^2，其中Σπ^2衡量分布纯度。"
+      },
+      {
+        "term": "Driving Force",
+        "known": false,
+        "explanation": "定义：由微调数据分布p驱动的外部学习信号，公式为F_drive = Σ_l (π~+ - π~-)^T K p_l。动机：表示训练数据如何推动对齐状态变化，取决于数据分布与对齐/非对齐条件后验的差异。数学形式：几何上为数据分布p在对齐对比方向上的投影，经核K加权。"
+      },
+      {
+        "term": "Rehearsal Priming Effect",
+        "known": false,
+        "explanation": "定义：先前对齐阶段留下的潜在后验印记，在重新暴露于相同数据时放大有效Driving Force，导致比初始对齐更快的再对齐。动机：解释为何模型在经历反向微调后，重新对齐速度加快。数学形式：由定理2.9，后验结构π~+和π~-的残留直接调制F_drive，深度初始微调增强该效应。"
+      },
+      {
+        "term": "Empirical Neural Tangent Kernel (eNTK)",
+        "known": false,
+        "explanation": "定义：在LLM微调中，logits演化的核矩阵K_{m,l} = ∇θz_m^T ∇θz_l，其中z为logits。动机：用于建模参数更新对logits的影响，假设核相对稳定（RSK假设）。数学形式：Δz_l = -η Σ_k K_{l,k} G_k，其中G为梯度。"
+      },
+      {
+        "term": "Relatively Stable Kernel (RSK) Assumption",
+        "known": false,
+        "explanation": "定义：假设在微调过程中，token级核K的相对交互结构近似稳定。动机：使得推导闭式演化成为可能。数学形式：K(t) ≈ K(0)，即核矩阵随时间变化缓慢。"
+      },
+      {
+        "term": "Prefix Probability",
+        "known": false,
+        "explanation": "定义：π<l(y<l) = Π_{j=1}^{l-1} π(y_j | x, y<j)，即模型生成前缀y<l的累积概率。动机：用于token级分解中加权每个位置的贡献。数学形式：累积乘积。"
+      },
+      {
+        "term": "Future Alignment Potential",
+        "known": false,
+        "explanation": "定义：q+_{>l}(y_l) = P_π((x,y)∈A | x, y<l, y_l)，给定当前前缀和选择token y_l后，最终完成属于对齐集的概率。动机：连接局部token选择与全局对齐状态。数学形式：条件概率。"
+      },
+      {
+        "term": "Aligned/Non-aligned Conditional Token Distributions",
+        "known": false,
+        "explanation": "定义：π~+_l(i) = P_π(y_l=i | x, y<l, (x,y)∈A)，π~-_l(i) = P_π(y_l=i | x, y<l, (x,y)∉A)。动机：用于表达对齐对比方向。数学形式：条件概率分布。"
+      }
+    ],
+    "results_limits": {
+      "text": "结果含义与局限：实验验证了Rebound Effect的双向性、分布窄度对反弹强度的影响，以及Rehearsal Priming Effect的存在。局限包括RSK假设在工业规模的有效性未知，且主要结果限于SFT，未扩展到DPO/RLHF。",
+      "quotes": [
+        "Our analysis decomposes alignment updates into two competing components: a Rebound Force, governed jointly by the current alignment state and the narrowness of model distribution, and a Driving Force, determined by how the training distribution aligns with outcome-conditioned posteriors over aligned and non-aligned completions.",
+        "Our results demonstrate that for models exhibiting emergent misalignment, even after being realigned through benign fine-tuning, the broad misaligned behaviors can be rapidly reactivated.",
+        "Our analysis assumes a relatively stable eNTK, whose validity at industrial scales remains unclear."
+      ]
+    },
+    "reproduction": {
+      "text": "复现可行性与设备建议：不可行。理由：论文使用8B模型全参数微调，需要4×A800 80GB GPU，设备A（16GB内存）无法加载8B模型，设备B（RTX3060 12GB）显存不足且全参数微调8B超出能力。即使使用QLoRA，8B模型在12GB显存上勉强可行，但论文要求全参数微调以匹配理论，且训练数据量8192条，计算量巨大。因此不可行。",
+      "quotes": [
+        "We performed full-parameter fine-tuning on Llama-3.1-8B, Gemma-2-2B, and Qwen3-8B models to maintain consistency with our theoretical framework.",
+        "Training was executed on 4 × NVIDIA A800 (80GB) GPUs, with a maximum sequence length of 512 tokens."
+      ]
+    }
+  },
+  "verification_warnings": [
+    "⚠️ [results_limits] 引句在原文找不到：Our analysis decomposes alignment updates into two competing..."
+  ]
+}

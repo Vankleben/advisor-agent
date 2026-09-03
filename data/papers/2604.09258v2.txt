@@ -1,0 +1,5338 @@
+Nexus: Same Pretraining Loss, Better Downstream
+Generalization via Common Minima
+Huanran Chen1,2,‡, Huaqing Zhang1, Xiao Li2,†, Yinpeng Dong1,∗, Ke Shen2, Jun Zhu1,∗
+1Tsinghua University, 2ByteDance Seed
+‡Work done at ByteDance Seed, †Project Lead, ∗Corresponding authors
+Abstract
+The foundational capabilities of large language models are acquired during pretraining on internet-
+scale, highly heterogeneous data mixtures. In this work, we investigate an interesting geometric
+question regarding the converged state of pretraining: Does the model converge to a common
+minimizer across all data sources (e.g., Fig. 2b), or merely a minimizer of the summed loss (e.g.,
+Fig. 2a)? We hypothesize that the geometric "closeness" of task-specific minima is intrinsically
+linked to downstream generalization. We reveal that standard optimizers (e.g., AdamW) often
+converge to points where task-specific minima are distant from each other. To address this, we
+propose the Nexus optimizer, which encourages the closeness of these minima by maximizing
+gradient similarity during optimization. Experiments across models ranging from 130M to 3B
+parameters, various data mixtures and hyperparameter schedules, show that Nexus significantly
+boosts downstream performance, despite achieving the same pretraining loss (see Fig. 1). Notably,
+on the 3B model, Nexus reduces the out-of-distribution loss by 0.012 and yields up to a 15.0%
+accuracy improvement on complex reasoning tasks (e.g., GSM8k). This finding challenges the
+reliance on pretraining loss as the sole proxy for model evaluation and demonstrates the importance
+of implicit biases in unlocking downstream generalization.
+Date: May 28, 2026
+Email: Yingpeng Dong, Jun Zhu at {dongyinpeng, dcszj}@tsinghua.edu.cn;
+Huanran Chen, Huaqing Zhang at {chenhr25, zhanghq22}@mails.tsinghua.edu.cn;
+Xiao Li, Ke Shen at {lixiao.20, shenke}@bytedance.com.
+1
+Introduction
+Pretraining is the cornerstone of Large Language Models (LLMs). Accounting for over 95% of the total
+computational budget and data, it serves as the indispensable engine for their capabilities [17, 45, 57, 88].
+During pretraining, LLMs acquire foundational knowledge from an unprecedentedly massive and diverse data
+sources, encompassing a vast array of domains such as general language, mathematics, code, and complex
+reasoning [2, 58, 78]. To learn from such a heterogeneous corpus of K distinct sources, the standard practice
+is to average the loss of each data source Lk(θ) and minimize the averaged loss Ltrain(θ) = 1
+K
+PK
+k=1 Lk(θ).
+In this work, we investigate an interesting geometric question: Does the model converge to a common
+minimizer across all data sources Lk, or does it merely find a minimizer of the summed loss Ltrain? To
+illustrate this, consider a simplified setting composed of two data sources (L1 and L2), yielding a training
+1
+arXiv:2604.09258v2  [cs.LG]  27 May 2026
+
+0
+20000
+40000
+60000
+80000
+100000
+Step
+1.6
+1.8
+2.0
+2.2
+2.4
+2.6
+2.8
+Eval Loss
+AdamW
+Nexus
+(a) Pretraining Loss
+0
+20000
+40000
+60000
+80000
+100000
+Step
+1.4
+1.6
+1.8
+2.0
+OOD Loss
+AdamW
+Nexus
+(b) OOD Loss
+0
+20000
+40000
+60000
+80000
+100000
+Step
+0.25
+0.30
+0.35
+0.40
+0.45
+0.50
+MMLU Acc.
+AdamW
+Nexus
+(c) MMLU Acc.
+0
+20000
+40000
+60000
+80000
+100000
+Step
+1.2
+1.4
+1.6
+1.8
+2.0
+2.2
+2.4
+2.6
+GSM8k Loss
+AdamW
+Nexus
+(d) GSM8k Loss
+0
+20000
+40000
+60000
+80000
+100000
+Step
+1.0
+1.2
+1.4
+1.6
+1.8
+2.0
+Math500 Loss
+AdamW
+Nexus
+(e) Math500 Loss
+0
+20000
+40000
+60000
+80000
+100000
+Step
+1.8
+2.0
+2.2
+2.4
+2.6
+2.8
+3.0
+3.2
+MBPP Loss
+AdamW
+Nexus
+(f) MBPP Loss
+0
+20000
+40000
+60000
+80000
+100000
+Step
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+GSM8k Acc.
+AdamW
+Nexus
+(g) GSM8k Acc.
+0
+20000
+40000
+60000
+80000
+100000
+Step
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+Math500 Acc.
+AdamW
+Nexus
+(h) Math500 Acc.
+0
+20000
+40000
+60000
+80000
+100000
+Step
+0.0
+0.1
+0.2
+0.3
+0.4
+MBPP Acc.
+AdamW
+Nexus
+(i) MBPP Acc.
+Figure 1 Illustration of “same pretraining loss, better downstream task”. The training loss of baseline and our Nexus
+are nearly the same. However, our methods achieves better downstream generalization.
+loss of Ltrain(θ) = 1
+2(L1(θ) + L2(θ)). As depicted in Fig. 2, there exist two distinct types of minimizers that
+achieve the exact same training loss Ltrain. The first corresponds to the Average-type Minimizer (Fig. 2a),
+where the converged parameter θ∗
+train successfully minimizes the total training loss Ltrain yet may remain
+geometrically distant from the minimizers of individual tasks Lk. The second approaches the Intersection-type
+Minimizer (Fig. 2b), where θ∗
+train is not only a minimizer of Ltrain, but is also geometrically close to the
+minimizer of each individual task Lk.
+We hypothesize that this geometric “closeness”—the distance between task-specific minima—is strongly
+correlated with downstream generalization. Even when achieving the exact same pretraining loss, these two
+types of minimizers yield drastically different downstream losses LT (see the blue curve LT (θ) in Fig. 2).
+Intuitively, if the training losses Lk and downstream task LT are quadratic and i.i.d. distributed, the
+Intersection-type minimizer (Fig. 2b) will strictly outperform the Sum-type minimizer (Fig. 2a) on the
+downstream task LT , given the same pretraining loss (see Theorem 2.1). Therefore, we posit that this
+intuition may generalize beyond quadratics to LLM pretraining, and steering the optimization toward the
+Intersection-type minimizer would achieve the “same pretraining loss, better downstream task”.
+However, directly optimizing for this geometric “closeness” is computationally intractable, as it requires
+knowing the exact minimizer of each Lk at every training step. To overcome this, we prove that the gradient
+similarity between tasks, CosSim(∇Li, ∇Lj) ≜
+∇LT
+i ∇Lj
+∥∇Li∥∥∇Lj∥, upper bounds the geometric closeness. The
+rationale is straightforward: if the gradient directions of each loss ∇Lk are always exactly the same throughout
+optimization, their respective minimizers θ∗
+k must be exactly the same. Based on this insight, we propose the
+2
+
+1.00
+0.75
+0.50
+0.25
+0.00
+0.25
+0.50
+0.75
+1.00
+x
+0
+1
+2
+3
+4
+5
+Loss
+1
+2
+train( )
+( )
+(a) Distant (Average-type Minimizer)
+1.00
+0.75
+0.50
+0.25
+0.00
+0.25
+0.50
+0.75
+1.00
+x
+0
+1
+2
+3
+4
+5
+Loss
+1
+2
+train( )
+( )
+(b) Close (Intersection-type Minimizer)
+Figure 2 Illustration of two types of minimizer. (a) Distant: Minimizers of each source are distant from each other. (b)
+Close: Minimizers are geometrically close to each other. Although both configurations achieve the same total training
+loss, they perform significantly differently on a new downstream task LT .
+Nexus algorithm, which approximates the gradient of gradient similarity ∇CosSim(∇Li, ∇Lj). Combining
+Nexus with pretraining optimizer [32, 37, 85] effectively maximizes CosSim(∇Li, ∇Lj). In Sec. 5.1, we show
+that both gradient similarity and geometric closeness generalize to downstream tasks, thus leading to lower
+downstream loss and better downstream performance, even when achieving the same pretraining loss.
+We empirically validate Nexus across various settings, including model scales ranging from 130M to 3B
+parameters [80, 85, 88], diverse pretraining data and mixtures [5, 77], learning rate schedules [28, 50, 86], and
+training compute allocations [33]. Experimental results demonstrate that, across nearly all settings, Nexus
+consistently enhances downstream capabilities by reducing downstream losses while achieving nearly the same
+pretraining loss. For instance, on the 3B model, Nexus improves GSM8K accuracy by 15%, MATH500 by 8%,
+and HumanEval by 4%. These consistent and substantial downstream gains demonstrate the importance of
+implicit biases in unlocking downstream generalization [47], particularly as the current pretraining paradigm
+transitions from being compute-bound to data-bound [36, 55, 62, 73].
+2
+Closeness: A Second-Order Property Related to Generalization
+2.1
+Problem Formulation
+Formally, let the pretraining corpus be the union of K distinct data sources, denoted as Dtrain = ∪K
+k=1Dk.
+Let αk represent the sampling probability (data mixing ratio) for the k-th source. We define the weighted
+empirical loss function for the k-th source as:
+Lk(θ) = −αk
+|Dk|
+|Dk|
+X
+j=1
+log p(xj|θ).
+(1)
+Consequently, the total pretraining objective is simply the average of these weighted losses:
+Ltrain(θ) = 1
+K
+K
+X
+k=1
+Lk(θ).
+(2)
+2.2
+Flatness and Closeness are both Second Order Generalization Biases
+Our primary interest lies in how well our pretraining minimizer θ∗
+train ∈arg minθ Ltrain(θ) performs on the
+downstream task T , i.e., the downstream loss LT (θ∗
+train).
+Let ST = {θ | ∃ϵ > 0, ∀θ′ ∈Bϵ(θ), LT (θ) ≤LT (θ′)} be the set of local minimizers for the downstream task.
+3
+
+We define θ∗
+T as the closest minimizer of downstream loss:
+θ∗
+T = arg min
+θ∈ST ∥θ −θ∗
+train∥2.
+(3)
+By applying a second-order Taylor expansion with the Lagrange remainder around the optimal point θ∗
+T , we
+can characterize the downstream loss at the pretraining minimizer θ∗
+train:
+LT (θ∗
+train) = LT (θ∗
+T ) + (θ∗
+train −θ∗
+T )⊤∇LT (θ∗
+T ) + 1
+2(θ∗
+train −θ∗
+T )⊤∇2LT (ξ)(θ∗
+train −θ∗
+T )
+= LT (θ∗
+T ) + 1
+2 ∥θ∗
+train −θ∗
+T ∥2
+2
+|
+{z
+}
+Closeness
+·
+u⊤∇2LT (ξ)u
+|
+{z
+}
+Directional Sharpness
+,
+(4)
+where ξ ∈[θ∗
+T , θ∗
+train] denotes an intermediate point on the line segment connecting θ∗
+T and θ∗
+train, and
+u =
+θ∗
+train−θ∗
+T
+∥θ∗
+train−θ∗
+T ∥2 represents the unit directional vector. Note that the first-order term vanishes because θ∗
+T
+is a local minimizer (i.e., ∇LT (θ∗
+T ) = 0). The remaining term is controlled by two scalars: the directional
+Flatness u⊤∇2LT (ξ)u ≤∥∇2LT (ξ)∥2 ≤∥∇2LT (ξ)∥F , and crucially, the Closeness ∥θ∗
+train −θ∗
+T ∥2
+2.
+Therefore, the flatter the local loss landscape of LT and the closer the converged parameter θ∗
+train is to the
+task minimizer θ∗
+T , the better the generalization. Together, flatness and closeness encapsulate all second-
+order information for downstream generalization. While flatness has been well-studied in prior literature
+[8, 21, 38, 74, 94], in this work, we focus solely on our new implicit bias: closeness.
+2.3
+Closeness Improves Out-of-Distribution Generalization
+Eq. (4) reveals that the closeness between the trained parameters and the downstream task minimizers directly
+correlates with downstream generalization. In other words, if one could minimize ∥θ∗
+train −θ∗
+T ∥2
+2 without
+compromising the intrinsic loss LT (θ∗
+T ) and the flatness, one would directly boost downstream generalization.
+However, in practice, minimizing closeness typically comes at a cost: either (1) an increase in intrinsic loss
+LT (θ∗
+T ) or (2) an increase in sharpness (see Sec. 5.1). This trade-off is expected; if one were to minimize the
+closeness even among training tasks (i.e.,
+1
+K
+PK
+k=1 ∥θ∗
+train −θ∗
+k∥2
+2) without penalty, it would imply achieving
+significantly smaller training error and faster optimization rates. This contradicts the prevailing assumption
+and empirical observations regarding the inherent hardness of discovering significantly faster optimizers [68, 85].
+In this paper, we specifically focus on the "same training loss" regime. We demonstrate that a "close"
+minimizer (Fig. 2b) yields significantly better out-of-distribution generalization compared to a "distant"
+minimizer (Fig. 2a), even at the same pretraining loss Ltrain(θ) =
+1
+K
+PK
+k=1 Lk(θ). We analyze the specific
+scenario where improved closeness is achieved solely at the cost of increasing the intrinsic task loss Lk(θ∗
+k).
+This assumption decouples our analysis from the flatness bias (thereby eliminating flatness as a confounding
+factor) and aligns with the actual behavior observed in our experiments (see Sec. 5.1).
+The core intuition is illustrated in Fig. 2: as long as the loss landscape is quadratic-like along the directions of
+interest (i.e., locally and directionally strongly convex), and the pretraining and downstream tasks share a
+common task distribution, improved closeness will inherently lead to a lower generalization gap. We begin with
+a simplified analysis assuming strictly quadratic loss functions to mathematically substantiate this intuition.
+Theorem 2.1 (Generalization of Closeness in the Quadratic Case). To model the non-convex landscape,
+assume the parameter space Rd is partitioned into a set of disjoint basins of attraction {B}. Within any
+specific basin B, assume that any task L sampled from a distribution P is locally a quadratic function:
+L(θ) = a
+2∥θ −θ∗
+L∥2
+2 + cB, where the local task minimizers are distributed as θ∗
+L ∼P(µB, σ2
+BI) with mean µB
+and variance σ2
+B, and cB is the intrinsic loss (depth) of basin B.
+Let the pretraining tasks {Lk}K
+k=1 and the downstream task LT be i.i.d. samples from P. Let Θ = {θ∗
+train,B |
+Ltrain(θ∗
+train,B) = Ctrain} be the set of converged minimizers across different basins that achieve the exact same
+training loss Ctrain. For any candidate θ∗
+train,B ∈Θ, the expected downstream error on an unseen task T ∼P
+is strictly proportional to the task variance σ2
+B:
+ET ∼P[LT (θ∗
+train,B)] = Ctrain + a
+K σ2
+B.
+(5)
+4
+
+Proof. By stationarity, the converged parameter is the mean of local minimizers: θ∗
+train,B =
+1
+K
+PK
+k=1 θ∗
+k,B.
+Constraining the training loss to Ctrain and closeness to σ2
+B explicitly determines the basin’s intrinsic depth:
+cB = Ctrain −
+a
+2K
+PK
+k=1 ∥θ∗
+train,B −θ∗
+k,B∥2
+2. This enforces the core trade-off: to achieve the identical Ctrain, a
+basin with tightly clustered minimizers inherently requires a higher intrinsic loss cB to compensate.
+For an unseen task T ∼P, the expected downstream loss is E[LT ] = E[ a
+2∥θ∗
+train,B −θ∗
+T ,B∥2
+2]+cB. Substituting
+cB perfectly cancels out the intrinsic depth, leaving the generalization gap entirely dependent on the variance
+of the distributions: E[LT (θ∗
+train,B)] −Ctrain = a
+2
+  1 + 1
+K
+
+−K−1
+K
+
+σ2
+B = a
+K σ2
+B.
+Consequently, as long as downstream tasks and pretraining tasks follow the same distribution, by trading
+intrinsic loss cB for improved closeness (i.e., smaller σ2
+B), one obtains better out-of-distribution generalization
+due to the reduction in task variance.
+We can also extend Theorem 2.1 beyond purely quadratic loss functions to the broader class of general loss
+landscapes exhibiting local and directional strong convexity, as demonstrated in the following theorem.
+Theorem 2.2 (Generalization of Closeness beyond Quadratics, Proof in Appendix C.2). Let θ∗be a
+specific local minimizer of the population loss EL∼P[L(θ)].
+For any task L sampled from P, let θ∗
+L =
+arg minθ∈SL ∥θ∗−θ∥2 be its corresponding local minimizer. Assume that for any task L ∼P, the loss function
+is locally and directionally strongly convex along the segments [θ∗
+L, θ∗], i.e., λmax ≥u⊤∇2L(ξ)u ≥λmin > 0
+for any ξ ∈[θ∗
+L, θ∗] and any unit vector u ∈span{θ∗−θ∗
+L | L ∼P}. Let µ = E[θ∗
+L] and σ2 = E[∥θ∗
+L −µ∥2
+2].
+Assuming the statistical independence between the task flatness ∇2LL(ξ) and the task closeness θ∗
+L across
+the distribution P. Conditioned on achieving a fixed training loss Ctrain, the expected out-of-distribution
+generalization error of the converged training parameter θ∗
+train is bounded by:
+ET ∼P[LT (θ∗
+train)] −Ctrain ≤
+λmax
+
+λmax
+λmin
+2
++ 1
+
+2K
+σ2.
+(6)
+Therefore, as long as the loss landscape exhibits quadratic-like behavior (i.e., local and directional strong
+convexity) along these typical directions [θ∗
+k, θ∗], explicitly optimizing for closeness σ2 = E[∥θ∗
+k −µ∥2
+2] would
+be beneficial for a lower downstream loss.
+3
+Nexus Optimizer: Enhancing Closeness via Second-Order Approximation
+Both geometric intuition and our analysis of quadratic functions support the conclusion that a “close” minimizer
+(Fig. 2b) generalizes to out-of-distribution data significantly better than a “distant” minimizer (Fig. 2a), even
+when achieving the same training loss. Consequently, we aim to explicitly optimize this closeness during
+LLM pretraining. In this section, we introduce a second-order gradient approximator named “Nexus”, which
+effectively optimizes parameter closeness on the training tasks (i.e.,
+1
+K
+PK
+k=1 ∥θ −θ∗
+k∥2
+2), and successfully
+generalizes to the closeness of unseen downstream tasks (i.e., ∥θ −θ∗
+T ∥2
+2).
+3.1
+Gradient Similarity Upper Bounds Closeness
+Directly optimizing the closeness metric ∥θ −θ∗
+k∥involves finding the specific minimizer θ∗
+k for each task,
+which is itself a minimization problem and computationally prohibitive. Fortunately, we observe that the
+gradient similarity between different source tasks, given by P
+i̸=j −∇Li(θ)⊤∇Lj(θ), provides a tractable
+upper bound for closeness. Intuitively, if the gradients of distinct tasks Lk consistently align in direction, their
+respective minimizers be exactly the same. Theoretically, both the gradient dot product and cosine similarity
+serve as tight bounds for closeness:
+Theorem 3.1 (Gradient Similarity Upper Bounds Closeness). Let θ be the converged parameter satisfying
+∇Ltrain(θ) =
+1
+K
+PK
+k=1 ∇Lk(θ) = 0. Let Sk = {ϑ | ∃ϵ > 0, ∀ϑ′ ∈Bϵ(ϑ), Lk(ϑ) ≤Lk(ϑ′)} be the set of local
+minimizers for task k, and θ∗
+k = arg minϑ∈Sk ∥ϑ−θ∥2. Let λmin = mink infξ∈[θ,θ∗
+k]
+
+(θ−θ∗
+k)⊤
+∥θ−θ∗
+k∥2 ∇2Lk(ξ)
+θ−θ∗
+k
+∥θ−θ∗
+k∥2
+
+>
+5
+
+Algorithm 1 Standard Nexus Algorithm
+Require: Initial params θ0, losses {Li}K
+i=1, total iterations T.
+Require: Optimizers: Optinner (Normalized SGD), Optouter (e.g., AdamW). Inner learning rate γ.
+1: for t = 1 to T do
+2:
+θt,0 ←θt−1 {Initialize inner loop}
+3:
+for m = 1 to K do
+4:
+Sample task index sm ∼Uniform({1, . . . , K})
+5:
+g ←∇Lsm(θt,m−1)
+6:
+θt,m ←θt,m−1 −γ ·
+g
+∥g∥2 {Update inner trajectory}
+7:
+ˆgt ←θt,0 −θt,K {Compute Nexus pseudo-gradient}
+8:
+θt ←Optouter(θt−1, ˆgt) {Outer-update}
+Return: θT
+0, and G = supk ∥∇Lk(θ)∥2. Then, the closeness between the minimizers is bounded by:
+1
+K
+K
+X
+k=1
+∥θ −θ∗
+k∥2
+2 ≤
+1
+Kλ2
+min
+X
+i̸=j
+ −∇Li(θ)⊤∇Lj(θ)
+
+≤
+G2
+Kλ2
+min
+X
+i̸=j
+(1 −CosSim(∇Li(θ), ∇Lj(θ))) .
+(7)
+In other words, optimizing the training trajectory towards a regime where CosSim(∇Li(θ), ∇Lj(θ)) remains
+consistently high guarantees high closeness (i.e., a small distance ∥θ −θ∗
+k∥2). This "gradient similarity upper
+bound" also provides a more intuitive understanding of why closeness improves downstream generalization.
+Suppose that the high gradient similarity achieved among training tasks (i.e., high Sim(∇Li(θ), ∇Lj(θ)))
+successfully generalizes to the similarity between the training objective and the downstream task (i.e., high
+Sim(∇Ltrain(θ), ∇LT (θ))). This similarity directly represents the reduction in downstream loss after a single
+Gradient Descent (GD) step on the training set (in the first-order sense):
+LT (θ) −LT (θ −γ∇Ltrain(θ))
+|
+{z
+}
+decrease of downstream loss after one GD step on training set
+= γ∇Ltrain(θ)⊤∇LT (θ) + O(γ2).
+(8)
+Therefore, we view gradient similarity CosSim(∇Li(θ), ∇Lj(θ)) as a strong proxy for parameter closeness: it
+not only provides a tight upper bound on parameter distance (thereby enforcing closeness), but also leads to
+the same beneficial effects on downstream generalization. Given this strong connection, in the remainder of
+this paper, we use the term "closeness" to refer to both parameter closeness and gradient closeness.
+3.2
+Optimizing Gradient Similarity via Nexus
+Therefore, to encourage parameter closeness, it suffices to maximize the gradient similarity. However, directly
+optimizing this objective is computationally intractable because the gradient of the cosine similarity involves
+the Jacobian-vector product:
+∇θCosSim(∇θLi(θ), ∇θLj(θ)) =
+
+∇θ
+∇θLi(θ)
+∥∇θLi(θ)∥2
+⊤
+∇θLj(θ)
+∥∇θLj(θ)∥2
++
+
+∇θ
+∇θLj(θ)
+∥∇θLj(θ)∥2
+⊤
+∇θLi(θ)
+∥∇θLi(θ)∥2
+. (9)
+To address this challenge, we propose the Nexus optimizer, which approximates the gradient in Eq. (9) through
+a dual-loop mechanism. The complete procedure is outlined in Algorithm 1. Conceptually, one should view
+each step in the outer loop as a standard parameter update, while the K steps in the inner loop serve as a
+gradient approximator for Eq. (9). Specifically, for each outer iteration, we perform K normalized SGD steps
+(inner loop) to accumulate the approximated gradient ˆgt. This ˆgt is then passed to the outer optimizer (e.g.,
+AdamW [37, 49], Muon [32]) to perform the actual update. The following theorem demonstrates that Nexus
+algorithm effectively maximizes gradient similarity.
+6
+
+Nexus Regularizer 
+Nexus Regularizer: 
+Nexus Update: 
+Conventional Update + Nexus Regularizer: 
+=
+Conventional Update 
+Nexus Regularizer
+Figure 3 Intuitive illustration of Nexus Algorithm.
+E= denotes equality in expectation over the task permutations.
+Theorem 3.2 (Nexus Maximizes Gradient Similarity). Assume there exist constants Gmin, L, ρ > 0 such that
+for any t ∈[1, T] and m ∈[1, K]:
+∥∇Li(θt,m)∥2 ≥Gmin;
+∥∇2Li(θ)∥2 ≤L;
+∥∇2Li(x) −∇2Li(y)∥2 ≤ρ∥x −y∥2.
+(10)
+Then, the sequence {θt} generated by Algorithm 1 minimizes the following second-order objective:
+J2nd(θ) = γ
+K
+X
+i=1
+Li(θ) −γ2 K −1
+4K
+X
+i̸=j
+CosSim
+
+∇Li(θ), ∇Lj(θ)
+
+.
+(11)
+This holds because the expected update direction satisfies:
+E[ˆgt] = γ
+K
+X
+i=1
+∇Li(θt)
+∥∇Li(θt)∥2
+−γ2 K −1
+4K
+
+∇θ
+X
+i̸=j
+CosSim(∇Li, ∇Lj) + Esym,i,j
+
++ E2nd,
+(12)
+where Esym,i,j =
+
+∇
+∇Li
+∥∇Li∥2 −
+
+∇
+∇Li
+∥∇Li∥2
+⊤
+∇Lj
+∥∇Lj∥2 ⊥∇Lj is the Jacobian non-symmetric error, which
+becomes zero when the gradients align with the top eigenvectors of their respective Hessians [12, 14, 23, 71].
+The Taylor approximation error is bounded by ∥E2nd∥2 ≤1
+6
+
+4L2+ρGmin
+G2
+min
+
+K3γ3 = O(γ3).
+Intuitive Understanding of the Inner Loop. To intuitively understand why Nexus’s inner loop optimizes
+Eq. (9), consider a simplified scenario with two loss functions, L1 and L2, as illustrated in Fig. 3. At the
+current parameter state θt,0, a conventional optimizer (e.g., AdamW, Muon) would simply aggregate the
+gradients as ∇L1(θt,0) + ∇L2(θt,0) for the update. In contrast, the Nexus inner loop operates sequentially: it
+first takes a step using ∇L1(θt,0) to reach an intermediate point θt,1, and subsequently evaluates the next
+gradient ∇L2(θt,1) at this displaced location. As shown in the figure’s equations, this sequential trajectory is
+mathematically equivalent to a conventional update plus a "Nexus regularizer." Crucially, this regularizer
+naturally yields a Jacobian-vector product
+
+∇θt,0
+∇L2(θt,0)
+∥∇L2(θt,0)∥2
+
+∇L1(θt,0)
+∥∇L1(θt,0)∥2 , which equals the gradient of the
+gradient similarity (in the first-order and expectation sense). Consequently, the pseudo-gradient ˆgt produced
+by the inner loop effectively serves as the sum of the gradient of the pretraining loss and the gradient of the
+gradient similarity defined in Eq. (9).
+Thus, Nexus serves as an effective mechanism for maximizing gradient closeness. Strictly speaking, Nexus
+should be conceptualized as a gradient approximator rather than a standalone optimizer, for two reasons: (1)
+The inner optimization step must be a simple, memory-free update like NSGD or its generalized transformations
+(see Appendix B.4). Otherwise, as shown in Sec. 5.1, incorporating historical momentum would disrupt
+the accurate maximization of gradient similarity. (2) The outer optimization step simply consumes the
+7
+
+Algorithm 2 Standard Pretraining
+Require: model, loader
+Require: opt_outer (e.g., AdamW)
+Require: accum_steps
+1: for i, batch in loader do
+2:
+{Mini-batch Step}
+3:
+L ←model(batch)
+4:
+L.backward()
+5:
+if i % accum_steps == 0 then
+6:
+{Accumulation Step}
+7:
+opt_outer.step()
+8:
+opt_outer.zero_grad()
+Algorithm 3 Nexus (Engineering Adaptation)
+Require: model, loader, opt_outer, accum_steps
+1: inner_model ←model.clone()
+2: opt_inner ←NSGD(inner_model)
+3: for i, batch in loader do
+4:
+L ←inner_model(batch)
+5:
+L.backward()
+6:
+opt_inner.step()
+7:
+if i % accum_steps == 0 then
+8:
+ˆg ←inner_model −model
+9:
+opt_outer.step(grad=−ˆg)
+10:
+inner_model ←model.clone()
+Figure 4
+Comparison of Standard Pretraining and Nexus Engineering Adaptation. Left: Standard train-
+ing accumulates gradients over multiple mini-batches before performing a single optimizer update (at the micro-
+batch/accumulation step). Right: We adapt Nexus from Algorithm 1 to pretraining by keeping an auxiliary inner_model.
+It performs immediate updates on the inner_model at every mini-batch step. At the accumulation boundary, the total
+displacement (inner_model −model) serves as the pseudo-gradient ˆg for the outer optimizer, after which the inner
+model is re-synchronized.
+approximated gradient and can utilize standard optimization algorithms (see Appendix H.7). Consequently,
+Nexus acts as a modular plug-in that is broadly compatible with a wide range of outer base optimizers (e.g.,
+AdamW, SGDM).
+3.3
+Adapting Nexus to Practical Pretraining
+Motivation. We establish that Nexus effectively maximizes gradient similarity with controllable higher-order
+errors in Theorem B.3 and 3.2. However, directly applying Algorithm 1 to pretraining is still difficult. This is
+because Algorithm 1 requires computing gradients for every data source to perform a single effective outer
+update. In pretraining, the number of data sources is typically large (e.g., K > 50), which would result in an
+effective batch size that differs significantly from standard settings [33, 85]. This prevents us from leveraging
+established hyperparameters, thereby increasing tuning costs and preventing the wide application of Nexus.
+To address this, we propose an engineering adaptation to better adapt Nexus to practical pretraining. As
+shown in Algorithm 2, standard pretraining can be viewed as a gradient accumulation workflow: it computes
+gradients in every mini-batch and performs an optimizer update in every accumulation step.
+Adapted Nexus. Leveraging this structure, we adapt Nexus as illustrated in Algorithm 3. Specifically,
+we introduce an auxiliary inner_model. For each mini-batch, we perform an immediate Normalized SGD
+(NSGD) update on this inner model to approximate the hessian-gradient product. Upon completing the
+accumulation steps, we compute the displacement between the inner model and the frozen main model, using
+this displacement as the pseudo-gradient ˆg for the outer optimizer. Therefore, our adapted Nexus actually
+maximizes the cosine similarity between mini-batches within a single accumulation step. Since the pretraining
+corpus is typically vast and the mixing ratio for each source is typically low, two consecutive mini-batches are
+highly likely to be sampled from different sources. Thus, this approach effectively achieves the objective of
+Algorithm 1.
+Clarification on NSGD Normalization. Note that we apply per-param normalization rather than normalizing
+the globally flattened gradient vector. Mathematically, this adapted Nexus maximizes the sum of per-matrix
+gradient similarities P
+l CosSim(∇W (l)Li, ∇W (l)Lj) (see Appendix B.4), rather than the global gradient
+similarity CosSim(∇θLi, ∇θLj). This design choice is primarily motivated by the theoretical insights of µP
+[89–91] and recent practical wisdom [48] on controlling the RMS norm of each update, which potentially
+enables more stable optimization and better hyper-parameter transfer across different model scales.
+8
+
+Remark. It is worth noting that our adapted Nexus incurs almost no extra computational cost. The
+total number of forward and backward passes remains exactly the same as standard pretraining. The only
+computational overhead comes from the copy and update of the inner model, but this is negligible compared to
+the forward-backward pass (considering the classical 6NBS approximation [33]). The only memory overhead
+comes from the inner model, but this can be reduced to nearly zero through techniques like CPU offloading
+and asynchronous processing.
+We employ Algorithm 3 for all experiments, with the exception of specific ablation studies. Readers may
+proceed directly to Sec. 4. In Appendix B, we also provide a theoretical analysis of Nexus’s convergence speed
+and discuss its implications for standard Normalized SGD.
+4
+Experiments
+In this section, we validate that Nexus achieves nearly the same pretraining loss while delivering better
+downstream performance through comprehensive experiments across various datasets, learning rate schedules,
+model scales and token scales.
+4.1
+Experimental Settings
+Our experimental setup largely follows the protocols established in Wen et al. [85] and OLMo et al. [57].
+Pretraining Datasets. We utilize an in-house pretraining dataset similar to [77]. This corpus is: (1) strictly
+cleaned to ensure no data contamination regarding the evaluated benchmarks or distillation data; and (2)
+of higher quality and stability than typical open-source datasets, allowing us to observe smooth and clear
+optimization trends. We also conduct experiments on public datasets [5] in Appendix H.3. However, these
+public datasets are not strictly decontaminated and contain training samples from our benchmarks. This
+leads to artificially inflated performance on certain tasks while underperforming on others. Consequently, we
+primarily rely on the strictly cleaned dataset for more stable analysis.
+Model Architecture. Following Wen et al. [85], we train Llama-architecture models of 130M, 300M, 520M,
+1.2B, and 2.3B parameters (excluding embeddings). We primarily analyze the 520M (1B total parameters)
+and 2.3B (3B total parameters) models, hereafter referred to by their total parameter counts for brevity,
+except in the scaling law analysis (Sec. 4.3) as required by Kaplan et al. [33].
+Hyperparameters. Wen et al. [85] have already conducted extensive parameter searches using grid search,
+coordinate descent, and fine-grained tuning. To ensure fairness, we always apply exact the same hyper-
+parameters to both Nexus and its corresponding base optimizers. For the base optimizers, we adopt the
+optimal hyperparameters identified in Wen et al. [85]. We further verified these settings by sweeping the
+learning rate with a multiplier of 2 (i.e., verifying 0.5× and 2.0×), confirming that their configurations remain
+optimal for our dataset. See Appendix H.1 for the detailed hyperparameters in each experiment.
+Benchmarks. We evaluate on diverse benchmarks encompassing general knowledge (MMLU [26]), reasoning
+(GPQA, GPQA Diamond [66], BBH [76]), math (GSM8k [10], MATH500 [27]), and coding (HumanEval [18],
+MBPP [4]). Beyond discrete accuracies, we also track downstream task losses and out-of-distribution (OOD)
+loss. The OOD loss is evaluated on a strictly cleaned proprietary in-house corpus, which exhibits a strong
+correlation with downstream benchmark capabilities.
+Highlighting Strategy. We use bold to highlight non-trivial performance gaps, defined as a loss difference
+> 0.01 or a benchmark improvement > 2%, following Wen et al. [85].
+4.2
+Main Experimental Results
+Settings. We train 1B models by 4× Chinchilla and 3B models for 2× Chinchilla tokens using two optimizer
+configurations: the standard AdamW baseline, AdamW equipped with our Nexus regularizer (Nexus).
+Nexus achieves Same Pretraining Loss, Better Downstream Task. As detailed in Tab. 1, Nexus strictly
+satisfies the “same pretraining loss” condition, showing an immaterial difference of 0.004 compared to the
+baseline. Despite this parity in pretraining loss, Nexus demonstrates substantial improvements across nearly
+9
+
+Table 1 Main Results. Comparison of validation losses and downstream capabilities. Notably, Nexus consistently
+achieves nearly identical pretraining losses compared to the base optimizers, yet demonstrates superior performance
+across downstream losses and benchmarks.
+Model Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+1B
+AdamW Acc. (↑)
+1.826
+1.433
+32.1
+25.0
+21.8
+29.6
+18.0
+13.0
+19.0
+17.0
+21.9
+Loss (↓)
+2.363
+2.221
+2.124
+1.640
+1.429
+1.204
+1.270
+2.035
+1.786
+Nexus
+Acc. (↑)
+1.826
+1.428
+33.5
+30.4
+21.8
+29.3
+20.0
+13.0
+19.0
+22.0
+23.6
+Loss (↓)
+2.316
+2.201
+2.102
+1.638
+1.396
+1.176
+1.261
+1.977
+1.758
+Improv. Acc. (↑)
+-
+-
++1.4
++5.4
+0.0
+-0.3
++2.0
+0.0
+0.0
++5.0
++1.7
+Loss (↑)
+0.000
++0.005 +0.047 +0.020
++0.022
++0.002 +0.033 +0.028
++0.009
++0.058 +0.027
+3B
+AdamW Acc. (↑)
+1.606
+1.302
+47.8
+32.8
+22.6
+36.6
+44.0
+32.0
+43.0
+38.0
+37.1
+Loss (↓)
+2.265
+2.005
+1.910
+1.534
+1.259
+1.054
+1.116
+1.922
+1.633
+Nexus
+Acc. (↑)
+1.602
+1.290
+48.9
+29.6
+23.4
+36.6
+59.0
+40.0
+47.0
+38.0
+40.3
+Loss (↓)
+2.179
+1.981
+1.881
+1.504
+1.227
+1.026
+1.086
+1.921
+1.601
+Improv. Acc. (↑)
+-
+-
++1.1
+-3.2
++0.8
+0.0
++15.0
++8.0
++4.0
+0.0
++3.2
+Loss (↑)
++0.004
++0.012 +0.086 +0.024
++0.029
++0.030 +0.032 +0.028
++0.030
++0.001 +0.032
+all evaluated out-of-distribution and downstream metrics. Specifically, it reduces the OOD validation loss by
+0.012 and yields significant accuracy gains on complex reasoning benchmarks, including a +15.0% improvement
+on GSM8k, +8.0% on MATH, and +4.0% on HumanEval. These consistent gains across diverse domains
+validate our core hypothesis: optimizing closeness unlocks downstream generalization in the same pretraining
+loss regime.
+Comparison of Muon and Nexus. Compared to the standard AdamW baseline, Muon reduces the pretraining
+loss by 0.029 and improves the average downstream accuracy by 2.3%. In contrast, Nexus achieves a negligible
+0.004 reduction in pretraining loss yet yields a 3.2% improvement in average downstream accuracy, reaching a
+downstream performance level comparable to Muon (see Tab. 10). This observation indicates a fundamental
+divergence in their optimization pathways: while Muon’s downstream improvements rely primarily on achieving
+a lower pretraining loss, the gains from Nexus stem from its implicit bias despite maintaining a nearly identical
+pretraining loss as AdamW.
+Output Analysis. Compared to the AdamW baseline, Nexus improves accuracy by 15.0% on GSM8k, 8.0% on
+MATH, and 4.0% on HumanEval. To investigate the source of these improvements, we analyze the model
+outputs on these benchmarks. We observe that the set of correctly answered questions by Nexus is almost
+a strict superset of those answered correctly by AdamW. Specifically, on GSM8k and HumanEval, Nexus
+retains a >95% retention rate on the questions already solved by AdamW, while the 15.0% net improvement
+stems entirely from exclusively solving previously failed questions. This additive behavior indicates that
+the performance gain provided by Nexus over the base optimizer is highly stable, expanding the capability
+boundaries without regressing on previously learned knowledge.
+4.3
+Scaling Analysis on Model Size
+Motivation. In the following two subsections, we investigate the scalability of Nexus across model size and
+training duration (tokens). Prevailing literature on implicit bias suggests that the role of implicit regularization
+becomes increasingly prominent with greater overparameterization and extended computational budgets, since
+sufficient expressive power and optimization steps grant the model the flexibility to satisfy the geometric
+implicit bias without compromising the minimization of the pretraining loss [6, 51, 54, 61, 72, 84, 93]. Since
+Nexus operates via such implicit bias, we hypothesize that its downstream generalization benefits will also
+amplify at larger compute and model scales.
+Settings. We evaluate models across five distinct sizes as outlined in Sec. 4.1. Please refer to Appendix H.1
+for the detailed hyperparameters of each experiment. The results are shown in Tab. 9 and Fig. 5.
+10
+
+130M
+300M
+520M
+1.2B
+2.3B
+Model Size
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+Loss ( )
+AdamW (OOD)
+Nexus (OOD)
+AdamW (GSM8k)
+Nexus (GSM8k)
+AdamW (HumanEval)
+Nexus (HumanEval)
+(a) Downstream Loss
+130M
+300M
+520M
+1.2B
+2.3B
+Model Size
+15
+20
+25
+30
+35
+40
+Avg. Benchmark Accuracy (%)
+AdamW
+Nexus
+(b) Downstream Benchmark
+130M
+300M
+520M
+1.2B
+2.3B
+Model Size
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+Nexus over AdamW ( %)
++0.8%
++1.5%
++1.7%
++2.6%
++3.2%
+(c) Average Benchmark Gain
+Figure 5 Benchmark Performance across Model Scales. We compare downstream capabilities for models ranging
+from 130M to 2.3B parameters. Notably, the relative gains of Nexus amplify as model capacity increases, with the
+average benchmark accuracy improvement growing from +0.8% on the 130M model to +3.2% on the 2.3B model.
+Table 2 Scaling Analysis on Training Tokens. We extend the pretraining duration of the 3B model from 2× to 4×
+Chinchilla optimal tokens. The results demonstrate that the downstream performance advantage of Nexus over the
+AdamW baseline persists strictly.
+Chinchila Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+2
+AdamW Acc. (↑)
+1.606
+1.302
+47.8
+32.8
+22.6
+36.6
+44.0
+32.0
+43.0
+38.0
+37.1
+Loss (↓)
+2.265
+2.005
+1.910
+1.534
+1.259
+1.054
+1.116
+1.922
+1.633
+Nexus
+Acc. (↑)
+1.602
+1.290
+48.9
+29.6
+23.4
+36.6
+59.0
+40.0
+47.0
+38.0
+40.3
+Loss (↓)
+2.179
+1.981
+1.881
+1.504
+1.227
+1.026
+1.086
+1.921
+1.601
+Improv. Loss (↑)
++0.004
++0.012 +0.086 +0.024
++0.029
++0.030 +0.032 +0.028
++0.030
++0.001 +0.032
+4
+AdamW Acc. (↑)
+1.591
+1.293
+48.3
+23.4
+21.9
+35.2
+54.0
+33.0
+45.0
+43.0
+38.0
+Loss (↓)
+2.240
+1.975
+1.880
+1.513
+1.245
+1.038
+1.119
+1.976
+1.623
+Nexus
+Acc. (↑)
+1.588
+1.281
+52.8
+20.3
+25.0
+44.1
+62.0
+33.0
+49.0
+47.0
+41.7
+Loss (↓)
+2.216
+1.957
+1.863
+1.501
+1.229
+1.008
+1.087
+1.885
+1.593
+Improv. Loss (↑)
++0.003
++0.012 +0.024 +0.018
++0.017
++0.012 +0.016 +0.030
++0.032
++0.091 +0.030
+Universal ‘‘Same Pretraining Loss, Better Downstream’’. Across all model sizes ranging from 130M to 2.3B,
+Nexus consistently maintains the pretraining validation loss within a negligible margin (defined as ∆< 0.01
+in Sec. 4.1) compared to the baseline, satisfying "same pretraining loss." Despite this parity in pretraining
+loss, Nexus achieves non-trivial loss reduction on nearly all downstream tasks. For instance, at the 1.2B scale,
+while the validation loss difference is merely 0.007, Nexus reduces MMLU loss by 0.086, and both BBH and
+HumanEval losses by 0.03, more than 7 times larger than the pretraining loss gap.
+Performance Gains Amplify with Scale. We observe that the relative advantage of Nexus over the AdamW
+baseline expands monotonically as model capacity increases. Specifically, the average benchmark accuracy
+improvements across the five evaluated scales are +0.8% (130M), +1.5% (300M), +1.7% (520M), +2.6%
+(1.2B), and +3.2% (2.3B). This amplification is particularly pronounced in complex reasoning tasks: the
+accuracy gap on GSM8k widens from negligible levels at the 130M scale to +15.0% (59.0 vs. 44.0) at the 2.3B
+scale, accompanied by a 0.032 reduction in downstream loss. These results demonstrate that Nexus scales
+favorably with model capacity, effectively leveraging the increased expressive power to enforce the geometric
+closeness bias.
+11
+
+10%
+40%
+70%
+Math Data Proportion
+0
+1
+2
+3
+4
+5
+6
+Nexus over AdamW ( %)
++1.1%
++3.4%
++5.8%
+(a) General Domain (MMLU)
+10%
+40%
+70%
+Math Data Proportion
+0
+2
+4
+6
+8
+10
+12
+Nexus over AdamW ( %)
++11.5%
++2.5%
++3.0%
+(b) Math Domain (Avg.)
+10%
+40%
+70%
+Math Data Proportion
+0
+1
+2
+3
+4
+5
+6
+Nexus over AdamW ( %)
++2.0%
++5.2%
++1.5%
+(c) Code Domain (Avg.)
+Figure 6 Results on varying data mixtures (3B models). As the proportion of math data increases (10% →70%),
+the relative performance gains of Nexus on math benchmarks gradually diminish, whereas its advantages on General
+domain progressively expand. This suggests Nexus boosts the sample-sparse or harder-to-learn domains in the mixture.
+4.4
+Scaling Analysis on Training Tokens
+Settings. To evaluate scalability with respect to compute, we extend the training duration of the 3B model
+from the standard 2× Chinchilla optimal token count to 4× Chinchilla optimal (i.e., doubling the original
+training time). All other configurations, including the data mixture, model architecture, and base optimizer
+hyperparameters, remain strictly identical to those in the main experiments in Sec. 4.1.
+The advantage of Nexus does not diminish with more training tokens. As shown in Tab. 2, while the AdamW
+baseline naturally improves with extended training (average accuracy increasing from 37.1 to 38.0), it still
+fundamentally lags behind Nexus. Notably, the overall performance gap between Nexus and AdamW does not
+shrink with more tokens; Nexus at 4× Chinchilla achieves an average accuracy of 41.7, effectively maintaining
+and even slightly widening its substantial lead over the baseline. This confirms that the current implicit
+bias of standard SGD is insufficient to naturally reach optimal geometric closeness, making Nexus’s explicit
+regularization strictly necessary even under extended compute budgets.
+4.5
+Robustness to Data Mixing
+Motivation. In Sec. 3.2 and Eq. (8), we show that the gradient similarity implies the marginal gains on task i
+when optimizing on task j (in the first-order sense):
+Li(θ) −Li(θ −γ∇Lj(θ))
+|
+{z
+}
+decrease of task i after one GD step on task j
+= γ∇Li(θ)⊤∇Lj(θ) + O(γ2).
+(13)
+Since Nexus encourages gradient similarity across the training set, optimizing a sample-dense domain implicitly
+optimizes sample-sparse domains. Therefore, we conjecture that Nexus acts like a dynamic data mixture,
+which boosts the sample-sparse or harder-to-learn domains within the mixture without manual re-weighting.
+Setup. To validate our hypothesis, we construct three distinct data mixtures by explicitly anchoring the
+sampling weight of the mathematics domain to 10%, 40%, and 70% (denoted as Math10, Math40, and Math70).
+Accordingly, we downsample the remaining data sources to fulfill the complementary proportion (e.g., Math70
+consists of 70% math and 30% downsampled other data). We train 3B models on each mixture using both
+AdamW and Nexus, strictly adhering to the hyperparameter settings detailed in Sec. 4.1.
+Results. As shown in Fig. 6 and Tab. 7, increasing the proportion of math data from 10% to 70% gradually
+reduces Nexus’s relative gain on math reasoning. Conversely, as general data becomes the relative minority,
+Nexus yields a larger improvement in this domain, increasing its gain from +1.1% to +5.8%. Interestingly,
+the gain on coding tasks exhibits a non-monotonic trend, which we hypothesize is because code generation
+is a composite capability requiring a complex balance of both logical reasoning and domain knowledge.
+Furthermore, Nexus mitigates the performance fluctuations observed in the baseline across these mixture
+12
+
+Table 3
+Results under different learning rate schedulers. We evaluate the 3B model trained with AdamW
+and Nexus using both WSD and Cosine schedulers. The results demonstrate that the “same pretraining loss, better
+downstream performance” phenomenon is highly robust regardless of the scheduler.
+Schedule Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Eval
+OOD
+MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+WSD
+AdamW Acc. (↑) 1.606
+1.302
+47.8
+32.8
+22.6
+36.6
+44.0
+32.0
+43.0
+38.0
+37.1
+Loss (↓)
+2.265
+2.005
+1.910
+1.534
+1.259
+1.054
+1.116
+1.922
+1.633
+Nexus
+Acc. (↑) 1.602
+1.290
+48.9
+29.6
+23.4
+36.6
+59.0
+40.0
+47.0
+38.0
+40.3
+Loss (↓)
+2.179
+1.981
+1.881
+1.504
+1.227
+1.026
+1.086
+1.921
+1.601
+Improv. Loss (↑) +0.004
++0.012
++0.086 +0.024
++0.029
++0.030 +0.032 +0.028
++0.030
++0.001 +0.032
+Cosine
+AdamW Acc. (↑) 1.526
+1.255
+53.2
+26.6
+19.5
+41.5
+60.0
+32.0
+56.0
+39.0
+41.0
+Loss (↓)
+2.195
+1.924
+1.829
+1.480
+1.212
+1.022
+1.045
+1.867
+1.572
+Nexus
+Acc. (↑) 1.528
+1.250
+54.9
+30.5
+27.3
+34.8
+59.0
+41.0
+54.0
+46.0
+43.4
+Loss (↓)
+2.115
+1.917
+1.826
+1.479
+1.169
+0.994
+1.025
+1.805
+1.541
+Improv. Loss (↑) -0.002
++0.005
++0.080 +0.007
++0.003
++0.001 +0.043 +0.028
++0.020
++0.062 +0.030
+shifts. These results support our conjecture that Nexus acts as an implicit balancer, dynamically prioritizing
+under-optimized tasks without manual mixture tuning.
+4.6
+Robustness to Learning Rate Schedule
+Motivation. While the Warmup-Stable-Decay (WSD) scheduler [28] has become increasingly popular in recent
+LLM pretraining, the Cosine annealing schedule remains a widely adopted standard [85, 86]. To ensure that
+our observed generalization benefits are not merely an artifact of a specific learning rate dynamic, we evaluate
+the robustness of Nexus across different schedulers.
+Settings. We conduct an ablation study by replacing the default WSD scheduler with a standard Cosine
+learning rate scheduler. All other training configurations, including the 3B model architecture, data mixture,
+and base optimizer hyperparameters, remain strictly identical to the main setup detailed in Sec. 4.2.
+Results. As demonstrated in Tab. 3, the "same pretraining loss, better downstream performance" phenomenon
+persists consistently across both schedulers.
+Under the Cosine schedule, Nexus maintains a negligible
+pretraining loss difference compared to the AdamW baseline (1.528 vs. 1.526) while delivering substantial
+improvements on downstream metrics, such as a +0.03 loss gain on downstream benchmarks. This confirms
+that the implicit bias introduced by Nexus is highly robust and orthogonal to the choice of learning rate
+trajectory.
+5
+Discussions
+In this section, we conduct several interesting ablation studies of Nexus.
+5.1
+Training Dynamic of Nexus
+Settings. We analyze the training trajectories of the 3B AdamW and 3B Nexus models from Sec. 4.2. During
+pretraining, we record the gradient cosine similarity between test set and each downstream corpus every 1,000
+steps and compute the average to approximate the averaged gradient similarity during training. Upon the
+completion of pretraining, we perform full batch Gradient Descent using AdamW with learning rate 2 × 10−5
+and weight decay 0 on each downstream task LT to locate the respective task-specific minimizer θ∗
+T for
+subsequent visualization and distance evaluation.
+Nexus Encourages Training Set Closeness. As demonstrated in Tab. 4, Nexus effectively increases the gradient
+similarity across the pretraining set, Ei̸=j[CosSim(∇Li, ∇Lj)], compared to the base optimizer, as analyzed
+in Theorem B.3 and 3.2.
+13
+
+Table 4 Analysis of Gradient Similarity, Loss, and Benchmarks. By optimizing gradient similarity within the
+pretraining corpus, Nexus achieves higher gradient similarity between the pretraining corpus and downstream corpus.
+Consistent with Eq. (8), this first order gradient similarity directly translates into lower zero-th order downstream
+losses, ultimately yielding better benchmark performance.
+Metric
+Optim.
+Pretrain Set
+OOD Set
+GPQA-D
+GSM8k
+Math500
+HumanEval
+MBPP
+Grad Sim. (↑)
+AdamW
+0.4499
+0.2228
+0.0824
+0.0374
+0.0422
+0.0367
+0.0091
+Nexus
+0.4661
+0.2464
+0.0924
+0.0325
+0.0427
+0.0382
+0.0092
+Param. Closeness. (↓)
+AdamW
+1.452
+2.812
+4.500
+3.418
+3.775
+4.472
+3.645
+Nexus
+1.441
+2.806
+4.482
+3.326
+3.766
+4.444
+3.648
+Loss (↓)
+AdamW
+1.606
+1.302
+1.910
+1.259
+1.054
+1.116
+1.922
+Nexus
+1.602
+1.290
+1.881
+1.227
+1.026
+1.086
+1.921
+Benchmark (↑)
+AdamW
+-
+-
+22.6
+44.0
+32.0
+43.0
+38.0
+Nexus
+-
+-
+23.4
+59.0
+40.0
+47.0
+38.0
+Training Set Closeness Generalizes to Downstream Closeness. Fortunately, this gradient closeness generalizes
+beyond the pretraining corpus to unseen downstream tasks T , effectively increasing the similarity between
+the training objective and the downstream task, CosSim(∇Ltrain, ∇LT ).
+Downstream Closeness Yields Smaller Downstream Loss and Better Performance. Since this gradient
+similarity CosSim(∇Ltrain, ∇LT ) generalizes, optimizing the pretraining objective inherently optimizes the
+downstream tasks, as indicated by the first-order approximation in Eq. (8). This gradient closeness translates
+into lower downstream losses and better benchmark performance.
+Empirical Landscapes Align with Fig. 2. As shown in Fig. 7c, Nexus reduces the downstream loss LT (θ∗
+train)
+by decreasing the geometric distance ∥θ∗
+T −θ∗
+train∥2 between the converged parameter and the task-specific
+minimizer. This observation matches the analyses in Theorem 2.1 and 2.2. While Nexus reduces this distance,
+it does not cause all minima to nearly intersect as depicted in Fig. 2b—which would theoretically yield a
+nearly 0% OOD generalization error. Instead, it achieves a moderate reduction in geometric distance, leading
+to a proportionally lower downstream loss. We hope future work can design stronger Nexus variants capable
+of approaching this extreme closeness without introducing significant computational overhead.
+5.2
+Implicit Biases of Other Optimizers
+Motivation. To explicitly demonstrate the "same pretraining loss, better downstream task" phenomenon
+and analyze the implicit biases of different optimizers, we visualize the correlation between pretraining and
+downstream losses, using the results of AdamW, Muon, and AdamW-Nexus from Sec. 4.2. We plot the
+averaged downstream loss (y-axis) against the pretraining validation loss (x-axis) at corresponding checkpoints.
+The results are presented in Fig. 7a.
+Muon does not possess a superior implicit bias. As illustrated in Fig. 7a, the curves for Adam and pure Muon
+almost completely overlap. This indicates that despite its orthogonalization mechanism, Muon seems not to
+introduce a favorable implicit bias for downstream generalization beyond what is explained by the pretraining
+loss itself. This observation aligns with the findings in Wen et al. [85], which suggest that for Muon-like
+optimizers, achieving the same pretraining loss typically translates to the same downstream performance.
+While recent work [82] demonstrates that Muon tends to optimize towards representations with a higher
+weight rank than Adam, empirical results suggest that this structural difference in weight matrices seems not
+inherently translate into observable generalization benefits on downstream tasks.
+Implicit bias does not stem from gradient normalization. To further isolate the source of Nexus’s generalization
+benefits, we conduct an ablation study where the normalized gradient g/∥g∥2 is directly fed into the Adam
+optimizer instead of the raw gradient g. The results are shown as the NSGD curve in Fig. 7a. We observe
+that this variant still fails to introduce any favorable implicit bias, which closely overlaps with the standard
+Adam baseline. This indicates that the downstream gains of Nexus do not originate from the mere act of
+14
+
+1.6
+1.7
+1.8
+1.9
+2.0
+Pretraining Loss
+1.4
+1.5
+1.6
+1.7
+1.8
+Averaged Downstream Loss
+AdamW
+Muon
+Nexus
+NSGD
+(a) Implicit Biases
+102000
+104000
+106000
+108000
+110000
+Step
+1.60
+1.65
+1.70
+1.75
+1.80
+Pretraining Loss
+AdamW
+Nexus
+Nexus-Dot
+(b) Nexus-Dot
+1.0
+0.5
+0.0
+0.5
+1.0
+2 Distance to 
+*
+train
+1.0
+1.5
+2.0
+2.5
+3.0
+Downstream Loss
+HumanEval (AdamW)
+HumanEval (Nexus)
+GSM8K (AdamW)
+GSM8K (Nexus)
+(c) Loss Landscape
+Figure 7 Ablation Studies. (a) Implicit biases of various optimizers, illustrated by the correlation between pretraining
+and downstream losses. (b) Pretraining trajectory of Nexus-Dot, demonstrating that optimizing the unnormalized dot
+product disrupts pretraining loss minimization. (c) Loss landscape visualization of Adam and Nexus.
+normalizing gradients. Mathematically, this ablation is strictly equivalent to executing the Nexus algorithm
+with an inner loop step count of K = 1. This empirical observation perfectly aligns with Theorem 3.2: when
+K = 1, the coefficient of the gradient similarity regularizer K−1
+4K
+becomes strictly zero, stripping the optimizer
+of its consensus-seeking property and reducing it to a purely first-order method.
+5.3
+Cosine Similarity Instead of Dot Product Similarity
+Although as discussed in Sec. 3, the dot product similarity of gradients offers a more direct theoretical
+connection—yielding a tighter bound for parameter closeness (Theorem 3.1) and a more straightforward
+interpretation for downstream generalization (Eq. (8))—it proves practically challenging to optimize.
+This difficulty primarily arises because the dot product objective introduces a pathological optimization
+shortcut. Specifically, the dot product is highly scale-dependent: if the overall loss magnitude scales by a
+factor of k, the gradient norm scales proportionally by k, causing the dot product similarity to artificially
+inflate by a factor of k2. Consequently, directly maximizing the dot product severely disrupts the primary
+minimization of the pretraining loss, as the optimizer may exploit this shortcut by inadvertently increasing
+the gradient norms rather than discovering genuine task consensus.
+As demonstrated in Fig. 7b, the optimization trajectory of Nexus-Dot lags significantly behind the standard
+Adam baseline. The resulting degradation in pretraining loss heavily outweighs any potential generalization
+benefits conferred by its implicit bias. Therefore, we adopt cosine similarity (via normalized gradients) as our
+primary regularization objective in this work. Note that the progressive deceleration of Nexus-Dot observed in
+Fig. 7b is a persistent geometric phenomenon, occurring consistently regardless of the learning rate scheduler
+or the choice of base optimizer (e.g., AdamW or Muon). Due to space constraints, we selectively present the
+ablation results for the 3B model with Adam, corresponding to the main setup in Sec. 4.2.
+6
+Conclusion and Limitation
+In this work, we investigate the geometric closeness of minimizers of different losses in LLM pretraining. We
+show that this closeness strongly correlates with downstream generalization. To optimize this closeness, we
+propose the Nexus algorithm, which encourages gradient similarity across different tasks. We show that both
+gradient closeness and geometric closeness generalize to downstream tasks, thus leading to lower downstream
+loss and better downstream performance. Experimental results across various settings validate our claims.
+We reckon that as the LLM scaling paradigm transitions from being compute-bound to data-bound, explicitly
+engineering the implicit biases of optimizers to unlock generalization may serve as a critical frontier for
+developing more capable language models.
+Limitations. Despite its empirical success and theoretical consistency on AdamW, Nexus currently remains
+incompatible with the Muon optimizer. Specifically, Muon combined with Nexus even underperforms the
+15
+
+AdamW-Nexus configuration on downstream tasks, due to its deceleration on Muon (in contrast to the slight
+acceleration observed with AdamW as demonstrated in Appendix B.1). We hypothesize this may be due to
+several subtle factors, such as numerical sensitivities involving the pseudo-gradient coefficient γ (see Eq. (11))
+or potential interactions arising from the Newton-Schulz iterations. We are currently investigating these
+challenges and aim to resolve this incompatibility in future work.
+Acknowledgement
+This work was conducted for research and validation purposes only. The algorithms and methodologies
+described herein are experimental prototypes and have not been integrated into any commercial products or
+services of the affiliated organizations.
+We gratefully acknowledge the support of the National Science Foundation (Grant 625B2104). We also thank
+Kaiyue Wen, Jiacheng You, Haodong Wen, Yan Wu, Jianhui Duan, Chengyin Xu for their insightful comments
+and helpful discussions.
+16
+
+References
+[1] Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan
+Shillingford, and Nando De Freitas. Learning to learn by gradient descent by gradient descent. Advances in neural
+information processing systems, 29, 2016.
+[2] Anthropic. The claude 3 model family: Opus, sonnet, haiku. 2024.
+[3] Sanjeev Arora, Nadav Cohen, Wei Hu, and Yuping Luo. Implicit regularization in deep matrix factorization.
+Advances in neural information processing systems, 2019.
+[4] Jacob Austin, Augustus Odena, Maxwell Nye, Maarten Bosma, Henryk Michalewski, David Dohan, Ellen Jiang,
+Carrie Cai, Michael Terry, Quoc Le, et al. Program synthesis with large language models. arXiv preprint
+arXiv:2108.07732, 2021.
+[5] Aarti Basant, Abhijit Khairnar, Abhijit Paithankar, Abhinav Khattar, Adithya Renduchintala, Aditya Malte,
+Akhiad Bercovich, Akshay Hazare, Alejandra Rico, Aleksander Ficek, et al. Nvidia nemotron nano 2: An accurate
+and efficient hybrid mamba-transformer reasoning model. arXiv preprint arXiv:2508.14444, 2025.
+[6] Mikhail Belkin, Daniel Hsu, Siyuan Ma, and Soumik Mandal. Reconciling modern machine-learning practice and
+the classical bias–variance trade-off. Proceedings of the National Academy of Sciences, pages 15849–15854, 2019.
+[7] Huanran Chen, Yichi Zhang, Yinpeng Dong, Xiao Yang, Hang Su, and Jun Zhu. Rethinking model ensemble in
+transfer-based adversarial attacks. In The Twelfth International Conference on Learning Representations, 2024.
+[8] Huanran Chen, Yinpeng Dong, Zeming Wei, Yao Huang, Yichi Zhang, Hang Su, and Jun Zhu. Understanding
+pre-training and fine-tuning from loss landscape perspectives. arXiv preprint arXiv:2505.17646, 2025.
+[9] Xiangning Chen, Chen Liang, Da Huang, Esteban Real, Kaiyuan Wang, Hieu Pham, Xuanyi Dong, Thang Luong,
+Cho-Jui Hsieh, Yifeng Lu, et al. Symbolic discovery of optimization algorithms. Advances in Neural Information
+Processing Systems, 2023.
+[10] Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert,
+Jerry Tworek, Jacob Hilton, Reiichiro Nakano, Christopher Hesse, and John Schulman. Training verifiers to solve
+math word problems. arXiv preprint arXiv:2110.14168, 2021.
+[11] Jeremy Cohen, Alex Damian, Ameet Talwalkar, J Zico Kolter, and Jason D Lee. Understanding optimization in
+deep learning with central flows. In The Thirteenth International Conference on Learning Representations, 2025.
+[12] Jeremy M Cohen, Simran Kaur, Yuanzhi Li, J Zico Kolter, and Ameet Talwalkar. Gradient descent on neural
+networks typically occurs at the edge of stability. arXiv preprint arXiv:2103.00065, 2021.
+[13] Alex Damian, Tengyu Ma, and Jason D Lee. Label noise sgd provably prefers flat global minimizers. Advances in
+Neural Information Processing Systems, pages 27449–27461, 2021.
+[14] Alex Damian, Eshaan Nichani, and Jason D Lee. Self-stabilization: The implicit bias of gradient descent at the
+edge of stability. arXiv preprint arXiv:2209.15594, 2022.
+[15] Tri Dao. FlashAttention-2: Faster attention with better parallelism and work partitioning. In International
+Conference on Learning Representations (ICLR), 2024.
+[16] Tri Dao, Daniel Y. Fu, Stefano Ermon, Atri Rudra, and Christopher Ré. FlashAttention: Fast and memory-efficient
+exact attention with IO-awareness. In Advances in Neural Information Processing Systems (NeurIPS), 2022.
+[17] Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman,
+Akhil Mathur, Alan Schelten, Amy Yang, Angela Fan, et al. The llama 3 herd of models. arXiv preprint
+arXiv:2407.21783, 2024.
+[18] Mark Chen et al. Evaluating large language models trained on code. arXiv preprint arXiv:2107.03374, 2021.
+[19] Alireza Fallah, Aryan Mokhtari, and Asuman Ozdaglar. On the convergence theory of gradient-based model-
+agnostic meta-learning algorithms.
+In International conference on artificial intelligence and statistics, pages
+1082–1092, 2020.
+[20] Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep
+networks. In International conference on machine learning, 2017.
+17
+
+[21] Pierre Foret, Ariel Kleiner, Hossein Mobahi, and Behnam Neyshabur. Sharpness-aware minimization for efficiently
+improving generalization. arXiv preprint arXiv:2010.01412, 2020.
+[22] Suriya Gunasekar, Jason D Lee, Daniel Soudry, and Nati Srebro. Implicit bias of gradient descent on linear
+convolutional networks. Advances in Neural Information Processing Systems, 2018.
+[23] Guy Gur-Ari, Daniel A Roberts, and Ethan Dyer. Gradient descent happens in a tiny subspace. arXiv preprint
+arXiv:1812.04754, 2018.
+[24] David Ha, Andrew Dai, and Quoc V Le. Hypernetworks. arXiv preprint arXiv:1609.09106, 2016.
+[25] Jeff Z HaoChen, Colin Wei, Jason Lee, and Tengyu Ma. Shape matters: Understanding the implicit bias of the
+noise covariance. In Conference on Learning Theory, 2021.
+[26] Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn Song, and Jacob Steinhardt.
+Measuring massive multitask language understanding. arXiv preprint arXiv:2009.03300, 2020.
+[27] Dan Hendrycks, Collin Burns, Saurav Kadavath, Akul Arora, Steven Basart, Eric Tang, Dawn Song, and Jacob
+Steinhardt. Measuring mathematical problem solving with the math dataset. arXiv preprint arXiv:2103.03874,
+2021.
+[28] Shengding Hu, Yuge Tu, Xu Han, Chaoqun He, Ganqu Cui, Xiang Long, Zhi Zheng, Yewei Fang, Yuxiang Huang,
+Weilin Zhao, et al. Minicpm: Unveiling the potential of small language models with scalable training strategies.
+arXiv preprint arXiv:2404.06395, 2024.
+[29] Stanisław Jastrzębski, Zachary Kenton, Devansh Arpit, Nicolas Ballas, Asja Fischer, Yoshua Bengio, and Amos
+Storkey. Three factors influencing minima in sgd. arXiv preprint arXiv:1711.04623, 2017.
+[30] Ziwei Ji and Matus Telgarsky. Gradient descent aligns the layers of deep linear networks. In International
+Conference on Learning Representations, 2018.
+[31] Rie Johnson and Tong Zhang. Accelerating stochastic gradient descent using predictive variance reduction.
+Advances in Neural Information Processing Systems, 2013.
+[32] Keller Jordan, Yuchen Jin, Vlado Boza, Jiacheng You, Franz Cesista, Laker Newhouse, and Jeremy Bernstein. Muon:
+An optimizer for hidden layers in neural networks, 2024. URL https://kellerjordan.github.io/posts/muon/.
+[33] Jared Kaplan, Sam McCandlish, Tom Henighan, Tom B Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec
+Radford, Jeffrey Wu, and Dario Amodei. Scaling laws for neural language models. arXiv preprint arXiv:2001.08361,
+2020.
+[34] Sai Praneeth Karimireddy, Satyen Kale, Mehryar Mohri, Sashank Reddi, Sebastian Stich, and Ananda Theertha
+Suresh. Scaffold: Stochastic controlled averaging for federated learning. In International conference on machine
+learning, pages 5132–5143, 2020.
+[35] Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, and Ping Tak Peter Tang. On
+large-batch training for deep learning: Generalization gap and sharp minima. arXiv preprint arXiv:1609.04836,
+2016.
+[36] Konwoo Kim, Suhas Kotha, Percy Liang, and Tatsunori Hashimoto. Pre-training under infinite compute. arXiv
+preprint arXiv:2509.14786, 2025.
+[37] Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980,
+2014.
+[38] Jungmin Kwon, Jeongseop Kim, Hyunseo Park, and In Kwon Choi. Asam: Adaptive sharpness-aware minimization
+for scale-invariant learning of deep neural networks. In International Conference on Machine Learning, pages
+5905–5914, 2021.
+[39] Hao Li, Zheng Xu, Gavin Taylor, Christoph Studer, and Tom Goldstein. Visualizing the loss landscape of neural
+nets. Advances in Neural Information Processing Systems, 31, 2018.
+[40] Tian Li, Anit Kumar Sahu, Manzil Zaheer, Maziar Sanjabi, Ameet Talwalkar, and Virginia Smith. Federated
+optimization in heterogeneous networks. Proceedings of Machine learning and systems, pages 429–450, 2020.
+[41] Yuanzhi Li, Tengyu Ma, and Hongyang Zhang. Algorithmic regularization in over-parameterized matrix sensing
+and neural networks with quadratic activations. In Conference on learning theory, 2018.
+18
+
+[42] Zhenguo Li, Fengwei Zhou, Fei Chen, and Hang Li. Meta-sgd: Learning to learn quickly for few-shot learning.
+arXiv preprint arXiv:1707.09835, 2017.
+[43] Zhiyuan Li, Yuping Luo, and Kaifeng Lyu. Towards resolving the implicit bias of gradient descent for matrix
+factorization: Greedy low-rank learning. arXiv preprint arXiv:2012.09839, 2020.
+[44] Kaizhao Liang, Lizhang Chen, Bo Liu, and Qiang Liu. Cautious optimizers: Improving training with one line of
+code. arXiv preprint arXiv:2411.16085, 2024.
+[45] Aixin Liu, Bei Feng, Bing Xue, Bingxuan Wang, Bochao Wu, Chengda Lu, Chenggang Zhao, Chengqi Deng,
+Chenyu Zhang, Chong Ruan, et al. Deepseek-v3 technical report. arXiv preprint arXiv:2412.19437, 2024.
+[46] Hong Liu, Zhiyuan Li, David Leo Wright Hall, Percy Liang, and Tengyu Ma. Sophia: A scalable stochastic
+second-order optimizer for language model pre-training. In The Twelfth International Conference on Learning
+Representations, 2023.
+[47] Hong Liu, Sang Michael Xie, Zhiyuan Li, and Tengyu Ma. Same pre-training loss, better downstream: Implicit
+bias matters for language models. In International Conference on Machine Learning, pages 22188–22214. PMLR,
+2023.
+[48] Jingyuan Liu, Jianlin Su, Xingcheng Yao, Zhejun Jiang, Guokun Lai, Yulun Du, Yidao Qin, Weixin Xu, Enzhe
+Lu, Junjie Yan, et al. Muon is scalable for llm training. arXiv preprint arXiv:2502.16982, 2025.
+[49] Ilya Loshchilov and Frank Hutter. Decoupled weight decay regularization. arXiv preprint arXiv:1711.05101, 2017.
+[50] Ilya Loshchilov and Frank Hutter. Sgdr: Stochastic gradient descent with warm restarts. In International
+Conference on Learning Representations, 2017.
+[51] Kaifeng Lyu and Jian Li. Gradient descent maximizes the margin of homogeneous neural networks. In International
+Conference on Learning Representations, 2019.
+[52] Dominic Masters and Carlo Luschi. Revisiting small batch training for deep neural networks. arXiv preprint
+arXiv:1804.07612, 2018.
+[53] Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, and Blaise Aguera y Arcas. Communication-
+efficient learning of deep networks from decentralized data. In Artificial intelligence and statistics, pages 1273–1282,
+2017.
+[54] Behnam Neyshabur, Ryota Tomioka, and Nathan Srebro. In search of the real inductive bias: On the role of
+implicit regularization in deep learning. arXiv preprint arXiv:1412.6614, 2014.
+[55] Jinjie Ni, Qian Liu, Longxu Dou, Chao Du, Zili Wang, Hang Yan, Tianyu Pang, and Michael Qizhe Shieh.
+Diffusion language models are super data learners. arXiv preprint arXiv:2511.03276, 2025.
+[56] Alex Nichol and John Schulman. Reptile: a scalable metalearning algorithm. arXiv preprint arXiv:1803.02999,
+2018.
+[57] Team OLMo, Pete Walsh, Luca Soldaini, Dirk Groeneveld, Kyle Lo, Shane Arora, Akshita Bhagia, Yuling
+Gu, Shengyi Huang, Matt Jordan, Nathan Lambert, Dustin Schwenk, Oyvind Tafjord, Taira Anderson, David
+Atkinson, Faeze Brahman, Christopher Clark, Pradeep Dasigi, Nouha Dziri, Allyson Ettinger, Michal Guerquin,
+David Heineman, Hamish Ivison, Pang Wei Koh, Jiacheng Liu, Saumya Malik, William Merrill, Lester James V.
+Miranda, Jacob Morrison, Tyler Murray, Crystal Nam, Jake Poznanski, Valentina Pyatkin, Aman Rangapur,
+Michael Schmitz, Sam Skjonsberg, David Wadden, Christopher Wilhelm, Michael Wilson, Luke Zettlemoyer, Ali
+Farhadi, Noah A. Smith, and Hannaneh Hajishirzi. 2 olmo 2 furious, 2025.
+[58] OpenAI. Gpt-4 technical report. arXiv, 2023.
+[59] Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban
+Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. 2017.
+[60] Thomas Pethick, Wanyun Xie, Kimon Antonakopoulos, Zhenyu Zhu, Antonio Silveti-Falls, and Volkan Cevher.
+Training deep learning models with norm-constrained lmos. In International Conference on Machine Learning,
+2025.
+[61] Alethea Power, Yuri Burda, Harri Edwards, Igor Babuschkin, and Vedant Misra. Grokking: Generalization beyond
+overfitting on small algorithmic datasets. arXiv preprint arXiv:2201.02177, 2022.
+19
+
+[62] Mihir Prabhudesai, Mengning Wu, Amir Zadeh, Katerina Fragkiadaki, and Deepak Pathak. Diffusion beats
+autoregressive in data-constrained settings. arXiv preprint arXiv:2507.15857, 2025.
+[63] Shikai Qiu, Zixi Chen, Hoang Phan, Qi Lei, and Andrew Gordon Wilson. Hyperparameter transfer enables
+consistent gains of matrix-preconditioned optimizers across scales. arXiv preprint arXiv:2512.05620, 2025.
+[64] Aniruddh Raghu, Maithra Raghu, Samy Bengio, and Oriol Vinyals. Rapid learning or feature reuse? towards
+understanding the effectiveness of maml. arXiv preprint arXiv:1909.09157, 2019.
+[65] Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. In International conference on
+learning representations, 2017.
+[66] David Rein, Betty Li Hou, Asa Cooper Stickland, Jackson Petty, Richard Yuanzhe Pang, Julien Dirani, Julian
+Michael, and Samuel R Bowman. Gpqa: A graduate-level google-proof q&a benchmark. In First Conference on
+Language Modeling, 2024.
+[67] Mengye Ren, Wenyuan Zeng, Bin Yang, and Raquel Urtasun. Learning to reweight examples for robust deep
+learning. In International conference on machine learning, pages 4334–4343. PMLR, 2018.
+[68] Andrei Semenov, Matteo Pagliardini, and Martin Jaggi. Benchmarking optimizers for large language model
+pretraining. arXiv preprint arXiv:2509.01440, 2025.
+[69] Jun Shu, Qi Xie, Lixuan Yi, Qian Zhao, Sanping Zhou, Zongben Xu, and Deyu Meng. Meta-weight-net: Learning
+an explicit mapping for sample weighting. Advances in neural information processing systems, 32, 2019.
+[70] Samuel L Smith and Quoc V Le. A bayesian perspective on generalization and stochastic gradient descent. In
+International Conference on Learning Representations, 2018.
+[71] Minhak Song, Kwangjun Ahn, and Chulhee Yun. Does sgd really happen in tiny subspaces?
+arXiv preprint
+arXiv:2405.16002, 2024.
+[72] Daniel Soudry, Elad Hoffer, Mor Shpigel Nacson, Suriya Gunasekar, and Nathan Srebro. The implicit bias of
+gradient descent on separable data. Journal of Machine Learning Research, 2018.
+[73] Jacob Mitchell Springer, Sachin Goyal, Kaiyue Wen, Tanishq Kumar, Xiang Yue, Sadhika Malladi, Graham Neubig,
+and Aditi Raghunathan. Overtrained language models are harder to fine-tune. arXiv preprint arXiv:2503.19206,
+2025.
+[74] Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: a simple
+way to prevent neural networks from overfitting. The journal of machine learning research, 15(1):1929–1958, 2014.
+[75] Sebastian U Stich. Local sgd converges fast and communicates little. arXiv preprint arXiv:1805.09767, 2018.
+[76] Mirac Suzgun, Nathan Scales, Nathanael Schärli, Sebastian Gehrmann, Yi Tay, Hyung Won Chung, Aakanksha
+Chowdhery, Quoc V Le, Ed H Chi, Denny Zhou, , and Jason Wei. Challenging big-bench tasks and whether
+chain-of-thought can solve them. arXiv preprint arXiv:2210.09261, 2022.
+[77] ByteDance Seed Team. Seed-oss open-source models. https://github.com/ByteDance-Seed/seed-oss, 2025.
+[78] Gemini Team, Rohan Anil, Sebastian Borgeaud, Yonghui Wu, Jean-Baptiste Alayrac, Jiahui Yu, Radu Soricut,
+Johan Schalkwyk, Andrew M Dai, Anja Hauth, et al. Gemini: a family of highly capable multimodal models.
+arXiv preprint arXiv:2312.11805, 2023.
+[79] Qwen Team. Qwen3 technical report, 2025. URL https://arxiv.org/abs/2505.09388.
+[80] Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay Bashlykov,
+Soumya Batra, Prajjwal Bhargava, Shruti Bhosale, et al. Llama 2: Open foundation and fine-tuned chat models.
+arXiv preprint arXiv:2307.09288, 2023.
+[81] Nikhil Vyas, Depen Morwani, Rosie Zhao, Itai Shapira, David Brandfonbrener, Lucas Janson, and Sham M Kakade.
+Soap: Improving and stabilizing shampoo using adam for language modeling. In The Thirteenth International
+Conference on Learning Representations, 2024.
+[82] Shuche Wang, Fengzhuo Zhang, Jiaxiang Li, Cunxiao Du, Chao Du, Tianyu Pang, Zhuoran Yang, Mingyi
+Hong, and Vincent YF Tan. Muon outperforms adam in tail-end associative memory learning. arXiv preprint
+arXiv:2509.26030, 2025.
+20
+
+[83] Ishaan Watts, Catherine Li, Sachin Goyal, Jacob Mitchell Springer, and Aditi Raghunathan. Sharpness-aware
+pretraining mitigates catastrophic forgetting. arXiv preprint arXiv:2605.02105, 2026.
+[84] Kaiyue Wen, Tengyu Ma, and Zhiyuan Li. How does sharpness-aware minimization minimize sharpness? arXiv
+preprint arXiv:2211.05729, 2022.
+[85] Kaiyue Wen, David Hall, Tengyu Ma, and Percy Liang. Fantastic pretraining optimizers and where to find them.
+arXiv preprint arXiv:2509.02046, 2025.
+[86] Kaiyue Wen, Zhiyuan Li, Jason S Wang, David Leo Wright Hall, Percy Liang, and Tengyu Ma. Understanding
+warmup-stable-decay learning rates: A river valley loss landscape view. In The Thirteenth International Conference
+on Learning Representations, 2025.
+[87] Lei Wu, Chao Ma, and Weinan E. How sgd selects the global minima in over-parameterized learning: A dynamical
+stability perspective. Advances in Neural Information Processing Systems, 2018.
+[88] An Yang, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chengyuan Li, Dayiheng Liu, Fei
+Huang, Haoran Wei, et al. Qwen2.5 technical report. arXiv preprint arXiv:2412.15115, 2024.
+[89] Ge Yang, Edward Hu, Igor Babuschkin, Szymon Sidor, Xiaodong Liu, David Farhi, Nick Ryder, Jakub Pachocki,
+Weizhu Chen, and Jianfeng Gao. Tuning large neural networks via zero-shot hyperparameter transfer. Advances
+in Neural Information Processing Systems, 2021.
+[90] Greg Yang and Edward J Hu. Tensor programs iv: Feature learning in infinite-width neural networks. In
+International Conference on Machine Learning, 2021.
+[91] Greg Yang, James B Simon, and Jeremy Bernstein. A spectral condition for feature learning. arXiv preprint
+arXiv:2310.17813, 2023.
+[92] Huizhuo Yuan, Yifeng Liu, Shuang Wu, Zhou Xun, and Quanquan Gu. Mars: Unleashing the power of variance
+reduction for training large models. In International Conference on Machine Learning, 2025.
+[93] Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning
+requires rethinking generalization. arXiv preprint arXiv:1611.03530, 2016.
+[94] Yihao Zhang, Hangzhou He, Jingyu Zhu, Huanran Chen, Yifei Wang, and Zeming Wei. On the duality between
+sharpness-aware minimization and adversarial training. arXiv preprint arXiv:2402.15152, 2024.
+[95] Yushun Zhang, Congliang Chen, Tian Ding, Ziniu Li, Ruoyu Sun, and Zhiquan Luo. Why transformers need
+adam: A hessian perspective. Advances in neural information processing systems, 37:131786–131823, 2024.
+[96] Yushun Zhang, Congliang Chen, Ziniu Li, Tian Ding, Chenwei Wu, Diederik P Kingma, Yinyu Ye, Zhi-Quan Luo,
+and Ruoyu Sun. Adam-mini: Use fewer learning rates to gain more. In The Thirteenth International Conference
+on Learning Representations, 2024.
+21
+
+Appendix
+A
+Extended Background and Setup
+A.1
+Related Work
+Pretraining Optimizers. Various optimizers have been proposed for LLM pretraining, such as AdamW [37, 49],
+Muon [32], Lion [9], SOAP [81], Sophia [46], MARS [92], Adam-mini [96], Cautious [44], and Scion [60].
+Most of these optimizers primarily focus on achieving faster optimization and accelerating the convergence
+of the pretraining loss. In contrast, our work focuses on the generalization aspect, aiming to achieve better
+downstream task performance under the same pretraining loss. Since Nexus serves as a gradient approximator
+prior to the optimizer update, our method is largely orthogonal to the choice of the base optimizer and may
+be used in conjunction with these existing optimization algorithms.
+Implicit Biases. Implicit bias is a well-studied topic in deep learning theory, as it is closely related to downstream
+generalization, especially under the zero training loss or same pretraining loss [3, 22, 25, 30, 41, 43, 47, 51, 72].
+Our work differs from previous studies in two main aspects. First, we focus on gradient and parameter
+closeness, whereas previous studies primarily investigate sharpness and margins. Second, we evaluate our
+method in modern auto-regressive LLM pretraining settings, as opposed to standard CNN, DNN, BERT or
+adversarial attack [7, 87]. A concurrent work [83] also demonstrates improved downstream performance at
+the same pretraining loss in auto-regressive LLMs, but their approach relies on flatness rather than closeness.
+Meta-Learning and Decentralized Learning. The nested inner-outer loop optimization structure utilized by
+Nexus has been extensively explored in fields like meta-learning [19, 20, 42, 56, 64] and decentralized learning
+[34, 40, 53, 75]. However, rather than aiming for few-shot fast adaptation during SFT or communication
+efficiency, our work repurposes this structure with two distinct contributions. First, we provide a rigorous
+mathematical characterization demonstrating that this inner-outer loop mechanism inherently optimizes
+gradient similarity (Theorem 3.2 and Appendix B.4). Second, we apply this mechanism to LLM pretraining,
+demonstrating its empirical value in achieving better downstream task performance under the same pretraining
+loss. Due to these different objectives, the practical algorithmic designs also diverge. For instance, while
+some meta-learning methods can flexibly incorporate momentum in the inner loop, the inner update in Nexus
+must strictly remain a memory-free step (such as vanilla or normalized SGD, see Appendix B.4); otherwise,
+historical momentum would unequally weight the first-order loss gradients from different steps. We believe
+other algorithms from the meta-learning literature, such as meta-optimizers [1, 65], hypernetworks [24], and
+meta-learned data weighting schemes [67, 69], might also yield unexpected implicit regularization benefits
+when applied to large-scale pretraining, which we leave as an open direction for future work.
+A.2
+Notations
+The primary mathematical notations for data mixtures, loss functions, geometries, and optimization dynamics
+are summarized in Tab. 5.
+A.3
+Assumptions
+The main assumptions used in our analysis are outlined below [11, 86]. Additional assumptions required for
+specific analyses will be stated in the respective theorems.
+Assumption A.1 (Bounded Gradients). For all tasks i ∈[1, K] and parameters θ along the optimization
+trajectory, the gradient norm is strictly bounded from below and above:
+0 < Gmin ≤∥∇Li(θ)∥2 ≤G
+This ensures that the Normalized SGD step in Nexus is always well-defined and numerically stable.
+Assumption A.2 (Smoothness and Bounded Curvature). The loss function Li is L-smooth, meaning its
+Hessian spectral norm is bounded from above. Furthermore, within the local basin of attraction [θ, θ∗
+k], the
+22
+
+Table 5 Summary of key notations used in this paper.
+Notation
+Description
+Data and Loss Functions
+K
+Total number of distinct pretraining data sources (tasks).
+αk
+Sampling probability (data mixing ratio) for the k-th data source.
+Lk(θ)
+The expected / empirical loss on the k-th source task.
+Ltrain(θ)
+The averaged pretraining loss:
+1
+K
+PK
+k=1 Lk(θ).
+LT (θ)
+The loss on an unseen downstream evaluation task T .
+Geometric and Statistical Variables
+θ∗
+train
+The converged parameter state that minimizes Ltrain.
+Sk, ST
+The set of local minimizers for task k and downstream task T , respectively.
+θ∗
+k, θ∗
+T
+The specific local minimizer in Sk or ST closest to the current parameter.
+µ
+The statistical center of task-specific minimizers: E[θ∗
+k].
+σ2
+The intrinsic variance (Closeness) of task-specific minimizers: E[∥θ∗
+k −µ∥2
+2].
+Optimization and Nexus Variables
+γ
+The inner learning rate (step size) used in the Nexus gradient approximator.
+ˆgt
+The Nexus pseudo-gradient (displacement) passed to the outer optimizer.
+CosSim(x, y)
+The cosine similarity between two vectors:
+x⊤y
+∥x∥2∥y∥2 .
+Sij(θ)
+Shorthand for gradient similarity: CosSim(∇Li(θ), ∇Lj(θ)).
+curvature is strictly lower-bounded by λmin > 0:
+λmin ≤
+inf
+ξ∈[θ,θ∗
+k]
+ u⊤∇2Li(ξ)u
+
+≤∥∇2Li(θ)∥2 ≤L
+where u is any unit vector. Prior literature extensively characterizes the local loss landscape of deep neural
+networks as exhibiting high quadraticity, particularly along meaningful optimization trajectories [8, 39, 84].
+Consequently, under the standard premise that the loss landscape can be locally and directionally approximated
+by a quadratic function, this bounded curvature condition should not be viewed as a restrictive assumption.
+Assumption A.3 (Hessian Lipschitz Continuous). The Hessian matrix is ρ-Lipschitz continuous. For any
+parameters x, y:
+∥∇2Li(x) −∇2Li(y)∥2 ≤ρ∥x −y∥2
+This assumption is necessary to bound the Jacobian of the normalized gradient during the second-order Taylor
+expansion in Nexus’s inner loop.
+23
+
+B
+Additional Discussions
+B.1
+Convergence Rate of Nexus
+All of our analyses are based on the assumption that Nexus should not be slower than its base optimizer. This
+ensures that both can achieve the "same training loss," allowing the implicit bias of Nexus to subsequently
+achieve "better downstream performance." One might concern that since Nexus optimizes two joint objectives
+(see Theorem B.3 and 3.2), it may be slower than its base optimizer. Consequently, the downstream gains
+might not offset the speed loss, potentially leading to worse overall downstream performance.
+Fortunately, this concern does not hold in practice. Empirically, across all experiments, Nexus is not slower,
+and sometimes even slightly faster, than its base optimizer (see Sec. 4). Intuitively, Nexus makes the gradients
+of each Li similar; thus, optimizing Li effectively optimizes Lj simultaneously, as analyzed in Sec. 3.2. This
+"constructive interference" can lead to slightly faster convergence.
+We can also adopt the framework of Johnson and Zhang [31] (assuming each Li is L-smooth and µ-strongly
+convex) to obtain further theoretical intuition. In this setting, standard SGD typically achieves only an
+O(1/T) convergence rate. However, if Nexus succeeds in finding a region where these tasks share common
+minimizers, it can achieve exponential convergence:
+Theorem B.1. Suppose each Li is L-smooth and µ-strongly convex. That is, for any θ1, θ2, we have:
+Li(θ1) ≤Li(θ2) + ∇Li(θ2)⊤(θ1 −θ2) + L
+2 ∥θ1 −θ2∥2
+2,
+Li(θ1) ≥Li(θ2) + ∇Li(θ2)⊤(θ1 −θ2) + µ
+2 ∥θ1 −θ2∥2
+2.
+(14)
+Additionally, assume there exists a common minimizer θ∗such that ∇Li(θ∗) = 0 for all i ∈[K]. Then, for
+the sequence {θ0, θ1, . . . , θT } generated by Nexus with step size γ ∈(0,
+2
+L+µ), we have:
+E[∥θT −θ∗∥2] ≤
+
+1 −2γµL
+L + µ
+T
+∥θ0 −θ∗∥2.
+(15)
+Specifically, setting γ =
+2
+L+µ and defining the condition number κ = L/µ, we obtain the convergence rate:
+E[∥θT −θ∗∥2] ≤
+κ −1
+κ + 1
+2T
+∥θ0 −θ∗∥2.
+(16)
+Therefore, if Nexus guides the parameters into a locally convex and smooth regime where a common minimizer
+exists, it guarantees exponential convergence.
+B.2
+Implicit Bias of Normalized SGD
+Interestingly, Nexus also offers a novel perspective on the success of Normalized SGD (NSGD). We observe
+that NSGD can be mathematically interpreted as a special case of Nexus, revealing that NSGD does not
+merely minimize the scalar loss but also implicitly optimizes gradient closeness. This implicit regularization
+provides a geometric explanation for why NSGD often generalizes better than standard Gradient Descent.
+Theorem B.2 (Implicit Bias of NSGD). Let {θt} be the sequence generated by Normalized SGD with learning
+rate γ. This sequence implicitly minimizes the following expected joint objective:
+JNSGD(θ) = Ex∼D[L(x; θ)] −γ
+8 Ex,x′i.i.d
+∼D[CosSim(∇L(x; θ), ∇L(x′; θ))],
+(17)
+subject to a Jacobian non-symmetric error and a discretization error bounded by 4
+3
+
+4L2+ρGmin
+G2
+min
+
+γ3.
+Proof. A sequence of n updates of NSGD is algebraically equivalent to performing Nexus with k inner steps
+(using NSGD) and n/k outer steps (using SGD with step size 1). By Theorem 3.2, the magnitude of the gradient
+24
+
+alignment signal scales as S(k) ≈γ2 k(k−1)
+4
+, while the residual error is bounded by N(k) ≤1
+6
+
+4L2+ρGmin
+G2
+min
+
+k3γ3.
+Defining the signal-to-noise ratio as ρ(k) ≜S(k)/N(k) and maximizing it with respect to k yields k = 2.
+Thus, viewing the NSGD updates through the lens of Nexus with k = 2 yields the stated results.
+A related implicit bias on Hessian alignment is analyzed by Wu et al. [87] in over-parameterized regimes. In
+their setting, the individual loss functions share identical minimizers, causing first-order gradients to vanish
+and leaving second-order properties as the sole means to characterize closeness. In contrast, modern LLM
+pretraining is far from this over-parameterized state. Consequently, first-order gradients remain non-zero,
+enabling the use of first-order gradient similarity to characterize the implicit regularization effect.
+B.3
+Other Approximators for Hessian Gradient Product
+While the Hessian-vector product can theoretically be implemented via the Jacobian-vector product (JVP) in
+PyTorch [59] with only a constant factor of computational overhead, implementing exact Hessian-gradient
+products in practical LLM pretraining remains prohibitive. First, standard Hessian-vector product imple-
+mentations are often incompatible with memory-efficient kernels like FlashAttention [15, 16] (which typically
+do not support second-order differentiation efficiently), leading to significantly higher memory usage and
+computational costs. Second, the constant margin of memory overhead poses significant infrastructure
+challenges for large-scale distributed training.
+Moreover, the Nexus algorithm exhibits a beneficial third-order effect. It actively seeks regions where gradients
+are not only aligned but also locally flat along the gradient dimension. This ensures that the gradient alignment
+property remains stable across a larger regime.
+Theorem B.3 (Nexus Maximizes Stability of Closeness). Assume the existence of constants Gmin, L, ρ > 0
+as in Theorem 3.2, and let M3 be a constant such that ∇3Li(θ)[u, v, w] ≤M3 for any unit vectors u, v, w.
+Then, the sequence {θt} generated by Algorithm 1 effectively minimizes the following third-order objective:
+J3rd(θ) = J2nd(θ) + γ3 (K −1)(2K −1)
+12K2
+X
+i,j,p
+∇Li(θ)⊤∇2Lj(θ)∇Lp(θ).
+(18)
+The approximation error is bounded by:
+E3rd ≜∥E[ˆgt] −∇J3rd∥≤
+M3
+24 + M3L
+8Gmin
+
+K4γ4 + M3L2
+40G2
+min
+K5γ5 = O(γ4).
+(19)
+Therefore, the third-order effect of Nexus works like a kind of "Multi-Task SAM": it minimize the directional
+sharpness along different tasks, leading to flatter landscape.
+B.4
+Extension to Generalized Similarity Metrics
+In the main text, we instantiate the Nexus algorithm using Normalized SGD (NSGD) in the inner loop to
+maximize the cosine similarity between task gradients. Nexus may also be extended to optimize a broader
+class of generalized similarity metrics.
+Consider a gradient transformation function Φ : Rd →Rd. We define a generalized gradient similarity metric
+between two tasks as the inner product of their transformed gradients:
+SimΦ(∇Li(θ), ∇Lj(θ)) ≜⟨Φ(∇Li(θ)), Φ(∇Lj(θ))⟩.
+(20)
+To maximize this generalized similarity, we replace the normalized gradient in the inner loop with the
+transformation Φ. The inner update rule becomes:
+θt,m = θt,m−1 −γΦ(∇Lsm(θt,m−1)).
+(21)
+25
+
+Algorithm 4 Generalized Nexus Algorithm
+Require: Initial params θ0, losses {Li}K
+i=1, total iterations T.
+Require: Gradient transformation function Φ : Rd →Rd.
+Require: Optimizers: Optinner (Memory-free update via Φ), Optouter (e.g., AdamW). Inner learning rate γ.
+Implicit Objective: Maximize expected generalized similarity Ei,j[⟨Φ(∇Li(θ)), Φ(∇Lj(θ))⟩].
+1: for t = 1 to T do
+2:
+θt,0 ←θt−1 {Initialize inner loop}
+3:
+for m = 1 to K do
+4:
+Sample task index sm ∼Uniform({1, . . . , K})
+5:
+g ←∇Lsm(θt,m−1)
+6:
+θt,m ←θt,m−1 −γ · Φ(g) {Update inner trajectory with Φ}
+7:
+ˆgt ←θt,0 −θt,K {Compute generalized pseudo-gradient}
+8:
+θt ←Optouter(θt−1, ˆgt) {Outer update}
+Return: θT
+Following the Taylor expansion logic in the main text, evaluating the transformed gradient of task j at the
+displaced parameter state from task i yields:
+Φ(∇Lj(θt,1)) −Φ(∇Lj(θt,0)) =
+ ∇θt,0Φ(∇Lj(θt,0))
+
+(θt,1 −θt,0) + O(γ2)
+(22)
+= −γ
+ ∇θt,0Φ(∇Lj(θt,0))
+
+Φ(∇Li(θt,0)) + O(γ2).
+(23)
+Taking the expectation over task permutations and pairing symmetric counterparts yields:
+E= −γ
+2 (∇θSimΦ(∇Li(θt,0), ∇Lj(θt,0)) + Esym,Φ,i,j + Esym,Φ,j,i) + O(γ2),
+(24)
+where Esym,Φ,i,j ≜
+
+∇θΦ(∇Li(θ)) −(∇θΦ(∇Li(θ)))⊤
+Φ(∇Lj(θ)) represents the generalized Jacobian non-
+symmetric error.
+This derivation shows that for a given choice of the transformation function Φ, the sequential evaluation in
+the inner loop constructs a Jacobian-vector product that aligns with the gradient of SimΦ, subject to the
+non-symmetric error.
+The generalized update covers several specific formulations:
+• When Φ(∇L) = ∇L, Nexus optimizes the unnormalized dot product.
+• When Φ(∇L) = A∇L for a full-rank matrix A, SimΦ induces a Mahalanobis inner product. For
+non-linear Φ, SimΦ acts as a kernel function mapping gradients into a Reproducing Kernel Hilbert Space
+(RKHS).
+• When Φ(∇L) =
+∇L
+∥∇L∥2 , the update recovers the standard cosine similarity maximization.
+• Other choices, such as Φ(∇L) = sign(∇L) or the orthogonalized gradient in Muon [32], enforce different
+geometric consensus choices across tasks.
+26
+
+C
+Proofs for Closeness Improving Generalization
+C.1
+Proof for Theorem 2.1
+Proof. First, solving the stationarity condition ∇P Lk(θ) = 0, we obtain the closed-form solution for the
+converged parameter: θ∗
+train = 1
+K
+PK
+k=1 θ∗
+k.
+The training loss at this optimum is given by:
+Ltrain(θ∗
+train) = 1
+K
+K
+X
+k=1
+a
+2∥θ∗
+train −θ∗
+k∥2
+2 + c
+
+= Ctrain.
+(25)
+From this, we can express the intrinsic loss constant c (which represents the "depth" of the minima) in terms
+of the fixed training loss Ctrain:
+c = Ctrain −a
+2K
+K
+X
+k=1
+∥θ∗
+train −θ∗
+k∥2
+2.
+(26)
+Now, consider the loss on a new downstream task T with minimizer θ∗
+T ∼P:
+LT (θ∗
+train) = a
+2∥θ∗
+train −θ∗
+T ∥2
+2 + c.
+(27)
+Substituting c, the generalization gap becomes:
+LT (θ∗
+train) −Ctrain = a
+2
+ 
+∥θ∗
+train −θ∗
+T ∥2
+2 −1
+K
+K
+X
+k=1
+∥θ∗
+train −θ∗
+k∥2
+2
+!
+.
+(28)
+Taking the expectation over the task distribution P, and utilizing the property of variance for i.i.d. samples
+(where E[∥θ∗
+train −θ∗
+T ∥2] = (1 + 1
+K )σ2 and E[ 1
+K
+P ∥θ∗
+train −θ∗
+k∥2] = K−1
+K σ2):
+E[LT (θ∗
+train)] −Ctrain = a
+2
+
+1 + 1
+K
+
+σ2 −K −1
+K
+σ2
+
+= a
+K σ2.
+(29)
+This concludes the proof. It explicitly shows that for a fixed training loss budget Ctrain, the generalization
+error scales linearly with the task variance σ2.
+C.2
+Proof for Theorem 2.2
+We now generalize the previous result to the general case. Assume that the pretraining tasks {Lk}K
+k=1 and
+the downstream task LT are sampled independently from a latent task distribution P.
+Due to the over-parameterized nature of LLMs, the minimizers are not unique. To rigorously analyze the
+closeness, we first define the set of local minimizers for the expected population loss:
+SP = {ϑ | ∃ϵ > 0, ∀ϑ′ ∈Bϵ(ϑ), ET ∼P[LT (ϑ)] ≤ET ∼P[LT (ϑ′)]} .
+(30)
+Let θ∗∈SP be one specific local minimizer of the population loss. This serves as the anchor point for the
+basin of attraction.
+We then define the task-specific minimizer θ∗
+k as the projection of this population minimizer θ∗onto the set
+of local minimizers of task k:
+θ∗
+k = arg min
+ϑ∈Sk ∥ϑ −θ∗∥2,
+where Sk denotes the set of local minimizers of Lk.
+(31)
+Given the distribution of these task-specific minimizers {θ∗
+k}, we define their statistical center µ and intrinsic
+covariance Σ as:
+µ := ET ∼P[θ∗
+T ],
+Σ := E[(θ∗
+T −µ)(θ∗
+T −µ)⊤].
+(32)
+We also define the scalar intrinsic variance σ2 = Tr(Σ) = E[∥θ∗
+k −µ∥2
+2]. From this point forward, our analysis
+focuses on the closeness to the statistical center µ, as E[θ∗
+T −µ] = 0 holds by definition.
+27
+
+Step 1: Estimation Error.
+The converged parameter θ∗
+train satisfies the stationarity condition:
+∇Ltrain(θ∗
+train) = 0 ⇐⇒
+K
+X
+k=1
+∇Lk(θ∗
+train) = 0.
+(33)
+Applying the Mean Value Theorem, there exists ξk ∈[θ∗
+train, θ∗
+k] such that ∇Lk(θ∗
+train) = ∇2Lk(ξk)(θ∗
+train−θ∗
+k).
+Thus:
+K
+X
+k=1
+∇2Lk(ξk)(θ∗
+train −µ) =
+K
+X
+k=1
+∇2Lk(ξk)(θ∗
+k −µ).
+(34)
+We assume the local curvature is bounded: for any k and vector u, λmin∥u∥2 ≤u⊤∇2Lk(ξk)u ≤λmax∥u∥2.
+Bounding the estimation error norm:
+∥θ∗
+train −µ∥2 ≤
+1
+Kλmin
+K
+X
+k=1
+λmax∥θ∗
+k −µ∥2.
+(35)
+Taking the expectation (noting cross-terms vanish because E[θ∗
+k −µ] = 0) and defining κ = λmax/λmin:
+E[∥θ∗
+train −µ∥2
+2] ≤κ2
+K σ2.
+(36)
+Step 2: The Intrinsic Loss Trade-off.
+We condition on the training loss achieving a fixed value Ctrain. By
+exact Taylor expansion around the task minimizers, the training loss is:
+Ctrain = 1
+K
+K
+X
+k=1
+Lk(θ∗
+train) = 1
+K
+K
+X
+k=1
+
+Lk(θ∗
+k) + 1
+2(θ∗
+train −θ∗
+k)⊤∇2Lk(ξk)(θ∗
+train −θ∗
+k)
+
+.
+(37)
+Taking the expectation over the task distribution, we can express the expected intrinsic loss exactly as:
+E[Lk(θ∗
+k)] = Ctrain −1
+2E
+"
+1
+K
+K
+X
+k=1
+(θ∗
+train −θ∗
+k)⊤∇2Lk(ξk)(θ∗
+train −θ∗
+k)
+#
+|
+{z
+}
+Qtrain (Expected Empirical Closeness Penalty)
+.
+(38)
+We retain the term Qtrain explicitly without approximation. This term represents the curvature-weighted
+variance of the minimizers around the converged point.
+Step 3: Downstream Generalization (Rigorous Matrix Derivation).
+Finally, we analyze the expected perfor-
+mance on a downstream task T sampled from the same distribution P. We perform a Taylor expansion of the
+test loss around the task-specific minimizer θ∗
+T . Since ∇LT (θ∗
+T ) = 0, the first-order term vanishes:
+LT (θ∗
+train) = LT (θ∗
+T ) + 1
+2(θ∗
+train −θ∗
+T )⊤∇2LT (ξT )(θ∗
+train −θ∗
+T ).
+(39)
+Taking the expectation over the task distribution, we define the expected test closeness penalty Qtest:
+ET [LT (θ∗
+train)] = E[LT (θ∗
+T )] + 1
+2E
+
+(θ∗
+train −θ∗
+T )⊤∇2LT (ξT )(θ∗
+train −θ∗
+T )
+
+|
+{z
+}
+Qtest
+.
+(40)
+Recalling the intrinsic loss trade-off from Eq. (38), we have E[LT (θ∗
+T )] = Ctrain −Qtrain. Substituting this
+into the equation above yields the generalization gap decomposition:
+ET [LT (θ∗
+train)] = Ctrain + (Qtest −Qtrain).
+(41)
+28
+
+Let ¯H = EP[∇2L(ξ)] denote the expected Hessian matrix over the task distribution. Since tasks are i.i.d.,
+both training and test tasks share this expected geometry.
+For the test term Qtest, we use the identity x⊤Ax = Tr(Axx⊤). Replacing the specific task Hessian with the
+expected Hessian ¯H = EP[∇2L(ξ)]:
+Qtest = 1
+2Tr
+  ¯H · E
+
+(θ∗
+train −θ∗
+T )(θ∗
+train −θ∗
+T )⊤
+.
+(42)
+We expand the covariance term fully around the statistical center µ:
+E
+
+(θ∗
+train −θ∗
+T )(θ∗
+train −θ∗
+T )⊤
+= E
+
+((θ∗
+train −µ) −(θ∗
+T −µ))((θ∗
+train −µ) −(θ∗
+T −µ))⊤
+= E[(θ∗
+train −µ)(θ∗
+train −µ)⊤] + E[(θ∗
+T −µ)(θ∗
+T −µ)⊤]
+−E[(θ∗
+train −µ)(θ∗
+T −µ)⊤] −E[(θ∗
+T −µ)(θ∗
+train −µ)⊤].
+(43)
+The cross-terms vanish strictly because θ∗
+T is independent of θ∗
+train and is centered at µ (i.e., E[θ∗
+T −µ] = 0
+by definition of µ). Substituting E[(θ∗
+T −µ)(θ∗
+T −µ)⊤] = Σ back:
+Qtest = 1
+2Tr
+  ¯H · E[(θ∗
+train −µ)(θ∗
+train −µ)⊤]
+
++ 1
+2Tr( ¯HΣ).
+(44)
+For the training term Qtrain, we consider the expected quadratic penalty averaged over the training tasks. By
+linearity of expectation, we replace ∇2Lk with ¯H exactly:
+Qtrain =
+1
+2K
+K
+X
+k=1
+E
+
+(θ∗
+train −θ∗
+k)⊤¯H(θ∗
+train −θ∗
+k)
+
+.
+(45)
+We apply the Generalized Centroid Property. For any positive semi-definite matrix ¯H, the weighted sum of
+squared errors is minimized by the mean ¯θ. Thus, we have the rigorous lower bound:
+K
+X
+k=1
+(θ∗
+train −θ∗
+k)⊤¯H(θ∗
+train −θ∗
+k) ≥
+K
+X
+k=1
+(¯θ −θ∗
+k)⊤¯H(¯θ −θ∗
+k).
+(46)
+We perform the matrix variance decomposition on the RHS by inserting µ:
+K
+X
+k=1
+(¯θ −θ∗
+k)⊤¯H(¯θ −θ∗
+k) =
+K
+X
+k=1
+((¯θ −µ) −(θ∗
+k −µ))⊤¯H((¯θ −µ) −(θ∗
+k −µ))
+=
+K
+X
+k=1
+(¯θ −µ)⊤¯H(¯θ −µ) +
+K
+X
+k=1
+(θ∗
+k −µ)⊤¯H(θ∗
+k −µ) −2(¯θ −µ)⊤¯H
+K
+X
+k=1
+(θ∗
+k −µ)
+|
+{z
+}
+K( ¯θ−µ)
+.
+(47)
+Simplifying the cross-term and combining with the first term:
+K
+X
+k=1
+(¯θ −θ∗
+k)⊤¯H(¯θ −θ∗
+k) = K(¯θ −µ)⊤¯H(¯θ −µ) +
+K
+X
+k=1
+(θ∗
+k −µ)⊤¯H(θ∗
+k −µ) −2K(¯θ −µ)⊤¯H(¯θ −µ)
+=
+K
+X
+k=1
+(θ∗
+k −µ)⊤¯H(θ∗
+k −µ) −K(¯θ −µ)⊤¯H(¯θ −µ).
+(48)
+Taking expectations and using the trace identity E[x⊤Ax] = Tr(AE[xx⊤]):
+• The first term: PK
+k=1 Tr( ¯HE[(θ∗
+k −µ)(θ∗
+k −µ)⊤]) = KTr( ¯HΣ).
+29
+
+• The second term (variance of the mean): E[(¯θ −µ)(¯θ −µ)⊤] = 1
+K Σ. Thus, KTr( ¯H · 1
+K Σ) = Tr( ¯HΣ).
+Combining these, the expected training penalty is bounded by:
+Qtrain ≥
+1
+2K
+ KTr( ¯HΣ) −Tr( ¯HΣ)
+
+= 1
+2
+
+1 −1
+K
+
+Tr( ¯HΣ).
+(49)
+Subtracting the two terms (Qtest −Qtrain), the dominant term 1
+2Tr( ¯HΣ) cancels out exactly. We then bound
+the remaining terms using the spectral norm λmax and the estimation error bound derived in Eq. (36):
+ET [LT (θ∗
+train)] −Ctrain ≤
+1
+2Tr( ¯HE[(θ∗
+train −µ)(θ∗
+train −µ)⊤]) + 1
+2Tr( ¯HΣ)
+
+−1
+2
+
+1 −1
+K
+
+Tr( ¯HΣ)
+= 1
+2Tr
+  ¯H · E[(θ∗
+train −µ)(θ∗
+train −µ)⊤]
+
++
+1
+2K Tr( ¯HΣ)
+≤λmax
+2
+E[∥θ∗
+train −µ∥2
+2] + λmax
+2K Tr(Σ)
+≤λmax
+2
+κ2
+K σ2
+
++ λmax
+2K σ2
+= λmax(κ2 + 1)
+2K
+σ2.
+(50)
+This confirms that the generalization gap scales with O( σ2
+K ), driven by the intrinsic task variance and the
+number of pretraining tasks.
+30
+
+D
+Proof of Theorem 3.1
+In this section, we provide the detailed proof for Theorem 3.1, which bounds the closeness between minimizers
+using gradient similarity.
+Proof. The proof proceeds in three main steps: (1) relating the closeness to the gradient norm via the Mean
+Value Theorem; (2) exploiting the stationarity condition of the total loss to decompose the gradient norms;
+and (3) bounding the cross-terms using the gradient upper bound and cosine similarity.
+Step 1: Relating Closeness to Gradient Norm.
+Recall that θ∗
+k is the projection of θ onto the global optimal set
+Sk. Since θ∗
+k is a minimizer, we have ∇Lk(θ∗
+k) = 0. Applying the Mean Value Theorem to the vector-valued
+function ϑ 7→∇Lk(ϑ), there exists a point ξk on the line segment connecting θ∗
+k and θ such that:
+∇Lk(θ) −∇Lk(θ∗
+k) = ∇2Lk(ξk)(θ −θ∗
+k).
+(51)
+Substituting ∇Lk(θ∗
+k) = 0 and taking the norm:
+∥∇Lk(θ)∥2 = ∥∇2Lk(ξk)(θ −θ∗
+k)∥2.
+(52)
+We assume the curvature condition where the smallest eigenvalue of the Hessian along the displacement vector
+is bounded below by λ > 0. Specifically:
+u⊤
+k ∇2Lk(ξk)uk ≥λ,
+where uk =
+θ −θ∗
+k
+∥θ −θ∗
+k∥2
+.
+(53)
+This implies ∥∇2Lk(ξk)(θ −θ∗
+k)∥2 ≥λ∥θ −θ∗
+k∥2. Rearranging this inequality gives an upper bound on the
+closeness:
+∥θ −θ∗
+k∥2 ≤1
+λ∥∇Lk(θ)∥2.
+(54)
+Squaring and averaging over all K tasks yields:
+1
+K
+K
+X
+k=1
+∥θ −θ∗
+k∥2
+2 ≤
+1
+Kλ2
+K
+X
+k=1
+∥∇Lk(θ)∥2
+2.
+(55)
+Step 2: Force Balance Decomposition.
+Since θ is the converged parameter for the total loss, it satisfies the
+stationarity condition:
+K
+X
+k=1
+∇Lk(θ) = 0.
+(56)
+We analyze the squared norm of this sum, which must equal zero:
+
+K
+X
+k=1
+∇Lk(θ)
+
+2
+2
+=
+K
+X
+k=1
+∥∇Lk(θ)∥2
+2 +
+X
+i̸=j
+∇Li(θ)⊤∇Lj(θ) = 0.
+(57)
+By rearranging terms, we obtain an exact identity relating the sum of squared gradient norms to the negative
+sum of cross-task inner products:
+K
+X
+k=1
+∥∇Lk(θ)∥2
+2 =
+X
+i̸=j
+ −∇Li(θ)⊤∇Lj(θ)
+
+.
+(58)
+Substituting Eq. (58) into Eq. (55), we obtain the first inequality of the theorem:
+1
+K
+K
+X
+k=1
+∥θ −θ∗
+k∥2
+2 ≤
+1
+Kλ2
+X
+i̸=j
+ −∇Li(θ)⊤∇Lj(θ)
+
+.
+(59)
+31
+
+Step 3: Bounding via Cosine Similarity.
+Finally, we bound the inner product term using the gradient
+magnitude upper bound G = supk ∥∇Lk(θ)∥2. Recall that:
+∇Li(θ)⊤∇Lj(θ) = ∥∇Li(θ)∥2∥∇Lj(θ)∥2CosSim(∇Li(θ), ∇Lj(θ)).
+(60)
+We use the property that for any i, j, the following term is non-negative:
+(G2 −∥∇Li(θ)∥2∥∇Lj(θ)∥2)(1 −CosSim(∇Li(θ), ∇Lj(θ))) ≥0,
+(61)
+since ∥∇Lk(θ)∥2 ≤G and CosSim ≤1. Adding this non-negative term to the negative inner product allows
+us to derive the bound directly:
+−∇Li(θ)⊤∇Lj(θ) = −∥∇Li(θ)∥2∥∇Lj(θ)∥2CosSim(∇Li(θ), ∇Lj(θ))
+≤−∥∇Li(θ)∥2∥∇Lj(θ)∥2CosSim(∇Li(θ), ∇Lj(θ))
++ (G2 −∥∇Li(θ)∥2∥∇Lj(θ)∥2)(1 −CosSim(∇Li(θ), ∇Lj(θ)))
+= G2(1 −CosSim(∇Li(θ), ∇Lj(θ))) −∥∇Li(θ)∥2∥∇Lj(θ)∥2
+≤G2(1 −CosSim(∇Li(θ), ∇Lj(θ))).
+(62)
+Summing this inequality over all i̸ = j yields:
+X
+i̸=j
+ −∇Li(θ)⊤∇Lj(θ)
+
+≤G2 X
+i̸=j
+(1 −CosSim(∇Li(θ), ∇Lj(θ))) .
+(63)
+Combining this with the result from Step 2 completes the proof.
+32
+
+E
+Implicit Bias of Nexus Optimizer
+In this appendix, we provide the detailed proofs for Theorem 3.2. We rigorously analyze the update dynamics
+of Algorithm 1 using second-order Taylor expansions and derive the precise form of the implicit optimization
+objective with explicit non-asymptotic error bounds.
+E.1
+Preliminaries and Notation
+Let Li : Rd →R denote the loss function for the i-th task, where i ∈{1, . . . , k}. We denote the gradient and
+Hessian at parameters θ as ∇Li(θ) and ∇2Li(θ), respectively. The cosine similarity between the gradients of
+task i and task j is defined as:
+Sij(θ) ≜CosSim(∇Li(θ), ∇Lj(θ)) =
+∇Li(θ)⊤∇Lj(θ)
+∥∇Li(θ)∥2∥∇Lj(θ)∥2
+.
+(64)
+Algorithm 1 performs k inner updates in each outer iteration t. Let θt,0 be the parameters at the start of the
+inner loop (i.e., θt,0 = θt−1). At each inner step m ∈{1, . . . , k}, a task index sm is sampled uniformly from
+{1, . . . , k}. The update rule is:
+θt,m = θt,m−1 −γ
+∇Lsm(θt,m−1)
+∥∇Lsm(θt,m−1)∥2
+.
+(65)
+The Nexus pseudo-gradient passed to the outer optimizer is ˆgt = θt,0 −θt,k = Pk
+m=1(θt,m−1 −θt,m).
+E.2
+Assumptions and Derived Constants
+To derive explicit non-asymptotic bounds, we utilize the following standard assumptions regarding the loss
+landscape.
+• Assumption 1 (Bounded Gradients): For all tasks i and parameters θ, the gradient norm is bounded
+from below: 0 < Gmin ≤∥∇Li(θ)∥2.
+• Assumption 2 (Smoothness): The loss Li is L-smooth, i.e., ∥∇2Li(θ)∥2 ≤L.
+• Assumption 3 (Hessian Lipschitz): The Hessian is ρ-Lipschitz continuous, i.e., ∥∇2Li(x) −∇2Li(y)∥2 ≤
+ρ∥x −y∥2.
+Based on the properties above, we further denote L1 and L2 as the Lipschitz constants for the normalized
+gradient and its Jacobian, respectively:
+1. The normalized gradient is L1-Lipschitz continuous:
+
+∇Li(x)
+∥∇Li(x)∥2
+−
+∇Li(y)
+∥∇Li(y)∥2
+
+2
+≤L1∥x −y∥2.
+(66)
+2. The Jacobian of the normalized gradient is L2-Lipschitz continuous:
+∥Ji(x) −Ji(y)∥2 ≤L2∥x −y∥2,
+(67)
+where Ji(θ) =
+∂
+∂θ
+
+∇Li(θ)
+∥∇Li(θ)∥2
+
+.
+Derivation of Constants.
+Here, we provide the detailed derivation of L1 and L2 based on Assumptions 1-3.
+1. Derivation of L1: By the Mean Value Theorem, L1 is bounded by the supremum of the spectral norm of the
+Jacobian Ji(θ). The Jacobian is explicitly given by:
+Ji(θ) =
+1
+∥∇Li∥2
+
+I −∇Li∇L⊤
+i
+∥∇Li∥2
+2
+
+∇2Li(θ).
+(68)
+33
+
+The middle term is an orthogonal projection matrix with spectral norm 1. Using the bounds from Assumptions
+1 and 2:
+L1 ≤sup
+θ
+∥Ji(θ)∥2 ≤
+1
+Gmin
+· 1 · L =
+L
+Gmin
+.
+(69)
+2. Derivation of L2: We decompose the Jacobian Ji(θ) into three components: a scalar term u(θ), a projection
+term Π(θ), and the Hessian Hi(θ):
+Ji(θ) = ∥∇Li(θ)∥−1
+2
+|
+{z
+}
+u(θ)
+·
+
+I −∇Li∇L⊤
+i
+∥∇Li∥2
+2
+
+|
+{z
+}
+Π(θ)
+· ∇2Li(θ)
+|
+{z
+}
+Hi(θ)
+.
+(70)
+We apply the product Lipschitz rule. For a product of three functions f = abc, the Lipschitz constant satisfies
+Lf ≤LaMbMc +MaLbMc +MaMbLc, where M(·) denotes the upper bound of the magnitude and L(·) denotes
+the Lipschitz constant.
+• Part 1: Scalar u(θ) = ∥∇Li∥−1
+2 .
+Magnitude (Mu): By Assumption 1, |u| ≤
+1
+Gmin .
+Lipschitz (Lu): The gradient of u is ∇u = −∥∇Li∥−2
+2
+∇2Li∇Li
+∥∇Li∥2
+= −Hi∇Li
+∥∇Li∥3
+2 . Taking the norm, we have
+∥∇u∥2 ≤∥Hi∥2∥∇Li∥2
+∥∇Li∥3
+2
+=
+∥Hi∥2
+∥∇Li∥2
+2 . Using the bounds L and Gmin, we get Lu =
+L
+G2
+min .
+• Part 2: Projection Π(θ) = I −hih⊤
+i .
+Magnitude (MΠ): The spectral norm is ∥Π∥2 = 1.
+Lipschitz (LΠ): Π depends on the normalized gradient hi, which is L1-Lipschitz. For any unit vectors
+x, y, we have ∥xx⊤−yy⊤∥2 ≤∥x(x −y)⊤∥2 + ∥(x −y)y⊤∥2 = 2∥x −y∥2.
+By the chain rule,
+LΠ = 2L1 =
+2L
+Gmin .
+• Part 3: Hessian Hi(θ) = ∇2Li.
+Magnitude (MH): By Assumption 2, ∥Hi∥2 ≤L.
+Lipschitz (LH): By Assumption 3, LH = ρ.
+Substituting these values into the product rule formula:
+L2 ≤LuMΠMH + MuLΠMH + MuMΠLH
+≤
+
+L
+G2
+min
+· 1 · L
+
++
+
+1
+Gmin
+·
+2L
+Gmin
+· L
+
++
+
+1
+Gmin
+· 1 · ρ
+
+=
+L2
+G2
+min
++ 2L2
+G2
+min
++
+ρ
+Gmin
+.
+(71)
+Combining terms yields the final constant:
+L2 = 3L2 + ρGmin
+G2
+min
+.
+(72)
+E.3
+Derivation of the Update Direction
+We now derive the expansion of the total pseudo-gradient ˆgt and bound the error terms.
+E.3.1
+Step 1: Expansion of the Normalized Gradient
+We aim to expand the normalized gradient at the shifted parameters θt,m−1 around the initial point θt,0. Let
+∆θm−1 = θt,m−1 −θt,0.
+The Jacobian of the normalized gradient is given explicitly by the projection of the Hessian:
+Jsm(θ) =
+1
+∥∇Lsm(θ)∥2
+
+I −∇Lsm(θ)∇Lsm(θ)⊤
+∥∇Lsm(θ)∥2
+2
+
+∇2Lsm(θ).
+(73)
+34
+
+Applying Taylor’s theorem with the Lagrange remainder form:
+∇Lsm(θt,m−1)
+∥∇Lsm(θt,m−1)∥2
+=
+∇Lsm(θt,0)
+∥∇Lsm(θt,0)∥2
++ Jsm(θt,0)∆θm−1 + rm.
+(74)
+Using the L2-Lipschitz property of the Jacobian, the residual vector rm is bounded by:
+∥rm∥2 ≤L2
+2 ∥∆θm−1∥2
+2.
+(75)
+E.3.2
+Step 2: Recursive Substitution
+The displacement ∆θm−1 is the sum of previous updates. Using the zeroth-order approximation:
+∆θm−1 =
+m−1
+X
+l=1
+(θt,l −θt,l−1) = −γ
+m−1
+X
+l=1
+∇Lsl(θt,l−1)
+∥∇Lsl(θt,l−1)∥2
+.
+(76)
+We approximate the terms in the sum using the zeroth-order expansion around θt,0. Using the L1-Lipschitz
+property of the normalized gradient:
+
+∇Lsl(θt,l−1)
+∥∇Lsl(θt,l−1)∥2
+−
+∇Lsl(θt,0)
+∥∇Lsl(θt,0)∥2
+
+2
+≤L1∥θt,l−1 −θt,0∥2 = L1
+
+−
+l−1
+X
+j=1
+γ
+∇Lsl(θt,j)
+∥∇Lsl(θt,j)∥2
+
+≤L1(l −1)γ. (77)
+Thus, we can write:
+∆θm−1 = −γ
+m−1
+X
+l=1
+∇Lsl(θt,0)
+∥∇Lsl(θt,0)∥2
++ δm−1,
+(78)
+where the accumulated error δm−1 is bounded by summing the individual errors:
+∥δm−1∥2 ≤γ
+m−1
+X
+l=1
+L1(l −1)γ = L1γ2 (m −1)(m −2)
+2
+≤L1
+2 (m −1)2γ2.
+(79)
+Substituting this expression for ∆θm−1 back into Eq. (74):
+∇Lsm(θt,m−1)
+∥∇Lsm(θt,m−1)∥2
+=
+∇Lsm(θt,0)
+∥∇Lsm(θt,0)∥2
+−γ
+m−1
+X
+l=1
+Jsm(θt,0)
+∇Lsl(θt,0)
+∥∇Lsl(θt,0)∥2
++ Em.
+(80)
+Here, the total error at step m, denoted Em, consists of the Taylor residual rm and the propagation error
+from δm−1 scaled by the Jacobian. Using ∥Jsm∥2 ≤L1 and ∥∆θm−1∥2 ≤(m −1)γ:
+∥Em∥2 ≤L2
+2 (m −1)2γ2 + L1
+L1
+2 (m −1)2γ2
+
+= L2 + L2
+1
+2
+(m −1)2γ2.
+(81)
+E.3.3
+Step 3: Aggregation of the Pseudo-Gradient
+The total pseudo-gradient is ˆgt = γ Pk
+m=1
+∇Lsm(θt,m−1)
+∥∇Lsm(θt,m−1)∥2 . Substituting the result from Step 2:
+ˆgt = γ
+k
+X
+m=1
+∇Lsm
+∥∇Lsm∥2
+−γ2
+k
+X
+m=1
+m−1
+X
+l=1
+Jsm
+∇Lsl
+∥∇Lsl∥2
++ Etotal.
+(82)
+(We omit the argument θt,0 for brevity; all terms are evaluated at θt,0). The total error vector Etotal =
+γ Pk
+m=1 Em is explicitly bounded by summing the bounds from Step 2:
+∥Etotal∥2 ≤γ
+k
+X
+m=1
+L2 + L2
+1
+2
+(m −1)2γ2 ≤L2 + L2
+1
+6
+k3γ3.
+(83)
+35
+
+E.3.4
+Step 4: Expectation Analysis and Connection to Cosine Similarity
+We now compute the expectation of ˆgt over the independent uniform sampling of indices s1, . . . , sk and relate
+the second-order term to the gradient of the cosine similarity.
+Linear Term.
+Let Tlinear = Pk
+m=1
+∇Lsm
+∥∇Lsm∥2 . By linearity of expectation:
+E[Tlinear] = k · 1
+k
+k
+X
+i=1
+∇Li
+∥∇Li∥2
+=
+k
+X
+i=1
+∇Li
+∥∇Li∥2
+.
+(84)
+Interaction Term.
+Let Tinteract = Pk
+m=1
+Pm−1
+l=1 Jsm
+∇Lsl
+∥∇Lsl∥2 . The double summation contains k(k−1)
+2
+terms.
+Since m > l, sm and sl are independent. Summing over all pairs yields:
+E[Tinteract] = k −1
+2k
+X
+i,j
+Ji
+∇Lj
+∥∇Lj∥2
+= k −1
+4k
+X
+i̸=j
+
+Ji
+∇Lj
+∥∇Lj∥2
++ Jj
+∇Li
+∥∇Li∥2
+
+.
+(85)
+Note that the exact gradient of the cosine similarity between task i and task j is formulated using the
+transposed Jacobian (VJP):
+∇θCosSim(∇Li, ∇Lj) = J⊤
+i
+∇Lj
+∥∇Lj∥2
++ J⊤
+j
+∇Li
+∥∇Li∥2
+.
+(86)
+To relate the interaction term to the cosine similarity gradient, we add and subtract the transposed Jacobian
+terms:
+Ji
+∇Lj
+∥∇Lj∥2
++ Jj
+∇Li
+∥∇Li∥2
+=
+
+J⊤
+i
+∇Lj
+∥∇Lj∥2
++ J⊤
+j
+∇Li
+∥∇Li∥2
+
++ (Ji −J⊤
+i )
+∇Lj
+∥∇Lj∥2
++ (Jj −J⊤
+j )
+∇Li
+∥∇Li∥2
+= ∇θCosSim(∇Li, ∇Lj) + Esym,i,j + Esym,j,i,
+(87)
+where Esym,i,j is the Jacobian non-symmetric error defined as:
+Esym,i,j =
+ 
+∇
+∇Li
+∥∇Li∥2
+−
+
+∇
+∇Li
+∥∇Li∥2
+⊤!
+∇Lj
+∥∇Lj∥2
+.
+(88)
+The residual Esym,i,j exhibits two properties:
+1. Orthogonality to the target gradient: The matrix Ai = ∇(
+∇Li
+∥∇Li∥2 ) −∇(
+∇Li
+∥∇Li∥2 )⊤is anti-symmetric
+(A⊤
+i = −Ai). For any anti-symmetric matrix A and vector x, the quadratic form is zero (x⊤Ax = 0).
+By setting x =
+∇Lj
+∥∇Lj∥2 , we have ⟨Esym,i,j, ∇Lj⟩= 0, which implies Esym,i,j ⊥∇Lj.
+2. Vanishing under gradient-Hessian alignment: Recent literature on the Edge of Stability (EoS) and the
+"river valley" phenomenon observes that gradients tend to align with the top eigenvectors of the Hessian
+during training [12, 14, 23, 71]. When the gradient aligns with an eigenvector, the commutator between
+the orthogonal projection and the Hessian becomes zero, which implies Esym,i,j = 0.
+Substituting this expansion into the interaction term expectation yields:
+E[Tinteract] = k −1
+4k
+X
+i̸=j
+(∇θCosSim(∇Li, ∇Lj) + Esym,i,j + Esym,j,i) .
+(89)
+36
+
+E.4
+Proof Conclusion
+Combining the linear term and the interaction term, the expected Nexus update direction is:
+E[ˆgt] = γ
+k
+X
+i=1
+∇Li(θt,0)
+∥∇Li(θt,0)∥2
+−γ2 k −1
+4k
+X
+i̸=j
+(∇θCosSim(∇Li, ∇Lj) + Esym,i,j + Esym,j,i) + Etotal.
+(90)
+Substituting the constants derived in Appendix E.2, the residual is bounded by:
+∥Etotal∥2 ≤1
+6
+ρGmin + 4L2
+G2
+min
+
+k3γ3 = O(γ3).
+(91)
+This confirms that the update direction follows the gradient of the loss plus the similarity alignment term,
+subject to the non-symmetric residual and a bounded cubic Taylor error.
+□
+37
+
+F
+Proof of Convergence Rate (Theorem B.1)
+In this section, we provide the detailed proof for Theorem B.1. Let θ∗be the common minimizer such that
+∇Li(θ∗) = 0 for all i ∈[k]. Consider the update at step m: θm = θm−1 −γ∇Lsm(θm−1), where sm is the
+task index sampled uniformly at random.
+First, we expand the squared distance to the optimum for a specific realization of sm:
+∥θm −θ∗∥2 = ∥θm−1 −γ∇Lsm(θm−1) −θ∗∥2
+= ∥θm−1 −θ∗∥2 −2γ⟨∇Lsm(θm−1), θm−1 −θ∗⟩+ γ2∥∇Lsm(θm−1)∥2.
+(92)
+To bound the inner product term, we utilize the property of smooth and strongly convex functions. Define the
+auxiliary function ϕi(θ) = Li(θ) −µ
+2 ∥θ∥2. Since each Li is L-smooth and µ-strongly convex, ϕi(θ) is convex
+and (L −µ)-smooth. By the co-coercivity property of convex smooth functions, for any θ, we have:
+⟨∇ϕi(θ) −∇ϕi(θ∗), θ −θ∗⟩≥
+1
+L −µ∥∇ϕi(θ) −∇ϕi(θ∗)∥2.
+(93)
+Substituting ∇ϕi(θ) = ∇Li(θ) −µθ and noting that ∇Li(θ∗) = 0, we substitute back:
+⟨∇Li(θ) −µ(θ −θ∗), θ −θ∗⟩≥
+1
+L −µ∥∇Li(θ) −µ(θ −θ∗)∥2
+=
+1
+L −µ
+ ∥∇Li(θ)∥2 −2µ⟨∇Li(θ), θ −θ∗⟩+ µ2∥θ −θ∗∥2
+.
+(94)
+Rearranging the terms, we obtain the following inequality which holds for any task index i, and thus specifically
+for the sampled index sm:
+⟨∇Lsm(θ), θ −θ∗⟩≥
+1
+L + µ∥∇Lsm(θ)∥2 +
+µL
+L + µ∥θ −θ∗∥2.
+(95)
+Substituting Eq. (95) back into Eq. (92) with θ = θm−1:
+∥θm −θ∗∥2 ≤∥θm−1 −θ∗∥2 −2γ
+
+1
+L + µ∥∇Lsm(θm−1)∥2 +
+µL
+L + µ∥θm−1 −θ∗∥2
+
++ γ2∥∇Lsm(θm−1)∥2
+=
+
+1 −2γµL
+L + µ
+
+∥θm−1 −θ∗∥2 +
+
+γ2 −
+2γ
+L + µ
+
+∥∇Lsm(θm−1)∥2.
+(96)
+Provided that the step size satisfies γ ∈(0,
+2
+L+µ], the coefficient
+
+γ2 −
+2γ
+L+µ
+
+is non-positive.
+Since
+∥∇Lsm(θm−1)∥2 ≥0, we can drop the gradient norm term to obtain an upper bound:
+∥θm −θ∗∥2 ≤
+
+1 −2γµL
+L + µ
+
+∥θm−1 −θ∗∥2.
+(97)
+Since this inequality holds for any realization of the random sample sm, we take the expectation over the
+sampling distribution. Let E[·] denote the total expectation over the sequence of random indices {s1, . . . , sm}.
+We have:
+E[∥θm −θ∗∥2] ≤
+
+1 −2γµL
+L + µ
+
+E[∥θm−1 −θ∗∥2].
+(98)
+Applying this recurrence relation recursively for T steps yields:
+E[∥θT −θ∗∥2] ≤
+
+1 −2γµL
+L + µ
+T
+∥θ0 −θ∗∥2.
+(99)
+38
+
+Specifically, when choosing the step size γ =
+2
+L+µ:
+1 −2γµL
+L + µ = 1 −
+4µL
+(L + µ)2 = (L −µ)2
+(L + µ)2 =
+κ −1
+κ + 1
+2
+,
+(100)
+where κ = L/µ is the condition number. Thus, we obtain the convergence rate:
+E[∥θT −θ∗∥2] ≤
+κ −1
+κ + 1
+2T
+∥θ0 −θ∗∥2.
+(101)
+□
+39
+
+G
+Third-Order Implicit Bias Analysis
+In this section, we analyze the third-order implicit bias of Nexus, inspired by recent works [11, 13, 86]. While
+the second-order analysis reveals how Nexus aligns gradients, it does not fully explain the stability of this
+alignment in complex landscapes. Here, we demonstrate that the Nexus update direction implicitly minimizes
+a "Generalized Directional Sharpness" metric. This implies that Nexus actively seeks regions where the
+loss landscape is not only aligned but also locally flat along the alignment direction, thereby preventing the
+"de-alignment" caused by sharp curvature.
+G.1
+Setup and Definitions
+To perform this analysis, we verify the behavior of the third-order terms in the Taylor expansion. We introduce
+a standard assumption regarding the smoothness of the Hessian.
+Assumption 4 (Bounded Third Derivative). Assume the third-order derivative tensor is bounded, i.e., for any
+unit vectors u, v, w and any task i, there exists a constant M3 such that ∥∇3Li(θ)[u, v, w]∥2 ≤M3. This
+implies that the third-order Taylor remainder satisfies ∥rT aylor(δ)∥2 ≤M3
+6 ∥δ∥3
+2.
+Definition (Generalized Directional Sharpness). We define the generalized sharpness term involving the Hessian
+of task j and the gradient directions of tasks i and p as:
+Ri,j,p(θ) ≜1
+2∇Li(θ)⊤∇2Lj(θ)∇Lp(θ).
+(102)
+This term measures the curvature of task j along the plane spanned by the gradients of tasks i and p. When
+i = p, this reduces to the standard directional sharpness, quantifying how fast the gradient changes along the
+update direction.
+G.2
+Proof of Theorem B.3
+1. Exact Expansion of the Gradient. Consider the m-th inner step with sampled task sm. Let θm−1 = θ0+∆m−1.
+The exact third-order Taylor expansion is:
+∇Lsm(θm−1) = ∇Lsm(θ0) + ∇2Lsm(θ0)∆m−1 + 1
+2∇3Lsm(θ0)[∆m−1, ∆m−1] + r(m)
+T aylor.
+(103)
+The remainder is bounded by ∥r(m)
+T aylor∥2 ≤
+M3
+6 ∥∆m−1∥3
+2. Using the bound on displacement magnitude
+∥∆m−1∥2 ≤(m −1)γ:
+∥r(m)
+T aylor∥2 ≤M3
+6 (m −1)3γ3.
+(104)
+2.
+Displacement Decomposition.
+We define the ideal displacement using initial gradients as ˜∆m−1 =
+Pm−1
+l=1 −γ ˆdsl. The true displacement is ∆m−1 = ˜∆m−1 + δm−1. Using the Lipschitz constant L1 = L/Gmin
+for the normalized gradient, the accumulated error is bounded by:
+∥δm−1∥2 ≤γ
+m−1
+X
+l=1
+L1(l −1)γ ≤L1
+2 (m −1)2γ2.
+(105)
+3. Substitution into Quadratic Term. We substitute ∆m−1 into the third-order term. By multilinearity of the
+tensor:
+1
+2∇3Lsm[∆m−1, ∆m−1] = 1
+2∇3Lsm[ ˜∆m−1, ˜∆m−1] + r(m)
+sub .
+(106)
+The residual r(m)
+sub accounts for the cross-terms and quadratic error terms. Its norm is strictly bounded by:
+∥r(m)
+sub ∥2 ≤1
+2
+
+2∥∇3∥∥˜∆m−1∥∥δm−1∥+ ∥∇3∥∥δm−1∥2
+.
+(107)
+40
+
+Substituting the bounds for ∥˜∆m−1∥and ∥δm−1∥:
+∥r(m)
+sub ∥2 ≤M3((m −1)γ)
+L1
+2 (m −1)2γ2
+
++ M3
+2
+L1
+2 (m −1)2γ2
+2
+= M3L1
+2
+(m −1)3γ3 + M3L2
+1
+8
+(m −1)4γ4.
+(108)
+4. Derivation of the Expected Update Direction. The explicit third-order component of the update (excluding
+residuals) is:
+v3 =
+k
+X
+m=1
+−γ
+1
+2∇3Lsm[ ˜∆m−1, ˜∆m−1]
+
+.
+(109)
+Substituting ˜∆m−1 = Pm−1
+l=1 −γ ˆdsl:
+v3 = −γ3
+2
+k
+X
+m=1
+m−1
+X
+l=1
+m−1
+X
+p=1
+∇3Lsm[ ˆdsl, ˆdsp].
+(110)
+Taking the expectation over uniform sampling of indices sm, sl, sp, each triplet (i, j, p) appears with probability
+1/k3:
+E[v3] = −γ3
+2
+k
+X
+m=1
+m−1
+X
+l=1
+m−1
+X
+p=1
+Esm,sl,sp
+h
+∇3Lsm[ ˆdsl, ˆdsp]
+i
+= −γ3
+2
+ 
+k
+X
+m=1
+m−1
+X
+l=1
+m−1
+X
+p=1
+1
+! 
+1
+k3
+X
+j,i,p
+∇3Lj[ ˆdi, ˆdp]
+
+
+= −γ3
+2
+ 
+k
+X
+m=1
+(m −1)2
+! 
+1
+k3
+X
+i,j,p
+∇3Lj[ ˆdi, ˆdp]
+
+.
+(111)
+Using the summation formula Pk
+m=1(m −1)2 = k(k−1)(2k−1)
+6
+:
+E[v3] = −γ3 (k −1)(2k −1)
+12k2
+X
+i,j,p
+∇3Lj[ ˆdi, ˆdp].
+(112)
+Recognizing that ∇θRi,j,p = 1
+2∇3Lj[ ˆdi, ˆdp] (treating the direction vectors as locally constant for the gradient
+of the surrogate), we can rewrite the update as a gradient descent step on the sharpness metric:
+E[v3] = −γ∇
+
+γ2 (k −1)(2k −1)
+6k2
+X
+i,j,p
+Ri,j,p
+
+.
+(113)
+This confirms that Nexus implicitly minimizes the generalized directional sharpness.
+5. Bounding the Total Residual. The total error vector is E3rd = Pk
+m=1 −γ(r(m)
+T aylor + r(m)
+sub ). Taking the norm:
+∥E3rd∥2 ≤γ
+k
+X
+m=1
+M3
+6
++ M3L1
+2
+
+(m −1)3γ3 + M3L2
+1
+8
+(m −1)4γ4
+
+.
+(114)
+Using summation bounds Pk−1
+j=1 j3 ≤k4
+4 and Pk−1
+j=1 j4 ≤k5
+5 , and substituting L1 = L/Gmin:
+∥E3rd∥2 ≤
+M3
+24 + M3L
+8Gmin
+
+k4γ4 + M3L2
+40G2
+min
+k5γ5.
+(115)
+□
+41
+
+H
+More Experiments Details
+H.1
+Detailed Hyper-parameters
+Our hyperparameter configurations strictly follow the baseline established in Wen et al. [85]. To verify the
+optimality of these settings on our specific pretraining corpus, we conduct a learning rate grid search with
+a multiplier of 2 (i.e., evaluating 0.5× and 2.0×), which confirms that the original configurations remain
+optimal. For clarity and reproducibility, the key hyperparameters are summarized in Tab. 6. Regarding the
+learning rate schedule, the main experiments that utilize the Warmup-Stable-Decay (WSD) scheduler employ
+1,000 warmup steps and 10,000 decay steps following Wen et al. [85], while the schedules for various ablation
+studies are clarified in their respective sections. Across all settings, we maintain a global batch size of 256, an
+Adam β of (0.9, 0.95), an Adam ϵ of 10−10, and a gradient clipping norm of 1.0.
+Table 6 Summary of key hyperparameters for the main pretraining experiments.
+Model Size Optimizer Outer LR Inner LR (γ) Chinchilla Tokens (B) Weight Decay
+Reference
+1B
+Adam
+0.002
+-
+4×
+50
+0.2
+Sec. 4.3
+Nexus
+0.002
+0.04
+4×
+50
+0.2
+3B
+Adam
+0.001
+-
+2×
+110
+0.2
+Secs. 4.2 and 4.5
+Sec. 4.4 and Appendix H.3
+Muon
+0.001
+-
+2×
+110
+0.1
+Nexus
+0.001
+0.1
+2×
+110
+0.2
+Compared to the base optimizers, Nexus introduces only one additional hyperparameter: the inner-loop
+learning rate γ. We tune γ based on a straightforward yet grounded empirical criterion: maximizing the
+regularization strength while strictly operating within the "same pretraining loss" regime. Specifically, we
+select the largest value of γ that incurs no discernible degradation in pretraining loss convergence, thereby
+maximizing the effect of the Nexus regularizer.
+H.2
+Detailed Results for Data Mixture
+As shown in Tab. 7, we observe a dynamic trade-off mechanism:
+• In the sample-sparse regime (Math10): Where math data is scarce, the baseline optimizer struggles to
+generalize on reasoning tasks. Nexus provides the most significant gains here (e.g., +15.0 on GSM8k),
+effectively "mining" the rare training signals to build robust reasoning capabilities.
+• In the sample-dense regime (Math70): As math data becomes abundant, the baseline catches up on
+math benchmarks. However, Nexus automatically shifts its advantage to the now-relative-minority
+domains. It significantly boosts General Knowledge (MMLU: +5.8) and broad Reasoning (GPQA: +3.1)
+compared to the baseline, which begins to suffer from domain dominance.
+• Lower sensitivity to mixture shifts: Nexus also demonstrates higher stability against drastic changes in
+data mixture. When shifting from a math-heavy (Math70) to a math-sparse (Math10) mixture, the
+performance variance of Nexus is significantly smaller than that of the baseline. For instance, while
+the baseline’s GSM8k score drops precipitously by 33.0 points (from 77.0 to 44.0), Nexus mitigates this
+degradation, dropping only 17.0 points (from 76.0 to 59.0). Similarly, on MMLU, while the baseline
+fluctuates by 3.8 points, Nexus remains highly stable with a variation of less than 1.0 point (49.8 vs.
+48.9), demonstrating its stability against data mixture changes.
+This suggests that Nexus reduces sensitivity to manual data mixing ratios, acting as an automatic balancer
+that prioritizes representations for the most under-optimized tasks in the mixture.
+H.3
+Experiments on a Public Dataset
+Motivation. While our primary analyses utilize strictly cleaned data to avoid confounding factors, many
+popular open-source pretraining datasets inevitably suffer from data contamination, inadvertently including
+42
+
+Table 7 Results on varying data mixtures (3B models). Hyperparameters follow Secs. 4.1 and 4.2. As the proportion
+of math data increases (10% →70%), the relative performance gains of Nexus on math benchmarks gradually diminish,
+whereas its advantages on other domains (General, Reasoning) progressively expand. This suggests Nexus boosts the
+sample-sparse or harder-to-learn domains in the mixture.
+Data
+Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+Math10
+AdamW Acc. (↑)
+1.606
+1.302
+47.8
+32.8
+22.6
+36.6
+44.0
+32.0
+43.0
+38.0
+37.1
+Loss (↓)
+2.265
+2.005
+1.910
+1.534
+1.259
+1.054
+1.116
+1.922
+1.633
+Nexus
+Acc. (↑)
+1.602
+1.290
+48.9
+29.6
+23.4
+36.6
+59.0
+40.0
+47.0
+38.0
+40.3
+Loss (↓)
+2.179
+1.981
+1.881
+1.504
+1.227
+1.026
+1.086
+1.921
+1.601
+Improv. Loss (↑)
++0.004
++0.012 +0.086 +0.024
++0.029
++0.030 +0.032 +0.028
++0.030
++0.001 +0.032
+Math40
+AdamW Acc. (↑)
+1.336
+1.330
+47.8
+29.6
+22.6
+38.1
+64.0
+44.0
+41.0
+38.0
+40.6
+Loss (↓)
+2.210
+1.989
+1.891
+1.522
+1.171
+0.969
+1.144
+1.976
+1.609
+Nexus
+Acc. (↑)
+1.339
+1.331
+51.2
+33.5
+27.3
+41.1
+70.0
+43.0
+45.0
+44.5
+44.4
+Loss (↓)
+2.182
+1.990
+1.889
+1.511
+1.117
+0.929
+1.132
+1.876
+1.578
+Improv. Loss (↑)
+-0.003
+-0.001 +0.028 -0.001
++0.002
++0.011 +0.054 +0.040
++0.012
++0.100 +0.031
+Math70
+AdamW Acc. (↑)
+1.033
+1.399
+44.0
+27.3
+23.4
+41.1
+77.0
+45.0
+38.0
+38.0
+41.7
+Loss (↓)
+2.252
+2.025
+1.923
+1.541
+1.111
+0.923
+1.178
+1.897
+1.606
+Nexus
+Acc. (↑)
+1.040
+1.409
+49.8
+30.4
+23.4
+42.5
+76.0
+52.0
+41.0
+38.0
+44.1
+Loss (↓)
+2.221
+2.037
+1.936
+1.548
+1.082
+0.911
+1.176
+1.872
+1.598
+Improv. Loss (↑)
+-0.007
+-0.010 +0.031 -0.012
+-0.013
+-0.007 +0.029 +0.012
++0.002
++0.025 +0.008
+benchmark training sets (e.g., GSM8k). We evaluate Nexus on a public dataset from Basant et al. [5] to
+investigate whether its consensus-seeking mechanism remains robust and mitigates shortcut over-memorization
+in the presence of such noisy, contaminated signals.
+Settings. We train the 1B and 3B models on a public dataset [5]. All other training configurations, including
+model architectures and base optimizer hyperparameters, are kept strictly identical to the main experiments
+detailed in Sec. 4.2.
+Table 8 Results on a public pretraining dataset [5]. The Adam baseline exhibits artificial performance inflation on
+leaked benchmarks. In contrast, Nexus effectively resists shortcut over-memorization, successfully reallocating model
+capacity to uncontaminated tasks and achieving superior overall OOD generalization.
+Model Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+1B
+Adam
+Acc. (↑)
+1.331
+1.863
+34.2
+25.8
+18.8
+24.8
+18.0
+14.0
+38.0
+1.0
+21.8
+Loss (↓)
+2.552
+2.280
+2.191
+1.700
+1.708
+1.346
+1.324
+2.991
+2.011
+Nexus
+Acc. (↑)
+1.338
+1.835
+31.4
+25.0
+18.8
+23.0
+22.0
+12.0
+41.0
+15.0
+23.5
+Loss (↓)
+2.446
+2.261
+2.172
+1.689
+1.749
+1.325
+1.325
+2.908
+1.984
+Improv. Loss (↑)
+-0.007
++0.028 +0.106 +0.019
++0.019
++0.011 -0.041
++0.021
+-0.001
++0.083 +0.027
+3B
+Adam
+Acc. (↑)
+1.330
+1.623
+55.1
+25.0
+27.3
+47.4
+44.0
+31.0
+59.0
+23.0
+39.0
+Loss (↓)
+2.356
+2.062
+1.975
+1.529
+1.519
+1.121
+1.205
+2.732
+1.812
+Nexus
+Acc. (↑)
+1.338
+1.606
+56.2
+25.8
+23.4
+44.4
+47.0
+32.0
+63.0
+38.0
+41.2
+Loss (↓)
+2.380
+2.047
+1.957
+1.540
+1.533
+1.106
+1.199
+2.530
+1.786
+Improv. Loss (↑)
+-0.008
++0.017 -0.024 +0.015
++0.018
+-0.011
+-0.014
++0.015
++0.006
++0.202 +0.026
+Results. As shown in Tab. 8, the Adam baseline exhibits artificial performance inflation on potentially
+contaminated benchmarks like GSM8k. In contrast, Nexus resists overfitting to these leaked signals and
+43
+
+effectively reallocates the model’s capacity to uncontaminated, sparse domains. This dynamic balancing is
+evidenced by the striking improvements on coding tasks—such as MBPP accuracy increasing from 1.0% to
+15.0% (1B) and 23.0% to 38.0% (3B)—ultimately leading to a consistently lower OOD loss across both scales.
+H.4
+Detailed Results for Model Size Scaling
+This section provides the detailed experimental results corresponding to the model size scaling analysis
+discussed in Sec. 4.3.
+Table 9 Benchmark Performance across Model Scales. We compare downstream capabilities for models ranging
+from 130M to 2.3B parameters. Notably, the relative gains of Nexus over the base optimizer amplify as model capacity
+increases, with the average benchmark accuracy improvement growing from +0.8% on the 130M model to +3.2% on
+the 2.3B model.
+Size
+Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+130M
+AdamW Acc. (↑)
+2.038
+1.559
+28.0
+22.6
+24.2
+25.1
+7.0
+6.0
+0.0
+10.0
+15.4
+Loss (↓)
+2.555
+2.438
+2.338
+1.793
+1.612
+1.360
+1.407
+2.230
+1.967
+Nexus
+Acc. (↑)
+2.031
+1.549
+27.0
+25.7
+21.8
+28.8
+5.0
+11.0
+0.0
+10.0
+16.2
+Loss (↓)
+2.523
+2.414
+2.312
+1.792
+1.601
+1.330
+1.384
+2.183
+1.942
+Improv. Acc. (↑)
+-
+-
+-1.0
++3.1
+-2.4
++3.7
+-2.0
++5.0
+0.0
+0.0
++0.8
+Loss (↑)
++0.007 +0.010 +0.032 +0.024
++0.026
++0.001 +0.011 +0.030
++0.023
++0.047 +0.024
+300M
+AdamW Acc. (↑)
+1.909
+1.474
+33.3
+26.5
+21.8
+31.8
+15.0
+15.0
+6.0
+16.0
+20.7
+Loss (↓)
+2.495
+2.296
+2.196
+1.704
+1.471
+1.255
+1.322
+2.141
+1.860
+Nexus
+Acc. (↑)
+1.901
+1.469
+30.3
+27.3
+25.0
+30.7
+14.0
+16.0
+13.0
+21.0
+22.2
+Loss (↓)
+2.381
+2.278
+2.177
+1.707
+1.470
+1.237
+1.298
+2.046
+1.824
+Improv. Acc. (↑)
+-
+-
+-3.0
++0.8
++3.2
+-1.1
+-1.0
++1.0
++7.0
++5.0
++1.5
+Loss (↑)
++0.008 +0.005 +0.114
++0.018
++0.019
+-0.003 +0.001 +0.018
++0.024
++0.095 +0.036
+520M
+AdamW Acc. (↑)
+1.826
+1.433
+32.1
+25.0
+21.8
+29.6
+18.0
+13.0
+19.0
+17.0
+21.9
+Loss (↓)
+2.363
+2.221
+2.124
+1.640
+1.429
+1.204
+1.270
+2.035
+1.786
+Nexus
+Acc. (↑)
+1.826
+1.428
+33.5
+30.4
+21.8
+29.3
+20.0
+13.0
+19.0
+22.0
+23.6
+Loss (↓)
+2.316
+2.201
+2.102
+1.638
+1.396
+1.176
+1.261
+1.977
+1.758
+Improv. Acc. (↑)
+-
+-
++1.4
++5.4
+0.0
+-0.3
++2.0
+0.0
+0.0
++5.0
++1.7
+Loss (↑)
+0.000
++0.005 +0.047 +0.020
++0.022
++0.002 +0.033 +0.028
++0.009
++0.058 +0.027
+1.2B
+AdamW Acc. (↑)
+1.714
+1.364
+44.4
+22.6
+24.2
+27.4
+30.0
+23.0
+30.0
+31.0
+29.1
+Loss (↓)
+2.626
+2.410
+2.000
+1.799
+1.338
+1.112
+1.199
+2.023
+1.813
+Nexus
+Acc. (↑)
+1.707
+1.358
+41.7
+25.7
+23.4
+32.9
+37.0
+28.0
+35.0
+30.0
+31.7
+Loss (↓)
+2.466
+2.373
+1.984
+1.792
+1.325
+1.109
+1.179
+1.987
+1.777
+Improv. Acc. (↑)
+-
+-
+-2.7
++3.1
+-0.8
++5.5
++7.0
++5.0
++5.0
+-1.0
++2.6
+Loss (↑)
++0.007 +0.006 +0.160 +0.037
++0.016
++0.007 +0.013 +0.003
++0.020
++0.036 +0.036
+2.3B
+AdamW Acc. (↑)
+1.606
+1.302
+47.8
+32.8
+22.6
+36.6
+44.0
+32.0
+43.0
+38.0
+37.1
+Loss (↓)
+2.265
+2.005
+1.910
+1.534
+1.259
+1.054
+1.116
+1.922
+1.633
+Nexus
+Acc. (↑)
+1.602
+1.290
+48.9
+29.6
+23.4
+36.6
+59.0
+40.0
+47.0
+38.0
+40.3
+Loss (↓)
+2.179
+1.981
+1.881
+1.504
+1.227
+1.026
+1.086
+1.921
+1.601
+Improv. Acc. (↑)
+-
+-
++1.1
+-3.2
++0.8
+0.0
++15.0
++8.0
++4.0
+0.0
++3.2
+Loss (↑)
++0.004
++0.012 +0.086 +0.024
++0.029
++0.030 +0.032 +0.028
++0.030
++0.001 +0.032
+As demonstrated above and analyzed in Sec. 4.3, Nexus consistently outperforms the base optimizer across all
+evaluated model scales, with average benchmark accuracy improvements of +0.8% (130M), +1.5% (300M),
++1.7% (520M), +2.6% (1.2B), and +3.2% (2.3B).
+44
+
+H.5
+Experiments on Muon Optimizers
+This section provides the detailed experimental results discussed in Secs. 4.2 and 5.2.
+Table 10 Comparison with Muon Optimizer on 3B Models. As shown, Muon improves downstream performance
+by decreasing the pretraining loss. While Nexus achieves nearly the same pretraining loss as AdamW, it achieves
+comparable performance to Muon on downstream tasks.
+Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+AdamW
+Acc. (↑)
+1.606
+1.302
+47.8
+32.8
+22.6
+36.6
+44.0
+32.0
+43.0
+38.0
+37.1
+Loss (↓)
+2.265
+2.005
+1.910
+1.534
+1.259
+1.054
+1.116
+1.922
+1.633
+Adam+Nexus Acc. (↑)
+1.602
+1.290
+48.9
+29.6
+23.4
+36.6
+59.0
+40.0
+47.0
+38.0
+40.3
+Loss (↓)
+2.179
+1.981
+1.881
+1.504
+1.227
+1.026
+1.086
+1.921
+1.601
+(- AdamW)
+Acc. (↑)
+-
+-
++1.1
+-3.2
++0.8
+0.0
++15.0
++8.0
++4.0
+0.0
++3.2
+Loss (↑)
++0.004
++0.012 +0.086 +0.024
++0.029
++0.030 +0.032 +0.028
++0.030
++0.001 +0.032
+Muon
+Acc. (↑)
+1.577
+1.285
+49.8
+32.0
+24.2
+41.9
+46.0
+38.0
+40.0
+43.0
+39.4
+Loss (↓)
+2.188
+1.968
+1.874
+1.502
+1.236
+1.035
+1.091
+1.951
+1.606
+(- AdamW)
+Acc. (↑)
+-
+-
++2.0
+-0.8
++1.6
++5.3
++2.0
++6.0
+-3.0
++5.0
++2.3
+Loss (↑)
++0.029 +0.017 +0.077 +0.037
++0.036
++0.032 +0.023 +0.019
++0.025
+-0.029 +0.027
+As demonstrated above, Nexus achieves comparable downstream performance to Muon, despite maintaining a
+pretraining loss that is nearly identical to the AdamW baseline. These results explicitly indicate that while
+Muon improves downstream performance primarily by reaching a significantly lower pretraining loss, the gains
+from Nexus stem directly from its favorable implicit bias.
+H.6
+Downstream SFT
+Motivation and Settings. To verify whether the performance gains of Nexus are merely a result of "pre-
+consuming" the potential improvements of the SFT phase in advance, we evaluate the supervised fine-tuning
+(SFT) performance of our checkpoints. We use an SFT dataset similar to [77] and branch off from the
+100,000-step checkpoints of the experiments in Sec. 4.6. Training is conducted on the SFT data with a learning
+rate of 2 × 10−5 and a global batch size of 256, which matches the pretraining learning rate and batch size at
+the 100,000-step mark. This setup can be viewed as continuing the learning rate decay on the SFT dataset,
+consistent with standard practices [77, 79, 88].
+Table 11 Downstream SFT Results. As shown, Nexus does not prematurely compromise the model’s SFT capabilities;
+on the contrary, it continues to outperform AdamW after SFT.
+Phase
+Optim.
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+SFT
+OOD
+MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP
+All
+Pre-SFT
+AdamW Acc. (↑) 1.655
+1.263
+52.7
+28.9
+25.8
+41.1
+54.0
+37.0
+50.0
+42.0
+41.4
+Loss (↓)
+2.221
+1.938
+1.842
+1.484
+1.233
+1.031
+1.053
+1.859
+1.583
+Nexus
+Acc. (↑) 1.647
+1.258
+50.9
+22.7
+22.7
+35.9
+57.0
+40.0
+48.0
+42.0
+39.9
+Loss (↓)
+2.138
+1.929
+1.838
+1.489
+1.179
+1.006
+1.030
+1.803
+1.552
+Improv. Loss (↑) +0.008 +0.005
++0.083 +0.009
++0.004
+-0.005 +0.054 +0.025
++0.023
++0.056 +0.031
+Post-SFT
+AdamW Acc. (↑) 1.035
+1.278
+51.4
+28.9
+33.6
+45.6
+58.0
+28.0
+40.0
+40.0
+40.7
+Loss (↓)
+2.244
+2.006
+1.915
+1.575
+1.377
+1.111
+1.077
+1.957
+1.658
+Nexus
+Acc. (↑) 1.028
+1.274
+54.7
+28.9
+29.7
+39.3
+62.0
+35.0
+46.0
+46.0
+42.7
+Loss (↓)
+2.220
+1.990
+1.901
+1.551
+1.299
+1.076
+1.060
+1.952
+1.631
+Improv. Acc. (↑)
+-
+-
++3.3
+0.0
+-3.9
+-6.3
++4.0
++7.0
++6.0
++6.0
++2.0
+Loss (↑) +0.007 +0.004
++0.024 +0.016
++0.014
++0.024 +0.078 +0.035
++0.017
++0.005 +0.027
+45
+
+Nexus still outperforms AdamW after SFT. As shown in Tab. 11, after supervised fine-tuning, Nexus achieves
+an average accuracy of 42.7%, surpassing the AdamW baseline by 2.0%. Specifically, Nexus outperforms
+AdamW by 7.0% on MATH, 6.0% on HumanEval, and 6.0% on MBPP. These results indicate that Nexus
+does not prematurely compromise the model’s capacity for downstream alignment.
+Nexus maintains lower SFT loss than AdamW throughout training.
+We observe that for the pre-SFT
+checkpoints, Nexus already yields a lower loss on the SFT dataset compared to AdamW (1.647 vs. 1.655).
+This result demonstrates that the geometric properties optimized by Nexus during pretraining translate into
+better generalization even before any explicit fine-tuning. Furthermore, this lower SFT loss is consistently
+maintained throughout the entire training process, as evidenced by the post-SFT loss (1.028 for Nexus vs.
+1.035 for AdamW). These observations indicate the potential of Nexus for continual training and extended
+optimization phases.
+H.7
+Experiment using SGDM
+Algorithm Newton-Schulz Iteration
+Algorithm RMS-Aligned Update
+def zeropower_via_ns(G, steps=5):
+a, b, c = 3.4445, -4.7750, 2.0315
+X = G / (torch.norm(G) + 1e-7)
+for _ in range(steps):
+A = X @ X.mT
+X = a*X + (b*A + c*A@A) @ X
+return X
+def sgd_alignRMS_update(G):
+K = min(G.shape[-2:])
+# Normalize to match Muon scale
+norm = torch.norm(G) + 1e-7
+return G * (K**0.5) / norm
+Figure 8 Muon-inspired SGDM. Left: Quintic Newton-Schulz iterations for orthogonalization. Right: Per-tensor
+RMS normalization ensuring consistent update scale as Muon.
+Motivation. We also conduct an experiment using SGD with Momentum (SGDM). However, SGDM typically
+converges slower than AdamW in LLM pretraining [95].
+Muon-Inspired SGDM. To this end, we adapt the Muon optimizer [32] to construct a faster SGDM baseline.
+Specifically, we control the RMS norm of SGDM updates to be the same as the orthogonalized updates in
+Muon, as shown in Fig. 8. This design is inspired by the empirical findings in Liu et al. [48], which suggest that
+maintaining a consistent per-tensor RMS norm aligns with the principles of Maximal Update Parameterization
+(µP). This may stabilize update dynamics and mitigate sensitivity to hyperparameter selection, and typically
+facilitate acceleration [63]. Surprisingly, in our LLM pretraining settings, this significantly accelerates SGDM,
+reaching speeds competitive with AdamW.
+Settings. Due to computational constraints, we only conduct experiments on 1B models, strictly adhering to
+the experimental settings detailed in Sec. 4.1.
+Results. On this SGDM baseline, we observe the following results (Fig. 9):
+• Pretraining Acceleration. Surprisingly, Nexus significantly accelerates pretraining loss minimization on
+SGDM. While the baseline SGDM is notably slower than AdamW, SGDM equipped with Nexus even
+surpasses the AdamW baseline. This acceleration may be attributed to the mechanism described in
+Appendix F.
+• Robust Implicit Bias. Since Nexus accelerates pretraining loss, direct comparisons of absolute downstream
+performance are confounded by the lower pretraining loss. Thus, we analyze the correlation between
+pretraining and downstream losses (Fig. 9). As shown in Fig. 9, the Nexus-SGDM curve lies consistently
+below the baseline SGDM, confirming that the favorable implicit bias persists even under different base
+optimizers.
+46
+
+0
+10000
+20000
+30000
+40000
+50000
+Step
+0.0000
+0.0005
+0.0010
+0.0015
+0.0020
+Learning Rate
+SGDM
+SGDM-Nexus
+(a) Learning Rate
+0
+10000
+20000
+30000
+40000
+50000
+Step
+2.0
+2.5
+3.0
+3.5
+4.0
+4.5
+Pretraining Loss
+SGDM
+SGDM-Nexus
+(b) Pretraining Loss
+0
+10000
+20000
+30000
+40000
+50000
+Step
+1.4
+1.6
+1.8
+2.0
+2.2
+2.4
+OOD Loss
+SGDM
+SGDM-Nexus
+(c) OOD Loss
+0
+10000
+20000
+30000
+40000
+50000
+Step
+1.8
+2.0
+2.2
+2.4
+2.6
+2.8
+3.0
+3.2
+Average Benchmark Loss
+SGDM
+SGDM-Nexus
+(d) Avg. Benchmark Loss
+0
+10000
+20000
+30000
+40000
+50000
+Step
+0.10
+0.12
+0.14
+0.16
+0.18
+0.20
+0.22
+Average Benchmark Acc.
+SGDM
+SGDM-Nexus
+(e) Avg. Benchmark Acc.
+0
+10000
+20000
+30000
+40000
+50000
+Step
+1.50
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+GSM8k Loss
+SGDM
+SGDM-Nexus
+(f) GSM8k Loss
+0
+10000
+20000
+30000
+40000
+50000
+Step
+1.4
+1.6
+1.8
+2.0
+2.2
+2.4
+HumanEval Loss
+SGDM
+SGDM-Nexus
+(g) HumanEval Loss
+0
+10000
+20000
+30000
+40000
+50000
+Step
+0.24
+0.26
+0.28
+0.30
+0.32
+MMLU Acc.
+SGDM
+SGDM-Nexus
+(h) MMLU Acc.
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+Pretrain Loss
+1.2
+1.4
+1.6
+1.8
+2.0
+2.2
+Math500 Loss
+SGDM
+SGDM-Nexus
+(i) Math500 Correlation
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+Pretrain Loss
+2.00
+2.25
+2.50
+2.75
+3.00
+3.25
+3.50
+3.75
+MBPP Loss
+SGDM
+SGDM-Nexus
+(j) MBPP Correlation
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+Pretrain Loss
+1.8
+2.0
+2.2
+2.4
+2.6
+2.8
+3.0
+3.2
+Average Benchmark Loss
+SGDM
+SGDM-Nexus
+(k) Avg. Loss Correlation
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+Pretrain Loss
+1.4
+1.6
+1.8
+2.0
+2.2
+2.4
+OOD Loss
+SGDM
+SGDM-Nexus
+(l) OOD Correlation
+Figure 9 Experimental Results using SGDM. Nexus both gives acceleration and implicit bias.
+H.8
+Experiment using Smaller Batch Size
+Motivation. It is well-established that smaller batch sizes can introduce an implicit bias that enhances
+generalization [29, 35, 52, 70]. To distinguish the geometric closeness bias of Nexus from this small-batch
+effect, we evaluate a baseline using AdamW with a reduced batch size of 128 on the 1B and 3B models. All
+hyperparameters remain identical to those in Sec. 4.1, except for the learning rate schedule, where we double
+47
+
+0
+50000
+100000
+150000
+200000
+Step
+0.0000
+0.0002
+0.0004
+0.0006
+0.0008
+0.0010
+Learning Rate
+AdamW-BS256
+AdamW-BS128
+Nexus
+(a) Learning Rate
+0
+50000
+100000
+150000
+200000
+Step
+1.6
+1.8
+2.0
+2.2
+2.4
+2.6
+2.8
+3.0
+Pretraining Loss
+AdamW-BS256
+AdamW-BS128
+Nexus
+(b) Pretraining Loss
+0
+50000
+100000
+150000
+200000
+Step
+1.0
+1.2
+1.4
+1.6
+1.8
+2.0
+Math500 Loss
+AdamW-BS256
+AdamW-BS128
+Nexus
+(c) Math500 Loss
+0
+50000
+100000
+150000
+200000
+Step
+1.2
+1.4
+1.6
+1.8
+2.0
+2.2
+HumanEval Loss
+AdamW-BS256
+AdamW-BS128
+Nexus
+(d) HumanEval Loss
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+Pretrain Loss
+1.2
+1.4
+1.6
+1.8
+2.0
+2.2
+HumanEval Loss
+AdamW-BS256
+AdamW-BS128
+Nexus
+(e) HumanEval Correlation
+1.75
+2.00
+2.25
+2.50
+2.75
+3.00
+Pretrain Loss
+1.25
+1.50
+1.75
+2.00
+2.25
+2.50
+2.75
+GSM8K Loss
+AdamW-BS256
+AdamW-BS128
+Nexus
+(f) GSM8K Correlation
+Figure 10 Experimental Results including the BS-128 Baseline. The standard AdamW and Nexus trajectories are
+retained from the main trials in Sec. 4.2 for direct comparison.
+Table 12 Results of Small Batch Size Baseline. Validation losses and downstream capabilities for AdamW trained
+with a reduced batch size of 128. Compared to the optimal BS-256 baseline reported in the main text (Tab. 1), reducing
+the batch size results in significant performance degradation.
+Model
+Configuration
+Metric
+Loss Metrics (↓)
+Gen.
+Reasoning
+Math
+Code
+Avg.
+Pretrain. OOD MMLU GPQA GPQA-D BBH GSM8k MATH HumanEval MBPP All
+1B
+AdamW (BS=128) Acc. (↑)
+1.937
+1.506
+29.3
+25.0
+20.3
+23.3
+8.0
+5.0
+11.0
+14.0
+17.0
+Loss (↓)
+2.396
+2.333
+2.231
+1.728
+1.510
+1.286
+1.340
+2.091 1.864
+3B
+AdamW (BS=128) Acc. (↑)
+1.627
+1.326
+45.4
+29.7
+21.9
+40.7
+39.0
+26.0
+37.0
+39.0
+34.8
+Loss (↓)
+2.262
+2.033
+1.937
+1.556
+1.281
+1.067
+1.148
+1.951 1.654
+the duration of both the stable and decay phases, as illustrated in Fig. 10(a).
+On this baseline, we observe the following:
+BS-128 is suboptimal compared to BS-256. As detailed in Sec. 4.1, our hyperparameter configurations are
+strictly aligned with the optimal settings established by Wen et al. [85]. Deviating from these settings
+compromises optimization efficiency. As demonstrated in Tab. 12, reducing the global batch size from 256 to
+128 causes the training speed to severely lag behind. Consequently, the AdamW-BS128 baseline substantially
+underperforms the standard AdamW-BS256 across both pretraining convergence and downstream benchmark
+evaluations by a loss margin of more than 0.02.
+BS-128 introduces implicit bias, but less significantly than Nexus. As illustrated in the correlation plots
+of Fig. 10, AdamW-BS128 indeed exhibits a favorable implicit bias compared to the standard AdamW,
+particularly during the early stages of training where the pretraining loss is high. However, in the later stages
+of training, the correlation curve of BS-128 lies between the standard AdamW and Nexus, indicating that
+its implicit bias is not as pronounced as that of Nexus. This confirms that the strong implicit bias of Nexus
+genuinely originates from its explicit geometric regularization, rather than merely mimicking the gradient
+48
+
+Algorithm 5 Controllable Nexus Variant for Ablation Study
+Require: Control coefficient λ ≥0
+1: ˆgt ←Algorithm 1 and 3(∇L(θt)) {Standard Nexus pseudo gradient}
+2: uablation ←ˆgt −γλ
+∇L(θt)
+∥∇L(θt)∥2+ϵ {Decouple optimization and regularization}
+3: Return: uablation
+0
+10000
+20000
+30000
+40000
+50000
+Step
+2
+3
+4
+5
+Pretraining Loss
+0.0
+0.1
+0.2
+0.4
+0.8
+(a) Pretraining Loss
+0
+10000
+20000
+30000
+40000
+50000
+Step
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Gradient Closeness on Pretrain Set
+0.0
+0.1
+0.2
+0.4
+0.8
+(b) Gradient Similarity (Pretrain Set)
+0
+10000
+20000
+30000
+40000
+50000
+Step
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Gradient Closeness on OOD Set
+0.0
+0.1
+0.2
+0.4
+(c) Gradient Similarity (OOD Set)
+Figure 11 Ablation Results on Regularization Strength λ. As the coefficient λ increases, there is a monotonic
+increase in gradient closeness across both training and OOD sets.
+noise effect of small batch sizes. Furthermore, while Nexus successfully induces this bias while maintaining an
+identical pretraining loss to the baseline, BS-128 fails to do so (suffering a pretraining loss degradation of
+approximately 0.02).
+H.9
+Ablation Studies on Regularization Term
+Motivation. The standard formulations of Nexus (Algorithm 1 and 3) intrinsically couple the optimization of
+the primary loss and the regularization term at a fixed, implicit ratio of 1 : γ K−1
+4K . To systematically decouple
+and investigate the specific regularization effect of Nexus, we design a controllable variant. As demonstrated in
+Algorithm 5, after obtaining the Nexus pseudo gradient ˆgt, we subtract a scaled, L2-normalized loss gradient
+γλ
+∇L(θt)
+∥∇L(θt)∥2 . Consequently, the expectation of the actual modified update uablation applied to the parameters
+is given by:
+E[uablation] = γ(1 −λ)
+K
+X
+i=1
+∇Li(θt)
+∥∇Li(θt)∥2
+−γ2 K −1
+4K
+
+∇θ
+X
+i̸=j
+CosSim(∇Li, ∇Lj) + Esym,i,j
+
++ E2nd.
+(116)
+In this formulation, λ ∈[0, 1) serves as a direct dial to control the regularization strength. As λ approaches
+1, the first-order loss-minimization component is explicitly suppressed, effectively amplifying the relative
+influence of the geometric regularization term.
+However, this modified algorithm is intended exclusively for ablation purposes, as it incurs double the
+computational overhead per step (despite maintaining an identical token budget). Consequently, we evaluate
+the impact of the regularization-to-loss ratio using the 1B model configuration described in Sec. 4.1, sweeping
+across λ ∈{0, 0.1, 0.2, 0.4, 0.8}, where λ = 0 corresponds to the original Nexus algorithm. The results are
+summarized as follows:
+Results. As illustrated in Fig. 11, we observe a clear monotonic relationship: the higher the λ, the higher
+the gradient closeness on both pretraining and OOD sets. This empirical evidence confirms that the Nexus
+mechanism indeed explicitly maximizes gradient closeness by inner-loop outer-loop mechanism.
+49
