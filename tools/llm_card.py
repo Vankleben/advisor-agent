@@ -1,5 +1,6 @@
 """
-工具三：LLM 导师卡片生成器 v2.1
+工具三：LLM 导师卡片生成器 v2.2
+改动：homepage_candidates 提取收紧——优先级排序 + 反幻觉校验外链来源
 用法：python tools/llm_card.py 董胤蓬           （默认在 collegeai 库里找）
       python tools/llm_card.py 葛亮 life
 """
@@ -33,7 +34,12 @@ SYSTEM_PROMPT = """你是导师情报分析员。我会给你一位高校老师�
    - "⚪"：原文没有任何相关信息
    严禁在没有任何原文支持时给出 🟢。
 4. 职业阶段（career_stage）：根据教育/工作年份推断，"青年"（博士毕业8年内/助理教授/刚建组）、"中年"（副教授到教授中段）、"资深"（教授多年/院士等头衔），evidence 给出推断依据的原句；无法判断填 null。
-5. 输出必须是合法 JSON，不要输出任何 JSON 以外的内容。"""
+5. 输出必须是合法 JSON，不要输出任何 JSON 以外的内容。
+6. 个人主页提取：
+   - 只能从【详情页外链】里挑选，严禁凭空编造任何 URL；
+   - 按可信度从高到低排序：个人主页 > 实验室主页 > Google Scholar > GitHub > 其他；
+   - 每条带 type 字段标注类型（personal / lab / scholar / github / other）；
+   - 找不到个人主页外链时填 []，不要编造。"""
 
 
 def build_card(teacher: dict) -> dict:
@@ -47,7 +53,7 @@ def build_card(teacher: dict) -> dict:
 详情页正文原文：
 {detail.get("detail_text", "")}
 
-详情页里的外链（个人主页候选）：
+详情页里的外链（label 是链接文字，url 是链接地址）：
 {json.dumps(detail.get("external_links", []), ensure_ascii=False)}
 
 请输出如下 JSON：
@@ -58,7 +64,9 @@ def build_card(teacher: dict) -> dict:
   "current_focus": {{"text": "近期在做什么", "evidence": ["原文原句1", "原文原句2"]}},
   "career_stage": {{"stage": "青年/中年/资深", "evidence": ["推断依据的原文原句"]}},
   "recruitment": {{"level": "🟢/🟡/⚪", "evidence": ["原文原句"] 或 null, "note": "补充说明"}},
-  "homepage_candidates": ["最可能是个人主页的外链"],
+  "homepage_candidates": [
+    {{"url": "外链地址（必须从上方外链列表里选）", "label": "外链文字", "type": "personal/lab/scholar/github/other"}}
+  ],
   "summary": "一句话概括这位老师"
 }}"""
 
@@ -75,9 +83,12 @@ def build_card(teacher: dict) -> dict:
 
 
 def verify_evidence(card: dict, teacher: dict) -> list[str]:
-    """反幻觉校验：卡片里的每条 evidence 必须能在详情页原文中原样搜到。"""
-    text = (teacher.get("detail") or {}).get("detail_text", "")
+    """反幻觉校验：evidence 必须能在原文搜到；homepage_candidates 的 url 必须来自外链列表。"""
+    detail = teacher.get("detail") or {}
+    text = detail.get("detail_text", "")
     text_flat = re.sub(r"\s+", "", text)
+    external_urls = {link["url"] for link in detail.get("external_links", [])
+                      if isinstance(link, dict) and "url" in link}
     warnings = []
 
     def check(field: str, ev):
@@ -92,6 +103,15 @@ def verify_evidence(card: dict, teacher: dict) -> list[str]:
           if isinstance(card.get("current_focus"), dict) else None)
     check("career_stage", (card.get("career_stage") or {}).get("evidence"))
     check("recruitment", (card.get("recruitment") or {}).get("evidence"))
+
+    # 校验 homepage_candidates 的 url 必须来自外链列表
+    for i, c in enumerate(card.get("homepage_candidates") or []):
+        url = c.get("url") if isinstance(c, dict) else c
+        if not url:
+            continue
+        if url not in external_urls:
+            warnings.append(f"⚠️ homepage_candidates[{i}] 的 url 不在详情页外链列表中：{url[:60]}...")
+
     return warnings
 
 
@@ -111,7 +131,7 @@ def main():
 
     warnings = verify_evidence(card, teacher)
     print("\n=== 反幻觉校验 ===")
-    print("\n".join(warnings) if warnings else "✅ 所有 evidence 均可在原文中找到")
+    print("\n".join(warnings) if warnings else "✅ 所有 evidence 均可在原文中找到，homepage_candidates 的 url 均来自外链列表")
 
 
 if __name__ == "__main__":
