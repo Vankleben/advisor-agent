@@ -1,11 +1,12 @@
 """
-模块六+九：聊天主循环 v4.3（导师情报 + 论文拆解 + M5思考批改 + M2导师深潜 + M4进组路径 + M1.5对比视图）
+模块六+九：聊天主循环 v4.4（导师情报 + 论文拆解 + M5思考批改 + M2导师深潜 + M4进组路径 + M1.5对比视图 + M6实时监测）
+v4.4 改动：新增 M6 实时情报监测（monitor / monitor_show）
 v4.3 改动：新增 M1.5 对比视图（panorama 全景表 + deep_compare 深度对比）
 v4.2 改动：新增 M4 进组路径分析工具 path_analysis
 用法：python main.py
       然后直接用中文提问，输入 quit 退出
 多行输入：/m 回车后逐行粘贴，最后单独一行输入 EOF 结束
-文件输入：/f D:\path\thinking.txt  （读取整个文件当一条消息）
+文件输入：/f 路径（读取整个文件当一条消息）
 """
 import json
 import traceback
@@ -28,6 +29,7 @@ import path_analysis as pa
 import compare_advisors as ca
 import web_fetch as wf
 import knowledge_store as ks
+import monitor as mon
 
 PROVIDERS = {
     "moonshot": {"base_url": "https://api.moonshot.cn/v1",
@@ -167,6 +169,27 @@ def tool_list_targets() -> str:
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"读取失败：{e}", "traceback": tb}, ensure_ascii=False)
+
+
+# ============ 工具八：M6 实时情报监测 ============
+
+def tool_monitor(name: str = "") -> str:
+    """对已收藏老师扫描主页变化 + 可选 arXiv 新论文，返回情报简报"""
+    try:
+        r = mon.scan(name)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"监测失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(r, ensure_ascii=False)
+
+
+def tool_monitor_show() -> str:
+    """查看监测历史简报"""
+    try:
+        return mon.show()
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"读取监测历史失败：{e}", "traceback": tb}, ensure_ascii=False)
 
 
 # ============ 工具二：论文链路 ============
@@ -342,6 +365,16 @@ TOOLS = [
         "description": "查看目标老师清单（用户问'我收藏了哪些老师/目标清单/盯哪些组'时调用）",
         "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {
+        "name": "monitor",
+        "description": "M6实时情报监测：扫描已收藏老师的主页是否有新增内容、arXiv是否有新论文，输出情报简报；可只扫某人（传 name）",
+        "parameters": {"type": "object", "properties": {
+            "name": {"type": "string", "description": "老师中文名，可省略；省略则扫全部收藏老师", "default": ""}},
+            "required": []}}},
+    {"type": "function", "function": {
+        "name": "monitor_show",
+        "description": "查看 M6 监测的历史简报（过去几轮扫描结果）",
+        "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {
         "name": "search_papers",
         "description": "查某老师近期发表的论文。参数是作者英文名（拼音），中文名由你负责转成拼音",
         "parameters": {"type": "object", "properties": {
@@ -404,6 +437,8 @@ DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "fetch_url": tool_fetch_url,
             "bookmark_advisor": tool_bookmark_advisor,
             "list_targets": tool_list_targets,
+            "monitor": tool_monitor,
+            "monitor_show": tool_monitor_show,
             "search_papers": tool_search_papers, "paper_decision": tool_paper_decision,
             "deep_dive": tool_deep_dive,
             "critique_thinking": tool_critique_thinking,
@@ -427,6 +462,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 9. M4路径分析流程：用户说怎么进某老师的组/该做什么项目/帮我规划进组时调 path_analysis（name 传老师中文名）；返回的 path 中 demand 每条保留 evidence 原句，supply 三档分列展示，actions 逐个展示并标注设备A/B；如果返回 error 说没有深潜报告，引导用户先做深潜；
 10. M1.5对比视图流程：用户说全览/有哪些老师/一览时调 panorama（无参数），结果展示为表格（姓名/职称/方向/招生信号/有无深潜）；用户说对比/比较几位老师时调 deep_compare（names 传中文名列表，2-5人），结果展示为七项打分矩阵表格 + 总结建议；无深潜报告的老师如实标注；用户只选了1人时提示至少选2人才能对比；
 11. 长期档案流程：用户说收藏某老师/想盯某老师时调 bookmark_advisor；用户汇报接触进展（读完论文了/发邮件了/老师回复了）时调 bookmark_advisor 更新 status（已读论文/已发邮件/已回复）；用户问收藏清单时调 list_targets；
+12. M6监测流程：用户说看看收藏的老师有什么新动态/情报/监测下他们时调 monitor（无参数扫全部，或传名字扫某人）；返回的 per_teacher 里 changes（主页新增内容）和 arxiv（新论文）分老师展示，[首次监测]说明该老师刚建立基线下次才有变化对比；"未监测"提示可深潜补主页URL以便开始监测；
 12. 回答用简洁中文，列表用表格。"""
 
 

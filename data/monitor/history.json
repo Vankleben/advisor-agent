@@ -1,0 +1,122 @@
+[
+  {
+    "date": "2026-09-04",
+    "per_teacher": [
+      {
+        "name": "俞立",
+        "urls": [
+          "https://liyu-lab-tsinghua.github.io/"
+        ],
+        "changes": [
+          "[首次监测] https://liyu-lab-tsinghua.github.io/ 已建立基线（后续开始跟踪变化）"
+        ],
+        "arxiv": [
+          {
+            "id": "2609.02786v1",
+            "title": "SafeEvolve: Harness-Policy Co-Evolution from Agent Experience for Safety Alignment",
+            "published": "2026-09-02"
+          },
+          {
+            "id": "2609.02751v1",
+            "title": "Multi-Tool Image Editing Attribution in Facial Forgery",
+            "published": "2026-09-02"
+          },
+          {
+            "id": "2609.01977v1",
+            "title": "Inflationary Magnetogenesis with f(R) Gravity: Dynamics, Constraints, and Observational Signatures during Reheating",
+            "published": "2026-09-02"
+          },
+          {
+            "id": "2608.30769v1",
+            "title": "TrainSDC: Characterizing and Mitigating Silent Data Corruption in Large Language Model Training",
+            "published": "2026-08-31"
+          },
+          {
+            "id": "2608.30214v1",
+            "title": "SPARK: Skeleton-Guided Reasoning Synthesis from Large-Scale Scientific Literature",
+            "published": "2026-08-31"
+          }
+        ],
+        "note": ""
+      },
+      {
+        "name": "王童",
+        "urls": [
+          "https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "changes": [
+          "[首次监测] https://life.tsinghua.edu.cn/info/1034/6714.htm 已建立基线（后续开始跟踪变化）"
+        ],
+        "arxiv": [],
+        "note": ""
+      }
+    ],
+    "summary": [
+      "俞立：1 源有变化 / 5 篇新论文",
+      "王童：1 源有变化 / 0 篇新论文"
+    ]
+  },
+  {
+    "date": "2026-09-04",
+    "per_teacher": [
+      {
+        "name": "俞立",
+        "urls": [
+          "https://liyu-lab-tsinghua.github.io/"
+        ],
+        "changes": [
+          "[无变化] https://liyu-lab-tsinghua.github.io/"
+        ],
+        "arxiv": [
+          "近期未检索到符合 俞立 主题的 arXiv 新论文（关键词：migrasome, membrane, cell migration）"
+        ],
+        "note": ""
+      },
+      {
+        "name": "王童",
+        "urls": [
+          "https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "changes": [
+          "[无变化] https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "arxiv": [],
+        "note": ""
+      }
+    ],
+    "summary": [
+      "俞立：1 源有变化 / 1 篇新论文",
+      "王童：1 源有变化 / 0 篇新论文"
+    ]
+  },
+  {
+    "date": "2026-09-04",
+    "per_teacher": [
+      {
+        "name": "俞立",
+        "urls": [
+          "https://liyu-lab-tsinghua.github.io/"
+        ],
+        "changes": [
+          "[无变化] https://liyu-lab-tsinghua.github.io/"
+        ],
+        "arxiv": [
+          "近期未检索到符合 俞立 主题的 arXiv 新论文（关键词：migrasome, membrane, cell migration）"
+        ],
+        "note": ""
+      },
+      {
+        "name": "王童",
+        "urls": [
+          "https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "changes": [
+          "[无变化] https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "arxiv": [],
+        "note": ""
+      }
+    ],
+    "summary": []
+  }
+]
