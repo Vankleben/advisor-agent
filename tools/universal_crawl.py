@@ -66,7 +66,7 @@ def main():
     )
     raw = json.loads(r.choices[0].message.content)["teachers"]
 
-    ok, dropped = [], []
+    # 核对姓名真实存在于页面原文
     for t in raw:
         if t.get("name") and t["name"] in html_clean:
             t["detail_url"] = urljoin(url, t.pop("detail_path") or "") or None
@@ -74,15 +74,37 @@ def main():
             ok.append(t)
         else:
             dropped.append(t.get("name"))
+    page_teachers = merge_by_name(ok)   # 本页转 sections 形态
 
-    teachers = merge_by_name(ok)
     out_file = DATA_DIR / f"faculty_{site}.json"
+
+    # 合并式落盘：已有名单按姓名保留，本页新增教师合进去，不覆盖丢数据。
+    # 支持分页师资页多次 add_school 累加（北大智能学院 5 页等场景）。
+    existing = []
+    if out_file.exists():
+        try:
+            existing = json.load(open(out_file, encoding="utf-8")).get("teachers", [])
+        except Exception:
+            existing = []
+    if existing:
+        if url in {t.get("source_url") for t in existing}:
+            print(f"ℹ️ 页面 {url} 已收录过，现有名单 {len(existing)} 人保持不变")
+            return
+        # 已有记录是 sections 形态，直接按名保留；本页新增的才补入
+        combined = {t["name"]: t for t in existing}
+        for t in page_teachers:
+            combined.setdefault(t["name"], t)
+        merged = list(combined.values())
+    else:
+        merged = page_teachers
+
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump({"source_url": url, "crawl_date": date.today().isoformat(),
-                   "count": len(teachers), "extractor": "llm",
-                   "teachers": teachers}, f, ensure_ascii=False, indent=2)
+                   "count": len(merged), "extractor": "llm",
+                   "teachers": merged}, f, ensure_ascii=False, indent=2)
 
-    print(f"提取 {len(raw)} 条 → 校验通过 {len(teachers)} 人 → {out_file}")
+    print(f"提取 {len(ok)} 条 → 校验通过 {len(merged)} 人 → {out_file}"
+          f"（跨页合并，累计 {len(merged)} 人）")
     if dropped:
         print(f"⚠️ {len(dropped)} 条未通过原文校验（疑似幻觉），已丢弃：{dropped}")
 

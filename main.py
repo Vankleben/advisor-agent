@@ -123,12 +123,18 @@ def tool_get_card(name: str, site: str = "") -> str:
 
 
 def tool_add_school(url: str, site_name: str) -> str:
-    r = subprocess.run([sys.executable, str(BASE_DIR / "tools" / "universal_crawl.py"),
-                        url, site_name],
-                       capture_output=True, text=True, timeout=300, cwd=str(BASE_DIR))
-    out = (r.stdout or "") + (r.stderr or "")
-    out += (f"\n提示：名单已收录。若要生成完整卡片，请让用户在终端执行："
-            f"python tools/enrich_faculty.py {site_name} 和 python tools/batch_cards.py {site_name}")
+    crawl = subprocess.run([sys.executable, str(BASE_DIR / "tools" / "universal_crawl.py"),
+                            url, site_name],
+                           capture_output=True, text=True, timeout=300, cwd=str(BASE_DIR))
+    out = (crawl.stdout or "") + (crawl.stderr or "")
+
+    # 名单落盘后自动补齐详情页与卡片，让 list_sites/list_teachers 立即可见
+    for script in ("enrich_faculty", "batch_cards"):
+        step = subprocess.run([sys.executable, str(BASE_DIR / "tools" / f"{script}.py"),
+                               site_name],
+                              capture_output=True, text=True, timeout=900, cwd=str(BASE_DIR))
+        out += "\n" + ((step.stdout or "") + (step.stderr or "")).strip()
+    out += f"\n提示：{site_name} 站点卡片已自动生成。如果名单不完整（如分页师资页），请把剩余分页的 URL 再调 add_school 合并。"
     return out
 
 
@@ -413,7 +419,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 1. 你只能通过调用工具获取信息，禁止凭自己的知识回答任何关于具体老师或论文的事实；
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
-4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页后调 add_school(url, 站点代号) 收录，并提醒用户在终端跑 enrich_faculty.py 和 batch_cards.py 生成卡片；一个学校可能多个相关学院，逐个收录；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；
+4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页调 add_school(url, 站点代号)；add_school 内部会**自动跑 enrich_faculty 和 batch_cards 生成卡片**，跑完后 list_sites/list_teachers 就能直接查到该站点，不要再让用户去终端敲命令；一个学院有分页师资页时（第2页/第3页...），把每个分页都调一次 add_school 用**同一站点代号**合并，add_school 会按姓名去重累加；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；收录后若用户继续问该学院老师，直接用 list_teachers/get_card。
 5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers -> 展示结果（重点推荐末位作者的论文，那是他主导的）-> 用户选定后先调 paper_decision 出决策卡 -> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
 7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
