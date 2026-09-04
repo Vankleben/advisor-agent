@@ -27,6 +27,7 @@ import advisor_deepdive as ad
 import path_analysis as pa
 import compare_advisors as ca
 import web_fetch as wf
+import knowledge_store as ks
 
 PROVIDERS = {
     "moonshot": {"base_url": "https://api.moonshot.cn/v1",
@@ -139,6 +140,27 @@ def tool_fetch_url(url: str) -> str:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"抓取失败：{e}", "traceback": tb}, ensure_ascii=False)
     return json.dumps(r, ensure_ascii=False)
+
+
+# ============ 工具七：长期知识档案 ============
+
+def tool_bookmark_advisor(name: str, status: str = "收藏", note: str = "") -> str:
+    """收藏/更新目标老师（接触进度：收藏/已读论文/已发邮件/已回复）"""
+    try:
+        result = ks.bookmark(name, status=status, note=note)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"收藏失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(result, ensure_ascii=False)
+
+
+def tool_list_targets() -> str:
+    """查看目标老师清单"""
+    try:
+        return ks.list_targets()
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"读取失败：{e}", "traceback": tb}, ensure_ascii=False)
 
 
 # ============ 工具二：论文链路 ============
@@ -302,6 +324,18 @@ TOOLS = [
             "url": {"type": "string", "description": "完整网址"}},
             "required": ["url"]}}},
     {"type": "function", "function": {
+        "name": "bookmark_advisor",
+        "description": "收藏/更新目标老师到长期档案（用户说收藏某老师、想盯某老师、或汇报接触进展如已发邮件/已回复时调用）",
+        "parameters": {"type": "object", "properties": {
+            "name": {"type": "string", "description": "老师中文名"},
+            "status": {"type": "string", "description": "接触进度：收藏/已读论文/已发邮件/已回复，默认收藏"},
+            "note": {"type": "string", "description": "备注，可省略", "default": ""}},
+            "required": ["name"]}}},
+    {"type": "function", "function": {
+        "name": "list_targets",
+        "description": "查看目标老师清单（用户问'我收藏了哪些老师/目标清单/盯哪些组'时调用）",
+        "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {
         "name": "search_papers",
         "description": "查某老师近期发表的论文。参数是作者英文名（拼音），中文名由你负责转成拼音",
         "parameters": {"type": "object", "properties": {
@@ -362,6 +396,8 @@ TOOLS = [
 DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "get_card": tool_get_card, "add_school": tool_add_school,
             "fetch_url": tool_fetch_url,
+            "bookmark_advisor": tool_bookmark_advisor,
+            "list_targets": tool_list_targets,
             "search_papers": tool_search_papers, "paper_decision": tool_paper_decision,
             "deep_dive": tool_deep_dive,
             "critique_thinking": tool_critique_thinking,
@@ -384,7 +420,8 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 8. M2深潜流程：用户说深挖/深入了解某位老师时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；
 9. M4路径分析流程：用户说怎么进某老师的组/该做什么项目/帮我规划进组时调 path_analysis（name 传老师中文名）；返回的 path 中 demand 每条保留 evidence 原句，supply 三档分列展示，actions 逐个展示并标注设备A/B；如果返回 error 说没有深潜报告，引导用户先做深潜；
 10. M1.5对比视图流程：用户说全览/有哪些老师/一览时调 panorama（无参数），结果展示为表格（姓名/职称/方向/招生信号/有无深潜）；用户说对比/比较几位老师时调 deep_compare（names 传中文名列表，2-5人），结果展示为七项打分矩阵表格 + 总结建议；无深潜报告的老师如实标注；用户只选了1人时提示至少选2人才能对比；
-11. 回答用简洁中文，列表用表格。"""
+11. 长期档案流程：用户说收藏某老师/想盯某老师时调 bookmark_advisor；用户汇报接触进展（读完论文了/发邮件了/老师回复了）时调 bookmark_advisor 更新 status（已读论文/已发邮件/已回复）；用户问收藏清单时调 list_targets；
+12. 回答用简洁中文，列表用表格。"""
 
 
 def main():
