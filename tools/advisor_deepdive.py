@@ -45,10 +45,12 @@ DEEP_PROMPT = """你是导师深潜分析员，服务对象是一名想找实验
 
 输出 JSON：
 {"research_now": [{"point": "近期研究重点", "evidence": ["原句"], "source": 1, "note": ""}],
+ "research_timeline": [{"point": "研究轨迹/方向漂移（近3-5年从什么转向什么，或一直稳定）", "evidence": ["原句"], "source": 1, "note": ""}],
  "lab_culture":   [{"point": "组内风格线索（会议/作息/氛围）", "evidence": ["原句"], "source": 1, "note": ""}],
  "recruitment":   [{"point": "招生意向与要求", "evidence": ["原句"], "source": 1, "note": ""}],
  "career_outcomes": [{"point": "学生毕业去向", "evidence": ["原句"], "source": 1, "note": ""}],
  "recent_activity": [{"point": "近期动态（论文/获奖/新闻）", "evidence": ["原句"], "source": 1, "note": ""}],
+ "github_footprint": [{"point": "开源/工程足迹（GitHub仓库/代码、工具、活跃度线索）", "evidence": ["原句"], "source": 1, "note": ""}],
  "fit_questions": ["结合以上情报，给用户的3-5个套磁/面试前该问的具体问题"],
  "summary": "一句话深潜结论（要不要重点考虑这位老师，为什么）"}
 
@@ -100,8 +102,8 @@ def load_enriched(name: str, site: str = "") -> dict:
 def verify_report(report: dict, src_texts: list) -> list:
     flats = [flatten(t) for t in src_texts]
     warnings = []
-    for section in ("research_now", "lab_culture", "recruitment",
-                    "career_outcomes", "recent_activity"):
+    for section in ("research_now", "research_timeline", "lab_culture", "recruitment",
+                    "career_outcomes", "recent_activity", "github_footprint"):
         for i, item in enumerate(report.get(section, [])):
             src_idx = int(item.get("source", 0)) - 1
             if not (0 <= src_idx < len(flats)):
