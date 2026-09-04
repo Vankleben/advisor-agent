@@ -118,5 +118,37 @@
       }
     ],
     "summary": []
+  },
+  {
+    "date": "2026-09-04",
+    "per_teacher": [
+      {
+        "name": "俞立",
+        "urls": [
+          "https://liyu-lab-tsinghua.github.io/"
+        ],
+        "changes": [
+          "[无变化] https://liyu-lab-tsinghua.github.io/"
+        ],
+        "arxiv": [
+          "近期未检索到符合 俞立 主题的 arXiv 新论文（关键词：migrasome, membrane, cell migration）"
+        ],
+        "github": [],
+        "note": ""
+      },
+      {
+        "name": "王童",
+        "urls": [
+          "https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "changes": [
+          "[无变化] https://life.tsinghua.edu.cn/info/1034/6714.htm"
+        ],
+        "arxiv": [],
+        "github": [],
+        "note": ""
+      }
+    ],
+    "summary": []
   }
 ]

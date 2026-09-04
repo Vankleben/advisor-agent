@@ -9,6 +9,15 @@ M6：实时情报监测
   忽略时间戳/页码/纯链接等噪音；首次建立基线不报变化。
 - arXiv：若该老师在 target_advisors 里填了 author_en，则用 paper_tools 检索并对比"已见论文 id"，
   报告新增。未填 author_en 的老师跳过 arXiv 检测。
+- GitHub：若该老师在 target_advisors 里填了 github（GitHub 用户名，如 tsinghua-mars-lab），
+  则拉取该账号最近 push 的仓库，报告新增仓库/活跃度。未填 github 的老师跳过。
+  归属需人工确认——同名账号很常见，务必填该老师真实的 GitHub 账号（从主页/论文脚注核对）。
+
+要启用某位老师的主页/arXiv/GitHub 监测，在 archive/target_advisors.json 的该老师条目加：
+  "urls": [...可选覆盖监测来源...]  （默认取深潜报告 sources）
+  "author_en": "英文名拼音，如 Yu Li",
+  "keywords": ["研究主题词1", "主题词2"],   （用于 arXiv 归属过滤）
+  "github": "GitHub用户名"
 - 输出：情报简报（按老师分组的 change list），存档到 data/monitor/{name}_briefing.json 与快照。
 
 用法：
@@ -76,6 +85,26 @@ def _semantic_diff(old: str, new: str) -> list:
     return out
 
 
+def _github_trail(github_id: str) -> list:
+    """GitHub 轨迹：拉该账号最近 push 的仓库，返回 [(repo, pushed_at, html_url)]，最多8个。"""
+    import requests
+    r = requests.get(
+        f"https://api.github.com/users/{github_id}/repos",
+        params={"sort": "pushed", "per_page": 8, "type": "owner"},
+        headers={"User-Agent": "advisor-agent", "Accept": "application/vnd.github+json"},
+        timeout=15)
+    r.raise_for_status()
+    out = []
+    for repo in r.json():
+        out.append({
+            "repo": repo.get("full_name", ""),
+            "pushed_at": (repo.get("pushed_at") or "")[:10],
+            "url": repo.get("html_url", ""),
+            "desc": (repo.get("description") or "")[:80],
+        })
+    return {"repos": out}
+
+
 def _nice_name(name: str) -> str:
     return str(name).replace("/", "_").replace("\\", "_")
 
@@ -112,8 +141,9 @@ def scan(name: str = "") -> dict:
     for t in targets:
         tname = t.get("name")
         author_en = t.get("author_en", "")      # 可填空，默认不做 arXiv 检测
+        github_id = t.get("github", "")          # 可填空，默认不做 GitHub 检测
         urls = _monitor_sources(tname)
-        entry = {"name": tname, "urls": urls, "changes": [], "arxiv": [], "note": ""}
+        entry = {"name": tname, "urls": urls, "changes": [], "arxiv": [], "github": [], "note": ""}
         if not urls:
             entry["note"] = "无深潜报告主页源，跳过页面监测（可在深潜时指定主页URL）"
 
@@ -173,12 +203,37 @@ def scan(name: str = "") -> dict:
             except Exception as e:
                 entry["arxiv"].append(str(e))
 
+        # 3) GitHub 轨迹（可选）
+        if github_id:
+            try:
+                g = _github_trail(github_id)
+                seen_file = MONITOR_DIR / f"{_nice_name(tname)}_github_seen.json"
+                seen = {}
+                if seen_file.exists():
+                    seen = json.loads(seen_file.read_text(encoding="utf-8"))
+                new_repos = [r for r in g["repos"] if r["repo"] not in seen]
+                # 记录本次全部仓库 + 最近 push 时间供下次对比
+                seen = {r["repo"]: r["pushed_at"] for r in g["repos"]}
+                seen_file.write_text(json.dumps(seen, ensure_ascii=False),
+                                     encoding="utf-8")
+                if new_repos:
+                    entry["github"] = [
+                        f"新仓库/新动态: {r['repo']}（最近更新 {r['pushed_at']}）{r['desc']}"
+                        for r in new_repos]
+                elif g["repos"]:
+                    entry["github"] = [f"{len(g['repos'])} 个仓库，最近无新增（最新：{g['repos'][0]['pushed_at']} {g['repos'][0]['repo']}）"]
+                else:
+                    entry["github"] = ["GitHub 无仓库"]
+            except Exception as e:
+                entry["github"].append(f"[GitHub 抓取失败] {e}")
+
         briefings["per_teacher"].append(entry)
         n_new_src = sum(1 for c in entry["changes"] if c.startswith("[有新增内容]"))
         n_new_arxiv = sum(1 for a in entry["arxiv"] if isinstance(a, dict))
-        if n_new_src or n_new_arxiv:
+        n_new_gh = sum(1 for g in entry["github"] if g.startswith("新仓库/新推送"))
+        if n_new_src or n_new_arxiv or n_new_gh:
             briefings["summary"].append(
-                f"{tname}：{n_new_src} 个主页源有新增 / {n_new_arxiv} 篇新论文")
+                f"{tname}：{n_new_src} 个主页源有新增 / {n_new_arxiv} 篇新论文 / {n_new_gh} 个仓库有更新")
 
     # 存历史
     hist = MONITOR_DIR / "history.json"
