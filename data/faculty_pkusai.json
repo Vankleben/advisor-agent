@@ -1,0 +1,48 @@
+{
+  "source_url": "http://sai.pku.edu.cn/szdw/zzjs/1.htm",
+  "crawl_date": "2026-09-04",
+  "count": 4,
+  "extractor": "llm",
+  "teachers": [
+    {
+      "name": "张岩",
+      "title": "教授",
+      "research": "信息检索，数据挖掘",
+      "email": "zhy@cis.pku.edu.cn",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/2243.htm",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "赵卉菁",
+      "title": "教授",
+      "research": "机器感知，智能车，自动驾驶，自主移动机器人",
+      "email": "zhaohj@cis.pku.edu.cn",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/2246.htm",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "钟亦武",
+      "title": "助理教授",
+      "research": "视觉-语言学习，多模态大模型，智能体，三维空间推理，具身机器人",
+      "email": "yiwu-zhong@outlook.com",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/3348.htm",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "朱松纯",
+      "title": "讲席教授",
+      "research": "计算机视觉、统计建模与计算、认知科学、机器学习、自主机器人等",
+      "email": "s.c.zhu@pku.edu.cn",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/2267.htm",
+      "sections": [
+        null
+      ]
+    }
+  ]
+}
