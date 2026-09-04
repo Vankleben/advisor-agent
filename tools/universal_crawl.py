@@ -67,6 +67,7 @@ def main():
     raw = json.loads(r.choices[0].message.content)["teachers"]
 
     # 核对姓名真实存在于页面原文
+    ok, dropped = [], []
     for t in raw:
         if t.get("name") and t["name"] in html_clean:
             t["detail_url"] = urljoin(url, t.pop("detail_path") or "") or None
