@@ -1,0 +1,160 @@
+{
+  "source_url": "http://sai.pku.edu.cn/szdw/zzjs/1.htm",
+  "crawl_date": "2026-09-04",
+  "enrich_date": "2026-09-04",
+  "count": 4,
+  "teachers": [
+    {
+      "name": "张岩",
+      "title": "教授",
+      "research": "信息检索，数据挖掘",
+      "email": "zhy@cis.pku.edu.cn",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/2243.htm",
+      "sections": [
+        null
+      ],
+      "detail": {
+        "detail_text": "张岩-北京大学智能学院 English 北京大学 首页 新闻动态 通知公告 学术交流 科研成果 学院概况 院长致辞 学院简介 组织结构 委员会 师资队伍 专职教师 博士后 行政教辅 荣休教师 学科建设 学科介绍 学科方向 学术成果 跨媒体通用人工智能全国重点实验室 校企合作 人才培养 研究生招生 研究生培养 智班培养 继续教育 招贤纳士 教师 博士后 青年论坛 行政教辅 学生工作 学工队伍 学生风采 公示信息 党团建设 所获荣誉 党建工作 党建动态 工会风采 智能校友 校友会 校友动态 校友捐赠 办公服务 行政办公 规章制度 常用下载 办事流程 会议室预定 学习专区 阅读专区 AI微课十讲 English 北京大学 导航菜单 专职教师 博士后 行政教辅 荣休教师 师资队伍 专职教师 博士后 行政教辅 荣休教师 当前位置: 首页 > 师资队伍 > 专职教师 >\r\n                正文 专职教师 张岩 时间：2019-04-12   \r\n              点击数： 职称 教授 研究领域 信息检索，数据挖掘 办公电话 86-10-6275 5592 电子邮件 zhy@cis.pku.edu.cn 分工 办公地点 张岩 职称：教授 研究所：信息科学中心 研究领域：信息检索，数据挖掘 办公电话：86-10-6275 5592 电子邮件： zhy@cis.pku.edu.cn 个人主页：http://www.cis.pku.edu.cn/szdw/zxjs/zy.htm 主要研究领域 信息检索，数据挖掘，大数据分析，网络科学 代表性学术论著 Tianshu Lyu, Yuan Zhang and Yan Zhang. Enhancing the Network Embedding Quality with Structural Similarity. CIKM 2017, Singapore. November 6-10, 2017 Yuan Zhang, Tianshu Lyu and Yan Zhang. Hierarchical Community-Level Information Diffusion Modeling in Social Networks. SIGIR 2017, Tokyo, Japan. August 7-11, 2017 Tianshu Lyu, Lidong Bing, Zhao Zhang, and Yan Zhang. Efficient and Scalable Detection of Overlapping Communities in Big Networks. ICDM 2016, Barcelona, Spain. December 12-15, 2016 Lidong Bing, Shan Jiang, Wai Lam, Yan Zhang, Shoaib Jameel. Adaptive Concept Resolution for Document Representation and Its Applications in Text Mining. Knowledge-Based Systems, 74:1-13, January 2015 Shi Zhao and Yan Zhang. Tailor Knowledge Graph for Query Understanding: Linking Intent Topics by Propagation. EMNLP 2014, Doha, Qatar. October 25-29, 2014Shize Xu, Shanshan Wang, and Yan Zhang. Summarizing Complex Events: a Cross-modal Solution of Storylines Extraction and Reconstruction. EMNLP 2013, Seattle, USA. October 18–21, 2013 Rui Yan, Congrui Huang, Jie Tang, Yan Zhang, and Xiaoming Li. To Better Stand on the Shoulder of Giants. JCDL 2012, Washington, DC, USA, June 10-14, 2012 (Nominated as best student paper) Shan Jiang, Lidong Bing, Bai Sun, Yan Zhang, and Wai Lam. Ontology Enhancement and Concept Granularity Learning: Keeping Yourself Current and Adaptive. KDD 2011, San Diego, USA. August 21-24, 2011 Rui Yan, Xiaojun Wan, Jahna Otterbacher, Liang Kong, Xiaoming Li, and Yan Zhang. Evolutionary Timeline Summarization: a Balanced Optimization Framework via Iterative Substitution. ACM SIGIR 2011, Beijing,China. July 24-28, 2011 Zhifeng Chen, Yan Zhang, Yuanyuan Zhou, Heidi Scott, Berni Schiefer: Empirical Evaluation of Multi-level Buffer Cache Collaboration for Storage Systems. SIGMETRICS 2005, Banff, Canada. June 06-10, 2005 蒋卓轩,张岩,李晓明. 基于MOOC数据的学习行为分析与预测. 《计算机研究与发展》2015年第3期 （入选“第二届中国科协优秀科技论文”） 主要科研项目 国家自然科学基金重点项目“面向课程的大规模在线教育资源组织与持续优化的理论与方法”（负责人），2016/01-2020/12 973课题“网络大数据模式发现与效应分析方法研究”（课题执行负责人），2014/01-2018/12 国家自然科学基金项目“大型语义辞典的自动生成及在文本分析中的应用”（负责人），2014/01-2017/12 国家自然科学基金项目“基于Web的热点事件检索和分析系统相关技术研究”（负责人），2011-2013 主要学术服务 CCF数据库专委会委员 NSFC、MOE-RCOE项目评议人 《数据挖掘与知识发现》编委 上一条： 罗定生 下一条： 吴玺宏 【 关闭 】 地址：北京市海淀区颐和园路5号（62755617）   反馈意见：its@pku.edu.cn Copyright 版权所有©北京大学智能学院 All Rrights Reserved.",
+        "emails": [
+          "zhy@cis.pku.edu.cn",
+          "its@pku.edu.cn"
+        ],
+        "external_links": [
+          {
+            "url": "https://www.pku.edu.cn/",
+            "label": "北京大学"
+          },
+          {
+            "url": "https://flbook.com.cn/c/NyAoHV8Ulg",
+            "label": "学科介绍"
+          },
+          {
+            "url": "http://162.105.209.37/Member/YDConRoom/",
+            "label": "会议室预定"
+          }
+        ],
+        "fallback": true
+      }
+    },
+    {
+      "name": "赵卉菁",
+      "title": "教授",
+      "research": "机器感知，智能车，自动驾驶，自主移动机器人",
+      "email": "zhaohj@cis.pku.edu.cn",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/2246.htm",
+      "sections": [
+        null
+      ],
+      "detail": {
+        "detail_text": "赵卉菁-北京大学智能学院 English 北京大学 首页 新闻动态 通知公告 学术交流 科研成果 学院概况 院长致辞 学院简介 组织结构 委员会 师资队伍 专职教师 博士后 行政教辅 荣休教师 学科建设 学科介绍 学科方向 学术成果 跨媒体通用人工智能全国重点实验室 校企合作 人才培养 研究生招生 研究生培养 智班培养 继续教育 招贤纳士 教师 博士后 青年论坛 行政教辅 学生工作 学工队伍 学生风采 公示信息 党团建设 所获荣誉 党建工作 党建动态 工会风采 智能校友 校友会 校友动态 校友捐赠 办公服务 行政办公 规章制度 常用下载 办事流程 会议室预定 学习专区 阅读专区 AI微课十讲 English 北京大学 导航菜单 专职教师 博士后 行政教辅 荣休教师 师资队伍 专职教师 博士后 行政教辅 荣休教师 当前位置: 首页 > 师资队伍 > 专职教师 >\r\n                正文 专职教师 赵卉菁 时间：2019-04-12   \r\n              点击数： 职称 教授 研究领域 机器感知，智能车，自动驾驶，自主移动机器人 办公电话 86-10-6275 7458 电子邮件 zhaohj@cis.pku.edu.cn 分工 办公地点 赵卉菁 职称：教授 研究所：信息科学中心 研究领域：机器感知，智能车，自动驾驶，自主移动机器人 办公电话：86-10-6275 7458 电子邮件：zhaohj@cis.pku.edu.cn 个人主页： http://www.poss.pku.edu.cn/ 教育背景 1996.10— 1999.09 ： 东京大学工学系研究科社会基础专业、博士课程、获博士学位 1994.10— 1996.09 ： 东京大学工学系研究科土木工程专业、硕士课程、获硕士学位 1987.09— 1991.07 ： 北京大学计算机科学系软件专业、本科、学术学位 主要研究领域 智能车与移动机器人、智能交通、环境感知、驾驶行为理解 代表性学术论著 1. Biao Gao, Xijun Zhao, Huijing Zhao, An Active and Contrastive Learning Framework for Fine-Grained Off-Road Semantic Segmentation, IEEE Trans. on Intelligent Transportation Systems (T-ITS), 24(1), 564-579, 2023. 2. Zhezhang Ding, Donghao Xu , Chenfeng Tu, Huijing Zhao , Mathieu Moze, François Aioun, and Franck Guillemard, Driver Identification Through Heterogeneity Modeling in Car-Following Sequences, IEEE Trans. on Intelligent Transportation Systems (T-ITS), 23(10), 17143-17156, 2022. 3. Zeyu Zhu, Huijing Zhao, A Survey of Deep RL and IL for Autonomous Driving Policy Learning, IEEE Trans. on Intelligent Transportation Systems (T-ITS), 23(9), 14043-14065, 2022. 4. Biao Gao, Yancheng Pan, Chengkun Li, Sibo Geng, Huijing Zhao, Are We Hungry for 3D LiDAR Data for Semantic Segmentation? A Survey of Datasets and Methods, IEEE Trans. on Intelligent Transportation Systems (T-ITS), 23(7), 6063-6081, 2022. 5. Xiaoliang Ju, Donghao Xu, Huijing Zhao, Scene-Aware Error Modeling of LiDAR/Visual Odometry for Fusion-Based Vehicle Localization, IEEE Trans. on Intelligent Transportation Systems (T-ITS), 23(7), 6480-6494, 2022. 主要科研项目 1. 国家自然科学基金联合基金重点项目（项目负责人），面向移动机器人长期自主机动的环境理解、建模和定位关键技术研究， U22A2061 ， 2023.1-2026.12. 2. 国家自然科学基金面上项目（项目负责人），路面车辆行为分析与情境理解， 61573027 ， 2016.1-2019.12. 3. 国家自然科学基金与法国国家科研署合作研究项目（项目负责人），基于多模态信息融合的智能车感知技术的跨国界研究， 61161130528, 2012.1-2014.12. 4. 国家自然科学基金面上项目（项目负责人），面向室外复杂动态场景的三维同时定位定向与地图创建的研究， 60975061 ， 2010.1-2012.12. 5. 国家自然科学基金重大研究计划重点项目（课题负责人），无人驾驶车辆智能行为综合测试环境设计与测评体系研究， 90920304 ， 2010.1-2012.12. 6. 法国标致雪铁龙 PCA-PKU 开放实验室项目（项目负责人），基于多模态传感器环境感知的驾驶行为建模与理解研究， 2012.11-2019.12. 主要获奖成果 1. First Prize at Valeo Innovation Challenge 2015. (Project title “Visual - based On-road Vehicle Detection and Tracking through Online Road Structure Understanding”, Team FalconView leaded by Yongkun Fang) 2. The Okawa Fundation Research Grant ， Semantic Mapping of Dynamic Environment, 2011.3. 3. Most Influential Paper Over The Decade Award , by IAPR Conference on Machine Vision and Application, 2009. (Zhao, H., Shibasaki, R., Reconstruction Textured Urban 3D Model by Fusing Ground-Based Laser Range Image and CCD Image",
+        "emails": [
+          "zhaohj@cis.pku.edu.cn",
+          "its@pku.edu.cn"
+        ],
+        "external_links": [
+          {
+            "url": "https://www.pku.edu.cn/",
+            "label": "北京大学"
+          },
+          {
+            "url": "https://flbook.com.cn/c/NyAoHV8Ulg",
+            "label": "学科介绍"
+          },
+          {
+            "url": "http://162.105.209.37/Member/YDConRoom/",
+            "label": "会议室预定"
+          },
+          {
+            "url": "http://www.poss.pku.edu.cn/",
+            "label": "http://www.poss.pku.edu.cn/"
+          },
+          {
+            "url": "https://www.cis.pku.edu.cn/__local/9/D7/5C/D428586168CC9B5A38809428007_8991F099_312FD.pdf?e=.pdf",
+            "label": "The Okawa Fundation Research Grant"
+          },
+          {
+            "url": "https://www.cis.pku.edu.cn/__local/7/C2/FD/248B800B43F3A3383B7526C9F18_E88BA27E_3DC00.pdf?e=.pdf",
+            "label": "Most Influential Paper Over The Decade Award"
+          }
+        ],
+        "fallback": true
+      }
+    },
+    {
+      "name": "钟亦武",
+      "title": "助理教授",
+      "research": "视觉-语言学习，多模态大模型，智能体，三维空间推理，具身机器人",
+      "email": "yiwu-zhong@outlook.com",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/3348.htm",
+      "sections": [
+        null
+      ],
+      "detail": {
+        "detail_text": "钟亦武-北京大学智能学院 English 北京大学 首页 新闻动态 通知公告 学术交流 科研成果 学院概况 院长致辞 学院简介 组织结构 委员会 师资队伍 专职教师 博士后 行政教辅 荣休教师 学科建设 学科介绍 学科方向 学术成果 跨媒体通用人工智能全国重点实验室 校企合作 人才培养 研究生招生 研究生培养 智班培养 继续教育 招贤纳士 教师 博士后 青年论坛 行政教辅 学生工作 学工队伍 学生风采 公示信息 党团建设 所获荣誉 党建工作 党建动态 工会风采 智能校友 校友会 校友动态 校友捐赠 办公服务 行政办公 规章制度 常用下载 办事流程 会议室预定 学习专区 阅读专区 AI微课十讲 English 北京大学 导航菜单 专职教师 博士后 行政教辅 荣休教师 师资队伍 专职教师 博士后 行政教辅 荣休教师 当前位置: 首页 > 师资队伍 > 专职教师 >\r\n                正文 专职教师 钟亦武 时间：2025-04-22   \r\n              点击数： 职称 助理教授 研究领域 视觉-语言学习，多模态大模型，智能体，三维空间推理，具身机器人 办公电话 电子邮件 yiwu-zhong@outlook.com 分工 办公地点 钟亦武 职称：助理教授 所在院系：智能学院 研究领域：视觉-语言学习，多模态大模型，智能体，三维空间推理，具身机器人 电子邮件： yiwu-zhong@outlook.com 个人主页： https://yiwuzhong.notion.site/homepage 学术主页： https://scholar.google.com/citations?user=irrbH_IAAAAJ&hl=en 北京大学智能学院助理教授、研究员、博士生导师，国家级青年人才项目（海外）获得者，北京大学博雅青年学者。博士毕业于美国威斯康星大学-麦迪逊分校（UW-Madison）计算机科学专业，后于香港中文大学任博士后研究员。研究方向聚焦于视觉-语言表征学习，致力于构建视觉世界与人类语言之间的桥梁，实现多模态的统一理解，为多模态大语言模型、空间理解、高效推理、具身智能体等前沿领域奠定了坚实基础。曾多次在美国和中国顶尖科技企业工作，包括Meta AI（硅谷总部），Microsoft Research（微软研究院总部），腾讯AI Lab（西雅图、深圳）。曾获得CVPR 2022最佳论文候选、CVPR 2023博士联盟奖、CVPR 2025杰出审稿人、Meta优秀实习生等来自于学术界和工业界的荣誉。 长期招收实习生、硕士研究生（考研）、博士研究生（直博和申请-考核）、以及国际港澳台学生，欢迎感兴趣的同学邮件联系。 上一条： 刘航欣 下一条： 方聪 【 关闭 】 地址：北京市海淀区颐和园路5号（62755617）   反馈意见：its@pku.edu.cn Copyright 版权所有©北京大学智能学院 All Rrights Reserved.",
+        "emails": [
+          "yiwu-zhong@outlook.com",
+          "its@pku.edu.cn"
+        ],
+        "external_links": [
+          {
+            "url": "https://www.pku.edu.cn/",
+            "label": "北京大学"
+          },
+          {
+            "url": "https://flbook.com.cn/c/NyAoHV8Ulg",
+            "label": "学科介绍"
+          },
+          {
+            "url": "http://162.105.209.37/Member/YDConRoom/",
+            "label": "会议室预定"
+          },
+          {
+            "url": "https://yiwuzhong.notion.site/homepage",
+            "label": "https://yiwuzhong.notion.site/homepage"
+          },
+          {
+            "url": "https://scholar.google.com/citations?user=irrbH_IAAAAJ&hl=en",
+            "label": "https://scholar.google.com/citations?user=irrbH_IAAAAJ&hl=en"
+          }
+        ],
+        "fallback": true
+      }
+    },
+    {
+      "name": "朱松纯",
+      "title": "讲席教授",
+      "research": "计算机视觉、统计建模与计算、认知科学、机器学习、自主机器人等",
+      "email": "s.c.zhu@pku.edu.cn",
+      "detail_url": "http://sai.pku.edu.cn/info/1362/2267.htm",
+      "sections": [
+        null
+      ],
+      "detail": {
+        "detail_text": "朱松纯-北京大学智能学院 English 北京大学 首页 新闻动态 通知公告 学术交流 科研成果 学院概况 院长致辞 学院简介 组织结构 委员会 师资队伍 专职教师 博士后 行政教辅 荣休教师 学科建设 学科介绍 学科方向 学术成果 跨媒体通用人工智能全国重点实验室 校企合作 人才培养 研究生招生 研究生培养 智班培养 继续教育 招贤纳士 教师 博士后 青年论坛 行政教辅 学生工作 学工队伍 学生风采 公示信息 党团建设 所获荣誉 党建工作 党建动态 工会风采 智能校友 校友会 校友动态 校友捐赠 办公服务 行政办公 规章制度 常用下载 办事流程 会议室预定 学习专区 阅读专区 AI微课十讲 English 北京大学 导航菜单 专职教师 博士后 行政教辅 荣休教师 师资队伍 专职教师 博士后 行政教辅 荣休教师 当前位置: 首页 > 师资队伍 > 专职教师 >\r\n                正文 专职教师 朱松纯 时间：2022-02-23   \r\n              点击数： 职称 讲席教授 研究领域 计算机视觉、统计建模与计算、认知科学、机器学习、自主机器人等 办公电话 电子邮件 s.c.zhu@pku.edu.cn 分工 办公地点 朱松纯 职称：讲席教授 所在院系：智能学院 研究领域：计算机视觉、统计建模与计算、认知科学、机器学习、自主机器人等 办公电话： 电子邮件：s.c.zhu@pku.edu.cn 个人主页： www.ai.pku.edu.cn/sczhu 朱松纯教授是人工智能领域全球著名的学者，主要研究包括通用人工智能基础、计算机视觉、统计建模与计算、认知科学、机器学习、自主机器人等。曾任美国加州大学洛杉矶分校（UCLA）统计学系与计算机系教授，UCLA计算机视觉、认知、学习与自主机器人中心（Center for Vision, Cognition, Learning and Autonomy，VCLA）主任。自 2021年12月起，任北京大学智能学院院长。 教育和工作经历 1986-1991年，中国科学技术大学，计算机专业，学士学位； 1992-1996年，美国哈佛大学，计算机专业，硕士、博士学位。 1996-1997年，美国布朗大学，应用数学专业，博士后。 1997-1998年，美国斯坦福大学，计算机系人工智能实验室，讲师。 1998-2002年，美国俄亥俄州立大学，计算机系与认知科学中心，助理教授。 2002-2006年，美国洛杉矶加州大学，统计系与计算机系，副教授 (终身教职)。 2006-2020年， 美国洛杉矶加州大学，统计系与计算机系，正教授。 2020年至今，北京通用人工智能研究院，院长 2020年至今，北京大学人工智能研究院，院长 2021年至今，北京大学智能学院，院长 学术研究 朱松纯教授已在国际顶级期刊和会议上发表论文300余篇，其研究成果集中在以下四个时期和领域： 一、视觉的统计建模与计算理论 —— 为马尔的视觉理论建立统一的数理模型 二、实现图像与场景的解译（parsing）计算框架 —— 扩展了模式识别创始人傅京孙先生的句法模式识别理论 三、提出人工智能的“暗物质” —— 研究视觉与认知的物理与社会常识 四、探索迈向通用人工智能的新的研究路径 ——“小数据、大任务”范式 有关朱教授的研究成果，请参考其个人学术主页 奖励和荣誉 · 2017年，计算建模奖 (Computational Modeling Prize)，国际认知科学学会 (Cognitive Science Society) · 2013年，赫尔姆霍茨奖 (Helmholtz Test-of-Time Award)，第14届国际计算机视觉大会颁发 · 2008年，第二届J.K.Aggarwal 奖，国际模式识别协会(6) · 2007年，马尔奖荣誉提名，第11届国际计算机视觉大会 · 2003年，马尔奖，第九届国际计算机视觉大会(7) · 2001年，Sloan fellow， Sloan基金 · 2001年，青年教授奖励基金 (Career Award)，美国国家科学基金委员会 · 2001年，杰出青年科学家奖 (ONR Young Investigator Award)，美国海军研究所颁发 · 1999年，马尔奖 (Marr Prize) 荣誉提名, 第7届国际计算机视觉大会颁发 上一条： 赵卉菁 下一条： 许超 【 关闭 】 地址：北京市海淀区颐和园路5号（62755617）   反馈意见：its@pku.edu.cn Copyright 版权所有©北京大学智能学院 All Rrights Reserved.",
+        "emails": [
+          "s.c.zhu@pku.edu.cn",
+          "its@pku.edu.cn"
+        ],
+        "external_links": [
+          {
+            "url": "https://www.pku.edu.cn/",
+            "label": "北京大学"
+          },
+          {
+            "url": "https://flbook.com.cn/c/NyAoHV8Ulg",
+            "label": "学科介绍"
+          },
+          {
+            "url": "http://162.105.209.37/Member/YDConRoom/",
+            "label": "会议室预定"
+          },
+          {
+            "url": "http://www.ai.pku.edu.cn/sczhu",
+            "label": "www.ai.pku.edu.cn/sczhu"
+          }
+        ],
+        "fallback": true
+      }
+    }
+  ]
+}
