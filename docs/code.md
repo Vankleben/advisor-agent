@@ -164,3 +164,14 @@ System Prompt 中固化了 11 条行为规则：工具返回什么就说什么�
 ## 12. 明确不做（划界，来自设计审计文档）
 
 不自动发邮件、不替用户做申请决策、不抓取需要登录的平台数据、不输出无来源断言、不维护两套 Agent 代码、不用生活比喻解释概念。
+
+## 13. 本地 Web 聊天界面（2026-09-04 新增）
+
+零依赖，复用 main.py 的 function calling 链路。启动：
+```bash
+conda activate advisor
+python web_server.py          # 浏览器打开 http://127.0.0.1:8080
+```
+- 单页聊天，前端渲染 markdown 表格/证据折叠/工具调用痕迹；支持多轮历史（messages 整段回传）。
+- 后端 `web_server.py`：http.server + POST /chat，agent.SYSTEM/TOOLS/DISPATCH 复用；ChatCompletionMessage 转 JSON 安全 dict。
+- 与 CLI `python main.py` 功能完全一致，只是多了可读性更好的页面。
