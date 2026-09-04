@@ -1,32 +1,3 @@
 {
-  "targets": [
-    {
-      "name": "俞立",
-      "site": "",
-      "status": "已读论文",
-      "note": "",
-      "added": "2026-09-04",
-      "author_en": "Yu Li",
-      "keywords": [
-        "migrasome",
-        "membrane",
-        "cell migration",
-        "vesicle"
-      ]
-    },
-    {
-      "name": "王童",
-      "site": "",
-      "status": "收藏",
-      "note": "",
-      "added": "2026-09-04",
-      "keywords": [
-        "protein",
-        "drug",
-        "molecular",
-        "AI",
-        "deep learning"
-      ]
-    }
-  ]
+  "targets": []
 }
