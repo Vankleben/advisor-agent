@@ -26,6 +26,7 @@ import critique_thinking as ct
 import advisor_deepdive as ad
 import path_analysis as pa
 import compare_advisors as ca
+import web_fetch as wf
 
 PROVIDERS = {
     "moonshot": {"base_url": "https://api.moonshot.cn/v1",
@@ -128,6 +129,16 @@ def tool_add_school(url: str, site_name: str) -> str:
     out += (f"\n提示：名单已收录。若要生成完整卡片，请让用户在终端执行："
             f"python tools/enrich_faculty.py {site_name} 和 python tools/batch_cards.py {site_name}")
     return out
+
+
+def tool_fetch_url(url: str) -> str:
+    """抓取网页正文+链接，供 Agent 自主导航定位院系/师资页/个人主页"""
+    try:
+        r = wf.fetch_url(url)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"抓取失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(r, ensure_ascii=False)
 
 
 # ============ 工具二：论文链路 ============
@@ -279,11 +290,17 @@ TOOLS = [
             "required": ["name"]}}},
     {"type": "function", "function": {
         "name": "add_school",
-        "description": "收录一个新学校的师资名单页（用户提供师资页网址时调用）",
+        "description": "收录一个新学校的师资名单页（通过 fetch_url 自主导航找到师资页网址后调用）",
         "parameters": {"type": "object", "properties": {
             "url": {"type": "string", "description": "师资名单页的完整网址"},
             "site_name": {"type": "string", "description": "给站点起个英文代号"}},
             "required": ["url", "site_name"]}}},
+    {"type": "function", "function": {
+        "name": "fetch_url",
+        "description": "抓取网页，返回清洗后的正文和可点击链接列表。用于自主导航：从学校主页沿'院系/机构/师资队伍'链接逐层找到目标学院的师资名单页，也可用于查看老师个人主页内容。多次调用即可像浏览器一样逐层深入",
+        "parameters": {"type": "object", "properties": {
+            "url": {"type": "string", "description": "完整网址"}},
+            "required": ["url"]}}},
     {"type": "function", "function": {
         "name": "search_papers",
         "description": "查某老师近期发表的论文。参数是作者英文名（拼音），中文名由你负责转成拼音",
@@ -344,6 +361,7 @@ TOOLS = [
 
 DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "get_card": tool_get_card, "add_school": tool_add_school,
+            "fetch_url": tool_fetch_url,
             "search_papers": tool_search_papers, "paper_decision": tool_paper_decision,
             "deep_dive": tool_deep_dive,
             "critique_thinking": tool_critique_thinking,
@@ -359,7 +377,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 1. 你只能通过调用工具获取信息，禁止凭自己的知识回答任何关于具体老师或论文的事实；
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
-4. 用户问未收录的学校时，主动说明并请他提供该校师资页网址；
+4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页后调 add_school(url, 站点代号) 收录，并提醒用户在终端跑 enrich_faculty.py 和 batch_cards.py 生成卡片；一个学校可能多个相关学院，逐个收录；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；
 5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers -> 展示结果（重点推荐末位作者的论文，那是他主导的）-> 用户选定后先调 paper_decision 出决策卡 -> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
 7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
