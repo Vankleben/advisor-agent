@@ -34,18 +34,8 @@ from config import PROVIDER   # noqa: E402
 # 批改需容纳论文全文，选长上下文模型（与 main.py 的 P["long"] 同角色）
 GRADING_MODEL = {"moonshot": "moonshot-v1-128k", "deepseek": "deepseek-chat"}[PROVIDER]
 
-USER_PROFILE = """【知识储备-已掌握】
-- ML/DL理论：Transformer/RNN/CNN框架
-- 工程：HuggingFace Transformers全流程（微调/loss/benchmark）；跑通过水印、越狱、R-Judge、Agent构建、CoT、RLHF、PoT（停留于"知道+跑过"层面）
-- 系统：Shell/集群训练脚本、Git、Vim
-- 推理系统入门：kernel核函数、KV cache、首token生成、CPU/GPU分工
-- 多模态入门：Qwen2.5-VL看图问答、CLIP余弦相似度
-
-【项目经历】
-- 熊类行为识别（川农课题组）：YOLO11迁移学习，mAP50 0.716→0.803，已交付
-- ESM-IF1蛋白质逆向折叠：完整流水线，序列恢复率45.8%，代码开源
-
-【兴趣方向】ML / LLM / CV / 具身智能 / AI4Science"""
+# 用户画像从 archive/profile.json 读取（唯一权威版本），禁止在此硬编码
+from user_profile import format_profile  # noqa: E402
 
 
 # ============ 加载论文原文与精读分析 ============
@@ -218,7 +208,7 @@ def run_grading(client, arxiv_id: str, thinking: str) -> dict:
         paper_truncated += f"\n...[原文共{len(paper_text)}字符，已截断]"
 
     prompt = GRADE_PROMPT.format(
-        profile=USER_PROFILE,
+        profile=format_profile(),
         paper_text=paper_truncated,
         analysis=json.dumps(analysis, ensure_ascii=False, indent=2)[:8000],
         thinking=thinking,

@@ -13,21 +13,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 DEEPDIVE_DIR = DATA_DIR / "deepdive"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 FENCE = chr(96) * 3
 
-USER_PROFILE = """【知识储备-已掌握】
-- ML/DL理论：Transformer/RNN/CNN框架
-- 工程：HuggingFace Transformers全流程（微调/loss/benchmark）；跑通过水印、越狱、R-Judge、Agent构建、CoT、RLHF、PoT（停留于"知道+跑过"层面）
-- 系统：Shell/集群训练脚本、Git、Vim
-- 推理系统入门：kernel核函数、KV cache、首token生成、CPU/GPU分工
-- 多模态入门：Qwen2.5-VL看图问答、CLIP余弦相似度
-
-【项目经历】
-- 熊类行为识别（川农课题组）：YOLO11迁移学习，mAP50 0.716→0.803，已交付
-- ESM-IF1蛋白质逆向折叠：完整流水线，序列恢复率45.8%，代码开源
-
-【兴趣方向】ML / LLM / CV / 具身智能 / AI4Science"""
+# 用户画像从 archive/profile.json 读取（唯一权威版本），禁止在此硬编码
+from user_profile import format_profile  # noqa: E402
 
 COMPARE_PROMPT = """你是导师对比分析员。用户是一名CS大三学生，想横向对比几个目标老师。
 
@@ -137,7 +128,7 @@ def deep_compare(client, model, names: list) -> dict:
         })
 
     prompt = COMPARE_PROMPT.format(
-        profile=USER_PROFILE,
+        profile=format_profile(),
         teachers_data=json.dumps(teachers_data, ensure_ascii=False))
 
     resp = client.chat.completions.create(

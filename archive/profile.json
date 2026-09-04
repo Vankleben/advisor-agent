@@ -1,9 +1,52 @@
 {
-    "interests": ["机器学习", "大模型", "机器视觉", "具身智能", "AI4Science"],
-    "known": ["Transformer架构", "注意力机制", "RNN", "CNN", "HuggingFace微调全流程", "tokenize与chat template", "前向反向传播与loss", "RLHF基本流程", "CoT", "LoRA/QLoRA", "KV cache", "向量空间与余弦相似度"],
-    "learning": ["CUDA与算子kernel入门", "推理系统(latency/throughput)", "分布式训练"],
-    "hardware": {
-      "设备A": "核显笔记本16GB内存：仅支持≤3B量化推理、数据处理、评测",
-      "设备B": "RTX3060 12GB+32GB内存：QLoRA微调7-8B上限，全参数微调≤1.5B，不可预训练"
+  "interests": [
+    "机器学习",
+    "大模型",
+    "机器视觉",
+    "具身智能",
+    "AI4Science"
+  ],
+  "known": [
+    "Transformer架构",
+    "注意力机制",
+    "RNN",
+    "CNN",
+    "HuggingFace微调全流程",
+    "tokenize与chat template",
+    "前向反向传播与loss",
+    "RLHF基本流程",
+    "CoT",
+    "LoRA/QLoRA",
+    "KV cache",
+    "向量空间与余弦相似度"
+  ],
+  "learning": [
+    "CUDA与算子kernel入门",
+    "推理系统(latency/throughput)",
+    "分布式训练"
+  ],
+  "hardware": {
+    "设备A": {
+      "summary": "核显笔记本（联想14寸，i7-12700H / Iris Xe核显 / 16GB LPDDR5 / 476GB SSD）",
+      "可行": "≤3B模型4bit量化推理；数据处理、评测脚本、prompt工程、API调用、论文复现的CPU环节；CLIP/小ViT级视觉实验",
+      "勉强": "7B Q4推理（约2-4 tok/s，仅\"跑通看看\"，不适合迭代实验）",
+      "不可行": "任何有实际意义的微调；7B以上模型；批量实验"
+    },
+    "设备B": {
+      "summary": "RTX3060 12GB台式机（i5-12400F / 32GB DDR4 / 932GB SSD）",
+      "可行": "7-8B模型Q4/Q8量化推理；13B Q4推理；QLoRA/LoRA微调7-8B；全参数微调≤1.5B；SD1.5级扩散模型推理与LoRA；YOLO级CV训练",
+      "勉强": "7B全参数微调（12GB显存极紧，不推荐）；14B Q4推理",
+      "不可行": "13B以上微调；任何规模的预训练；多卡分布式"
     }
-  }
+  },
+  "projects": [
+    {
+      "name": "熊类行为与个体识别（川农课题组访问学习）",
+      "detail": "YOLO11迁移学习，mAP50 0.716→0.803，已交付试运行"
+    },
+    {
+      "name": "ESM-IF1蛋白质逆向折叠",
+      "detail": "完整\"设计—评分—评估\"流水线，序列恢复率45.8%，代码开源"
+    }
+  ]
+}
