@@ -1,0 +1,168 @@
+{
+  "source_url": "https://sai.sjtu.edu.cn/cn/faculty/zzjs",
+  "crawl_date": "2026-09-04",
+  "count": 16,
+  "extractor": "llm",
+  "teachers": [
+    {
+      "name": "曹钦翔",
+      "title": "副教授",
+      "research": null,
+      "email": "caoqinxiang@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/caoqinxiang",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "陈思衡",
+      "title": "副教授",
+      "research": null,
+      "email": "sihengc@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/sihengc",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "蔡盼盼",
+      "title": "副教授",
+      "research": null,
+      "email": "cai_panpan@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/caipanpan",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "程远",
+      "title": "副教授",
+      "research": null,
+      "email": "cyuan328@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/chengyuan",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "陈立鹏",
+      "title": "副教授",
+      "research": null,
+      "email": "lipeng.chen@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/chenlipeng",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "陈明达",
+      "title": "副教授",
+      "research": null,
+      "email": "mingdachen@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/chenmingda",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "崔少波",
+      "title": "助理教授",
+      "research": null,
+      "email": "shaobo.cui@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/cuishaobo",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "陈颢天",
+      "title": "助理研究员",
+      "research": null,
+      "email": "haotianchen@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/chenhaotian",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "戴国浩",
+      "title": "副教授",
+      "research": null,
+      "email": "daiguohao@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/daiguohao",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "符芳诚",
+      "title": "副教授",
+      "research": null,
+      "email": "ccchengff@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/fufangcheng",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "冯二虎",
+      "title": "助理教授",
+      "research": null,
+      "email": "fengerhu1@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/fengerhu",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "郭宁",
+      "title": "助理研究员",
+      "research": null,
+      "email": "sjtu7439612@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/guoning",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "金梦",
+      "title": "教授",
+      "research": null,
+      "email": "jinm@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/jinmeng",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "卢策吾",
+      "title": "教授",
+      "research": null,
+      "email": "lucewu@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/lucewu",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "连文昭",
+      "title": "教授",
+      "research": null,
+      "email": "lianwenzhao@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/lianwenzhao",
+      "sections": [
+        null
+      ]
+    },
+    {
+      "name": "林洲汉",
+      "title": "副教授",
+      "research": null,
+      "email": "hantek@sjtu.edu.cn",
+      "detail_url": "https://sai.sjtu.edu.cn/cn/facultydetails/zzjs/linzhouhan",
+      "sections": [
+        null
+      ]
+    }
+  ]
+}
