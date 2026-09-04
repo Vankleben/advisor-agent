@@ -256,6 +256,13 @@ def run_grading(client, arxiv_id: str, thinking: str) -> dict:
     # 6. 错误记录回流长期知识档案（设计文档 M5：错误模式库）
     _backfill_errors(result["date"], arxiv_id, result.get("fact_errors") or [])
 
+    # 7. 已读论文库入库（凝练段落沉淀为申请素材）
+    try:
+        import knowledge_store
+        knowledge_store.update_read_papers(arxiv_id)
+    except Exception as e:
+        print(f"[M5] 已读论文库入库失败（不影响批改结果）：{e}")
+
     return result
 
 
