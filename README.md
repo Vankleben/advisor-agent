@@ -1,4 +1,8 @@
-# 导师情报与论文伴读 Agent 🎓
+<p align="center">
+  <img src="assets/banner.png" alt="导师情报与论文伴读 Agent" width="100%">
+</p>
+
+<h1 align="center">导师情报与论文伴读 Agent 🎓</h1>
 
 > 一个帮你 **找实验室、读论文、改认知、定进组路线** 的本地智能体。
 > 基于 LLM Function Calling + 多层反幻觉校验——**每条结论都能溯源到原文，查不到就明说，绝不编造。**
