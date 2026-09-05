@@ -1,0 +1,5136 @@
+{
+  "count": 190,
+  "cards": [
+    {
+      "name": "邬江兴",
+      "title": "院士、博导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "职称： 院士 、 博导"
+        ],
+        "note": "院士头衔，资深学者，日常指导可能由团队其他成员承担，但资源丰富。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院的院士、博导，但页面信息极少，无具体研究方向。",
+      "_verification": []
+    },
+    {
+      "name": "柴洪峰",
+      "title": "院士、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "职称： 院士 、 博导"
+        ],
+        "note": "院士头衔表明其已处于学术生涯顶端，资源丰富，但日常指导可能由团队其他成员承担。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "柴洪峰是复旦大学的院士和博导，研究领域未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "沈学民",
+      "title": "院士、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "职称： 院士 、 博导"
+        ],
+        "note": "院士头衔，名头资源多，但日常指导可能由团队其他成员承担。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "沈学民是复旦大学计算与智能创新学院的院士、博导，但页面信息有限。",
+      "_verification": []
+    },
+    {
+      "name": "陈阳",
+      "title": "教授、博导",
+      "research_interests": [
+        "智能互联网",
+        "社交网络",
+        "网络大数据",
+        "城市计算",
+        "大语言模型"
+      ],
+      "current_focus": {
+        "text": "研究领域为智能互联网、社交网络、网络大数据、城市计算、大语言模型",
+        "evidence": [
+          "研究领域： 智能互联网、社交网络、网络大数据、城市计算、大语言模型"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://chenyang03.wordpress.com/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究领域涵盖智能互联网、社交网络、网络大数据、城市计算和大语言模型。",
+      "_verification": []
+    },
+    {
+      "name": "窦德景",
+      "title": "教授、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授、博导，但页面信息极少，缺乏研究方向和招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "戴开宇",
+      "title": "教授、硕导",
+      "research_interests": [
+        "智慧教育"
+      ],
+      "current_focus": {
+        "text": "研究方向为智慧教育，并致力于课程建设与教学改革。",
+        "evidence": [
+          "研究方向为智慧教育。",
+          "负责课程获评国家级一流本科课程，上海市一流本科课程（2门），上海市本科重点课程（3门）等；获得上海市教学成果奖二等奖，首届复旦大学教师教学创新大赛一等奖等。"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://wenuanhappy.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "戴开宇是复旦大学计算与智能创新学院的教授和硕导，研究方向为智慧教育，曾获多项教学奖项和荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "傅金兰",
+      "title": "研究员、硕导",
+      "research_interests": [
+        "大语言模型",
+        "多模态大模型",
+        "智能体"
+      ],
+      "current_focus": {
+        "text": "大语言模型、多模态大模型与智能体",
+        "evidence": [
+          "研究领域： 大语言模型、多模态大模型与智能体"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "傅金兰，复旦大学计算与智能创新学院助理教授A/研究员、博士生导师，入选国家级青年人才计划。曾在新加坡国立大学从事博士后研究工作。"
+        ],
+        "note": "青年学者，亲自指导可能性高，但资源积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://jinlanfu.github.io",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院助理教授/研究员，研究方向为大语言模型、多模态大模型与智能体，曾获多项荣誉，谷歌学术引用高。",
+      "_verification": []
+    },
+    {
+      "name": "傅晓明",
+      "title": "教授、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授、博导，但页面未提供研究方向和招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "冯瑞",
+      "title": "研究员、博导",
+      "research_interests": [
+        "人工智能",
+        "跨媒体智能",
+        "医学影像分析",
+        "视频大数据"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/fengrui/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院研究员、博导，研究方向为人工智能、跨媒体智能、医学影像分析、视频大数据。",
+      "_verification": []
+    },
+    {
+      "name": "黄萱菁",
+      "title": "教授、博导",
+      "research_interests": [
+        "人工智能",
+        "自然语言处理",
+        "大语言模型"
+      ],
+      "current_focus": {
+        "text": "主要从事人工智能、自然语言处理和大语言模型研究",
+        "evidence": [
+          "主要从事人工智能、自然语言处理和大语言模型研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "复旦大学特聘教授，国家级领军人才。",
+          "在国际重要学术刊物和会议发表论文200余篇，被引3万余次，8次入选优秀论文奖。"
+        ],
+        "note": "资深教授，名头资源多，但日常指导可能由团队其他成员承担，申请时需主动联系并展示自身能力。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件咨询。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://xuanjing-huang.github.io/chinese/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学特聘教授，国家级领军人才，主要研究人工智能、自然语言处理和大语言模型，学术成果丰硕。",
+      "_verification": []
+    },
+    {
+      "name": "黄橙",
+      "title": "青年研究员、博导",
+      "research_interests": [
+        "数据隐私",
+        "人工智能安全"
+      ],
+      "current_focus": {
+        "text": "数据隐私和人工智能安全",
+        "evidence": [
+          "研究方向为数据隐私和人工智能安全"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "青年研究员、博士生导师，国家级青年人才",
+          "博士毕业于加拿大滑铁卢大学电气与计算机工程专业"
+        ],
+        "note": "青年研究员，刚建组，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://chenghuang-sec.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院青年研究员、博导，研究方向为数据隐私和人工智能安全，发表多篇高水平论文。",
+      "_verification": []
+    },
+    {
+      "name": "何震瀛",
+      "title": "教授、博导",
+      "research_interests": [
+        "AI4DB",
+        "DB4AI"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为AI4DB和DB4AI。",
+      "_verification": []
+    },
+    {
+      "name": "韩伟力",
+      "title": "教授、博导",
+      "research_interests": [
+        "数据驱动的系统安全",
+        "访问控制",
+        "人工智能系统安全"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/weili/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "韩伟力是复旦大学计算与智能创新学院的教授、博导，研究领域为数据驱动的系统安全、访问控制和人工智能系统安全。",
+      "_verification": []
+    },
+    {
+      "name": "金玲飞",
+      "title": "教授、博导",
+      "research_interests": [
+        "编码与密码",
+        "隐私计算"
+      ],
+      "current_focus": {
+        "text": "研究方向包括编码与密码，隐私计算等。",
+        "evidence": [
+          "研究方向包括编码与密码，隐私计算等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "复旦大学计算与智能创新学院教授、博导。",
+          "2021-2024年度连续入选全球前2%顶尖科学家榜单。",
+          "入选上海市东方特聘教授。",
+          "曾主持国家自然科学基金面上基金，上海市青年科技启明星计划等。"
+        ],
+        "note": "教授且已有多年成果积累，可能处于科研产出稳定期，但指导风格需具体联系确认。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为编码与密码、隐私计算，曾获多项荣誉和奖项。",
+      "_verification": []
+    },
+    {
+      "name": "荆一楠",
+      "title": "教授、博导",
+      "research_interests": [
+        "大数据分析",
+        "数据库系统与AI4DB",
+        "时空数据管理",
+        "金融科技"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://daslab.fudan.edu.cn/61/7f/c26852a287103/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向包括大数据分析、数据库系统与AI4DB、时空数据管理和金融科技。",
+      "_verification": []
+    },
+    {
+      "name": "金城",
+      "title": "教授、博导",
+      "research_interests": [
+        "多媒体分析与检索",
+        "人机交互"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cjinfdu.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为多媒体分析与检索和人机交互。",
+      "_verification": []
+    },
+    {
+      "name": "阚海斌",
+      "title": "教授、博导",
+      "research_interests": [
+        "编码与信息论",
+        "密码学与信息安全",
+        "计算复杂性"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://cis.cs.fudan.edu.cn/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为编码与信息论、密码学与信息安全、计算复杂性。",
+      "_verification": []
+    },
+    {
+      "name": "李斌",
+      "title": "教授、博导",
+      "research_interests": [
+        "机器学习",
+        "视觉认知理论方法",
+        "物理场景理解",
+        "抽象视觉推理",
+        "多模态大数据分析"
+      ],
+      "current_focus": {
+        "text": "担任学院人工智能教学团队负责人与交叉融通人才培养专项工作小组负责人",
+        "evidence": [
+          "目前担任学院人工智能教学团队负责人与交叉融通人才培养专项工作小组负责人。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "曾任澳大利亚联邦科学与工业研究组织（CSIRO）高级研究科学家。",
+          "在人工智能权威期刊与顶级会议上发表论文百余篇，担任机器学习三大会领域主席（Area Chair）；授权发明专利10余项。"
+        ],
+        "note": "资源稳定，但可能指导时间有限，需主动联系。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://aimpressionist.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为机器学习与视觉认知，有丰富科研和教学经验。",
+      "_verification": []
+    },
+    {
+      "name": "吕智慧",
+      "title": "教授、博导",
+      "research_interests": [
+        "网络多媒体技术",
+        "云计算与服务计算技术",
+        "大数据架构",
+        "边缘智能",
+        "联邦学习",
+        "区块链分布式系统",
+        "网络智能监管"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://dblp.uni-trier.de/pid/51/4748.html",
+          "label": "个人主页",
+          "type": "other"
+        }
+      ],
+      "summary": "吕智慧是复旦大学计算与智能创新学院的教授和博导，研究领域涵盖网络多媒体、云计算、大数据、边缘智能、联邦学习、区块链等。",
+      "_verification": []
+    },
+    {
+      "name": "李伟",
+      "title": "教授、博导",
+      "research_interests": [
+        "音频信息处理",
+        "多媒体信息安全"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/weilics/zh_CN",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "李伟是复旦大学计算与智能创新学院的教授、博导，研究方向为音频信息处理与多媒体信息安全。",
+      "_verification": []
+    },
+    {
+      "name": "卢暾",
+      "title": "教授、博导",
+      "research_interests": [
+        "CSCW与社会计算",
+        "人机协同与交互",
+        "群智协同",
+        "推荐系统",
+        "服务与云计算"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cscw.fudan.edu.cn/tunlu/list.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "卢暾是复旦大学计算与智能创新学院的教授和博导，研究领域涵盖CSCW与社会计算、人机协同与交互、群智协同、推荐系统及服务与云计算。",
+      "_verification": []
+    },
+    {
+      "name": "路红",
+      "title": "教授、博导",
+      "research_interests": [
+        "图像和视频处理",
+        "计算机视觉",
+        "机器学习",
+        "模式识别",
+        "机器人任务"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/luhong1/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "路红是复旦大学计算与智能创新学院的教授、博导，研究方向为图像和视频处理、计算机视觉、机器学习、模式识别和机器人任务。",
+      "_verification": []
+    },
+    {
+      "name": "李晟",
+      "title": "教授、博导",
+      "research_interests": [
+        "多媒体内容安全",
+        "多媒体内容生成",
+        "人工智能安全"
+      ],
+      "current_focus": {
+        "text": "多媒体内容安全、多媒体内容生成、人工智能安全",
+        "evidence": [
+          "研究领域： 多媒体内容安全、多媒体内容生成、人工智能安全"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "主持了国家自然科学基金面上/青年项目、国家重点研发计划子课题、国家自然科学基金重点项目子课题等国家级项目，以及上海市青年科技英才扬帆计划、阿里巴巴创新研究计划、CCF-蚂蚁专项基金等省部级和企业合作项目"
+        ],
+        "note": "已主持多项国家级项目，处于科研产出和资源稳定期，可能有一定团队规模，但指导风格需具体了解。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://blazelisheng.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为多媒体内容安全、内容生成与人工智能安全，主持多项国家级项目，发表论文百余篇。",
+      "_verification": []
+    },
+    {
+      "name": "牛军钰",
+      "title": "教授、博导",
+      "research_interests": [
+        "大规模中文文本信息处理",
+        "公共绩效与信息化"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/c3/c25922a278211/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "牛军钰是复旦大学计算与智能创新学院的教授、博导，研究领域为大规模中文文本信息处理和公共绩效与信息化。",
+      "_verification": []
+    },
+    {
+      "name": "彭鑫",
+      "title": "教授、博导",
+      "research_interests": [
+        "软件智能化开发",
+        "云原生与AI原生系统",
+        "智能汽车与智能制造基础软件"
+      ],
+      "current_focus": {
+        "text": "研究方向包括软件智能化开发、云原生与AI原生系统、智能汽车与智能制造基础软件等。",
+        "evidence": [
+          "研究方向包括软件智能化开发、云原生与AI原生系统、智能汽车与智能制造基础软件等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "复旦大学计算与智能创新学院副院长、教授，国家级高层次人才计划入选者。",
+          "获“NASAC青年软件创新奖”及“中创软件人才奖”，入选上海市东方英才拔尖项目。"
+        ],
+        "note": "已任副院长，有行政职务，可能指导时间有限，但资源丰富。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/pengxin/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "彭鑫是复旦大学计算与智能创新学院副院长、教授，国家级高层次人才，研究方向为软件智能化开发、云原生与AI原生系统、智能汽车与智能制造基础软件。",
+      "_verification": []
+    },
+    {
+      "name": "钱振兴",
+      "title": "教授、博导",
+      "research_interests": [
+        "多媒体信息安全",
+        "人工智能安全与应用"
+      ],
+      "current_focus": {
+        "text": "主要从事多媒体信息安全、人工智能安全与应用等方面的研究",
+        "evidence": [
+          "主要从事多媒体信息安全、人工智能安全与应用等方面的研究"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "复旦大学计算与智能创新学院教授、博导，本科至博士毕业于中国科学技术大学，入选国家高层次人才计划，担任文化和旅游部重点实验室副主任。",
+          "主持国家自然科学基金重点、国家重点研发计划课题等各类项目30余项，在IEEE TPAMI, TIFS, TMM, TDSC, TIP, TCSVT, TCYB, TASLP, TCC, TNSE; CVPR, ICCV, AAAI, IJCAI, NeurIPS, ACM MM等重要期刊和会议上发表学术论文200余篇，担任IEEE TCYB, IEEE TCSVT, IEEE TASLP, SP, JVCI、中国图象图形学报等多个著名期刊的编委，担任ACM MM, IEEE ICME等国内外学术会议的领域主席，编著图书《多媒体安全基础导论》、《多媒体与人工智能安全极简综述》、《计算机教授白话人工智能》、《计算机教授跟孩子聊AI与艺术》、《计算机教授给孩子讲历史》等。研究成果在多家单位获得应用，获得上海市自然科学奖一等奖、上海市科技进步二等奖、文津图书提名奖等奖项。"
+        ],
+        "note": "教授且成果丰富，处于事业稳定期，可能有一定资源，但日常指导可能由团队其他成员分担。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://tomzqian.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究多媒体信息安全与人工智能安全，成果丰硕。",
+      "_verification": []
+    },
+    {
+      "name": "邱锡鹏",
+      "title": "教授、博导",
+      "research_interests": [
+        "大语言模型",
+        "智能体"
+      ],
+      "current_focus": {
+        "text": "主要研究方向为大语言模型和智能体，主持研发了MOSS等多个高影响力大模型",
+        "evidence": [
+          "主要研究方向为大语言模型和智能体，主持研发了MOSS等多个高影响力大模型"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "复旦大学教授，上海创智学院全时导师，中国人工智能学会会士，获得国家基金委青A、青B项目资助",
+          "连续入选中国高被引学者、全球前2%顶尖科学家榜单",
+          "获得钱伟长中文信息处理科学技术奖一等奖，教育部“高校计算机专业优秀教师奖励计划”，CCF-ACM青年科技奖等奖励"
+        ],
+        "note": "资深教授，名头资源多，但日常指导可能由团队其他成员承担，需主动争取直接交流机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://xpqiu.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学教授、博导，专注于大语言模型和智能体研究，主持研发MOSS等大模型，学术成就显著。",
+      "_verification": []
+    },
+    {
+      "name": "孙未未",
+      "title": "教授、博导",
+      "research_interests": [
+        "大模型",
+        "AI算法",
+        "大数据和数据科学"
+      ],
+      "current_focus": {
+        "text": "研究兴趣包括大模型、AI算法、大数据和数据科学",
+        "evidence": [
+          "研究兴趣包括大模型、AI算法、大数据和数据科学"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "复旦大学计算与智能创新学院教授，博士生导师",
+          "曾获上海市科技进步奖特等奖",
+          "任中国大学生程序设计竞赛组委会副主席"
+        ],
+        "note": "教授多年，资源丰富，但可能日常指导由团队其他成员分担。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/sunweiwei1/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究大模型、AI算法、大数据和数据科学，主持多项国家级项目，曾获多项荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "沈一帆",
+      "title": "教授、博导",
+      "research_interests": [
+        "网络图形",
+        "大规模科学计算",
+        "机器语音"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/e3/c25921a278243/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "沈一帆是复旦大学计算与智能创新学院的教授和博导，研究领域包括网络图形、大规模科学计算和机器语音。",
+      "_verification": []
+    },
+    {
+      "name": "尚笠",
+      "title": "教授、博导",
+      "research_interests": [
+        "计算机与嵌入式系统",
+        "人机交互与智能",
+        "集成电路与EDA"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cscw.fudan.edu.cn/lishang/list.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究领域涵盖计算机与嵌入式系统、人机交互与智能、集成电路与EDA。",
+      "_verification": []
+    },
+    {
+      "name": "谭伟敏",
+      "title": "教授、博导",
+      "research_interests": [
+        "人工智能",
+        "AI for Science"
+      ],
+      "current_focus": {
+        "text": "研究方向人工智能、AI for Science，并在相关领域发表多篇论文。",
+        "evidence": [
+          "研究方向人工智能、AI for Science。",
+          "在Nat. Methods、Nat. Biomed. Eng.、Nat. photonics、Nat. Commun.、Engineering、IEEE Trans.汇刊等国际期刊和CCF A类会议发表论文40余篇。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "入选2024上海市东方英才计划青年项目。"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源和名气尚在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://dml.fudan.edu.cn/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为人工智能与AI for Science，入选上海市东方英才计划青年项目。",
+      "_verification": []
+    },
+    {
+      "name": "汪源源",
+      "title": "教授",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授，但页面未提供具体研究方向和个人简介。",
+      "_verification": []
+    },
+    {
+      "name": "危辉",
+      "title": "教授、博导",
+      "research_interests": [
+        "非单调推理与形式逻辑",
+        "类脑计算"
+      ],
+      "current_focus": {
+        "text": "近期在类脑计算和人工智能形式概念系统方面有研究，并发表了多篇超长文。",
+        "evidence": [
+          "自1993年起从事非单调推理与形式逻辑研究，1995年后从事类脑计算研究。",
+          "发表SCI期刊论文近百篇，其中近二年在IJCV、TIP、TRO、TVCG、TGRS、TMM上发表超长文七篇。",
+          "出版由独立研究形成的专著《人工智能形式概念系统》、《认知相关性与智能模型构造的系统观点》和《类脑计算》。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "危辉，1998年毕业于北航计算机系，先后师从怀进鹏院士和何新贵院士，获工学博士学位。同年9月进入浙江大学计算机系，师从潘云鹤院士进行博士后研究，2000年出站进入复旦大学计算机科学技术系。"
+        ],
+        "note": "资深教授，可能日常指导由小导师或博后承担，但资源丰富，名头响亮。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/weihui/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "危辉是复旦大学计算机科学技术学院的教授、博导，长期从事类脑计算与人工智能研究，发表多篇高水平论文并出版专著。",
+      "_verification": []
+    },
+    {
+      "name": "汪卫",
+      "title": "教授、博导",
+      "research_interests": [
+        "数据库",
+        "数据挖掘"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/e1/c25921a278241/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "汪卫是复旦大学计算与智能创新学院的教授、博导，研究方向为数据库和数据挖掘。",
+      "_verification": []
+    },
+    {
+      "name": "吴杰",
+      "title": "研究员、博导",
+      "research_interests": [
+        "计算机网络",
+        "分布式系统",
+        "网络多媒体"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/c1/c25922a278209/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "吴杰是复旦大学计算与智能创新学院的研究员和博导，研究方向包括计算机网络、分布式系统和网络多媒体。",
+      "_verification": []
+    },
+    {
+      "name": "王晓阳",
+      "title": "教授、博导",
+      "research_interests": [
+        "时空移动数据分析",
+        "数据系统安全及私密",
+        "大数据并行式分析"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://daslab.fudan.edu.cn/61/83/c26852a287107/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算机科学技术学院教授、博导，研究领域包括时空移动数据分析、数据系统安全及私密、大数据并行式分析。",
+      "_verification": []
+    },
+    {
+      "name": "吴俊",
+      "title": "教授、博导",
+      "research_interests": [
+        "无线网络",
+        "强化学习&深度学习",
+        "信源信道编码",
+        "嵌入式系统"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/dd/c25921a278237/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "吴俊是复旦大学计算与智能创新学院的教授和博导，研究领域包括无线网络、强化学习与深度学习、信源信道编码和嵌入式系统。",
+      "_verification": []
+    },
+    {
+      "name": "王鹏",
+      "title": "教授、博导",
+      "research_interests": [
+        "数据挖掘",
+        "数据流处理",
+        "海量数据管理"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://pengwang511.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "王鹏是复旦大学计算与智能创新学院的教授和博导，研究领域包括数据挖掘、数据流处理和海量数据管理。",
+      "_verification": []
+    },
+    {
+      "name": "王新",
+      "title": "教授、博导",
+      "research_interests": [
+        "新一代互联网体系结构",
+        "无线与移动网络",
+        "数据中心网络",
+        "网络存储系统"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/wangxin/zh_CN/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "王新是复旦大学计算机与智能创新学院的教授、博导，研究领域包括新一代互联网体系结构、无线与移动网络、数据中心网络和网络存储系统。",
+      "_verification": []
+    },
+    {
+      "name": "徐扬",
+      "title": "教授、博导",
+      "research_interests": [
+        "计算机网络",
+        "软件定义网络",
+        "数据中心网络",
+        "分布式机器学习",
+        "边缘计算"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://yangxu.info/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "徐扬是复旦大学计算机领域的教授和博导，研究方向包括计算机网络、软件定义网络、数据中心网络、分布式机器学习和边缘计算。",
+      "_verification": []
+    },
+    {
+      "name": "薛向阳",
+      "title": "教授、博导",
+      "research_interests": [
+        "多模态大模型",
+        "具身智能",
+        "类脑智能"
+      ],
+      "current_focus": {
+        "text": "当前研究方向为多模态大模型、具身智能和类脑智能等",
+        "evidence": [
+          "当前研究方向为多模态大模型、具身智能和类脑智能等"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "现任大数据研究院、类脑智能科学与技术研究院副院长",
+          "获国家科技进步奖一等奖1项和二等奖1项、国家自然科学奖二等奖1项、省部级科学技术一等奖6项",
+          "入选上海市启明星计划和学术带头人计划，享受国务院特殊津贴"
+        ],
+        "note": "资深教授，资源丰富，但日常指导可能由团队其他成员承担，需主动争取直接交流机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件咨询。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/xyxue/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为多模态大模型、具身智能和类脑智能，成果丰硕，获多项国家级奖项。",
+      "_verification": []
+    },
+    {
+      "name": "熊贇",
+      "title": "教授、博导",
+      "research_interests": [
+        "数据科学",
+        "人工智能"
+      ],
+      "current_focus": {
+        "text": "研究方向数据科学与人工智能，研究工作获国家、省部级及企业资助，提出大数据智能算法并应用于重要领域。",
+        "evidence": [
+          "研究方向数据科学与人工智能。",
+          "研究工作获国家、省部级及阿里、蚂蚁金服、微信支付、西门子等企业资助。",
+          "提出一批大数据智能算法，已被应用于证券交易所、医联平台、交通信息中心等上海市大数据建设重要领域。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "复旦大学计算与智能创新学院教授，博导，上海市数据科学重点实验室副主任。",
+          "曾任中国计算机学会CCF上海青年论坛主席。"
+        ],
+        "note": "教授且担任实验室副主任，处于学术生涯稳定期，资源丰富，但可能指导较多学生，亲自指导时间有限。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [],
+      "summary": "熊贇是复旦大学计算与智能创新学院的教授、博导，研究方向为数据科学与人工智能，拥有丰富的研究成果和企业合作经验。",
+      "_verification": []
+    },
+    {
+      "name": "谢涛",
+      "title": "教授、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究领域未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "徐跃东",
+      "title": "教授、博导",
+      "research_interests": [
+        "大模型训练与推理系统",
+        "强化学习后训练算法与系统",
+        "智能体系统",
+        "大模型安全对齐"
+      ],
+      "current_focus": {
+        "text": "研究方向为大模型训练与推理系统、强化学习后训练算法与系统、智能体系统、大模型安全对齐等，与互联网企业合作密切，主要从事人工智能基础设施技术研究。",
+        "evidence": [
+          "研究方向为大模型训练与推理系统、强化学习后训练算法与系统、智能体系统、大模型安全对齐等（与互联网企业合作密切，主要从事人工智能基础设施技术研究）。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "博士毕业于香港中文大学，曾在法国国家自动化与计算机研究院、德国哥廷根大学等从事博士后和访问研究。",
+          "获得上海市东方英才拔尖计划奖励(2025)、日本大川基金会研究助成奖(2019)、复旦大学比亚迪奖教金(2024)，上海唐君远教育基金会-教师君远奖(2023)、复旦大学本科生“我心目中的好老师”提名奖(2022)。"
+        ],
+        "note": "教授、博导，有多年科研经历，处于产出与资源稳定窗口期。"
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "课题组本科生获得Yale、Duke、UCLA等学校的博士生全奖，硕士生多名获得复旦大学/上海市优秀毕业生和国家奖学金，（合作）指导的博士生获得上海市信息学会优博和ACM SIGCOMM China优博等。"
+        ],
+        "note": "原文提到指导本科生和研究生，但未明确写招收实习生或访问学生，故为🟡。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://ydxu2025.github.io",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学教授、博导，研究方向为大模型训练与推理系统、强化学习后训练算法与系统、智能体系统、大模型安全对齐等，与互联网企业合作密切。",
+      "_verification": []
+    },
+    {
+      "name": "许扬",
+      "title": "青年研究员、博导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 青年研究员 、 博导"
+        ],
+        "note": "青年研究员通常意味着刚建组不久，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "许扬是复旦大学的青年研究员和博导，但页面未提供研究方向等详细信息。",
+      "_verification": []
+    },
+    {
+      "name": "肖仰华",
+      "title": "教授、博导",
+      "research_interests": [
+        "大数据",
+        "认知智能"
+      ],
+      "current_focus": {
+        "text": "长期从事大数据、认知智能研究",
+        "evidence": [
+          "长期从事大数据、认知智能研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "荣获ICDE2024十年最有影响力论文奖、ACL 2025/2023杰出论文奖。发表 CCF-A 、B 类等论文 300 余篇。出版学术专著与教材三部。完成五十多项政府及人工智能头部企业研发项目。荣获包括华为、阿里、美团等机构授予的科研奖项二十多项。"
+        ],
+        "note": "名头资源多但日常指导多由小导师/博后承担"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://kw.fudan.edu.cn/people/xiaoyanghua/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学教授、博导，上海市数据科学重点实验室主任，长期从事大数据与认知智能研究，成果丰硕。",
+      "_verification": []
+    },
+    {
+      "name": "杨夙",
+      "title": "教授、博导",
+      "research_interests": [
+        "Computer Vision",
+        "Urban Informatics",
+        "Data Mining"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/53/22/c25921a348962/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "杨夙是复旦大学计算与智能创新学院的教授、博导，研究领域包括计算机视觉、城市信息学与数据挖掘。",
+      "_verification": []
+    },
+    {
+      "name": "叶广楠",
+      "title": "研究员、博导",
+      "research_interests": [
+        "金融科技",
+        "图模型算法",
+        "多模态特征融合",
+        "计算机视觉"
+      ],
+      "current_focus": {
+        "text": "主持国家重点研发计划，国家自然科学基金优秀青年科学基金，参与中国工程院战略研究与咨询项目。",
+        "evidence": [
+          "主持国家重点研发计划，国家自然科学基金优秀青年科学基金，参与中国工程院战略研究与咨询项目。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "国家级青年人才计划入选者",
+          "国家自然科学基金优秀青年科学基金"
+        ],
+        "note": "青年学者，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://yeslab.co",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "叶广楠是复旦大学计算与智能创新学院的研究员、博导，国家级青年人才，研究领域包括金融科技、图模型算法等。",
+      "_verification": []
+    },
+    {
+      "name": "杨威",
+      "title": null,
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "页面加载中，暂无有效信息。",
+      "_verification": []
+    },
+    {
+      "name": "颜波",
+      "title": "教授、博导",
+      "research_interests": [
+        "计算机视觉",
+        "科学智能",
+        "智能制造"
+      ],
+      "current_focus": {
+        "text": "主要研究领域包括计算机视觉、科学智能和智能制造等。",
+        "evidence": [
+          "主要研究领域包括：计算机视觉、科学智能和智能制造等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "颜波博士，复旦大学计算与智能创新学院教授/博导、教育部长江学者。",
+          "先后获得国家优秀青年科学基金、国家自然科学基金联合重点基金／面上基金／青年基金、华为基金和中船集团等多项省部级项目和企业合作项目的资助。"
+        ],
+        "note": "教授且为长江学者，项目资源丰富，但可能指导由团队协助。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://dml.fudan.edu.cn/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授/博导，长江学者，研究方向为计算机视觉、科学智能和智能制造。",
+      "_verification": []
+    },
+    {
+      "name": "杨珉",
+      "title": "教授、博导",
+      "research_interests": [
+        "网络安全",
+        "恶意代码检测",
+        "漏洞分析挖掘",
+        "AI 安全",
+        "区块链安全",
+        "Web 安全",
+        "系统安全机制"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://secsys.fudan.edu.cn/b0/da/c28039a307418/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学教授、博导，研究领域为网络安全，包括恶意代码检测、漏洞分析挖掘、AI安全等。",
+      "_verification": []
+    },
+    {
+      "name": "杨卫东",
+      "title": "研究员、博导",
+      "research_interests": [
+        "大数据",
+        "知识工程",
+        "数据库与数据挖掘"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.bigdatalab.fudan.edu.cn/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "杨卫东是复旦大学计算与智能创新学院的研究员和博导，研究领域包括大数据、知识工程、数据库与数据挖掘。",
+      "_verification": []
+    },
+    {
+      "name": "张奇",
+      "title": "教授、博导",
+      "research_interests": [
+        "自然语言处理",
+        "信息检索",
+        "数据密集型计算"
+      ],
+      "current_focus": {
+        "text": "承担国家重点研发计划课题、国家自然科学基金、上海市科委等多个项目，在国际重要学术期刊和会议上发表论文200余篇。",
+        "evidence": [
+          "近年来，承担了国家重点研发计划课题、国家自然科学基金、上海市科委等的多个项目，在国际重要学术期刊和会议上发表论文200余篇。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "国家级领军人才、博士生导师。兼任上海市智能信息处理重点实验室副主任，中国中文信息学会理事、CCF大模型论坛常务委员、CIPS信息检索专委会常务委员、CIPS大模型专委会委员。多次担任ACL、EMNLP、COLING、全国信息检索大会等重要国际和国内会议的程序委员会主席、领域主席、讲习班主席等职务。"
+        ],
+        "note": "资源丰富，指导可能由团队协作，但作为负责人仍会关注学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://qizhang.info/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张奇是复旦大学计算与智能创新学院的教授、博导，国家级领军人才，研究方向为自然语言处理、信息检索和数据密集型计算，发表论文200余篇，获得多项奖项。",
+      "_verification": []
+    },
+    {
+      "name": "张文强",
+      "title": "研究员、博导",
+      "research_interests": [
+        "机器人",
+        "人工智能",
+        "计算机视觉",
+        "智能装备"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.fudanroilab.com/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张文强是复旦大学计算与智能创新学院的研究员、博导，研究方向为机器人、人工智能、计算机视觉和智能装备。",
+      "_verification": []
+    },
+    {
+      "name": "张源",
+      "title": "教授、博导",
+      "research_interests": [
+        "软件安全"
+      ],
+      "current_focus": {
+        "text": "软件安全研究，成果应用于华为、阿里等公司，带领白泽战队参加安全攻防赛事",
+        "evidence": [
+          "主要研究方向为软件安全",
+          "部分研究成果应用于华为、阿里、OPPO、vivo等公司",
+          "带领复旦白泽战队获得国内外顶尖安全攻防赛事20余次冠军"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "国家级青年人才"
+        ],
+        "note": "青年学者，亲自指导学生的可能性较大，但资源和名声仍在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://yuanxzhang.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张源是复旦大学教授、博导，国家级青年人才，主要研究软件安全，成果丰硕并应用于多家知名企业。",
+      "_verification": []
+    },
+    {
+      "name": "张玥杰",
+      "title": "教授、博导",
+      "research_interests": [
+        "跨媒体信息处理与检索",
+        "自然语言理解"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/d0/c25921a278224/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张玥杰是复旦大学计算与智能创新学院的教授和博导，研究方向为跨媒体信息处理与检索、自然语言理解。",
+      "_verification": []
+    },
+    {
+      "name": "章忠志",
+      "title": "教授、博导",
+      "research_interests": [
+        "图学习理论与算法",
+        "图数据挖掘",
+        "社交网络分析",
+        "网络科学"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "指导近20名本科生赴Princeton、Stanford、Cornell、UPenn等世界名校攻读博士学位。"
+        ],
+        "note": "原文提到指导本科生，但未明确说明招收本科生或访问学生，因此为间接迹象。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/zhangzhongzhi/zh_CN/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "章忠志是复旦大学计算与智能创新学院的教授、博导，研究方向为图学习、图数据挖掘、社交网络分析和网络科学，发表论文200余篇，并指导多名本科生赴世界名校攻读博士。",
+      "_verification": []
+    },
+    {
+      "name": "赵文耘",
+      "title": "教授、博导",
+      "research_interests": [
+        "软件工程",
+        "企业应用集成",
+        "电子商务"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.se.fudan.edu.cn/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "赵文耘是复旦大学计算与智能创新学院的教授、博导，研究领域为软件工程、企业应用集成和电子商务。",
+      "_verification": []
+    },
+    {
+      "name": "周水庚",
+      "title": "教授、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://admis.fudan.edu.cn/sgzhou/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "周水庚是复旦大学的教授和博导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "张谧",
+      "title": "教授、博导",
+      "research_interests": [
+        "推荐系统",
+        "社会网络",
+        "数据挖掘",
+        "机器学习"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/95/c25921a278165/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张谧是复旦大学计算与智能创新学院的教授、博导，研究方向包括推荐系统、社会网络、数据挖掘和机器学习。",
+      "_verification": []
+    },
+    {
+      "name": "周扬帆",
+      "title": "教授、博导",
+      "research_interests": [
+        "软件系统"
+      ],
+      "current_focus": {
+        "text": "长期从事软件系统研究，研究成果发表于OSDI、SOSP、FSE、ICSE、CSCW等顶级会议，并在腾讯、华为、美团等企业落地。",
+        "evidence": [
+          "长期从事软件系统研究，曾主持、参与多项国家自然科学基金项目、973项目及重点研发项目。",
+          "其研究成果发表于百余篇国际学术论文，包括近三年来在领域顶级国际出版物OSDI、SOSP、FSE、ICSE、CSCW等发表的多篇论文。",
+          "他的学术成果兼具产业转化价值，已在腾讯、华为、美团等头部企业落地应用，是多项专利的发明人，并因技术长期落地效果获颁美团时间检验奖。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "教授、博导",
+          "长期从事软件系统研究，曾主持、参与多项国家自然科学基金项目、973项目及重点研发项目。",
+          "他目前任全国信息技术标准化技术委员会用户界面分技术委员会委员，中国计算机学会信息存储专委会委员，上海市计算机学会教育信息化专委会副主任委员。"
+        ],
+        "note": "教授且担任多个专委会委员，处于学术影响力稳定期，可能团队规模较大，指导以宏观为主。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://www.y-droid.com/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算机与智能创新学院教授、博导，长期从事软件系统研究，成果发表于OSDI、SOSP等顶级会议，并具有产业转化经验。",
+      "_verification": []
+    },
+    {
+      "name": "张为华",
+      "title": "教授、博导",
+      "research_interests": [
+        "体系结构与编译优化"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/d2/c25921a278226/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张为华是复旦大学计算与智能创新学院的教授、博导，研究领域为体系结构与编译优化。",
+      "_verification": []
+    },
+    {
+      "name": "张军平",
+      "title": "教授、博导",
+      "research_interests": [
+        "人工智能",
+        "图像处理",
+        "生物认证",
+        "智能交通"
+      ],
+      "current_focus": {
+        "text": "研究方向包括人工智能、图像处理、生物认证、智能交通等，并著有科普书籍。",
+        "evidence": [
+          "研究方向包括人工智能、图像处理、生物认证、智能交通等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "连续五年（2021—2025）入选全球前2%顶尖科学家榜单终身科学影响力排行榜，谷歌学术引用万余次。"
+        ],
+        "note": "资深教授，资源丰富，但日常指导可能由团队其他成员承担。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.pami.fudan.edu.cn/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向为人工智能、图像处理等，学术影响力高，著有科普书籍。",
+      "_verification": []
+    },
+    {
+      "name": "张新鹏",
+      "title": "教授、博导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "国家杰出青年科学基金获得者，二级教授。",
+          "连续十一年入选“爱思唯尔”中国高被引学者榜单，并入选“科睿唯安”全球高被引科学家。"
+        ],
+        "note": "名头资源多，但日常指导可能由团队其他成员承担，联系时需明确指导方式。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://fdmas.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张新鹏是复旦大学计算机领域的资深教授和博导，国家杰青获得者，研究领域涉及信息隐藏与多媒体安全，成果丰硕。",
+      "_verification": []
+    },
+    {
+      "name": "赵进",
+      "title": "教授、博导",
+      "research_interests": [
+        "网络系统结构"
+      ],
+      "current_focus": {
+        "text": "研究方向主要包括网络系统结构等，在网络领域的重要国际期刊和会议上发表学术论文50余篇。",
+        "evidence": [
+          "研究方向主要包括网络系统结构、等。",
+          "在网络领域的重要国际期刊和会议上发表学术论文50余篇。"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://jinzhaofd.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "赵进是复旦大学计算与智能创新学院的教授、博导，研究方向为网络系统结构，发表论文50余篇，主持多项国家级项目。",
+      "_verification": []
+    },
+    {
+      "name": "赵运磊",
+      "title": "教授、博导",
+      "research_interests": [
+        "密码学理论及应用",
+        "网络安全"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/cd/c25921a278221/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "赵运磊是复旦大学计算与智能创新学院的教授、博导，研究领域为密码学理论及应用、网络安全。",
+      "_verification": []
+    },
+    {
+      "name": "周向东",
+      "title": "教授、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院教授、博导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "张亮",
+      "title": "教授、博导",
+      "research_interests": [
+        "Web 与服务计算",
+        "以数据为中心的工作流"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/d4/c25921a278228/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张亮是复旦大学计算与智能创新学院的教授、博导，研究方向为Web与服务计算及以数据为中心的工作流。",
+      "_verification": []
+    },
+    {
+      "name": "陈碧欢",
+      "title": "副教授、博导",
+      "research_interests": [
+        "软件安全",
+        "AI系统工程"
+      ],
+      "current_focus": {
+        "text": "主持国家自然科学基金项目和企业合作项目，参与科技创新2030重大项目，研究软件安全与AI系统工程，并研制开源风险治理平台伏羲。",
+        "evidence": [
+          "主要研究方向包括软件安全、AI系统工程等。",
+          "主持两项国家自然科学基金项目和多项企业合作项目，参加科技创新2030-“新一代人工智能”重大项目。",
+          "研制了开源风险治理平台伏羲，获中国信通院软件供应链安全社区2023年优秀自主研发创新成果案例。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "复旦大学计算与智能创新学院副教授。",
+          "获2023年NASAC青年软件创新奖"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源和名气尚在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://chenbihuan.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授，研究方向为软件安全与AI系统工程，主持多项科研项目并获奖。",
+      "_verification": []
+    },
+    {
+      "name": "陈学青",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "多媒体信息检索",
+        "网络编码"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/b7/c25926a278199/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "陈学青是复旦大学计算与智能创新学院的副教授、硕导，研究领域为多媒体信息检索和网络编码。",
+      "_verification": []
+    },
+    {
+      "name": "池明旻",
+      "title": "副教授、博导",
+      "research_interests": [
+        "机器学习（深度学习）",
+        "数据科学",
+        "大数据分析和数据挖掘理论及其在目标检测，AI芯片，软硬一体化设计，图像处理，工业智能，网络分析和安全，文本挖掘，信号处理和流数据分析，遥感信息处理，智能油气勘探，推荐系统等应用研究"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/chimingmin/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "池明旻是复旦大学计算与智能创新学院的副教授、博导，研究方向涵盖机器学习、数据科学及多个应用领域。",
+      "_verification": []
+    },
+    {
+      "name": "曹袖",
+      "title": "高级工程师、硕导",
+      "research_interests": [
+        "计算机网络",
+        "分布式系统",
+        "电力自动化",
+        "智能电网",
+        "电力大数据和人工智能",
+        "社会计算"
+      ],
+      "current_focus": {
+        "text": "长期从事上述方向的科研、应用系统研发和教学工作",
+        "evidence": [
+          "长期从事计算机网络、分布式系统、电力自动化、智能电网、电力大数据和人工智能、社会计算等方向的科研、应用系统研发和教学工作。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "曹袖，男，1968年生"
+        ],
+        "note": "老师年龄较大，可能已处于职业生涯后期，但职称仍为高级工程师和硕导，可能仍会亲自指导，但需注意其精力分配。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，无法判断是否招收学生。"
+      },
+      "homepage_candidates": [],
+      "summary": "曹袖是复旦大学计算与智能创新学院的高级工程师和硕士生导师，长期从事计算机网络、智能电网等领域的研究与教学。",
+      "_verification": []
+    },
+    {
+      "name": "陈辰",
+      "title": "高级工程师、硕导",
+      "research_interests": [
+        "深度学习",
+        "大数据分析",
+        "大模型智能体"
+      ],
+      "current_focus": {
+        "text": "围绕大模型智能体开展深入研究",
+        "evidence": [
+          "研究领域包括人工智能和大数据分析等，围绕大模型智能体开展了深入研究，并取得了诸多成果。"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学高级工程师，研究深度学习与大数据分析，指导竞赛队伍获奖。",
+      "_verification": []
+    },
+    {
+      "name": "董震",
+      "title": "副教授、博导",
+      "research_interests": [
+        "软件分析与测试",
+        "神经符号系统",
+        "机器人软件工程"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://zhendong2050.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究方向为软件分析与测试、神经符号系统和机器人软件工程。",
+      "_verification": []
+    },
+    {
+      "name": "戈维峰",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "计算机视觉",
+        "模式识别",
+        "机器学习"
+      ],
+      "current_focus": {
+        "text": "主要研究领域包括计算机视觉、认知计算和人形机器人通用智能，在视觉感知理解、知识快速学习及多模态认知推理等方面取得科研成果。",
+        "evidence": [
+          "主要研究领域包括计算机视觉、认知计算和人形机器人通用智能，在视觉感知理解、知识快速学习及多模态认知推理等方面取得了一系列科研成果。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "于华中科技大学、清华大学、香港大学分别获学士、硕士与博士学位，并于2020年荣获香港大学李嘉诚奖和杰出研究生奖提名。",
+          "主持了国家自然科学基金委青年项、上海市科委新一代信息技术重点专项、复旦大学计算机学院优秀青年培育计划等多个项目"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源和名声仍在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.weifengge.net/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "戈维峰是复旦大学计算与智能创新学院的副教授、硕导，研究方向为计算机视觉、模式识别和机器学习，在顶级会议和期刊发表论文40余篇，主持多项科研项目。",
+      "_verification": []
+    },
+    {
+      "name": "姜忠鼎",
+      "title": "副教授、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/af/c25926a278191/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、硕导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "蒋晶",
+      "title": null,
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "由于详情页内容加载中，未能获取到蒋晶老师的任何信息。",
+      "_verification": []
+    },
+    {
+      "name": "刘乐茂",
+      "title": "副教授",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2013年博士毕业于哈尔滨工业大学，随后在纽约城市大学进行博士后研究，2014年就职于日本国立信息通信研究机构(NICT)，2017年至2025年于腾讯先后担任高级研究员和专家研究员。"
+        ],
+        "note": "有多年工业界经验，刚回归学术界，可能处于建组初期，资源积累中但指导精力较充沛。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "刘乐茂是复旦大学计算与智能创新学院的副教授，具有丰富的工业界研究经验，在自然语言处理等领域发表多篇高水平论文。",
+      "_verification": []
+    },
+    {
+      "name": "李景涛",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "网络与系统安全",
+        "网络测量",
+        "网络行为学"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/53/29/c25927a348969/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "李景涛是复旦大学计算与智能创新学院的副教授和硕士生导师，研究方向为网络与系统安全、网络测量和网络行为学。",
+      "_verification": []
+    },
+    {
+      "name": "李敏波",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "工业数据挖掘",
+        "工业应用软件",
+        "工业AI应用"
+      ],
+      "current_focus": {
+        "text": "主要研究方向为工业数据挖掘、工业应用软件、工业AI应用。",
+        "evidence": [
+          "主要研究方向为工业数据挖掘、工业应用软件、工业AI应用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2001年获清华大学博士。",
+          "2001-2002 新加坡国立大学博士后，2003-2004金蝶软件研究员，2006-2012年用友软件兼职ERP应用研究与系统集成总监。"
+        ],
+        "note": "博士毕业已超过20年，且担任副教授多年，处于职业中期，资源和经验稳定，但可能指导学生的精力有限。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/liminbo/zh_CN/jsxx/123491/jsxx/jsxx.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、硕导，研究方向为工业数据挖掘、工业应用软件和工业AI应用，拥有丰富的产学研经历。",
+      "_verification": []
+    },
+    {
+      "name": "李元",
+      "title": "青年副研究员、硕导",
+      "research_interests": [
+        "计算复杂性理论",
+        "编码理论"
+      ],
+      "current_focus": {
+        "text": "关注计算复杂性与编码理论交叉领域，如纠错码编码的计算复杂性，主持相关基金项目。",
+        "evidence": [
+          "目前的研究方向为计算复杂性理论与编码理论，尤其关注两者交叉领域中的关键问题，如纠错码编码的计算复杂性等。",
+          "主持国家自然科学基金青年项目“超低深度超级浓缩器的构造和应用”以及华为胡杨林基金项目“纠错码高效编码电路的构造”。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 青年副研究员 、 硕导",
+          "2011 年本科毕业于复旦大学，2017 年于芝加哥大学计算机系获博士学位。"
+        ],
+        "note": "青年副研究员，博士毕业约7年，刚建组，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://scholar.google.com/citations?user=j5q7RPgAAAAJ&hl=en",
+          "label": "个人主页",
+          "type": "scholar"
+        }
+      ],
+      "summary": "李元是复旦大学计算与智能创新学院的青年副研究员，研究方向为计算复杂性理论与编码理论，主持多项基金项目。",
+      "_verification": []
+    },
+    {
+      "name": "李银胜",
+      "title": "副教授、博导",
+      "research_interests": [
+        "电子商务",
+        "供应链金融",
+        "人工智能",
+        "严肃游戏",
+        "虚拟仿真"
+      ],
+      "current_focus": {
+        "text": "算法模型众智工厂、基于拟态智能体的严肃游戏、反洗钱及供应链金融欺诈识别、虚拟仿真实训、学情/会情/赛情智能分析系统已产品化",
+        "evidence": [
+          "形成的算法模型众智工厂、基于拟态智能体的严肃游戏、反洗钱及供应链金融欺诈识别、虚拟仿真实训、学情/会情/赛情智能分析系统已产品化、部分成为行业龙头"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "副教授，博士生导师，IEEE TCBIS主席，电子商务交易技术国家工程实验室联合发起人，数字化设计与制造专委会副主任委员，IEEE Senior Member，《SOCA》责任主编、《IJCSE》副主编。先后主持国家重大项目/课题、国际合作、省部及企业项目20余项，主笔或参与现行国家及行业标准6项、专利及软件50余项、论文60余篇"
+        ],
+        "note": "副教授且担任多个学术职务，项目经验丰富，处于学术生涯稳定期，可能有一定资源但亲自指导时间可能有限。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接联系询问。"
+      },
+      "homepage_candidates": [],
+      "summary": "李银胜是复旦大学计算与智能创新学院的副教授、博导，研究领域涉及电子商务、供应链金融、人工智能等，主持多项项目并已产品化多项成果。",
+      "_verification": []
+    },
+    {
+      "name": "娄一翎",
+      "title": "青年副研究员、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 青年副研究员 、 硕导"
+        ],
+        "note": "青年副研究员通常刚建组，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "娄一翎是复旦大学的青年副研究员和硕导，研究方向未在页面中列出。",
+      "_verification": []
+    },
+    {
+      "name": "廖志成",
+      "title": "高级工程师",
+      "research_interests": [
+        "数据科学",
+        "大数据",
+        "数据挖掘",
+        "信息安全"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "廖志成是复旦大学计算与智能创新学院的高级工程师，研究领域涉及数据科学、大数据、数据挖掘和信息安全，参与过多项国家级项目并获奖。",
+      "_verification": []
+    },
+    {
+      "name": "刘百祥",
+      "title": "高级工程师 、 硕导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "刘百祥是复旦大学计算与智能创新学院的高级工程师和硕士生导师，但页面未提供具体研究方向或招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "梁瑾",
+      "title": "高级工程师、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/86/c25928a278150/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "梁瑾是复旦大学计算与智能创新学院的高级工程师和硕士生导师，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "沈立炜",
+      "title": "副教授、博导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究领域未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "沙朝锋",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "数据管理和数据挖掘",
+        "机器学习"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/aa/c25926a278186/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、硕导，研究方向为数据管理和数据挖掘、机器学习。",
+      "_verification": []
+    },
+    {
+      "name": "孙晓光",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "计算机系统结构",
+        "嵌入式系统"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/a6/c25926a278182/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "孙晓光是复旦大学计算与智能创新学院的副教授和硕导，研究领域为计算机系统结构与嵌入式系统。",
+      "_verification": []
+    },
+    {
+      "name": "唐渊",
+      "title": "副教授、硕导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院副教授、硕导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "谈子敬",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "大数据管理",
+        "机器学习"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/tanzijing/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、硕导，研究方向为大数据管理与机器学习。",
+      "_verification": []
+    },
+    {
+      "name": "唐志强",
+      "title": "高级实验师、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院高级实验师、硕士生导师，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "王轶彤",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "融合数据与知识的数据分析",
+        "基于知识图谱及LLM的推荐系系统",
+        "数据挖掘及机器学习算法的研究及特定领域的应用（社会媒体大数据分析，医药，金融，物联网追溯系统）"
+      ],
+      "current_focus": {
+        "text": "原文未提供近期具体研究动态，仅列出研究领域。",
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/%7Eb2iMNr/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "王轶彤是复旦大学计算与智能创新学院的副教授和硕导，研究方向包括数据与知识融合分析、基于知识图谱和LLM的推荐系统，以及数据挖掘和机器学习在社交媒体、医药、金融和物联网等领域的应用。",
+      "_verification": []
+    },
+    {
+      "name": "吴承荣",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "信息安全",
+        "互联网应用"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/9f/c25926a278175/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "吴承荣是复旦大学计算与智能创新学院的副教授和硕士生导师，研究方向为信息安全和互联网应用。",
+      "_verification": []
+    },
+    {
+      "name": "吴永辉",
+      "title": "副教授、硕导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "吴永辉是复旦大学计算与智能创新学院的副教授和硕士生导师，主要致力于大学程序设计课程与竞赛训练教材的编写和全球讲学。",
+      "_verification": []
+    },
+    {
+      "name": "王飞",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "生物信息学",
+        "系统生物学",
+        "数据挖掘"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/a2/c25926a278178/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "王飞是复旦大学的副教授和硕导，研究方向为生物信息学、系统生物学和数据挖掘。",
+      "_verification": []
+    },
+    {
+      "name": "吴毅坚",
+      "title": "副教授、博导",
+      "research_interests": [
+        "软件工程",
+        "软件复用",
+        "软件产品线",
+        "软件维护与再工程"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/9e/c25926a278174/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "吴毅坚是复旦大学计算机与智能创新学院的副教授和博导，研究方向为软件工程、软件复用、软件产品线、软件维护与再工程。",
+      "_verification": []
+    },
+    {
+      "name": "徐辉",
+      "title": "副教授、博导",
+      "research_interests": [
+        "软件安全",
+        "程序分析",
+        "AI系统软件可靠性"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://hxuhack.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究方向为软件安全、程序分析和AI系统软件可靠性。",
+      "_verification": []
+    },
+    {
+      "name": "肖晓春",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "计算机网络",
+        "信息安全"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/59/c25931a278105/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "肖晓春是复旦大学计算与智能创新学院的副教授和硕士生导师，研究方向为计算机网络与信息安全。",
+      "_verification": []
+    },
+    {
+      "name": "谢志鹏",
+      "title": "副教授、博导",
+      "research_interests": [
+        "数据挖掘",
+        "Web 挖掘",
+        "生物信息学"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/xiezhipeng/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究方向为数据挖掘、Web挖掘和生物信息学。",
+      "_verification": []
+    },
+    {
+      "name": "徐迎晓",
+      "title": "高级工程师、硕导",
+      "research_interests": [
+        "严肃游戏",
+        "人工智能",
+        "软件工程",
+        "区块链"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/53/2e/c25928a348974/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "徐迎晓是复旦大学计算与智能创新学院的高级工程师和硕士生导师，研究领域包括严肃游戏、人工智能、软件工程和区块链。",
+      "_verification": []
+    },
+    {
+      "name": "严明",
+      "title": "高级工程师",
+      "research_interests": [
+        "高性能网络",
+        "网络安全审计",
+        "云计算"
+      ],
+      "current_focus": {
+        "text": "参与国家重点研发及省部级科研项目，研究高性能网络、网络安全审计、云计算等。",
+        "evidence": [
+          "高级工程师，主要研究方向高性能网络、网络安全审计、云计算等，曾参与多项国家重点研发及省部级科研项目"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "获上海市科学技术进步二等奖3项，三等奖1项，在CCF A/B相关国际会议及期刊和SCI/EI/中文核心等期刊上发表论文近30篇，获IWQoS 2024 Best Paper Runner-up Award，CoNEXT 2022 Best Paper Award等，同时获多项软著及发明专利，个人曾获“上海市新长征突击手”等荣誉"
+        ],
+        "note": "成果积累较多，可能处于事业稳定期，指导风格可能较为成熟。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "严明是复旦大学计算与智能创新学院的高级工程师，研究方向为高性能网络、网络安全审计和云计算，有丰富的科研项目和论文成果。",
+      "_verification": []
+    },
+    {
+      "name": "杨广亮",
+      "title": "青年副研究员、硕导",
+      "research_interests": [
+        "系统安全",
+        "内存安全",
+        "程序分析"
+      ],
+      "current_focus": {
+        "text": "长期致力于系统安全前沿研究，聚焦底层复杂软件的安全分析与防护，在内存安全与程序分析方向取得系列创新成果。",
+        "evidence": [
+          "长期致力于系统安全前沿研究，聚焦底层复杂软件的安全分析与防护，在内存安全与程序分析方向取得系列创新成果。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "博士毕业于德州农工大学，随后于佐治亚理工学院从事博士后研究，2021年回国加入复旦大学。",
+          "职称： 青年副研究员 、 硕导"
+        ],
+        "note": "青年副研究员，刚建组不久，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://yian-lang.net/guangliang",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学青年副研究员，专注系统安全、内存安全与程序分析，曾获多项顶会杰出论文奖。",
+      "_verification": []
+    },
+    {
+      "name": "杨哲慜",
+      "title": "副教授、博导",
+      "research_interests": [
+        "漏洞挖掘技术",
+        "人工智能系统安全",
+        "移动安全"
+      ],
+      "current_focus": {
+        "text": "研究方向包括漏洞挖掘技术、人工智能系统安全、移动安全等。",
+        "evidence": [
+          "研究方向包括漏洞挖掘技术、人工智能系统安全、移动安全等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "复旦大学计算与智能创新学院副教授，博导。"
+        ],
+        "note": "副教授且刚建组，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://yangzhemin.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究方向为漏洞挖掘、AI系统安全和移动安全，在网络安全顶会发表多篇论文，获多项奖项。",
+      "_verification": []
+    },
+    {
+      "name": "叶德建",
+      "title": "副教授、硕导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "叶德建是复旦大学计算与智能创新学院的副教授和硕士生导师，但页面未提供具体研究方向或招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "曾剑平",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "大数据安全",
+        "人工智能安全",
+        "社交媒体分析及应用",
+        "主动防御技术"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/zengjianping/zh_CN/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "曾剑平是复旦大学计算与智能创新学院的副教授和硕士生导师，研究领域包括大数据安全、人工智能安全、社交媒体分析及应用和主动防御技术。",
+      "_verification": []
+    },
+    {
+      "name": "张守志",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "数据库与数据挖掘"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/94/c25926a278164/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张守志是复旦大学计算与智能创新学院的副教授和硕士生导师，研究方向为数据库与数据挖掘。",
+      "_verification": []
+    },
+    {
+      "name": "周雅倩",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "自然语言处理",
+        "信息抽取",
+        "问答式检索",
+        "相关的机器学习方法"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/8e/c25926a278158/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "周雅倩是复旦大学计算与智能创新学院的副教授和硕导，研究方向为自然语言处理、信息抽取、问答式检索及相关机器学习方法。",
+      "_verification": []
+    },
+    {
+      "name": "张巍",
+      "title": "副教授、博导",
+      "research_interests": [
+        "机器视觉",
+        "图像视频分析与理解",
+        "统计模式识别"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/zhangwei1234/zh_CN/index/161831/list/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究方向为机器视觉、图像视频分析与理解、统计模式识别。",
+      "_verification": []
+    },
+    {
+      "name": "周喆",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "系统安全",
+        "人工智能安全"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://www.y-droid.com/zhe/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "周喆是复旦大学计算与智能创新学院的副教授、硕导，研究方向为系统安全和人工智能安全。",
+      "_verification": []
+    },
+    {
+      "name": "张凯",
+      "title": "副教授、博导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院副教授、博导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "张睿",
+      "title": "高级工程师 、 硕导",
+      "research_interests": [
+        "嵌入式系统",
+        "机器人",
+        "移动通信"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "张睿是复旦大学计算与智能创新学院的高级工程师和硕士生导师，研究领域为嵌入式系统、机器人和移动通信。",
+      "_verification": []
+    },
+    {
+      "name": "朱东来",
+      "title": "副教授、硕导",
+      "research_interests": [
+        "管理信息系统",
+        "电子商务",
+        "面向服务工程"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/89/c25927a278153/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "朱东来是复旦大学计算与智能创新学院的副教授、硕导，研究领域包括管理信息系统、电子商务和面向服务工程。",
+      "_verification": []
+    },
+    {
+      "name": "朱崇湘",
+      "title": "高级工程师 、 硕导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "朱崇湘是复旦大学计算与智能创新学院的高级工程师和硕士生导师，但页面未提供具体研究方向或招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "张晓寒",
+      "title": "青年副研究员、硕导",
+      "research_interests": [
+        "系统安全",
+        "认证安全",
+        "AI应用安全"
+      ],
+      "current_focus": {
+        "text": "主要研究方向为系统安全、认证安全和AI应用安全等，在网络空间安全国际顶会发表论文，并主持多个项目。",
+        "evidence": [
+          "主要研究方向为系统安全、认证安全和AI应用安全等，在网络空间安全国际顶会IEEE S&P、USENIX Security、ACM CCS、NDSS发表论文10余篇",
+          "主持国家重点研发计划子课题、自科基金青年项目、博新计划、腾讯企业合作等多个项目"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "复旦大学青年副研究员、硕导",
+          "主持国家重点研发计划子课题、自科基金青年项目、博新计划、腾讯企业合作等多个项目"
+        ],
+        "note": "青年副研究员，刚建组不久，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，但作为硕导，可能有招生名额，建议邮件咨询。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://xhzhang.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学青年副研究员、硕导，研究方向为系统安全、认证安全和AI应用安全，在网络安全顶会发表多篇论文并获多项奖项。",
+      "_verification": []
+    },
+    {
+      "name": "赵卫东",
+      "title": "副教授、硕导",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2001年于东南大学获博士学位，后进入复旦大学博士后流动站，，主讲深度学习及其应用等课程，2011年赴纽约大学访学。"
+        ],
+        "note": "博士毕业已超过20年，且已获得多项教学成果奖，处于学术生涯稳定期，可能指导学生的精力相对分散。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://www.scholat.com/sihan733",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "赵卫东是复旦大学计算与智能创新学院的副教授、硕导，拥有丰富的教学和科研经验，主要研究方向为机器学习与商务智能。",
+      "_verification": []
+    },
+    {
+      "name": "张向东",
+      "title": "高级讲师",
+      "research_interests": [
+        "人工智能神经网络"
+      ],
+      "current_focus": {
+        "text": "长期从事计算机基础教学工作，负责复旦AI大课“Python程序设计”和“C程序设计”课程，编写国家级规划教材，主持和参与上海市重点课程建设和教改项目。",
+        "evidence": [
+          "研究方向：人工智能神经网络。",
+          "长期从事计算机基础教学工作，复旦AI大课“Python程序设计”和“C程序设计”课程负责人。",
+          "编写过多套国家级规划教材。主持和参与多项上海市重点课程建设和教改项目。"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及任何招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "张向东是复旦大学计算与智能创新学院的高级讲师，研究方向为人工智能神经网络，长期从事计算机基础教学，负责Python和C程序设计课程。",
+      "_verification": []
+    },
+    {
+      "name": "郑骁庆",
+      "title": "副教授、博导",
+      "research_interests": [
+        "自然语言处理",
+        "机器学习"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "复旦大学计算智能与创新学院副教授、博士生导师",
+          "美国麻省理工学院International Faculty Fellow，加州大学洛杉矶分校访问学者",
+          "目前在Computational Linguistics、ICML、NeurIPS、ICLR、ACL、EMNLP等自然语言处理和人工智能领域的顶级国际会议和期刊发表论文80余篇"
+        ],
+        "note": "副教授且发表论文较多，可能处于科研产出稳定期，但具体指导情况需进一步了解。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/zhengxq/zh_CN/index/155051/list/index.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "复旦大学计算智能与创新学院副教授、博导，研究方向为自然语言处理和机器学习，发表多篇顶级论文。",
+      "_verification": []
+    },
+    {
+      "name": "安海龙",
+      "title": "助理工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "安海龙是复旦大学计算与智能创新学院的助理工程师，邮箱为anhl@fudan.edu.cn，但页面未提供研究方向和招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "曹瑜",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "陈彤兵",
+      "title": "讲师",
+      "research_interests": [
+        "数据库和知识库",
+        "电子商务"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/78/c25930a278136/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "陈彤兵是复旦大学计算与智能创新学院的讲师，研究领域为数据库和知识库、电子商务。",
+      "_verification": []
+    },
+    {
+      "name": "陈荣华",
+      "title": "讲师、硕导",
+      "research_interests": [
+        "网络与系统安全",
+        "移动智能媒体"
+      ],
+      "current_focus": {
+        "text": "主持教育部首批新文科研究与改革实践项目，参与国家重点研发计划等，研究网络与系统安全、移动智能媒体。",
+        "evidence": [
+          "主持教育部首批新文科研究与改革实践项目“融合现代金融工程技术的‘以学为中心’教学方法创新与实践”。",
+          "主要研究领域为网络与系统安全、移动智能媒体。近5年参与两项国家科技部重点研发计划、一项国家自科基金面上项目、一项上海浦东新区产学研项目"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 讲师 、 硕导",
+          "复旦大学计算机博士、学院学科科研办主任。"
+        ],
+        "note": "讲师且刚获得博士不久，可能亲自指导研究生，但资源积累有限。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "陈荣华是复旦大学计算与智能创新学院的讲师和硕导，研究方向为网络与系统安全、移动智能媒体，并主持多项教学改革项目。",
+      "_verification": []
+    },
+    {
+      "name": "陈利锋",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究领域未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "陈海洪",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "陈海洪是复旦大学的工程师，研究方向未提及，联系方式为chenhh@fudan.edu.cn。",
+      "_verification": []
+    },
+    {
+      "name": "陈伟男",
+      "title": "工程师 、 硕导",
+      "research_interests": [
+        "可重构计算",
+        "嵌入式系统",
+        "数据采集和监控"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/62/c25931a278114/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "陈伟男是复旦大学的工程师和硕士生导师，研究领域包括可重构计算、嵌入式系统、数据采集和监控。",
+      "_verification": []
+    },
+    {
+      "name": "丁玲",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "丁玲是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "戴嘉润",
+      "title": "助理研究员、硕导",
+      "research_interests": [
+        "智能系统安全攻防"
+      ],
+      "current_focus": {
+        "text": "面向多类型智能系统研制动静态漏洞挖掘、漏洞分析与漏洞治理工具",
+        "evidence": [
+          "研究方向为智能系统安全攻防，在IEEE S&P、USENIX Security、ACM CCS、NDSS等国际顶级会议上发表多篇高水平研究论文，面向多类型智能系统研制动静态漏洞挖掘、漏洞分析与漏洞治理工具，在热门智能体、智能设备、智能手机、智能驾驶系统等关键目标上累计挖掘千余例零天漏洞，获多项国内外网络安全攻防赛事冠军，相关技术支撑华为、阿里等头部企业的安全平台研制，服务上海市数字政务系统的安全治理工作。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 助理研究员 、 硕导"
+        ],
+        "note": "助理研究员通常属于刚建组或青年阶段，可能亲自指导研究生，但资源和名气尚在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://djrrr.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "戴嘉润是复旦大学计算与智能创新学院的助理研究员、硕导，研究方向为智能系统安全攻防，在顶级会议发表多篇论文并挖掘大量零天漏洞。",
+      "_verification": []
+    },
+    {
+      "name": "邓智友",
+      "title": null,
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助教，研究方向未公开。",
+      "_verification": []
+    },
+    {
+      "name": "丁素芬",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，邮箱dingsf@fudan.edu.cn，但页面未提供研究方向和招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "董羡",
+      "title": "馆员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院馆员，无个人主页外链。",
+      "_verification": []
+    },
+    {
+      "name": "付雁",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/76/c25930a278134/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "付雁是复旦大学计算机学院的讲师，担任学生党建工作负责人和专职辅导员。",
+      "_verification": []
+    },
+    {
+      "name": "冯颖欣",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "冯颖欣是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "方旭峰",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "方旭峰是复旦大学计算与智能创新学院的工程师，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "冯红伟",
+      "title": "讲师、硕导",
+      "research_interests": [
+        "知识图谱与知识管理",
+        "大模型应用"
+      ],
+      "current_focus": {
+        "text": "从事知识图谱与知识管理、大模型应用的研究，并参与或主持相关项目。",
+        "evidence": [
+          "从事知识图谱与知识管理、大模型应用的研究。",
+          "(1) 中国科技部科技创新2030-“新一代人工智能”重大项目, 2020AAA0109300, 工业领域知识自动构建与推理决策技术及应用, 2020年(2) 参与国家自然科学基金委员会, 重大研究计划, 92270121, 数据与知识联合驱动的双系统认知智能理论与技术研究，2023年(3) 主持高等教育出版社有限公司, 基于知识图谱的智适应学习数字教材系统，2021年(4) 主持上海市教育委员会教学研究室, 横向咨询项目, 无, 数据处理及分析技术咨询服务,2020年"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 讲师 、 硕导"
+        ],
+        "note": "讲师职称，可能刚建组或处于职业早期，亲自指导学生的概率较高，但资源和名气尚在积累。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，无法判断。"
+      },
+      "homepage_candidates": [],
+      "summary": "冯红伟是复旦大学的讲师和硕导，研究方向为知识图谱与知识管理、大模型应用，参与多项国家级项目。",
+      "_verification": []
+    },
+    {
+      "name": "龚洁",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "顾宁",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "顾宁是复旦大学计算与智能创新学院的讲师，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "顾鑫",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "顾鑫是复旦大学计算与智能创新学院的工程师，邮箱为guxin@fudan.edu.cn，但页面未提供研究方向和更多个人信息。",
+      "_verification": []
+    },
+    {
+      "name": "洪赓",
+      "title": null,
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "页面加载中，暂无有效信息。",
+      "_verification": []
+    },
+    {
+      "name": "何浩",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院工程师，研究方向未公开。",
+      "_verification": []
+    },
+    {
+      "name": "胡锐",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "胡锐是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "何晓清",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "何晓清是复旦大学的工程师，邮箱为hexiaoqing@fudan.edu.cn，但页面未提供研究方向和更多个人信息。",
+      "_verification": []
+    },
+    {
+      "name": "姜秀艳",
+      "title": "讲师、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师、硕导，研究方向未在页面中列出。",
+      "_verification": []
+    },
+    {
+      "name": "靳煜",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "刘卉",
+      "title": "讲师、硕导",
+      "research_interests": [
+        "计算机图形与动画",
+        "GPGPU"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 讲师 、 硕导"
+        ],
+        "note": "讲师通常处于职业早期，可能亲自指导研究生，但资源积累有限。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/6e/c25930a278126/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "刘卉是复旦大学的讲师和硕导，研究方向为计算机图形与动画及GPGPU。",
+      "_verification": []
+    },
+    {
+      "name": "刘新",
+      "title": "讲师、硕导",
+      "research_interests": [
+        "数字媒体技术",
+        "网络质量控制"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 讲师 、 硕导"
+        ],
+        "note": "讲师通常处于学术生涯早期，可能亲自指导学生的概率较高，但资源和名气尚在积累。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/6d/c25930a278125/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "刘新是复旦大学的讲师和硕导，研究方向为数字媒体技术和网络质量控制。",
+      "_verification": []
+    },
+    {
+      "name": "卢盛祺",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "李吉萍",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "李弋",
+      "title": "讲师、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师、硕导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "廖健",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "刘木强",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "刘木强是复旦大学计算与智能创新学院的工程师，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "廖炳华",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院工程师，研究方向未在页面中说明。",
+      "_verification": []
+    },
+    {
+      "name": "李旻",
+      "title": "讲师、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师、硕导，研究方向未在页面中说明。",
+      "_verification": []
+    },
+    {
+      "name": "刘天弼",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院工程师，研究方向未公开。",
+      "_verification": []
+    },
+    {
+      "name": "刘钢",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "马志远",
+      "title": "助理工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院的助理工程师，研究方向未在页面中说明。",
+      "_verification": []
+    },
+    {
+      "name": "马晨曦",
+      "title": "助理研究员、硕导",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员、硕导，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "毛迪林",
+      "title": "讲师",
+      "research_interests": [
+        "云计算",
+        "数据中心网络",
+        "无线网络"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/6c/c25930a278124/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "毛迪林是复旦大学计算与智能创新学院的讲师，研究方向包括云计算、数据中心网络和无线网络。",
+      "_verification": []
+    },
+    {
+      "name": "潘旭东",
+      "title": "助理研究员、硕导",
+      "research_interests": [
+        "大模型安全与治理",
+        "大模型安全合规评估",
+        "智能体安全攻防",
+        "前沿AI风险治理"
+      ],
+      "current_focus": {
+        "text": "围绕大模型安全合规评估、智能体安全攻防、前沿AI风险治理开展系统性前瞻研究",
+        "evidence": [
+          "研究方向为大模型安全与治理，过去五年间，围绕大模型安全合规评估、智能体安全攻防、前沿AI风险治理三方面开展系统性前瞻研究"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 助理研究员 、 硕导",
+          "入选2024年上海市“晨光计划”、2024年世界人工智能大会WAIC云帆奖（海内外AI领域遴选10名）、2023年ACM中国计算机安全分会优博奖、华为“天才少年”（最高档）。主持大模型安全相关的国家重点研发计划课题、国家自然科学基金青年项目、百度合作项目等多项科研项目。"
+        ],
+        "note": "青年学者，刚建组或处于早期，亲自指导学生的可能性高，但资源和名声仍在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://ravensanstete.github.io/",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "潘旭东是复旦大学计算与智能创新学院的助理研究员和硕导，研究方向为大模型安全与治理，在AI安全领域有突出成果和多项荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "潘依伊",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "单晓玥",
+      "title": null,
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院研究实习员，无职称，研究领域和个人简介未提供。",
+      "_verification": []
+    },
+    {
+      "name": "沈洁",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "王智慧",
+      "title": "讲师、硕导",
+      "research_interests": [
+        "大数据管理与分析",
+        "机器学习与数据挖掘",
+        "数据安全与隐私保护"
+      ],
+      "current_focus": {
+        "text": "目前主要研究方向为大数据管理与分析、机器学习与数据挖掘、数据安全与隐私保护等。",
+        "evidence": [
+          "目前主要研究方向为大数据管理与分析、机器学习与数据挖掘、数据安全与隐私保护等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称： 讲师 、 硕导"
+        ],
+        "note": "讲师通常处于职业早期，可能亲自指导研究生，但资源积累有限。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://faculty.fudan.edu.cn/zhhwang",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "王智慧是复旦大学计算与智能创新学院的讲师和硕导，研究方向包括大数据管理与分析、机器学习与数据挖掘、数据安全与隐私保护。",
+      "_verification": []
+    },
+    {
+      "name": "王国平",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院的工程师，邮箱为gpwang@fudan.edu.cn，但页面未提供研究方向和招生信息。",
+      "_verification": []
+    },
+    {
+      "name": "王莉莉",
+      "title": "研究实习员、无",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "王莉莉是复旦大学计算与智能创新学院的研究实习员，研究方向和个人简介未在页面中提供。",
+      "_verification": []
+    },
+    {
+      "name": "王雪平",
+      "title": "讲师、硕导",
+      "research_interests": [
+        "计算机网络",
+        "信息安全",
+        "智能电网"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/69/c25930a278121/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "王雪平是复旦大学的讲师和硕导，研究领域包括计算机网络、信息安全与智能电网。",
+      "_verification": []
+    },
+    {
+      "name": "王勇",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "王静然",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生相关信息"
+      },
+      "homepage_candidates": [],
+      "summary": "王静然是复旦大学计算与智能创新学院的研究实习员，主要负责学院前台、资产管理、行政、会务及软件学院宣传等工作。",
+      "_verification": []
+    },
+    {
+      "name": "王慧敏",
+      "title": "研究员",
+      "research_interests": [
+        "保密学院办公室工作"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "王慧敏是复旦大学计算与智能创新学院的研究员，从事保密学院办公室工作。",
+      "_verification": []
+    },
+    {
+      "name": "王李霞",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中列出。",
+      "_verification": []
+    },
+    {
+      "name": "薛莘",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": "主要负责研究生学籍管理、教学培养工作",
+        "evidence": [
+          "计算与智能创新学院研究生教务员，主要负责研究生学籍管理、教学培养工作。"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "该老师为行政教务人员，非科研导师，无招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "薛莘是复旦大学计算与智能创新学院的助理研究员，担任研究生教务员，负责研究生学籍管理和教学培养工作。",
+      "_verification": []
+    },
+    {
+      "name": "徐晓栋",
+      "title": "工程师",
+      "research_interests": [
+        "电力调度自动化监控",
+        "城市火灾自动报警监控",
+        "物联网"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/58/c25931a278104/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "徐晓栋是复旦大学的工程师，研究领域涉及电力调度自动化监控、城市火灾自动报警监控和物联网。",
+      "_verification": []
+    },
+    {
+      "name": "徐畅",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "徐畅是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中明确说明。",
+      "_verification": []
+    },
+    {
+      "name": "徐睿",
+      "title": null,
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "页面未提供徐睿老师的个人简介、研究方向等具体信息，仅有基本联系方式和职称（管理员、无）。",
+      "_verification": []
+    },
+    {
+      "name": "徐志平",
+      "title": "讲师",
+      "research_interests": [
+        "人工智能",
+        "图像处理"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/64/c25930a278116/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "徐志平是复旦大学计算与智能创新学院的讲师，研究方向为人工智能和图像处理。",
+      "_verification": []
+    },
+    {
+      "name": "肖川",
+      "title": "工程师",
+      "research_interests": [
+        "计算机基础教学与研究"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/5a/c25931a278106/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "肖川是复旦大学的工程师，研究方向为计算机基础教学与研究。",
+      "_verification": []
+    },
+    {
+      "name": "叶家炜",
+      "title": "工程师",
+      "research_interests": [
+        "计算机网络",
+        "信息安全"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "叶家炜是复旦大学的工程师，研究领域为计算机网络与信息安全。",
+      "_verification": []
+    },
+    {
+      "name": "叶雅珍",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "叶雅珍是复旦大学的助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "姚晓枝",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "于泽平",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "杨柳",
+      "title": null,
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "杨柳是复旦大学计算与智能创新学院的研究实习员，页面未提供研究方向、个人简介等详细信息。",
+      "_verification": []
+    },
+    {
+      "name": "曾艺",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理研究员，研究方向未在页面中明确列出。",
+      "_verification": []
+    },
+    {
+      "name": "朱莉",
+      "title": "研究实习员、无",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "朱莉是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "张梦露",
+      "title": "助理工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院助理工程师，研究方向未公开。",
+      "_verification": []
+    },
+    {
+      "name": "赵琼",
+      "title": "讲师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学计算与智能创新学院讲师，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "张莉",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "张莉是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "郑巧菲",
+      "title": "研究实习员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "郑巧菲是复旦大学计算与智能创新学院的研究实习员，研究方向未在页面中提及。",
+      "_verification": []
+    },
+    {
+      "name": "张天戈",
+      "title": "工程师、硕导",
+      "research_interests": [
+        "模型驱动的开发",
+        "逆向工程"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cs.fudan.edu.cn/3e/2b/c25931a278059/page.htm",
+          "label": "个人主页",
+          "type": "personal"
+        }
+      ],
+      "summary": "张天戈是复旦大学的工程师和硕士生导师，研究领域为模型驱动的开发和逆向工程。",
+      "_verification": []
+    },
+    {
+      "name": "朱元婷",
+      "title": "助理研究员",
+      "research_interests": [
+        "绩效评价",
+        "数字治理",
+        "区域发展"
+      ],
+      "current_focus": {
+        "text": "主要开展绩效评价、数字治理、区域发展相关研究",
+        "evidence": [
+          "复旦大学公共绩效与信息化研究中心副主任，主要开展绩效评价、数字治理、区域发展相关研究"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null,
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "复旦大学公共绩效与信息化研究中心副主任，助理研究员，研究方向为绩效评价、数字治理和区域发展。",
+      "_verification": []
+    },
+    {
+      "name": "张致元",
+      "title": null,
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "张致元是复旦大学计算与智能创新学院的研究实习员，无职称，研究领域和个人简介信息未提供。",
+      "_verification": []
+    },
+    {
+      "name": "张瑞彬",
+      "title": "工程师",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": [],
+        "note": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": null
+      },
+      "homepage_candidates": [],
+      "summary": "张瑞彬是复旦大学计算与智能创新学院的工程师，邮箱为zhangrb@fudan.edu.cn，但页面未提供研究方向和招生信息。",
+      "_verification": []
+    }
+  ]
+}
