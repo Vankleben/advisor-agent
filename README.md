@@ -233,7 +233,7 @@ advisor_agent/
 └── data/                 # 卡片库、论文全文、深潜报告、监测快照
 ```
 
-详见 [docs/code.md](docs/code.md)（开发进度文档）与 [docs/设计审计文档](docs/)（完整需求设计）。
+详见 [docs/code.md](docs/code.md)（开发进度文档）与 [设计审计文档 v0.4](docs/design-audit-v0.4.md)（完整需求设计）。
 
 ---
 
