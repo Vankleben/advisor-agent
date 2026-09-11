@@ -6,6 +6,13 @@ M1.5：对比视图
   python tools/compare_advisors.py --panorama
   python tools/compare_advisors.py --compare 俞立 张三
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import sys
 from pathlib import Path

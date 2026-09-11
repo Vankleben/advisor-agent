@@ -3,6 +3,13 @@
 零新依赖：Python 内置 http.server + 复用 main.py 的 function calling 链路。
 启动：python tools/web_server.py  → 浏览器 http://127.0.0.1:8080
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import sys
 import traceback

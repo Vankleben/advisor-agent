@@ -3,6 +3,13 @@
 用法：python tools/analyze_paper.py 2605.18309v1
 流程：第0步 阅读决策卡 → 确认精读 → 七段框架拆解（每处阐述附原文原句）→ 反幻觉校验
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import re
 import sys

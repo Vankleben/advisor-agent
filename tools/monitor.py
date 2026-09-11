@@ -25,6 +25,13 @@ M6：实时情报监测
                       scan --name 俞立      # 只扫某人
                       show                   # 看历史简报
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import re
 import sys

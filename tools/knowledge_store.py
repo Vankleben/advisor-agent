@@ -7,6 +7,13 @@
   python tools/knowledge_store.py show                        # 查看两个档案
   python tools/knowledge_store.py bookmark 俞立 --note 备注    # 收藏/更新目标老师
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import sys
 import datetime

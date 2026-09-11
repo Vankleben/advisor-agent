@@ -4,6 +4,13 @@
 - 返回截断后的纯文本 + 可点击的链接列表
 - Agent 多次调用即可自主导航网页
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import re
 from html import unescape
 from urllib.parse import urljoin, urlparse
