@@ -196,6 +196,42 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
     return ok
 
 
+def merge_paper_sources(arxiv: list, epmc: list, lab: list) -> list[dict]:
+    """
+    跨源合并去重：同标题（归一化比对）的论文合并为一条，sources 字段记录命中来源。
+    价值：官网论文可补上 arXiv/PMC 缺失的条目，多源命中则互相印证，可信度更高。
+    """
+    norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", str(s or "")).lower()[:70]
+    merged: dict[str, dict] = {}
+
+    def add(p: dict, src: str):
+        key = norm(p.get("title"))
+        if not key:
+            return
+        if key in merged:
+            m = merged[key]
+            if src not in m["sources"]:
+                m["sources"].append(src)
+            # 用更完整的信息补齐空缺字段（官网常有作者全名/期刊/年份）
+            for f in ("authors", "journal", "venue", "published", "year", "url", "abstract"):
+                if not m.get(f) and p.get(f):
+                    m[f] = p[f]
+            if p.get("is_last_author"):
+                m["is_last_author"] = True
+        else:
+            m = dict(p)
+            m["sources"] = [src]
+            merged[key] = m
+
+    for p in arxiv:
+        add(p, "arXiv")
+    for p in epmc:
+        add(p, "EuropePMC")
+    for p in lab:
+        add(p, "实验室官网")
+    return list(merged.values())
+
+
 def resolve_arxiv_id(arg: str) -> str:
     """支持两种输入：arXiv id 直接返回；纯数字视为最近一次搜索结果的序号。"""
     if re.fullmatch(r"\d{1,3}", arg):
