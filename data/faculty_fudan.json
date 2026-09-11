@@ -1,0 +1,1530 @@
+{
+  "site": "fudan",
+  "school": "复旦大学 计算与智能创新学院",
+  "crawl_date": "2026-09-04",
+  "count": 190,
+  "extractor": "chrome-headless",
+  "teachers": [
+    {
+      "name": "邬江兴",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wjx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "柴洪峰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/chf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "沈学民",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/sxm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈阳",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cy_37066/list.htm",
+      "sections": null
+    },
+    {
+      "name": "窦德景",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ddj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "戴开宇",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/dky/list.htm",
+      "sections": null
+    },
+    {
+      "name": "傅金兰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fjl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "傅晓明",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fxm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "冯瑞",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fr/list.htm",
+      "sections": null
+    },
+    {
+      "name": "黄萱菁",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hxj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "黄橙",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hc/list.htm",
+      "sections": null
+    },
+    {
+      "name": "何震瀛",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hzy2/list.htm",
+      "sections": null
+    },
+    {
+      "name": "韩伟力",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hwl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "金玲飞",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jlf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "荆一楠",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jyn/list.htm",
+      "sections": null
+    },
+    {
+      "name": "金城",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jc/list.htm",
+      "sections": null
+    },
+    {
+      "name": "阚海斌",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/khb/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李斌",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lb/list.htm",
+      "sections": null
+    },
+    {
+      "name": "吕智慧",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lzh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李伟",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lw/list.htm",
+      "sections": null
+    },
+    {
+      "name": "卢暾",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lt/list.htm",
+      "sections": null
+    },
+    {
+      "name": "路红",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lh_37422/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李晟",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ls/list.htm",
+      "sections": null
+    },
+    {
+      "name": "牛军钰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/njy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "彭鑫",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/px/list.htm",
+      "sections": null
+    },
+    {
+      "name": "钱振兴",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/qzx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "邱锡鹏",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/qxp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "孙未未",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/sww/list.htm",
+      "sections": null
+    },
+    {
+      "name": "沈一帆",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/syf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "尚笠",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/sl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "谭伟敏",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/twm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "汪源源",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wyy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "危辉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wh_37219/list.htm",
+      "sections": null
+    },
+    {
+      "name": "汪卫",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ww/list.htm",
+      "sections": null
+    },
+    {
+      "name": "吴杰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wj_37237/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王晓阳",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wxy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "吴俊",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王鹏",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王新",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐扬",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "薛向阳",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xxy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "熊贇",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xy_37635/list.htm",
+      "sections": null
+    },
+    {
+      "name": "谢涛",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xt/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐跃东",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xyd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "许扬",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xy1/list.htm",
+      "sections": null
+    },
+    {
+      "name": "肖仰华",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xyh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨夙",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ys/list.htm",
+      "sections": null
+    },
+    {
+      "name": "叶广楠",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ygn/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨威",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yw/list.htm",
+      "sections": null
+    },
+    {
+      "name": "颜波",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yb/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨珉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ym_37286/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨卫东",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ywd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张奇",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zq_40317/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张文强",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zwq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张源",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zy_37542/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张玥杰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zyj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "章忠志",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zzz/list.htm",
+      "sections": null
+    },
+    {
+      "name": "赵文耘",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zwy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "周水庚",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zsg/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张谧",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "周扬帆",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zyf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张为华",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zwh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张军平",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zjp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张新鹏",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zxp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "赵进",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "赵运磊",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zyl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "周向东",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zxd1/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张亮",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zl_37515/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈碧欢",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cbh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈学青",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cxq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "池明旻",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cmm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "曹袖",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈辰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cc/list.htm",
+      "sections": null
+    },
+    {
+      "name": "董震",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/dz/list.htm",
+      "sections": null
+    },
+    {
+      "name": "戈维峰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/gwf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "姜忠鼎",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jzd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "蒋晶",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jj1/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘乐茂",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/llm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李景涛",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ljt/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李敏波",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lmb/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李元",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ly/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李银胜",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lys/list.htm",
+      "sections": null
+    },
+    {
+      "name": "娄一翎",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lyl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "廖志成",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lzc/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘百祥",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lbx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "梁瑾",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "沈立炜",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/slw/list.htm",
+      "sections": null
+    },
+    {
+      "name": "沙朝锋",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/scf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "孙晓光",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/sxg/list.htm",
+      "sections": null
+    },
+    {
+      "name": "唐渊",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ty/list.htm",
+      "sections": null
+    },
+    {
+      "name": "谈子敬",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/tzj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "唐志强",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/tzq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王轶彤",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wyt/list.htm",
+      "sections": null
+    },
+    {
+      "name": "吴承荣",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wcr/list.htm",
+      "sections": null
+    },
+    {
+      "name": "吴永辉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wyh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王飞",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "吴毅坚",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wyj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐辉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "肖晓春",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xxc/list.htm",
+      "sections": null
+    },
+    {
+      "name": "谢志鹏",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xzp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐迎晓",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xyx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "严明",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ym/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨广亮",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ygl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨哲慜",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yzm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "叶德建",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ydj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "曾剑平",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cjp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张守志",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zsz/list.htm",
+      "sections": null
+    },
+    {
+      "name": "周雅倩",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zyq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张巍",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zw/list.htm",
+      "sections": null
+    },
+    {
+      "name": "周喆",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zz_37596/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张凯",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zk1/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张睿",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zr_50405/list.htm",
+      "sections": null
+    },
+    {
+      "name": "朱东来",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zdl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "朱崇湘",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zcx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张晓寒",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zxh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "赵卫东",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zwd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张向东",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zxd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "郑骁庆",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zxq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "安海龙",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ahl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "曹瑜",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cy_37042/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈彤兵",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ctb/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈荣华",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/crh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈利锋",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/clf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈海洪",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/chh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "陈伟男",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cwn/list.htm",
+      "sections": null
+    },
+    {
+      "name": "丁玲",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/dl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "戴嘉润",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/djr/list.htm",
+      "sections": null
+    },
+    {
+      "name": "邓智友",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/dzy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "丁素芬",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/dsf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "董羡",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/dx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "付雁",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "冯颖欣",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fyx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "方旭峰",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fxf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "冯红伟",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/fhw/list.htm",
+      "sections": null
+    },
+    {
+      "name": "龚洁",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/gj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "顾宁",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/gn11/list.htm",
+      "sections": null
+    },
+    {
+      "name": "顾鑫",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/gx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "洪赓",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hg/list.htm",
+      "sections": null
+    },
+    {
+      "name": "何浩",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "胡锐",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hr/list.htm",
+      "sections": null
+    },
+    {
+      "name": "何晓清",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/hxq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "姜秀艳",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jxy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "靳煜",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/jy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘卉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lh_37398/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘新",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "卢盛祺",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lsq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李吉萍",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ljp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李弋",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ly1/list.htm",
+      "sections": null
+    },
+    {
+      "name": "廖健",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lj_37386/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘木强",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lmq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "廖炳华",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lbh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "李旻",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘天弼",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ltb/list.htm",
+      "sections": null
+    },
+    {
+      "name": "刘钢",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/lg/list.htm",
+      "sections": null
+    },
+    {
+      "name": "马志远",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/mzy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "马晨曦",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/mcx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "毛迪林",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/mdl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "潘旭东",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/pxd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "潘依伊",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/pyy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "单晓玥",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/sxy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "沈洁",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/sj/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王智慧",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wzh/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王国平",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wgp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王莉莉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wll/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王雪平",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wxp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王勇",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王静然",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wjr/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王慧敏",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/whm/list.htm",
+      "sections": null
+    },
+    {
+      "name": "王李霞",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/wlx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "薛莘",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xx/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐晓栋",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xxd/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐畅",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xc1/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐睿",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xr/list.htm",
+      "sections": null
+    },
+    {
+      "name": "徐志平",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xzp_37273/list.htm",
+      "sections": null
+    },
+    {
+      "name": "肖川",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/xc/list.htm",
+      "sections": null
+    },
+    {
+      "name": "叶家炜",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yjw/list.htm",
+      "sections": null
+    },
+    {
+      "name": "叶雅珍",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yyz/list.htm",
+      "sections": null
+    },
+    {
+      "name": "姚晓枝",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yxz/list.htm",
+      "sections": null
+    },
+    {
+      "name": "于泽平",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yzp/list.htm",
+      "sections": null
+    },
+    {
+      "name": "杨柳",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/yl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "曾艺",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/cy_50313/list.htm",
+      "sections": null
+    },
+    {
+      "name": "朱莉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zl_37602/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张梦露",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zml/list.htm",
+      "sections": null
+    },
+    {
+      "name": "赵琼",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zq/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张莉",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zl/list.htm",
+      "sections": null
+    },
+    {
+      "name": "郑巧菲",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zqf/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张天戈",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/ztg/list.htm",
+      "sections": null
+    },
+    {
+      "name": "朱元婷",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zyt/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张致元",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zzy/list.htm",
+      "sections": null
+    },
+    {
+      "name": "张瑞彬",
+      "title": null,
+      "research": null,
+      "email": null,
+      "detail_url": "http://ai.fudan.edu.cn/zrb/list.htm",
+      "sections": null
+    }
+  ],
+  "source_url": "http://ai.fudan.edu.cn/53161/list.htm"
+}

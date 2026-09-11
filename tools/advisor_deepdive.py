@@ -61,14 +61,32 @@ DEEP_PROMPT = """你是导师深潜分析员，服务对象是一名想找实验
 # ============ 通用层：抓取与校验 ============
 
 def fetch_text(url: str) -> str:
-    r = requests.get(url, headers=HEADERS, timeout=20)
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=20)
+    except requests.exceptions.SSLError:
+        print(f"⚠️ SSL 证书验证失败({url})，降级跳过验证")
+        r = requests.get(url, headers=HEADERS, timeout=20, verify=False)
     r.raise_for_status()
     if not r.encoding or r.encoding.lower() == "iso-8859-1":
         r.encoding = r.apparent_encoding
     html = r.text
-    html = re.sub(r"(?is)<(script|style|noscript).*?</\1>", " ", html)
-    text = unescape(re.sub(r"(?s)<[^>]+>", " ", html))
-    return re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"(?is)<(script|style|noscript).*?</\1>", " ", html)
+    text = unescape(re.sub(r"(?s)<[^>]+>", " ", text))
+    text = re.sub(r"\s+", " ", text).strip()
+    # SSL 降级后内容仍很短（被拦截）→ 降级 Chrome headless 渲染
+    if len(text) < 50:
+        try:
+            from web_fetch import render_url
+            print(f"⚠️ 内容过短({len(text)}字符)，降级 Chrome headless 渲染...")
+            rendered = render_url(url, max_chars=8000, budget_ms=20000)
+            if not rendered.get("error") and len(rendered.get("text", "")) > len(text):
+                text = re.sub(r"(?is)<(script|style|noscript).*?</\1>", " ", rendered.get("text", ""))
+                text = re.sub(r"<[^>]+>", " ", text)
+                text = re.sub(r"\s+", " ", text).strip()
+                print(f"✅ 渲染后获取到 {len(text)} 字符")
+        except Exception:
+            pass
+    return text
 
 
 def flatten(text: str) -> str:
@@ -119,16 +137,18 @@ def verify_report(report: dict, src_texts: list) -> list:
 # ============ 主流程 ============
 
 def run_deepdive(client: OpenAI, name: str, site: str = "", url: str = "") -> dict:
-    card = load_card(name, site)
-
-    # 1. 提取 homepage_candidates（兼容新旧两种格式）
-    #    新格式：[{url, label, type}] —— 跳过 type=other
-    #    旧格式：["url"] —— 无法判断 type，全部跳过（交给 fallback）
-    hpc = card.get("homepage_candidates") or []
-    if hpc and isinstance(hpc[0], dict):
-        hpc_urls = [c["url"] for c in hpc if c.get("type") != "other" and c.get("url")]
-    else:
-        hpc_urls = []   # 旧格式或空，全走 fallback
+    # 1. 尝试加载卡片；若找不到但提供了 url，则跳过卡片（卡片非必需）
+    hpc_urls = []
+    try:
+        card = load_card(name, site)
+        hpc = card.get("homepage_candidates") or []
+        if hpc and isinstance(hpc[0], dict):
+            hpc_urls = [c["url"] for c in hpc if c.get("type") != "other" and c.get("url")]
+    except LookupError:
+        if url:
+            print(f"ℹ️ 卡片库中未找到 {name}，使用提供的 URL: {url}")
+        else:
+            return {"error": f"卡片库中找不到 {name}，请先收录并生成卡片（add_school + enrich + batch）"}
 
     candidates = ([url] if url else []) + hpc_urls
     candidates = list(dict.fromkeys(candidates))[:3]

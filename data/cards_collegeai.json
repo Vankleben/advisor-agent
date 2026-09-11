@@ -1,0 +1,2723 @@
+{
+  "count": 93,
+  "cards": [
+    {
+      "name": "张钹",
+      "title": "教授",
+      "research_interests": [
+        "人工智能",
+        "人工神经网络",
+        "机器学习",
+        "模式识别",
+        "知识工程",
+        "机器人"
+      ],
+      "current_focus": {
+        "text": "提出多粒度空间之间相互转换、综合与推理的方法，以及人工神经网络的结构学习方法",
+        "evidence": [
+          "在过去30多年中，他提出问题求解的商空间理论，在商空间数学模型的基础上，提出了多粒度空间之间相互转换、综合与推理的方法。",
+          "在人工神经网络上，他提出基于规划和基于点集覆盖的学习算法。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "1958年毕业于清华大学自动控制系，同年留校任教至今。",
+          "2011年汉堡大学授予自然科学荣誉博士。",
+          "中科院院士。"
+        ],
+        "note": "名头极响、资源丰厚，但年事已高，日常指导大概率由团队小导师或博后承担，需先确认组内是否有本科生深度参与的先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://www.xuetangx.com/"
+      ],
+      "summary": "张钹是清华大学计算机系教授、中科院院士，长期从事人工智能、人工神经网络、机器学习等理论研究，并提出了商空间理论和结构学习方法。",
+      "_verification": []
+    },
+    {
+      "name": "姚期智",
+      "title": "院士",
+      "research_interests": [
+        "算法",
+        "密码学",
+        "量子计算",
+        "机制设计",
+        "人工智能"
+      ],
+      "current_focus": {
+        "text": "近期论文涉及大语言模型、数学文本、定理证明等，如“Cumulative Reasoning with Large Language Models”等。",
+        "evidence": [
+          "“Cumulative Reasoning with Large Language Models,” Yifan Zhang, Jingqin Yang, Yang Yuan, Andrew C Yao, TMLR 2025",
+          "“Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts,” Yifan Zhang, Yifan Luo, Yang Yuan, Andrew C Yao, ACL 2025 Findings",
+          "“Hierarchical Attention Generates Better Proofs,” Jianlong Chen, Chao Li, Yang Yuan, Andrew C Yao, ACL 2025",
+          "“Augmenting Math Word Problems via Iterative Question Composing,” Haoxiong Liu, Yifan Zhang, Yifan Luo, Andrew C Yao, AAAI 2025",
+          "“ProofAug: Efficient Neural Theorem Proving via Fine-grained Proof Structure Analysis,” Haoxiong"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2000年 图灵奖（A.M. Turing Award）",
+          "2016年 中国科学院院士（Member, Chinese Academy of Sciences）",
+          "2024年 基础科学终身成就奖 (Basic Science Lifetime Award)"
+        ],
+        "note": "名头极响、资源顶级，但日常指导大概率由团队小导师或博后承担；需先查清组内本科生是否有独立课题或一作先例，避免只挂名无实质培养。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "姚期智是清华大学交叉信息研究院院长、教授，中国科学院院士，图灵奖得主，研究领域涵盖算法、密码学、量子计算、机制设计和人工智能。",
+      "_verification": []
+    },
+    {
+      "name": "戴琼海",
+      "title": "院士",
+      "research_interests": [
+        "成像与智能"
+      ],
+      "current_focus": {
+        "text": "研究领域为成像与智能",
+        "evidence": [
+          "研究领域 成像与智能"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "院士"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需确认组内是否有本科生一作先例，避免“挂名”式参与。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "戴琼海是清华大学自动化系的院士，研究领域为成像与智能。",
+      "_verification": []
+    },
+    {
+      "name": "张亚勤",
+      "title": "院士",
+      "research_interests": [
+        "数字视频",
+        "人工智能"
+      ],
+      "current_focus": {
+        "text": "张亚勤院士是清华大学智能科学讲席教授，清华大学智能产业研究院创始院长，致力于数字视频和人工智能领域的研究。",
+        "evidence": [
+          "张亚勤院士是清华大学智能科学讲席教授，清华大学智能产业研究院创始院长。",
+          "张亚勤院士是数字视频和人工智能领域的世界级科学家和企业家，拥有60多项美国专利，发表500多篇学术论文，并出版11本专著。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "中国工程院 院士（外籍）",
+          "澳大利亚国家工程院院士（外籍）",
+          "美国艺术与科学院 院士",
+          "1997年他31岁被授予IEEE Fellow，成为历史上获得这一荣誉最年轻的科学家"
+        ],
+        "note": "名头极响、资源顶级，但日常指导大概率由团队小导师或博后负责，需先确认组内是否有本科生一作先例，避免“挂名式”参与。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "张亚勤是清华大学智能产业研究院创始院长，数字视频和人工智能领域的院士级科学家。",
+      "_verification": []
+    },
+    {
+      "name": "胡事民",
+      "title": "教授",
+      "research_interests": [
+        "计算机图形学",
+        "智能信息处理",
+        "系统软件"
+      ],
+      "current_focus": {
+        "text": "主要从事计算机图形学、智能信息处理和系统软件等方面的教学和科研工作，在几何处理、可视媒体编辑与交互合成、真实感绘制和动画仿真等方面有研究。",
+        "evidence": [
+          "主要从事计算机图形学、智能信息处理和系统软件等方面的教学和科研工作，在几何处理方面，提出基于积分不变量和特征敏感度量的几何处理框架、超大规模模型拓扑修复编辑理论和基于逆曲率映射的共形参数化理论；在可视媒体的编辑与交互合成方面，提出基于全局对比度的显著性检测、基于梯度场的拓扑一致的图像矢量化方法、以及结合草图输入和网络搜索的图像合成方法（Sketch2Photo）等；在真实感绘制和动画仿真方面，提出基于内在特征的流体调制方法、基于SPH的多流体与流固耦合方法，以及全局环境光照的球面分段常量基函数等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "院士",
+          "中国计算机图形学杰出奖 (2006)",
+          "新世纪百千万人才工程国家级人选 (2010)"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师/博后承担，需确认组内是否有本科生一作先例及你能否直接接触院士。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "http://cg.cs.tsinghua.edu.cn/shimin.htm"
+      ],
+      "summary": "胡事民是清华大学计算机系教授、院士，主要研究计算机图形学、智能信息处理和系统软件。",
+      "_verification": [
+        "⚠️ career_stage 的 evidence 在原文中找不到：院士..."
+      ]
+    },
+    {
+      "name": "段路明",
+      "title": "院士",
+      "research_interests": [
+        "离子与超导量子计算",
+        "量子网络",
+        "量子模拟",
+        "量子人工智能"
+      ],
+      "current_focus": {
+        "text": "近期在量子计算和量子网络方向取得多项突破，包括首次观测到多体动力学冻结现象、实现高保真度量子纠缠门、实现多模增强的量子中继节点等。",
+        "evidence": [
+          "交叉信息院科研团队首次观测到多体动力学冻结现象",
+          "段路明研究组首次在双重编码量子比特之间实现了高保真度量子纠缠门",
+          "濮云飞、段路明研究组实现多模增强的12公里量子中继节点，接近城际量子网络扩展阈值",
+          "段路明研究组首次在二维离子阵列上实现全连通的量子纠缠逻辑门",
+          "段路明研究组首次在离子阱量子模拟器上观测到拓扑缺陷的量子叠加"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "段路明教授于中国科技大学获得学士(1994年)和博士学位(1998年)，毕业后留校任教，历任副教授、教授。2003年任美国密歇根大学助理教授，2007年获终身教职，2012年担任费米讲席教授。2018年辞去美国密歇根大学费米讲席教授职位，全职回清华大学交叉信息研究院工作，现任清华大学姚期智讲座教授、清华大学基础科学讲席教授。",
+          "2009年当选美国物理学会会士。"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需留意组内是否有本科生一作先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://scholar.google.com/citations?user=ULkJQpkAAAAJ&hl=en"
+      ],
+      "summary": "段路明是清华大学姚期智讲座教授、基础科学讲席教授，中国科学院院士，长期从事量子计算与量子网络研究，是DLCZ方案的开创者之一，在量子信息领域取得多项开创性成果。",
+      "_verification": []
+    },
+    {
+      "name": "董胤蓬",
+      "title": "助理教授、院长助理",
+      "research_interests": [
+        "人工智能基础理论",
+        "机器学习",
+        "大模型安全与对齐",
+        "生成式AI"
+      ],
+      "current_focus": {
+        "text": "研究可泛化鲁棒防御和安全增强方法，构建模型安全性评测基准与平台",
+        "evidence": [
+          "研究可泛化鲁棒防御和安全增强方法，提出鲁棒扩散分类器模型【ICML’24&NeurIPS’24】，将机器学习中判别式建模和生成式建模两类方法融合统一，首次验证生成式分类器能够取得最优的模型鲁棒性效果；提出基于推理增强的大模型安全对齐方法【ICML‘25 Oral】，取得了商用模型的安全性水平，并应用于DeepSeek-R1的安全对齐。",
+          "构建模型安全性评测基准与平台，包括：1）首个深度学习模型鲁棒性综合评测基准ARES【CVPR‘20 Oral】；2）首个多模态大模型可信评测基准MultiTrust【NeurIPS’24】；3）首个文生视频模型安全性评测基准T2VSafetyBench【NeurIPS’24】。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2022年，于清华大学计算机科学与技术系获得博士学位（导师为朱军教授）",
+          "2022.1-2025.2，就职于清华大学计算机科学与技术系，从事博士后工作",
+          "2025.2-至今，就职于清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组冲劲足，亲自带人概率高，方向可能延续博后积累；但资源、名声尚在积累，发文章压力大，适合想拼一作且能扛压的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "清华大学人工智能学院助理教授，专注于人工智能基础理论、机器学习及大模型安全与对齐，在对抗攻击、鲁棒防御和安全性评测方面取得多项代表性成果。",
+      "_verification": []
+    },
+    {
+      "name": "Alex Lamb",
+      "title": "助理教授",
+      "research_interests": [
+        "深度学习",
+        "强化学习",
+        "表示学习",
+        "数据高效学习",
+        "正则化"
+      ],
+      "current_focus": {
+        "text": "探索深度学习和强化学习的更佳表示方法，开发多步逆模型，以及通过插值法训练改进神经网络的正则化。",
+        "evidence": [
+          "主要研究方向之一是探索深度学习和强化学习的更佳表示方法。",
+          "其开发的一种特殊模型是多步逆模型，它是在交互环境中（如强化学习中）学习可证明紧凑表示的一种方式。",
+          "Alex Lamb助理教授的另一项研究工作是通过使用插值法进行训练来改进神经网络的正则化。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年，于加拿大蒙特利尔大学攻获得计算机科学博士学位",
+          "2025.6-至今就职于清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组、冲劲足，亲自带学生概率高，但资源与名声尚在积累，适合敢闯敢拼、愿与课题组共同成长的本科生或硕士生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "Alex Lamb是清华大学人工智能学院的助理教授，专注于深度学习和强化学习中的表示学习与数据高效学习。",
+      "_verification": []
+    },
+    {
+      "name": "米璐",
+      "title": "助理教授",
+      "research_interests": [
+        "人工智能与神经科学的交叉赋能",
+        "脑机接口算法"
+      ],
+      "current_focus": {
+        "text": "主要研究方向为人工智能与脑科学的交叉赋能，促进生物神经网络和人工神经网络的交叉融合。通过人工智能加速脑研究的科学发现；利用人工智能算法采集，处理，分析，理解大规模高维多模态的脑数据，在神经元以及其连接突触的单细胞尺度级别上理解大脑编码，计算和学习的新机制，将打造脑科学与人工智能交叉的新范式，为加速脑科学研究、脑机接口和类脑智能研发提供技术支撑。",
+        "evidence": [
+          "主要研究方向为人工智能与脑科学的交叉赋能，促进生物神经网络和人工神经网络的交叉融合。通过人工智能加速脑研究的科学发现；利用人工智能算法采集，处理，分析，理解大规模高维多模态的脑数据，在神经元以及其连接突触的单细胞尺度级别上理解大脑编码，计算和学习的新机制，将打造脑科学与人工智能交叉的新范式，为加速脑科学研究、脑机接口和类脑智能研发提供技术支撑。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2022年，于麻省理工学院人工智能实验室 (MIT CSAIL) 获得计算机科学博士学位（导师是Nir Shavit教授）",
+          "2024年-2025年，担任佐治亚理工学院的计算科学与工程系助理教授",
+          "2025.6-至今，就职于清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组冲劲足，亲自带学生概率高，方向偏AI系统与计算科学交叉；但组内资源、论文积累尚浅，需接受初期成果波动，适合敢闯敢拼者。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "米璐是清华大学人工智能学院助理教授，研究方向为人工智能与神经科学的交叉赋能及脑机接口算法，拥有MIT博士和顶尖机构博士后经历。",
+      "_verification": []
+    },
+    {
+      "name": "李欣阳",
+      "title": "助理教授",
+      "research_interests": [
+        "智能成像与图像分析",
+        "科学观测大模型",
+        "先进成像机制与系统"
+      ],
+      "current_focus": {
+        "text": "致力于以人工智能赋能科学观测，推动科学发现，具体包括智能成像与图像分析、科学观测大模型、先进成像机制与系统。",
+        "evidence": [
+          "成像与视觉，致力于以人工智能赋能科学观测，推动科学发现",
+          "研究方向： • 智能成像与图像分析：研究高性能、可解释、自监督的智能图像分析方法，探索成像仪器与人工智能融合新架构，以智能计算突破观测极限，推动科学发现。 • 科学观测大模型：构建跨尺度、多模态、高质量的科学观测数据集，发展面向前沿科学研究的基础模型，实现复杂科学现象的精准表征与机理发现。 • 先进成像机制与系统：研究成像机器人新架构，以具身智能赋能自主感知与主动观测；研究量子效应与光学成像融合新范式，从物理机制上突破观测极限。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2023年，于清华大学自动化系获得博士学位",
+          "2023年7月-2025年6月，就职于清华大学自动化系，从事博士后研究",
+          "2025年7月起，就职于清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组、亲自带人意愿强，方向新但资源与产出尚在积累；适合想深度参与、能接受不确定性、愿共同成长的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://www.cell.com/cell/fulltext/S0092-8674(23)00412-9"
+      ],
+      "summary": "李欣阳是清华大学人工智能学院的助理教授，研究方向为智能成像与科学观测，致力于以人工智能赋能科学观测，推动科学发现。",
+      "_verification": []
+    },
+    {
+      "name": "李佳",
+      "title": "助理教授",
+      "research_interests": [
+        "AI Agent",
+        "大模型",
+        "软件工程"
+      ],
+      "current_focus": {
+        "text": "研究大模型驱动的AI Agent，提升其基础能力并面向软件工程、科学研究等重要场景构建智能体。",
+        "evidence": [
+          "李佳助理教授主要研究大模型驱动的AI Agent，聚焦于构建能自主完成数字与物理世界任务的智能体，主要包含两个核心维度： 1. 提升AI Agent的基础能力，例如：推理（Reasoning）、记忆（Memory）、工具调用（Tool-Calling）、效率（Efficiency）、安全（Safety）和多智能体协作（Multi-Agent Collaboration）等技术瓶颈。 2. 研究面向重要场景的智能体，例如：软件工程智能体、科学研究智能体"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年9月-2025年7月，于北京大学计算机学院获得博士学位 2025年8月起，就职于清华大学人工智能学院，担任助理教授（博士生导师）"
+        ],
+        "note": "刚建组且是清华助理教授，亲自带学生概率高、冲劲足，但资源与名气尚在积累，适合敢闯敢拼、愿共同成长的本科生。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "课题组长期招收对AI Agent、大模型等领域感兴趣的同学和科研实习生。"
+        ],
+        "note": "明确招收科研实习生，并欢迎感兴趣的同学联系。"
+      },
+      "homepage_candidates": [
+        "https://lj2lijia.github.io/"
+      ],
+      "summary": "李佳是清华大学人工智能学院助理教授，主要研究大模型驱动的AI Agent，聚焦于提升Agent基础能力并应用于软件工程等场景，课题组长期招收实习生。",
+      "_verification": []
+    },
+    {
+      "name": "刘淼",
+      "title": "助理教授",
+      "research_interests": [
+        "第一视角视觉",
+        "增强现实",
+        "生成式人工智能模型"
+      ],
+      "current_focus": {
+        "text": "在Meta GenAI期间参与生成式AI模型研发，并构建第一视角视频数据集和行为理解算法，部分成果已部署于智能眼镜产品。",
+        "evidence": [
+          "作为主要作者，参与构建了Eg04D、EgOEx04D、EGTEAGaze+、Behavior Vision Suite等多个具有广泛影响力的第一视角视频数据集,成果已在学术界与工业界获得广泛应用。",
+          "提出并设计多项第一视角视频中的行为理解与预测算法,部分成果已成功部署于Meta RealityLabs下一代智能眼镜产品中。",
+          "在Meta GenAI期间，参与了EMU、Llama3及Llama4(仅多模态部分)等生成式人工智能模型的端到端研发。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2025年8月起，就职于清华大学人工智能学院，担任助理教授。",
+          "2022.6，于美国佐治亚理工学院获得博士学位"
+        ],
+        "note": "亲自带人概率高、冲劲足，方向新但组刚起步，资源与产出待积累；清华平台加持，适合敢闯敢拼、愿共成长的本科生，但需接受初期不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "刘淼是清华大学人工智能学院助理教授，专注于第一视角视觉、增强现实和生成式AI模型研究，曾在Meta GenAI担任高级研究科学家，拥有丰富的学术和工业界成果。",
+      "_verification": []
+    },
+    {
+      "name": "姚远",
+      "title": "助理教授",
+      "research_interests": [
+        "多模态大模型",
+        "自然语言处理"
+      ],
+      "current_focus": {
+        "text": "主导构建高效多模态大模型系列，提出统一编码框架和细粒度人类反馈学习方法，并探索生物医学多模态科学大模型。",
+        "evidence": [
+          "主导构建了“轻量级、高性能”的MiniCPM-V系列高效多模态大模型、以及首个“实时感知、主动交互”的MiniCPM-o系列全双工全模态大模型,模型入选HuggingFace最受欢迎和下载模型榜单、中关村论坛年会10项重大科技成果等;",
+          "提出了统一高清图像、多图、视频的编码框架,实现了高清视觉内容的高效建模与知识迁移;",
+          "提出多模态细粒度人类反馈学习方法,大幅降低了生成内容的幻觉率,提高了模型的可信度;",
+          "提出了生物医学多模态科学大模型,首次实现分子结构与自然语言之间的深度交互;"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2023年，于清华大学计算机系获得博士学位",
+          "2023年9月-2026年1月，就职于新加坡国立大学计算机学院，担任博士后研究员",
+          "2026年1月-至今，就职于清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组、亲自带人概率高，冲劲足，本科生机会相对多，但组内资源、论文积累和名气尚在爬坡期，需评估自身抗压与试错意愿。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "姚远是清华大学人工智能学院助理教授，专注于多模态大模型和自然语言处理研究，主导开发了MiniCPM-V和MiniCPM-o系列模型，并提出了多项创新方法。",
+      "_verification": []
+    },
+    {
+      "name": "邹雪妍",
+      "title": "助理教授",
+      "research_interests": [
+        "交互式具身智能",
+        "世界模型",
+        "灵巧控制与感知",
+        "具身基础模型"
+      ],
+      "current_focus": {
+        "text": "博士后阶段转向机器人感知、决策与灵巧操作，提出M3、NaVILA、Dex1B等工作，并作为共同项目负责人获得多个研究资助。",
+        "evidence": [
+          "进入博士后阶段后，研究方向转向机器人感知、决策与灵巧操作，以第一作者或核心参与者的身份提出了 M3 、 NaVILA 、 Dex1B 等前沿工作。",
+          "博士后期间获得 TILOS Fellowship 资助，并作为共同项目负责人先后获得 Amazon Research Award (2025) 、 NVIDIA Research Grant (2025) 及 Accelerating Foundation Models Research Grant (2024) 。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2024年6月，于威斯康辛大学麦迪逊分校获得计算机博士学位",
+          "2026年1月-至今，于清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组、冲劲足，亲自带学生概率高，本科生机会相对多；但组内资源、论文积累和名气尚在起步期，需做好成果波动准备。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://maureenzou.github.io/"
+      ],
+      "summary": "邹雪妍是清华大学人工智能学院助理教授，研究交互式具身智能、世界模型、灵巧控制与感知、具身基础模型，博士毕业于威斯康辛大学麦迪逊分校，博士后期间转向机器人方向，发表多篇顶级论文并获多个奖项。",
+      "_verification": []
+    },
+    {
+      "name": "宋悦",
+      "title": "助理教授",
+      "research_interests": [
+        "结构化的表征学习",
+        "科学赋能AI",
+        "科学智能"
+      ],
+      "current_focus": {
+        "text": "构建解耦与等变时序动态系统，发展稳健高效的矩阵几何算法，探索非欧结构下的生成扩散模型，并关注原始科学数据中的学习、新型科学归纳偏置的挖掘与应用、融合几何先验的科学基础模型构建。",
+        "evidence": [
+          "当前核心研究方向包括 • 构建解耦 （disentangled）与等变 (equivariant) 时序动态系统，面向图像序列、神经科学、行为生态学、分子动力学等时序数据，挖掘其中的独立演化因子与语义结构； • 发展稳健高效的矩阵几何算法，例如快速可微矩阵方程运算、高效批次谱分解、流形一致归一化层等方法，应用于细粒度视觉识别、脑电信号分析等科学任务； • 探索非欧结构下的生成扩散模型，面向方向性/周期性的数据（如流体场、材料织构、指纹等），实现物理约束下的生成与建模。",
+          "未来将重点关注：原始科学数据中的学习（逆问题、数据驱动PDE等）、新型科学归纳偏置的挖掘与应用（振荡 、同步、拓扑等）、以及融合几何先验的科学基础模型构建。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2024年，于欧洲学习与智能系统实验室（ELLIS）项目获得博士学位",
+          "2026年2月-至今，于清华大学人工智能学院担任助理教授。"
+        ],
+        "note": "刚建组且海外博士背景，方向新、冲劲足，亲自带人概率高，但资源与声誉尚在积累，适合敢闯敢试、愿共成长的本科生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "宋悦是清华大学人工智能学院的助理教授，专注于结构化表征学习、科学赋能AI和科学智能，研究解耦与等变时序动态系统、矩阵几何算法及非欧生成扩散模型。",
+      "_verification": []
+    },
+    {
+      "name": "李一鸣",
+      "title": "助理教授",
+      "research_interests": [
+        "空间智能",
+        "机器人学",
+        "基础模型",
+        "世界模型"
+      ],
+      "current_focus": {
+        "text": "构建空间智能生态系统，研究空间认知、空间计算和空间机器人",
+        "evidence": [
+          "我的长远愿景是构建一个由认知智能、数字宇宙与物理实体深度融合、协同进化的空间智能生态系统。",
+          "目前正在研究的问题包括： 1. 空间认知：具身智能体如何高效地在四维时空中感知、表征和推理？ 2. 空间计算：如何从多模态传感流中自监督地创建逼真的数字孪生？ 3. 空间机器人：如何将认知智能赋予具有不同形态的真实机器人？"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2025年1月，于美国纽约大学获得博士学位",
+          "2026年3月-至今，于清华大学人工智能学院担任助理教授"
+        ],
+        "note": "刚建组、冲劲足，亲自带学生概率高，但资源积累少、方向可能未定型，适合想拼一作且能接受不确定性的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://yimingli-page.github.io/"
+      ],
+      "summary": "李一鸣是清华大学人工智能学院的助理教授，研究方向为空间智能、机器人学、基础模型和世界模型，致力于构建空间智能生态系统。",
+      "_verification": []
+    },
+    {
+      "name": "刘子鸣",
+      "title": "助理教授",
+      "research_interests": [
+        "Science for AI",
+        "Science of AI",
+        "AI for Science"
+      ],
+      "current_focus": {
+        "text": "着重推进发展一套务实的AI理论（即“AI的物理学”），并致力于将其构建进Agent系统。",
+        "evidence": [
+          "入职清华后，刘子鸣助理教授将着重推进发展一套务实的AI理论（即“AI的物理学”），并致力于将其构建进Agent系统。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2026年4月-至今，于清华大学人工智能学院，担任助理教授。",
+          "2020年，于北京大学物理学院获得学士学位；",
+          "2021年-2025年，于麻省理工学院物理系获得博士学位"
+        ],
+        "note": "青年助理教授刚建组，亲自带人概率高、冲劲足，本科生机会相对多，但组的名声、设备和资源可能还在积累期，需评估导师指导精力与初期产出压力。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "刘子鸣是清华大学人工智能学院助理教授，研究兴趣在AI与科学的交叉领域，提出了KAN等模型，并致力于发展AI的物理学理论。",
+      "_verification": []
+    },
+    {
+      "name": "王同翰",
+      "title": "助理教授",
+      "research_interests": [
+        "（多）智能体及其经济学",
+        "智能体及其基础模型的能力与演化",
+        "智能体经济",
+        "智能体集体智能涌现"
+      ],
+      "current_focus": {
+        "text": "研究人类和AI智能体共生世界中的关键科学问题，包括智能体能力与演化、智能体经济、集体智能涌现。",
+        "evidence": [
+          "未来世界是一个人类和AI智能体共生的世界。我们希望研究并解决这一转变过程中出现的关键科学问题。",
+          "构建具备自我改进、长期规划、高效记忆能力的LLM/Embodied智能体。我们关注基础模型能力边界的突破、智能体的高层认知与决策能力。",
+          "理解并塑造人类与智能体共生的社会及其经济基础。我们关注智能体和生成模型作为新的经济主体如何参与市场、塑造偏好、配置资源与定价。",
+          "理解多个智能体如何通过交互产生分工、合作、竞争、组织和集体智能。研究多智能体之间的推理能力演化、智能涌现，并设计促进这一过程的算法。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2026年6-至今，于清华大学人工智能学院，担任助理教授。",
+          "2025年，获得哈佛大学计算机科学博士学位"
+        ],
+        "note": "组刚起步，导师亲自带教、发文章意愿强，但资源积累和方向稳定性尚在爬坡期，适合敢闯敢拼、能接受高不确定性的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://mp.weixin.qq.com/s?__biz=MzkzMzY5NDM0Mw==&mid=2247485776&idx=1&sn=ad9a7c9bc6303db357a9b0ba9e3eb641&scene=21#wechat_redirect"
+      ],
+      "summary": "王同翰是清华大学人工智能学院助理教授，研究多智能体及其经济学，曾获Victor Lesser杰出博士论文奖。",
+      "_verification": []
+    },
+    {
+      "name": "郭钰铎",
+      "title": "助理教授",
+      "research_interests": [
+        "计算成像",
+        "物理驱动的人工智能",
+        "天文科学智能"
+      ],
+      "current_focus": {
+        "text": "聚焦于物理驱动的可信科学智能，致力于打破物理硬件与人工智能的传统边界，将物理规律内生于神经网络架构，推动天文观测、大气湍流感知、计算光学等领域突破经典物理探测极限，催生重大科学发现。",
+        "evidence": [
+          "聚焦于物理驱动的可信科学智能（Physics-informed AI for Science），致力于打破物理硬件与人工智能的传统边界，将物理规律内生于神经网络架构，推动天文观测、大气湍流感知、计算光学等领域突破经典物理探测极限，催生重大科学发现。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年9月–2024年7月，于清华大学清华-伯克利深圳学院获得信息与通信工程博士学位",
+          "2024年8月起，就职于清华大学自动化系，担任助理研究员（博士后）",
+          "2026年8月起，将就职清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "刚建组、亲自带人概率高，方向新但资源与名声尚在积累；若你愿共担早期风险，本科生进组机会相对多，但需确认他是否有稳定经费与一作先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "郭钰铎是清华大学人工智能学院助理教授，研究方向为计算成像、物理驱动的人工智能和天文科学智能，在Science、Nature等期刊发表多项突破性成果。",
+      "_verification": []
+    },
+    {
+      "name": "陈勇超",
+      "title": "助理教授",
+      "research_interests": [
+        "大模型、机器人、神经-符号人工智能以及AI for Science的交叉领域",
+        "基础模型与神经-符号方法",
+        "机器人与自主系统",
+        "科学智能"
+      ],
+      "current_focus": {
+        "text": "探索面向自主系统的通用性强、可扩展的神经-符号模型，提升智能体和机器人在复杂环境中的理解、推理、规划与决策能力。",
+        "evidence": [
+          "陈勇超助理教授核心目标是探索面向自主系统的通用性强、可扩展的神经-符号模型（General, Scalable Neuro-Symbolic Models for Autonomy），以提升智能体和机器人在复杂环境中的理解、推理、规划与决策能力。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2021年，于中国科学技术大学工程科学学院获得学士学位（获郭沫若奖学金，中科大本科生最高荣誉）",
+          "2021年-2026年，于哈佛大学工程科学学院(SEAS)和麻省理工学院信息和决策系统实验室(LIDS)获得博士学位（导师是Chuchu Fan, Na Li, Nicholas Roy）"
+        ],
+        "note": "亲自带人概率高、冲劲足，但刚建组资源少、方向未定型，适合敢闯敢拼的学生，需接受初期设备与论文积累的波动。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://yongchao98.github.io/YongchaoChen/"
+      ],
+      "summary": "陈勇超是助理教授，研究方向为大模型、机器人、神经-符号AI及AI for Science，致力于构建可扩展的神经符号自治系统。",
+      "_verification": []
+    },
+    {
+      "name": "冯瑶",
+      "title": "助理教授（拟入职）",
+      "research_interests": [
+        "以人为中心的具身智能",
+        "人机协作",
+        "数字人",
+        "计算机视觉",
+        "图形学",
+        "机器人",
+        "机器学习"
+      ],
+      "current_focus": {
+        "text": "研究聚焦以人为中心的具身智能，构建理解人类行为、建模人与世界交互、并与人协作的通用具身大脑。",
+        "evidence": [
+          "研究聚焦以人为中心的具身智能(Human-Centric Embodied Intelligence)——构建真正理解人类行为、建模人与世界交互、并与人协作的通用具身大脑。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2019年9月–2024年10月： 苏黎世联邦理工学院（ETH Zürich）与马克斯·普朗克智能系统研究所（MPI for Intelligent Systems）导师：Michael J. Black、Marc Pollefeys",
+          "2025年1月-： 美国斯坦福大学计算机科学系博士后研究员（合作导师：Karen Liu、Scott Delp）"
+        ],
+        "note": "青年建组初期，亲自指导多、冲劲足，学生上手快；但资源积累有限，方向未定型，需接受组内探索期的不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://yfeng95.github.io"
+      ],
+      "summary": "冯瑶是即将入职的助理教授，专注于以人为中心的具身智能，拥有丰富的博士后和研究经历。",
+      "_verification": []
+    },
+    {
+      "name": "刘天宇",
+      "title": "助理教授（拟入职）",
+      "research_interests": [
+        "基于AI智能体的人工智能科学家 (AI Co-Scientists/Scientists)",
+        "多模态人工智能（Multimodal AI）",
+        "规模化的基础模型的各阶段训练（pre-training, mid-training, post-training for foundation models）",
+        "数据驱动的科学发现（Data-driven Scientific Discovery）"
+      ],
+      "current_focus": {
+        "text": "组建团队专攻AI for Science（生物、化学与医疗健康）的前沿问题，包括AI智能体、多模态AI、基础模型训练和数据驱动的科学发现。",
+        "evidence": [
+          "我目前在组建团队专攻AI for Science (mainly in Biology, Chemistry, and Healthcare)的前沿问题，包括但不限于： · 基于AI智能体的人工智能科学家 (AI Co-Scientists/Scientists；例如SAGA, Hygieia, etc.) · 多模态人工智能（Multimodal AI；例如scELMo, spEMO, UNICORN, etc.） · 规模化的基础模型的各阶段训练（pre-training, mid-training, post-training for foundation models；例如TeamPath, BAITSAO, etc.） · 数据驱动的科学发现（Data-driven Scientific Discovery；例如spVelo, dGTEx, etc.）"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2022年8月-2026年5月，于耶鲁大学获得博士学位",
+          "2027年2月，将入职清华大学人工智能学院，担任助理教授"
+        ],
+        "note": "青年助理教授刚建组，亲自带人概率高、冲劲足，但方向未定型、资源积累少；适合敢闯敢拼的学生，需接受初期试错和不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "刘天宇是即将入职清华的助理教授，专注于AI for Science（生物、化学与医疗健康），研究涵盖AI智能体、多模态AI、基础模型训练与数据驱动科学发现。",
+      "_verification": []
+    },
+    {
+      "name": "汪玉",
+      "title": "教授",
+      "research_interests": [
+        "高能效领域定制加速器与计算系统",
+        "高效深度学习算法",
+        "多机协同计算系统",
+        "多智能体强化学习算法"
+      ],
+      "current_focus": {
+        "text": "长期从事智能芯片、高能效电路与系统研究，近期推动无问芯穹形成面向大模型的软硬件联合优化平台。",
+        "evidence": [
+          "汪玉教授长期从事智能芯片、高能效电路与系统研究，发表IEEE/ACM期刊论文60余篇、会议论文270余篇，谷歌学术引用30,000余次。",
+          "2023年推动成立无问芯穹，形成面向大模型的软硬件联合优化平台，在国内外十余种芯片上实现业界领先的大模型推理性能。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "汪玉，清华大学电子工程系长聘教授，IEEE Fellow，国家自然科学基金杰出青年基金获得者。",
+          "2026.1-至今 清华大学 | 电子工程系 | 长聘教授"
+        ],
+        "note": "产出与资源处于稳定上升期，方向明确、经费充足，适合求稳深钻；但组内规模大，需主动争取指导，本科生机会取决于个人主动性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://scholar.google.com/citations?user=j8JGVvoAAAAJ"
+      ],
+      "summary": "汪玉是清华大学电子工程系长聘教授，IEEE Fellow，长期从事智能芯片与高能效电路系统研究，并推动产业化。",
+      "_verification": []
+    },
+    {
+      "name": "周伯文",
+      "title": "教授",
+      "research_interests": [
+        "通用人工智能",
+        "大语言模型",
+        "深度学习",
+        "自然语言处理",
+        "人工智能安全",
+        "人工智能对齐",
+        "科学智能（AI for Science）"
+      ],
+      "current_focus": {
+        "text": "从事人工智能基础研究、核心技术研发与产业实践，研究领域包括通用人工智能、大语言模型、深度学习、自然语言处理、人工智能安全、人工智能对齐及科学智能（AI for Science）。",
+        "evidence": [
+          "周伯文教授长期从事人工智能基础研究、核心技术研发与产业实践，研究领域包括通用人工智能、大语言模型、深度学习、自然语言处理、人工智能安全、人工智能对齐及科学智能（AI for Science）。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "清华大学电子工程系讲席教授",
+          "享受国务院特殊津贴",
+          "中国智能科学最高奖“吴文俊人工智能杰出贡献奖”获得者",
+          "IEEE Fellow，CAAI Fellow"
+        ],
+        "note": "名头响、资源足、平台高，但日常指导大概率由小导师或博后代劳；需先确认组内是否有本科生一作先例，否则易成“挂名经历”。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "周伯文是清华大学电子工程系讲席教授，长期从事人工智能基础研究，研究领域涵盖通用人工智能、大语言模型、自然语言处理等，并担任上海人工智能实验室主任、首席科学家。",
+      "_verification": []
+    },
+    {
+      "name": "方璐",
+      "title": "教授",
+      "research_interests": [
+        "光场智能成像理论与技术",
+        "AI+天文望远镜"
+      ],
+      "current_focus": {
+        "text": "近期在光场智能成像、AI+天文望远镜方向有研究，并有多项成果发表。",
+        "evidence": [
+          "光场智能成像理论与技术、AI+天文望远镜",
+          "We are a multidisciplinary research group working at the intersection of physical optics and artificial intelligence, aiming to push the frontiers of next-generation imaging and photonic computing."
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "Ph.D. (HKUST 2011), B.E. (USTC 2007)",
+          "Professor, Dept. of EE, Tsinghua University"
+        ],
+        "note": "产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其近年论文署名习惯及组内学生去向。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://github.com/THU-luvision"
+      ],
+      "summary": "方璐是清华大学电子工程系教授，研究光场智能成像与AI+天文望远镜，成果丰硕。",
+      "_verification": [
+        "⚠️ current_focus 的 evidence 在原文中找不到：光场智能成像理论与技术、AI+天文望远镜..."
+      ]
+    },
+    {
+      "name": "汪小我",
+      "title": "长聘教授",
+      "research_interests": [
+        "生物信息学",
+        "模式识别与机器学习",
+        "人工生物系统的设计与控制"
+      ],
+      "current_focus": {
+        "text": "近期研究集中在合成启动子设计、基因调控网络、细胞衰老转录组等方向",
+        "evidence": [
+          "Synthetic Promoter Design in Escherichia Coli Based on a Deep Generative Network, Nucleic Acids Research. 2020, 48(12):6403-6412",
+          "Dynamic transcriptome profiling in DNA damage-induced cellular senescence and transient cell-cycle arrest. Genomics. 2020, 112(2):1309-1317",
+          "Regulation by competition: a hidden layer of gene regulatory network, Quantitative Biology, 2019; 7(2): 110–121"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2016年1月–2020年12月 清华大学，自动化系，长聘副教授",
+          "2020年12月–现在 清华大学，自动化系，长聘教授"
+        ],
+        "note": "产出与资源稳定，组内方向成熟，适合求稳深钻；但需确认他是否仍亲自带学生，还是已交由副手管理。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "http://bioinfo.au.tsinghua.edu.cn/member/xwwang/"
+      ],
+      "summary": "汪小我是清华大学自动化系长聘教授，研究方向为生物信息学、模式识别与机器学习及人工生物系统，近期聚焦于合成启动子设计与基因调控网络。",
+      "_verification": []
+    },
+    {
+      "name": "吴嘉敏",
+      "title": "准聘副教授",
+      "research_interests": [
+        "计算光学",
+        "生物医学成像",
+        "科学智能",
+        "系统生物学"
+      ],
+      "current_focus": {
+        "text": "致力于智能光学成像、显微仪器、科学智能与系统生物学的交叉研究，面向生命科学与医学对介观活体成像的迫切需求，提出了扫描光场成像、数字自适应光学、双光子合成孔径等理论与方法，并研制出相关仪器。",
+        "evidence": [
+          "致力于智能光学成像、显微仪器、科学智能与系统生物学的交叉研究。面向生命科学与医学对介观活体成像的迫切需求，提出了扫描光场成像，数字自适应光学、双光子合成孔径等理论与方法，突破光毒性、高速三维、背景荧光、光学像差等活体成像壁垒，研制出扫描光场显微镜与介观活体三维显微仪器等，为哺乳动物活体大规模细胞间交互研究提供了支撑，并广泛应用于天文观测及先进制造领域。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2024年1月-至今 清华大学自动化系，准聘副教授",
+          "2021年7月-2024年1月 清华大学自动化系，助理教授",
+          "2019年7月-2021年7月 清华大学自动化系，博士后"
+        ],
+        "note": "刚建组且处于上升期，亲自带学生意愿强、课题方向新，本科生有较多上手机会；但组内积累尚浅，产出和资源仍在爬坡，需接受不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "http://166.111.72.46:12001/bt2/admin/loginpage"
+      ],
+      "summary": "吴嘉敏是清华大学自动化系准聘副教授，专注于计算光学、生物医学成像等交叉研究，在Nature、Cell、Science等期刊发表多项成果，并获得多项荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "乔晖",
+      "title": "准聘副教授",
+      "research_interests": [
+        "计算成像",
+        "人工智能",
+        "生物医学工程"
+      ],
+      "current_focus": {
+        "text": "主持国家自然科学基金面上项目，研究基于光场显微镜的活体超分辨计算成像技术；作为核心骨干参与认知计算和脑记忆环路映射的机器智能等项目。",
+        "evidence": [
+          "国家自然科学基金委面上项目，62071271，基于光场显微镜的活体超分辨计算成像技术，2021/01-2024/12，54万元，在研，主持。",
+          "国家自然科学基金委基础科学中心，62088102，认知计算，2021/01-2025/12，1600/6000万元，在研，核心骨干。",
+          "科技部科技创新2030—“新一代人工智能”重大项目，2020AAA0105500，脑记忆环路映射的机器智能，2021/01-2023/12，466万元，在研，核心骨干。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2021年4月至今 清华大学自动化系，助理教授",
+          "2019年1月-2021年4月 清华大学自动化系，博士后"
+        ],
+        "note": "亲自带人概率高、冲劲足，方向新但组刚起步，设备和资源有限；本科生机会相对多，但成果和声誉尚在积累，需接受不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "乔晖是清华大学自动化系准聘副教授，研究方向为计算成像、人工智能和生物医学工程，主持国家自然科学基金面上项目，并参与多项国家级重大项目。",
+      "_verification": []
+    },
+    {
+      "name": "黄高",
+      "title": "长聘副教授",
+      "research_interests": [
+        "深度学习",
+        "多模态学习",
+        "具身智能",
+        "强化学习"
+      ],
+      "current_focus": {
+        "text": "研究方向为人工智能基础模型与算法，包括神经网络架构、高效推理算法、强化学习、多模态感知与生成、具身基座模型与世界模型等。",
+        "evidence": [
+          "研究方向为人工智能基础模型与算法，包括神经网络架构、高效推理算法、强化学习、多模态感知与生成、具身基座模型与世界模型等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2018年12月至2021年11月 清华大学自动化系 助理教授",
+          "2021年12月至今 清华大学自动化系 副教授"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，方向或资源仍在打磨，适合敢闯敢拼的学生；若求稳或需大平台背书，需谨慎评估。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "http://www.gaohuang.net"
+      ],
+      "summary": "黄高是清华大学自动化系的长聘副教授，研究方向包括深度学习、多模态学习、具身智能和强化学习，曾获CVPR最佳论文奖等荣誉。",
+      "_verification": [
+        "⚠️ current_focus 的 evidence 在原文中找不到：研究方向为人工智能基础模型与算法，包括神经网络架构、高效推理算法、强化学习、多模态感知与生成、具身基..."
+      ]
+    },
+    {
+      "name": "刘洋",
+      "title": "教授",
+      "research_interests": [
+        "自然语言处理",
+        "机器翻译"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2007年中科院计算所博士"
+        ],
+        "note": "产出与资源相对稳定，方向成熟、人脉广，但学生独立空间可能受限，需确认是否有直接指导及一作机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://www.xuetangx.com/"
+      ],
+      "summary": "清华大学计算机系教授，研究方向为自然语言处理和机器翻译。",
+      "_verification": []
+    },
+    {
+      "name": "刘云新",
+      "title": "首席研究员/万国数据教授",
+      "research_interests": [
+        "移动计算",
+        "边缘计算",
+        "异构计算"
+      ],
+      "current_focus": {
+        "text": "负责移动计算、边缘计算、异构计算等研究方向",
+        "evidence": [
+          "负责移动计算、边缘计算、异构计算等研究方向"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "他在微软亚洲研究院工作近20年，担任主任研究员",
+          "2021-至今 清华大学智能产业研究院 首席研究员"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需留意组内是否有本科生一作先例，且方向偏工业界落地。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://yunxinliu.github.io/"
+      ],
+      "summary": "刘云新是清华大学智能产业研究院的首席研究员和万国数据教授，拥有丰富的工业界和学术界经验，专注于移动计算、边缘计算和异构计算研究。",
+      "_verification": [
+        "⚠️ current_focus 的 evidence 在原文中找不到：负责移动计算、边缘计算、异构计算等研究方向...",
+        "⚠️ career_stage 的 evidence 在原文中找不到：他在微软亚洲研究院工作近20年，担任主任研究员...",
+        "⚠️ career_stage 的 evidence 在原文中找不到：2021-至今 清华大学智能产业研究院 首席研究员..."
+      ]
+    },
+    {
+      "name": "马维英",
+      "title": "首席科学家/惠妍讲席教授",
+      "research_interests": [
+        "AI for Science",
+        "人工智能科学",
+        "生成式人工智能",
+        "可扩展的科学基础大模型"
+      ],
+      "current_focus": {
+        "text": "专注于人工智能在科学领域的交叉融合，包括人工智能科学，以及用于生物学、化学、能源和材料的生成式人工智能与可扩展的科学基础大模型。",
+        "evidence": [
+          "他的研究团队专注于人工智能在科学领域的交叉融合（AI for Science），包括人工智能科学，以及用于生物学、化学、能源和材料的生成式人工智能与可扩展的科学基础大模型。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "马维英博士现任清华大学惠妍讲席教授、智能产业研究院（AIR）首席科学家。",
+          "他于 2009 年至 2017 年在微软亚洲研究院（MSRA）担任常务副院长",
+          "马维英博士是 ACM 和 IEEE 的会士，发表超过 300 篇论文，169 项专利。"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担；需确认组内是否有本科生一作先例，并主动争取独立课题机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=SToCbu8AAAAJ&sortby=pubdate&citation_for_view=SToCbu8AAAAJ:KsTgnNRry18C"
+      ],
+      "summary": "马维英是清华大学惠妍讲席教授、智能产业研究院首席科学家，专注于AI for Science领域，拥有丰富的工业界和学术界经验。",
+      "_verification": []
+    },
+    {
+      "name": "聂再清",
+      "title": "首席研究员/万国数据教授",
+      "research_interests": [
+        "大数据",
+        "知识图谱相关技术（包括实体信息挖掘、关系抽取技术、和实体名消歧技术）",
+        "对象级别的信息搜索技术",
+        "语音语义一体化理解"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于多模态大模型在生物医学和药物发现中的应用，如蛋白质语言模型、细胞语言模型、分子表示学习等。",
+        "evidence": [
+          "MutaPLM: Protein Language Modeling for Mutation Explanation and Engineering. NeurIPS 2024",
+          "LangCell: Language-Cell Pre-training for Cell Identity Understanding. ICML 2024",
+          "Mol-AE: Auto-Encoder Based Molecular Representation Learning With 3D Cloze Test Objective. ICML 2024",
+          "BioMedGPT: An Open Multimodal Large Language Model for BioMedicine. Journal of Biomedical and Health Informatics. Nov. 2024",
+          "Toward Unified AI Drug Discovery with Multimodal Knowledge. Heath Data Science"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2004年获得美国亚利桑那州立大学博士学位",
+          "2017年加入阿里巴巴，任阿里巴巴人工智能实验室北京负责人和阿里巴巴天猫精灵首席科学家",
+          "此前就职于微软亚洲研究院，任首席研究员",
+          "2020-至今清华大学智能产业研究院 首席研究员"
+        ],
+        "note": "资深大牛，资源与平台顶级，但日常指导大概率由副研究员/博后代劳，需先确认组内是否有本科生深度参与或一作先例，避免沦为“挂名打杂”。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "聂再清是清华大学智能产业研究院的首席研究员和万国数据教授，拥有丰富的工业界和学术界经验，专注于大数据、知识图谱和人工智能应用，近期研究聚焦于多模态大模型在生物医学和药物发现中的应用。",
+      "_verification": []
+    },
+    {
+      "name": "兰艳艳",
+      "title": "首席研究员/万国数据教授",
+      "research_interests": [
+        "机器学习",
+        "信息检索",
+        "AI for Science"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于AI for Science，包括分子生成与性质预测、蛋白质结构预测、跨细胞类型转录基础模型等。",
+        "evidence": [
+          "Shikun Feng, Yuyan Ni, Yan Lu, Zhi-Ming Ma, Wei-Ying Ma, Yanyan Lan , UniGEM: A Unified Approach to Generation and Property Prediction for Molecules. ICLR2025.",
+          "Bowen Gao, Haichuan Tan, Yanwen Huang, Minsi Ren, Xiao Huang, Weiying Ma, Ya-Qin Zhang, Yanyan Lan , Reframing Structure-Based Drug Design Model Evaluation via Metrics Correlated to Practical Needs, ICLR2025.",
+          "Xi Fu, Shentong Mo, Alejandro Buendia, Anouchka P Laurent, Anqi Shao, Maria del Mar Alvarez-Torres, Tianji Yu, Jimin Tan, Jiayu Su, Romella Sagatelian, Adolfo A Ferrando, Alberto Ciccia, Yanyan Lan , David M Owens, Teresa Palomero, Eric P Xing, Raul Rabadan, A foundation model of transcription across human cell types, Nature, 2025 January 23, 637, 965–973."
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2019-2021中国科学院计算技术研究所 研究员",
+          "2021-至今清华大学智能产业研究院 首席研究员"
+        ],
+        "note": "产出与资源处于稳定上升期，方向明确、平台好，适合求稳深钻；但需确认其亲自指导比例及组内学生一作先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://yanyanlan.com/"
+      ],
+      "summary": "兰艳艳是清华大学智能产业研究院首席研究员、副院长，研究方向为机器学习、信息检索和AI for Science，在AI领域发表论文80余篇，引用超万次，并获多项荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "朱军",
+      "title": "教授",
+      "research_interests": [
+        "机器学习",
+        "贝叶斯方法",
+        "深度学习",
+        "数据挖掘"
+      ],
+      "current_focus": {
+        "text": "研究围绕机器学习基础理论、高效算法和应用展开，注重理论与实际问题结合。",
+        "evidence": [
+          "研究工作围绕机器学习基础理论、高效算法和应用展开，注重理论与实际问题结合。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2015-2018，卡内基梅隆大学兼职教授",
+          "2018-今，IEEE Trans. on PAMI副主编（Associate Editor-in-Chief）"
+        ],
+        "note": "中年阶段，学术圈人脉和期刊话语权强，但日常指导可能偏少，适合想借平台发高质量论文的学生，需主动争取资源。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "http://ml.cs.tsinghua.edu.cn/~jun/"
+      ],
+      "summary": "清华大学计算机系教授，研究机器学习、贝叶斯方法、深度学习等，成果丰硕。",
+      "_verification": []
+    },
+    {
+      "name": "崔鹏",
+      "title": "长聘副教授",
+      "research_interests": [
+        "因果启发机器学习",
+        "安全可信人工智能"
+      ],
+      "current_focus": {
+        "text": "研究领域为人工智能与大数据分析理论方法和关键技术，首次将因果统计思想与机器学习框架进行融合性研究，自主提出并发展了因果启发的稳定学习理论方法体系。",
+        "evidence": [
+          "研究领域为人工智能与大数据分析理论方法和关键技术，首次将因果统计思想与机器学习框架进行融合性研究，自主提出并发展了因果启发的稳定学习理论方法体系。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2024年，入选国家自然科学基金委杰出青年科学基金",
+          "2026年，IEEE Fellow"
+        ],
+        "note": "产出与资源处于上升期，方向明确且经费充足，但组内竞争可能加剧，需确认是否有精力亲自指导你，以及近年学生毕业去向。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "http://pengcui.thumedialab.com/"
+      ],
+      "summary": "清华大学计算机系长聘副教授，因果启发机器学习与安全可信人工智能领域专家，IEEE Fellow、国家杰青获得者。",
+      "_verification": [
+        "⚠️ current_focus 的 evidence 在原文中找不到：研究领域为人工智能与大数据分析理论方法和关键技术，首次将因果统计思想与机器学习框架进行融合性研究，自..."
+      ]
+    },
+    {
+      "name": "喻纯",
+      "title": "副教授",
+      "research_interests": [
+        "人机交互",
+        "普适计算"
+      ],
+      "current_focus": {
+        "text": "研究方向是人机交互，其研究围绕人机交互自然性的计算原理和优化方法开展，具有重要的理论和实际应用价值。",
+        "evidence": [
+          "研究方向是人机交互，其研究围绕人机交互自然性的计算原理和优化方法开展，具有重要的理论和实际应用价值。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2016年获得了CCF-Intel青年学者计划的奖励资助",
+          "2017 CCF青年人才托举计划"
+        ],
+        "note": "青年期导师亲自带人概率高、冲劲足，本科生机会相对多，但组的名声、设备和资源可能还在积累期，适合愿共成长的申请者。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "http://pi.cs.tsinghua.edu.cn/lab/people/ChunYu/"
+      ],
+      "summary": "喻纯是清华大学计算机系副教授，研究方向为人机交互与普适计算，曾获多项青年人才奖项。",
+      "_verification": []
+    },
+    {
+      "name": "刘知远",
+      "title": "教授",
+      "research_interests": [
+        "知识图谱与语义计算",
+        "社会计算与计算社会科学"
+      ],
+      "current_focus": {
+        "text": "面向基础大模型技术开展深入研究，探索大模型与自然语言处理。",
+        "evidence": [
+          "长期从事知识图谱与语义计算、社会计算与计算社会科学方面的研究，面向基础大模型技术开展了较为深入的研究和前沿探索，取得多项创新成果，在自然语言处理、知识图谱和社会计算等方面实现了前沿领域突破"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "工学博士 (计算机科学), 清华大学, 中国,2011.",
+          "2023年高等学校科学研究优秀成果奖(科学技术)自然科学一等奖，排名第2 (2023)"
+        ],
+        "note": "中年阶段且刚获省部级一等奖（排名第2），说明组内产出与资源正处上升期，适合求稳深钻；但排名第2暗示非独立牵头，需确认其独立招生与项目主导权。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://www.xuetangx.com/"
+      ],
+      "summary": "清华大学计算机系教授，长期从事知识图谱与语义计算、社会计算与计算社会科学研究，并面向基础大模型技术开展前沿探索。",
+      "_verification": []
+    },
+    {
+      "name": "王宏宁",
+      "title": "长聘副教授",
+      "research_interests": [
+        "机器学习",
+        "信息检索",
+        "数据挖掘"
+      ],
+      "current_focus": {
+        "text": "研究着眼于创立具有完备理论性质与高效实用性能的强化学习方法以解决个性化决策问题，并应用于信息检索与推荐系统等。",
+        "evidence": [
+          "团队的研究着眼于创立具有完备理论性质与高效实用性能的强化学习方法以解决个性化决策问题。",
+          "近年来我们以交互式在线学习方法构建个性化信息检索与推荐的理论分析与证明框架；在此理论基础上针对可解释性及隐私保护等重要问题设计和优化个性化算法；并将其提出的理论与算法在众多实际系统中成功应用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2023.9至今 清华大学计算机系长聘副教授",
+          "2022.12-2023.8 美国弗吉尼亚大学Copenhaver讲席副教授",
+          "2020.8-2022.11 美国弗吉尼亚大学长聘副教授",
+          "2014.8-2020.7 美国弗吉尼亚大学准聘助理教授"
+        ],
+        "note": "中年阶段且刚获国内长聘，处于资源与产出双升的稳定窗口，适合求稳深钻；但需留意其回国建组初期，方向磨合与本土资源衔接可能尚需时间。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://www.cs.virginia.edu/~hw5x/"
+      ],
+      "summary": "王宏宁是清华大学计算机系长聘副教授，研究方向为机器学习、信息检索与数据挖掘，曾获多项奖项，并担任多个顶级会议主席。",
+      "_verification": []
+    },
+    {
+      "name": "东昱晓",
+      "title": "副教授",
+      "research_interests": [
+        "数据挖掘",
+        "机器学习",
+        "人工智能",
+        "网络科学"
+      ],
+      "current_focus": {
+        "text": "近期研究成果包括图神经网络预训练、异构图表示学习及网络嵌入理论和快速算法等。",
+        "evidence": [
+          "近期研究成果包括图神经网络预训练（GraphMAE, GPT-GNN, GCC）、异构图表示学习（Hetero. Graph Transformer/HGT, metapath2vec）及网络嵌入理论和快速算法（NetMF, NetSMF, ProNE, SketchNE）等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "获国家青年人才项目支持、IJCAI 2022 Early Career Spotlight 、2017年ACM SIGKDD博士论文提名奖（即第三名）和2022年ACM SIGKDD新星奖。"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，资源与名声尚在积累；顶会奖项亮眼，适合想拼一作、快速成长的本科生，需接受初期不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://keg.cs.tsinghua.edu.cn/yuxiao/"
+      ],
+      "summary": "东昱晓是清华大学计算机系副教授，主要研究数据挖掘、图机器学习、预训练模型和社交网络，曾获多项学术荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "任炬",
+      "title": "长聘副教授（博士生导师）",
+      "research_interests": [
+        "端智能/边缘智能",
+        "端云协同智能",
+        "隐私计算",
+        "大模型安全"
+      ],
+      "current_focus": {
+        "text": "端侧大模型推理infra、端侧记忆系统、端侧强化学习、端侧具身智能；大模型密态计算方法与框架、大模型数据安全与隐私泄露",
+        "evidence": [
+          "在端智能领域，目前主要关注端侧大模型推理infra、端侧记忆系统、端侧强化学习、端侧具身智能四个方向；在大模型安全和隐私计算领域，主要关注大模型密态计算方法与框架、大模型数据安全与隐私泄露两个方向。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "工学博士 (计算机科学与技术), 中南大学, 中国, 2016.",
+          "曾入选教育部高层次人才计划特聘教授（2024年度）、获得国家优秀青年基金（2021年度）"
+        ],
+        "note": "资源与产出双高，方向稳定，适合想发好文章的学生，但需确认他是否亲自带人，避免被高年级博士生“转包”。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://juren1987.github.io"
+      ],
+      "summary": "任炬是清华大学计算机系长聘副教授，专注于端智能、边缘智能、隐私计算和大模型安全等领域，拥有丰富的学术成果和荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "艾清遥",
+      "title": "副教授",
+      "research_interests": [
+        "信息检索",
+        "机器学习",
+        "自然语言处理"
+      ],
+      "current_focus": {
+        "text": "研究检索技术与生成式人工智能技术的结合，包括检索/排序优化、检索增强生成、自动化提示优化、智能体的持续学习等方向，以及大语言模型在互联网搜推和智慧司法上的应用。",
+        "evidence": [
+          "重点研究检索技术与生成式人工智能技术的结合，包括但不限于检索/排序优化、检索增强生成、自动化提示优化、智能体的持续学习等方向，以及大语言模型在互联网搜推和智慧司法上的应用等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2019.9-2022.6 University of Utah, Tenure-Track Assistant Professor",
+          "2022.8-2024.12 清华大学计算机系助理教授",
+          "2024.12- 清华大学计算机系副教授"
+        ],
+        "note": "青年建组期，亲自带人概率高、冲劲足，但组刚起步，资源与名声尚在积累，适合敢闯敢拼、能接受不确定性的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://qingyaoai.github.io"
+      ],
+      "summary": "艾清遥是清华大学计算机系副教授，研究方向为信息检索、机器学习与自然语言处理，近期聚焦于检索增强生成与智能体持续学习等前沿领域。",
+      "_verification": []
+    },
+    {
+      "name": "陈键飞",
+      "title": "副教授",
+      "research_interests": [
+        "机器学习",
+        "深度学习",
+        "贝叶斯方法"
+      ],
+      "current_focus": {
+        "text": "深度学习的高效算法与基础理论，包括基于随机量化的快速省内存训练、基于随机采样和方差缩减的高效机器学习算法、深度生成模型的高效算法、主题模型的高效算法和大规模训练系统。",
+        "evidence": [
+          "研究工作专注于深度学习的高效算法、基础理论。",
+          "针对深度学习算法计算量大、收敛速度慢、内存消耗高的问题，针对具体问题提出了若干有理论保证的高效算法：（1）基于随机量化的快速、省内存神经网络训练算法；（2）基于随机采样和方差缩减的高效机器学习算法；（3）深度生成模型的高效算法；（4）主题模型的高效算法和大规模训练系统。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "工学博士（计算机），清华大学，中国，2019",
+          "中国计算机学会优秀博士学位论文奖（2019）",
+          "清华大学水木学者（2019）"
+        ],
+        "note": "亲自带人概率高、冲劲足，清华平台起点高，但组刚建资源有限，适合敢闯敢拼者，本科生机会相对多。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://ml.cs.tsinghua.edu.cn/~jianfei/"
+      ],
+      "summary": "陈键飞是清华大学计算机系副教授，专注于深度学习高效算法与理论，已发表多篇顶级会议论文。",
+      "_verification": []
+    },
+    {
+      "name": "邓东灵",
+      "title": "长聘副教授",
+      "research_interests": [
+        "量子人工智能",
+        "量子信息与计算",
+        "拓扑相物质",
+        "量子非平衡态系统"
+      ],
+      "current_focus": {
+        "text": "近期研究集中在量子机器学习、量子纠错、拓扑物质和量子非平衡系统，并有多篇相关论文发表。",
+        "evidence": [
+          "Quantum Machine Learning & Artificial Intelligence",
+          "Quantum Information, Computation, and Simulation",
+          "Topological Phases of Matter, AMO Physics",
+          "Quantum Nonequilibrium Systems, Many-body Localization",
+          "K. Wang et al. , Demonstration of low-overhead quantum error correction codes, Nature Physics, 22, 308 (2026).",
+          "W Li, Y Ma, DL Deng, Pitfalls and prospects of quantum machine learning, Nature Computational Science 5, 1095 (2025)"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2018-2024 Assistant Professor, IIIS, Tsinghua University",
+          "2024- Tenured Associate Professor, IIIS, Tsinghua University"
+        ],
+        "note": "产出与资源已进入稳定上升期，亲自指导仍较常见，但组内竞争可能加剧；适合求稳深耕，需确认近两年学生毕业去向和独立课题空间。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "邓东灵是清华大学交叉信息研究院的长聘副教授，研究方向为量子人工智能、量子信息与计算等，近期在量子机器学习与量子纠错等领域取得进展。",
+      "_verification": []
+    },
+    {
+      "name": "袁洋",
+      "title": "长聘副教授",
+      "research_interests": [
+        "智能医疗",
+        "AI基础理论",
+        "应用范畴论"
+      ],
+      "current_focus": {
+        "text": "研究智能医疗、AI基础理论、应用范畴论，最终目标是实现由范畴论支撑的新医疗。",
+        "evidence": [
+          "我的研究方向是 智能医疗、AI基础理论、应用范畴论 ，最终目标是实现由范畴论支撑的新医疗。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "我博士毕业于美国康奈尔大学，师从 Robert Kleinberg 教授。博士毕业之后，我在MIT大数据基础研究院（MIFODS）做了一年博士后研究员。"
+        ],
+        "note": "青年建组期，亲自带人意愿强、方向新且灵活，但资源与名气尚浅；适合想深度参与、能承受不确定性的学生，竞争相对小。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "我今年有招博士生的计划， 但不招收中医AI方向的学生——除非你能背诵伤寒论，同时有 极强 的工程能力或代数能力。",
+          "欢迎感兴趣的同学们报名2025年叉院夏令营！"
+        ],
+        "note": "明确招收博士生，并欢迎报名夏令营。"
+      },
+      "homepage_candidates": [
+        "https://scholar.google.com/citations?user=7o4wtKEAAAAJ&hl=zh-CN&oi=sra"
+      ],
+      "summary": "袁洋是清华大学交叉信息研究院的长聘副教授，研究方向为智能医疗、AI基础理论和应用范畴论，目前招收博士生。",
+      "_verification": []
+    },
+    {
+      "name": "张景昭",
+      "title": "助理教授",
+      "research_interests": [
+        "优化",
+        "机器学习理论",
+        "强化学习",
+        "动力系统",
+        "异常检测"
+      ],
+      "current_focus": {
+        "text": "研究优化算法的理论解释，开发更快的训练算法，并应用于实际问题。",
+        "evidence": [
+          "I am interested in theoretical explanations of practical optimization algorithms.",
+          "I am working on developing faster training algorithms.",
+          "I enjoy applying optimization algorithms to real world problems."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "He graduated in 2022 from MIT EECS PhD program",
+          "张景昭现任清华交叉信息研究院助理教授。"
+        ],
+        "note": "刚建组、亲自带人意愿强，MIT博士背景硬但组内积累浅；适合想冲高影响力课题、能扛初期不确定性的学生，但需接受资源与名气尚在爬坡。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "If you want to join as an intern, please prepare a 15min presentation on a recent DL / ML / AI paper and then send me an email.",
+          "If you are interested in joining as a PhD, please refer to my post here ."
+        ],
+        "note": "明确欢迎实习生和博士生申请。"
+      },
+      "homepage_candidates": [
+        "https://sites.google.com/view/jingzhao/home/short-biography"
+      ],
+      "summary": "张景昭是清华大学交叉信息研究院的助理教授，研究优化算法、机器学习理论等，并积极招募实习生和博士生。",
+      "_verification": []
+    },
+    {
+      "name": "陈建宇",
+      "title": "长聘副教授",
+      "research_interests": [
+        "机器人学",
+        "强化学习",
+        "控制",
+        "自动驾驶"
+      ],
+      "current_focus": {
+        "text": "研究具身通用智能，致力于构建高性能、高智能的先进机器人系统。",
+        "evidence": [
+          "I run the Intelligent Systems and Robotics Laboratory (ISR Lab), where we are working at an intersection of artificial intelligence and robotics to build advanced robotic systems with high performance and high intelligence."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "Prior to that, I was working with Prof. Masayoshi Tomizuka at the University of California, Berkeley and received my Ph.D. degree in 2020.",
+          "I received my Bachelor degree from Tsinghua University in 2015."
+        ],
+        "note": "刚建组且师从名门，方向新、冲劲足，亲自带学生概率高，但资源与名气尚在积累，适合敢闯敢拼、愿与课题组共成长的本科生。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "We are actively recruiting Postdocs, Engineers, PhDs, Masters and RAs, please drop me an email with your resume via jianyuchen@tsinghua.edu.cn ."
+        ],
+        "note": "明确招收博士后、工程师、博士、硕士和研究助理（RA），但未明确提及本科生或访问学生。"
+      },
+      "homepage_candidates": [],
+      "summary": "陈建宇是清华大学交叉信息研究院的长聘副教授，研究方向为机器人学、强化学习、控制与自动驾驶，并领导智能系统与机器人实验室（ISR Lab），致力于构建高性能高智能的机器人系统。",
+      "_verification": []
+    },
+    {
+      "name": "赵行",
+      "title": "助理教授",
+      "research_interests": [
+        "多模态机器学习",
+        "自动驾驶",
+        "机器人学习",
+        "计算机视觉"
+      ],
+      "current_focus": {
+        "text": "近期研究包括人形机器人跑酷、自动驾驶与大型视觉语言模型的融合、少步生成高分辨率图像等。",
+        "evidence": [
+          "Humanoid Parkour Learning Hot Ziwen Zhuang, Shenzhe Yao, Hang Zhao CoRL 2024 \"The first humanoid robot that learns to parkour!\"",
+          "DriveVLM: The Convergence of Autonomous Driving and Large Vision-Language Models Hot Xiaoyu Tian, Junru Gu, Bailin Li, Yicheng Liu, Yang Wang, Zhiyong Zhao, Kun Zhan Peng Jia, Xianpeng Lang, Hang Zhao CoRL 2024 \"Slow-Fast Dual System for autnomous driving!\"",
+          "Latent Consistency Models: Synthesizing High-Resolution Images With Few-Step Inference Hot Simian Luo, Yiqin Tan, Longbo Huang, Jian Li, Hang Zhao \"Generating high-resolution images in only 2-4 steps!\""
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "I was a Research Scientist at Waymo (known as Google's self-driving project) from 2019 to 2020.",
+          "Before that, I got my Ph.D. degree at MIT in 2019 under the supervision of Professor Antonio Torralba (the Great Torralba!).",
+          "Before MIT, I received my B.S. from Zhejiang University in 2013."
+        ],
+        "note": "导师亲自带、方向前沿但组刚起步，学生能深度参与核心项目，但资源与论文积累有限，需接受初期不确定性，适合敢闯敢拼者。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "I am actively looking for PostDoc/PhD/BS students and engineers with CS/EE background to join my team."
+        ],
+        "note": "明确招收博士后、博士、本科生和工程师。"
+      },
+      "homepage_candidates": [
+        "https://tsinghua-mars-lab.github.io/"
+      ],
+      "summary": "赵行是清华大学交叉信息研究院助理教授，研究多模态机器学习、自动驾驶和机器人学习，曾就职于Waymo，现积极招收学生和工程师。",
+      "_verification": []
+    },
+    {
+      "name": "高阳",
+      "title": "助理教授",
+      "research_interests": [
+        "计算机视觉",
+        "强化学习",
+        "机器人操作"
+      ],
+      "current_focus": {
+        "text": "探索如何利用计算机视觉的先验知识来更高效、更有效地完成机器人操作任务，并可能重新设计机器人学习算法以更好地处理视觉状态。",
+        "evidence": [
+          "I am interested in the intersection between computer vision and robotics.",
+          "Specifically, I want to explore how to utilize the prior knowledge we have from computer vision to do robot manipulation tasks both more efficiently and effectively.",
+          "This not only involves understanding how to use the previous visual experiences but also potentially needs re-designing robotic learning algorithms to better handles the visual states."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "I am an Assistant Professor at Institute for Interdisciplinary Information Science (IIIS) at Tsinghua University .",
+          "Previously, I obtained my Ph.D. degree from UC Berkeley , advised by Prof. Trevor Darrell and B.E. from the Computer Science Department at Tsinghua University ."
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，方向可能多变，资源与论文积累有限；适合敢闯敢试、能接受不确定性的学生，本科生机会相对多。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "I welcome highly motivated and strong undergrad students and Ph.D. candidates to join our lab."
+        ],
+        "note": "明确欢迎本科生和博士生申请"
+      },
+      "homepage_candidates": [
+        "http://people.iiis.tsinghua.edu.cn/~gaoyang/yang-gao.weebly.com/index.html"
+      ],
+      "summary": "清华大学交叉信息研究院助理教授，研究方向为计算机视觉与机器人操作的交叉领域，欢迎优秀本科生和博士生加入其实验室。",
+      "_verification": []
+    },
+    {
+      "name": "弋力",
+      "title": "助理教授",
+      "research_interests": [
+        "三维计算机视觉",
+        "三维深度学习",
+        "机器人感知",
+        "计算机图形学",
+        "几何处理"
+      ],
+      "current_focus": {
+        "text": "近期研究兴趣聚焦于3D感知、人机交互和具身智能，目标是赋予机器人智能体理解和交互3D世界的能力。",
+        "evidence": [
+          "My recent research interests focus on 3D perception, human-robot interaction and embodied AI, with the goal of equipping robotic agent with the ability of understanding and interacting with the 3D world."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "I am an Assistant Professor in the Institute for Interdisciplinary Information Sciences (IIIS) at Tsinghua University.",
+          "I received my Ph.D. from Stanford University, advised by Professor Leonidas J. Guibas . And I spent a wonderful time at Google as a Research Scientist after graduation, working closely with Professor Thomas Funkhouser . Prior to joining Stanford, I got my bachelor's degree in Electronic Engineering from Tsinghua University ."
+        ],
+        "note": "亲自带人概率高、冲劲足，本科生机会相对多，但组的名声、设备和资源可能还在积累期。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "I am actively looking for motivated visiting students, interns, PhDs, and postdocs.",
+          "For visiting students or research interns, we have openings for long-term internship (six months or longer). Both undergraduate and graduate students are welcomed."
+        ],
+        "note": "明确招收访问学生、实习生、博士生和博士后，且欢迎本科生和研究生。"
+      },
+      "homepage_candidates": [
+        "http://geometry.stanford.edu/member/guibas/index.html"
+      ],
+      "summary": "弋力是清华大学交叉信息研究院的助理教授，研究方向为三维计算机视觉、三维深度学习、机器人感知等，目前积极招募学生和实习生。",
+      "_verification": []
+    },
+    {
+      "name": "杜韬",
+      "title": "助理教授",
+      "research_interests": [
+        "AI物理仿真"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "杜韬是清华大学交叉信息研究院的助理教授，兼聘PI，研究方向为AI物理仿真。",
+      "_verification": []
+    },
+    {
+      "name": "许华哲",
+      "title": "助理教授",
+      "research_interests": [
+        "深度强化学习",
+        "机器人学",
+        "计算机视觉",
+        "计算机触觉"
+      ],
+      "current_focus": {
+        "text": "深度强化学习、机器人学、计算机视觉、计算机触觉",
+        "evidence": [
+          "研究方向: 深度强化学习， 机器人学， 计算机视觉， 计算机触觉"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "助理教授"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，方向或资源可能不稳，适合敢闯敢拼、能接受试错的学生，本科生机会相对多。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "欢迎交叉信息研究院的学生及对我研究方向感兴趣的同学邮件与我沟通， 我通常12小时内回复 ;)"
+        ],
+        "note": "明确欢迎学生邮件联系，但未明确说明本科生或实习生，但根据上下文可能包括研究生。"
+      },
+      "homepage_candidates": [
+        "http://hxu.rocks"
+      ],
+      "summary": "许华哲是清华大学交叉信息研究院的助理教授，研究方向包括深度强化学习、机器人学、计算机视觉和计算机触觉，并欢迎学生邮件联系。",
+      "_verification": []
+    },
+    {
+      "name": "李克强",
+      "title": "中国工程院院士、教授、博士研究生导师",
+      "research_interests": [
+        "车辆电子控制与智能汽车",
+        "智能汽车与智能交通系统",
+        "电动汽车（EV）整车动力学与控制",
+        "车辆噪声振动分析与控制"
+      ],
+      "current_focus": {
+        "text": "长期致力于汽车智能驾驶系统动态设计与控制的理论研究、技术攻关和产品研发，主持研制三代系统装置并实现产业化应用。",
+        "evidence": [
+          "他长期致力于汽车智能驾驶系统动态设计与控制的理论研究、技术攻关和产品研发，针对汽车智能化技术演进及其产业化发展的重大需求，攻克了“控制协同、结构共用、车云融合”三大核心关键技术，先后主持研制“智能安全驾驶”、“智能集成驾驶”、“智能网联驾驶”三代系统装置，并实现产业化应用，为我国智能汽车系统核心技术突破和产业化做出重要贡献。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2021年当选为中国工程院院士。",
+          "1963年生于四川省资阳市"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需确认组内是否有本科生直接参与核心课题的先例。"
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "讲授课程 1． 汽车理论     （本科生课程）",
+          "在读硕士生：  5人 在读博士生： 13人（其中留学生1人）"
+        ],
+        "note": "页面显示其讲授本科生课程，并指导研究生，但未明确提及招收本科生或访问学生。"
+      },
+      "homepage_candidates": [],
+      "summary": "李克强是中国工程院院士、清华大学车辆与运载学院教授，长期致力于汽车智能驾驶系统研究，是智能网联汽车领域的领军学者。",
+      "_verification": []
+    },
+    {
+      "name": "董家鸿",
+      "title": "院士",
+      "research_interests": [
+        "精准外科理论与技术的创新研究",
+        "清华智慧健康医疗体系",
+        "肝脏肿瘤分子图谱测绘与侵袭性前沿的分子影像监测",
+        "基于高维数据集的肝癌智能化分期评估",
+        "肝段结构功能的多模态影像组学研究",
+        "数智化精准肝胆外科技术",
+        "胆道病学理论与技术体系的研究",
+        "肝胆肿瘤生物学特征以及外科治疗策略的研究",
+        "肝脏移植理论与技术的创新研究",
+        "器官移植免疫重塑与调控",
+        "离体外科学技术体系与临床实践"
+      ],
+      "current_focus": {
+        "text": "创立并践行精准医疗、精益管理、精诚服务的“三精医疗”理念，在北京清华长庚医院建立起具有鲜明特色的现代医院管理体系。",
+        "evidence": [
+          "董家鸿教授创立并践行精准医疗、精益管理、精诚服务的“三精医疗”理念，在北京清华长庚医院建立起具有鲜明特色的现代医院管理体系。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "中国工程院院士",
+          "法国国际外科科学院院士",
+          "美国外科学会荣誉Fellow",
+          "欧洲外科学会荣誉Fellow"
+        ],
+        "note": "名头极响、资源顶级，但日常指导大概率由团队小导师或博后承担；申请前需确认是否有本科生一作先例，否则易成“挂名”经历。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "董家鸿是中国工程院院士、清华大学讲席教授，国际著名肝胆外科专家，创立精准外科理念，现任清华大学临床医学院院长及北京清华长庚医院院长。",
+      "_verification": []
+    },
+    {
+      "name": "薛澜",
+      "skipped": true,
+      "reason": "404 Client Error: Not Found for url: https://www.sppm.tsinghua.edu.cn/info/1219/7509.htm",
+      "_verification": []
+    },
+    {
+      "name": "陈冯富珍",
+      "title": "教授",
+      "research_interests": [
+        "AI+健康医疗"
+      ],
+      "current_focus": {
+        "text": "担任清华大学万科公共卫生与健康学院首任院长，领导学院发展。",
+        "evidence": [
+          "2020年4月2日，陈冯富珍博士担任清华大学万科公共卫生与健康学院首任院长。",
+          "2020-至今 清华大学万科公共卫生与健康学院 首任院长"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "陈博士自2007年1月至2017年6月担任世界卫生组织第7任总干事",
+          "2020年4月2日，陈冯富珍博士担任清华大学万科公共卫生与健康学院首任院长。"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或团队骨干承担；需确认是否有本科生直接参与核心课题的先例，避免只挂名。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "陈冯富珍教授是清华大学万科公共卫生与健康学院首任院长，曾任世界卫生组织总干事，研究领域为AI+健康医疗。",
+      "_verification": []
+    },
+    {
+      "name": "李升波",
+      "skipped": true,
+      "reason": "404 Client Error: Not Found for url: https://www.svm.tsinghua.edu.cn/essay/80/1812.html",
+      "_verification": []
+    },
+    {
+      "name": "刘嘉",
+      "title": "教授",
+      "research_interests": [
+        "人工智能的认知神经基础",
+        "视觉智能"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于人工智能的认知神经基础，特别是神经几何、网格细胞、临界态脑、物体空间轴等主题。",
+        "evidence": [
+          "From Sensory to Perceptual Manifolds: The Twist of Neural Geometry.",
+          "Experience replay facilitates the formation of the hexagonal pattern of grid cells.",
+          "The Cognitive Critical Brain: Modulation of Criticality in Task-Engaged Regions.",
+          "Real-world size of objects serves as an axis of object space."
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "清华大学基础科学讲席教授",
+          "2020– : 基础科学讲席教授，清华大学社科学院心理学系、清华大学脑与智能实验室",
+          "2005–2020: 教授（二级），北京师范大学心理学部、心理学院、认知神经科学与学习国家重点实验室"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需确认本科生是否有一作先例，并主动争取直接沟通机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "刘嘉是清华大学心理与认知科学系教授，研究人工智能的认知神经基础和视觉智能，拥有丰富的国内外学术经历。",
+      "_verification": []
+    },
+    {
+      "name": "梁正",
+      "skipped": true,
+      "reason": "404 Client Error: Not Found for url: https://www.sppm.tsinghua.edu.cn/info/1207/7527.htm",
+      "_verification": []
+    },
+    {
+      "name": "沈阳",
+      "title": "教授/博士生导师",
+      "research_interests": [
+        "AI大模型理论与应用",
+        "新媒体",
+        "大数据",
+        "网络舆论",
+        "元宇宙",
+        "虚拟人和机器人"
+      ],
+      "current_focus": {
+        "text": "近期在AI大模型、元宇宙、虚拟人和机器人等领域进行研究和应用，并发布相关报告。",
+        "evidence": [
+          "主要研究方向：AI大模型理论与应用、新媒体、大数据、网络舆论、元宇宙。",
+          "发布的《DeepSeek从入门到精通》系列报告阅读人数超过数千万。",
+          "从2020年底开始关注虚拟人，发布了虚拟数字人研究报告。从2021年4月开始组织队伍研发机器人，在本领域提出了面向虚拟人、自然人、机器人的三人行系统驱动引擎，提出了机器人的进化逻辑和社会价值实现逻辑，初步提出了高仿人机器人的关键技术推进路径，所研发的机器人已应用于多个社会场景。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "34岁时破格升为教授博导",
+          "2014年6月调入清华大学新闻与传播学院任教授博导。"
+        ],
+        "note": "中年教授且调入清华，资源与平台已稳，但新闻传播学科竞争激烈，需确认其近年发文量及是否亲自带学生，适合求稳但别指望手把手指导。"
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "也在AI诊疗、AI音乐方向招收博士生和博士后。"
+        ],
+        "note": "明确招收博士生和博士后，但未提及本科生或实习生。"
+      },
+      "homepage_candidates": [],
+      "summary": "沈阳是清华大学新闻与传播学院教授、博士生导师，主要研究AI大模型、新媒体、大数据、网络舆论和元宇宙，在AI和大数据领域有丰富成果。",
+      "_verification": []
+    },
+    {
+      "name": "张萍",
+      "title": "临床教研系列长聘教授",
+      "research_interests": [
+        "心律失常发生机制与诊治",
+        "生物学起搏及心肌损伤修复",
+        "心血管人工智能诊治技术研发"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于心血管人工智能诊治技术研发，以及心律失常、生物学起搏与心肌损伤修复等方向。",
+        "evidence": [
+          "1.心律失常发生机制与诊治； 2.生物学起搏及心肌损伤修复； 3.心血管人工智能诊治技术研发；"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2014年5月至今 北京清华长庚医院 副院长、教授、主任医师、博士生导师",
+          "1983.9-1989.7，北京医科大学临床医学系，临床医学，医学学士学位",
+          "1992.9-1995.7，北京医科大学第三医院，心血管内科，医学博士学位"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或团队骨干承担，需确认其是否亲自带学生，并了解组内既往学生培养路径与一作机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "张萍是清华大学临床医学院长聘教授，主要研究方向为心律失常、生物学起搏及心血管人工智能诊治技术。",
+      "_verification": []
+    },
+    {
+      "name": "余家阔",
+      "title": "临床教研系列长聘教授",
+      "research_interests": [
+        "半月板损伤结构和功能重建",
+        "膝关节软骨损伤结构和功能重建",
+        "膝关节交叉韧带损伤结构和功能重建",
+        "膝关节髌股关节紊乱结构和功能重建",
+        "微创全膝置换（MIS-TKA）"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于AI+医疗，但原文未提供具体近期研究内容。",
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2008年08月-至今北京大学第三医院教授",
+          "2007年08月至今北京大学第三医院主任医师，博导",
+          "2023年12月至今北京清华长庚医院骨科运动医学中心主任、教授"
+        ],
+        "note": "名头响、资源广，但日常指导多由团队小导师或博后分担；需确认是否有本科生一作先例，以及能否直接接触核心课题。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "余家阔是清华大学临床医学院长聘教授，长期从事运动医学与关节外科的临床与科研工作，主要研究方向为膝关节相关损伤的结构与功能重建。",
+      "_verification": []
+    },
+    {
+      "name": "张敏",
+      "title": "教授",
+      "research_interests": [
+        "生物统计",
+        "健康医疗大数据"
+      ],
+      "current_focus": {
+        "text": "生物统计方法学和健康医疗领域应用性研究",
+        "evidence": [
+          "张敏教授的研究分为两部分: 生物统计方法学和健康医疗领域应用性研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2008-2015： 密歇根大学 (University of Michigan, Ann Arbor), 生物统计系, 公共卫生学院, 助理教授",
+          "2015-2020： 密歇根大学 (University of Michigan, Ann Arbor), 生物统计系, 公共卫生学院, 副教授 (终身)",
+          "2020-2023： 密歇根大学 (University of Michigan, Ann Arbor), 生物统计系, 公共卫生学院 教授 (终身)",
+          "2023至今： 清华大学，万科公共卫生与健康学院，长聘教授"
+        ],
+        "note": "产出与资源处于稳定期，方向明确、经费充足，适合求稳深钻；但组内规模可能较大，需确认他是否亲自带学生，以及本科生一作机会是否普遍。"
+      },
+      "recruitment": {
+        "level": "🟢",
+        "evidence": [
+          "本课题组欢迎合作，也招收硕士， 博士，博士后和科研助理。",
+          "有意合作或加入课题组请联系 mzhangst@tsinghua.edu.cn"
+        ],
+        "note": "明确招收硕士、博士、博士后和科研助理，但未提及本科生。"
+      },
+      "homepage_candidates": [],
+      "summary": "张敏教授是清华大学万科公共卫生与健康学院的长聘教授，研究方向为生物统计和健康医疗大数据，拥有丰富的海外学术经历，并明确招收硕士、博士、博士后和科研助理。",
+      "_verification": []
+    },
+    {
+      "name": "吴及",
+      "title": "教授",
+      "research_interests": [
+        "人工智能",
+        "机器学习",
+        "自然语言处理",
+        "模式识别",
+        "数据挖掘"
+      ],
+      "current_focus": {
+        "text": "主要从事人工智能、机器学习、自然语言处理、模式识别、数据挖掘等领域的研究工作，并担任多个医疗AI相关职务。",
+        "evidence": [
+          "主要从事 人工智能，机器学习，自然语言处理，模式识别，数据挖掘 等领域的研究工作。",
+          "清华大学精准医学研究院临床大数据中心共同主任。",
+          "2020年10月至今担任清华大学智慧医疗研究院副院长。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "吴及，清华大学孟昭英讲席教授，电子工程系长聘教授，人工智能学院兼聘教授",
+          "2001年3月留校任教。2018年12月被聘任为清华大学长聘教授",
+          "获2011年度国家科技进步二等奖、2014年度北京市科学技术奖一等奖、2021年度北京市教育教学成果奖一等奖和2023年度国家科技进步一等奖。"
+        ],
+        "note": "名头响、资源多、平台强，但日常指导大概率由小导师或博后承担，需先确认组内是否有本科生深度参与一作的传统。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "http://msiip.tsinghua.edu.cn/"
+      ],
+      "summary": "吴及是清华大学电子工程系长聘教授，主要研究人工智能、机器学习、自然语言处理等领域，并担任多个医疗AI相关职务。",
+      "_verification": [
+        "⚠️ career_stage 的 evidence 在原文中找不到：2001年3月留校任教。2018年12月被聘任为清华大学长聘教授..."
+      ]
+    },
+    {
+      "name": "李勇",
+      "title": "教授",
+      "research_interests": [
+        "人工智能，具身智能，世界模型",
+        "数据科学，城市科学与计算",
+        "社会计算，复杂系统"
+      ],
+      "current_focus": {
+        "text": "围绕人工智能、数据科学及交叉学科方向，承担国家重点研发计划项目、自然科学基金重点项目等20余项，研究成果发表于Nature系列期刊及CCF A类会议。",
+        "evidence": [
+          "围绕人工智能、数据科学及交叉学科方向，承担国家重点研发计划项目、自然科学基金重点项目等20余项，研究成果发表于Nature Computational Science（自然·计算科学）、Nature Machine Intelligence（自然·机器智能）、Nature Human Behaviour（自然·人类行为）、 Nature Cities（自然·城市） 等综合性期刊，在ACM KDD、NeurIPS、ICLR、WWW等CCF A类会议期刊发表学术论文100余篇，引用34000次，授权专利50余项。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2014.6-至今 清华大学 | 电子工程系 | 助理教授，副教授，教授"
+        ],
+        "note": "中年阶段但仍在上升通道，组内资源与产出较稳，导师亲自指导尚存，适合求稳深钻，但需确认其近年经费与招生名额是否充裕。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        "https://fi.ee.tsinghua.edu.cn/"
+      ],
+      "summary": "清华大学电子工程系长聘教授，专注于人工智能、数据科学及城市科学交叉研究，成果丰硕。",
+      "_verification": []
+    },
+    {
+      "name": "徐葳",
+      "title": "教授",
+      "research_interests": [
+        "分布式系统",
+        "数据中心网络",
+        "金融科技",
+        "人工智能安全",
+        "人工智能+医疗"
+      ],
+      "current_focus": {
+        "text": "近期研究兴趣包括分布式系统设计、大数据和金融科技，当前项目涉及隐私保护计算、数据中心网络、大规模机器学习和数据挖掘系统，以及各种大数据应用。",
+        "evidence": [
+          "I have a broad research interest in distributed system design, big data and financial technology.",
+          "My current projects include privacy-preserving computation, data center networking, large scale system for machine learning and data mining, as well as various big data applications."
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "I received my Ph.D from UC Berkeley in 2010.",
+          "I worked for Google for 2.5 years as a software engineer before joining Tsinghua."
+        ],
+        "note": "中年阶段、工业界转学术背景，意味着组里工程落地能力强、项目偏实用，但需确认他是否仍亲自带学生，以及清华组内资源分配是否稳定。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://scholar.google.com/citations?user=6jN5vScAAAAJ"
+      ],
+      "summary": "徐葳是清华大学交叉信息研究院的教授，研究兴趣广泛，涵盖分布式系统、大数据和金融科技，当前项目聚焦于隐私保护计算、数据中心网络和机器学习系统。",
+      "_verification": []
+    },
+    {
+      "name": "马恺声",
+      "title": "长聘副教授",
+      "research_interests": [
+        "AI+Chiplet",
+        "AI算法设计"
+      ],
+      "current_focus": {
+        "text": "领导算法、架构和芯片实验室（ARChip），研究领域包括人机接口、类脑AI算法设计、自动驾驶计算机视觉、紧凑模型设计、计算机体系结构和微电子，强调系统垂直整合，特别关注植入式医疗和神经设备以及自动驾驶系统的芯片级解决方案。",
+        "evidence": [
+          "He leads the Algorithms, Architecture and Chipset Lab (ARChip) .",
+          "His research interests lie in the interdisciplinary fields of human-machine interface (HMI), brain-spired AI algorithm design, computer vision for self-driving, compact model design, computer architecture and microelectronics.",
+          "He believes in vertical integration for systems, with a special emphasis on implanted medical and neural devices, and chip level system solutions for self-driving systems."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "交叉信息院助理教授马恺声荣获2022年度CCF 集成电路Early Career Award"
+        ],
+        "note": "青年助理教授刚获行业认可，冲劲足、亲自带人概率高，但组内资源与名气仍在积累，适合愿共同成长、能接受初期条件有限的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "马恺声是清华大学交叉信息研究院的长聘副教授，研究AI+Chiplet和AI算法设计，领导ARChip实验室，专注于垂直整合系统，特别是植入式医疗和自动驾驶芯片。",
+      "_verification": []
+    },
+    {
+      "name": "冯路",
+      "title": null,
+      "research_interests": [
+        "量子网络与量子纠缠"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "冯路老师的研究方向为量子网络与量子纠缠，办公地址为MMW-S317-8。",
+      "_verification": []
+    },
+    {
+      "name": "华子越",
+      "title": null,
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "清华大学交叉信息研究院的研究人员华子越，但原文信息极少。",
+      "_verification": []
+    },
+    {
+      "name": "卢亚男",
+      "title": null,
+      "research_interests": [
+        "金刚石色心量子模拟与量子传感"
+      ],
+      "current_focus": {
+        "text": "金刚石色心量子模拟与量子传感",
+        "evidence": [
+          "卢亚男 金刚石色心量子模拟与量子传感"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "卢亚男老师的研究方向为金刚石色心量子模拟与量子传感。",
+      "_verification": []
+    },
+    {
+      "name": "潘啸轩",
+      "title": null,
+      "research_interests": [
+        "超导量子信息处理"
+      ],
+      "current_focus": {
+        "text": "超导量子信息处理",
+        "evidence": [
+          "潘啸轩 超导量子信息处理"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "潘啸轩老师的研究方向为超导量子信息处理，办公地址在蒙民伟科技大楼南楼S317。",
+      "_verification": []
+    },
+    {
+      "name": "孙正之",
+      "title": null,
+      "research_interests": [
+        "量子人工智能",
+        "拓扑量子计算",
+        "张量网络方法"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "孙正之的研究方向为量子人工智能、拓扑量子计算和张量网络方法。",
+      "_verification": []
+    },
+    {
+      "name": "陶禹良",
+      "title": null,
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "陶禹良老师的页面仅提供了办公地址，没有其他信息。",
+      "_verification": []
+    },
+    {
+      "name": "许钰梓",
+      "title": null,
+      "research_interests": [
+        "离子阱量子计算与量子模拟"
+      ],
+      "current_focus": {
+        "text": "离子阱量子计算与量子模拟",
+        "evidence": [
+          "许钰梓 离子阱量子计算与量子模拟"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "许钰梓老师的研究方向为离子阱量子计算与量子模拟，办公地址为MMW-S421-8。",
+      "_verification": []
+    },
+    {
+      "name": "杨炎彬",
+      "title": null,
+      "research_interests": [
+        "量子物理"
+      ],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "杨炎彬老师的研究方向为量子物理，办公地址为MMW-S317-12。",
+      "_verification": []
+    },
+    {
+      "name": "元祎君",
+      "title": null,
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提供任何招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "清华大学交叉信息研究院的研究人员元祎君，但原文信息极少。",
+      "_verification": []
+    },
+    {
+      "name": "宋祎璞",
+      "title": "研究员",
+      "research_interests": [
+        "超导量子计算",
+        "量子系统中的输运现象的介观研究"
+      ],
+      "current_focus": {
+        "text": "开发可扩展的超导架构和几何相位门方案，以解决量子计算中的资源消耗和退相干问题。",
+        "evidence": [
+          "We will address these challenges by achieving the key research objectives: (1) we will develop a new scalable superconducting architecture approach, which is feasible for hybrid surface code. This unique architecture can significantly reduce the resource consumption by individual qubit and efficiently avoid breakpoints of superconducting networks, thus improving the robustness of inter-connections of qubits with the coupling in a well controllable manner. (2) We will realize a new nonadiabatic multi-qubit geometric phase gate scheme, through segmented microwave drive on multiple qubits coupled off-resonantly to a common resonator, with a high gate fidelity owing to the robustness against certain control errors and decoherence. (3) With exploiting the robust superconducting architecture and geometric gate scheme, we will con"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "I received my Ph.D. in Physics from Peking University in 2005",
+          "I am currently a research fellow at the Institute for Interdisciplinary Information Science (IIIS), Tsinghua University."
+        ],
+        "note": "产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其近年论文署名和指导风格，避免大组内被边缘化。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "http://apps.webofknowledge.com/OneClickSearch.do?product=UA&search_mode=OneClickSearch&SID=8Bgp28f9iUESBo4T6PT&field=AU&value=Xing,%20YJ&ut=412795&pos=5&excludeEventConfig=ExcludeIfFromFullRecPage"
+      ],
+      "summary": "宋祎璞是清华大学交叉信息研究院的研究员，专注于超导量子计算和介观输运研究，致力于开发可扩展的超导架构和几何相位门方案。",
+      "_verification": []
+    },
+    {
+      "name": "常秀英",
+      "title": "副研究员",
+      "research_interests": [
+        "超导量子计算",
+        "量子信息"
+      ],
+      "current_focus": {
+        "text": "近期研究涉及量子模拟、量子隐形传态等，但具体近期焦点不明确。",
+        "evidence": [
+          "Quantum Simulation of the Two-Dimensional Weyl Equation in a Magnetic Field，PHYSICAL REVIEW LETTERS 128, 200502(2022)",
+          "Quantum teleportation from light beams to vibrational states of a macroscopic diamond NATURE COMMUNICATIONS 7，11736(2016)"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2011年7月在中国科学院半导体研究所获得凝聚态物理专业博士学位",
+          "2006年7月在山东师范大学获得物理教育学士学位"
+        ],
+        "note": "【实际含义】组内产出与经费处于稳定上升期，导师有精力亲自指导但非手把手，适合有明确方向、能独立推进的学生；需确认其近年论文署名与项目分配是否倾向学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "常秀英是副研究员，研究方向为超导量子计算和量子信息，拥有凝聚态物理博士学位，发表多篇量子信息领域论文。",
+      "_verification": []
+    },
+    {
+      "name": "何丽",
+      "title": "副研究员",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "何丽是副研究员，办公室在MMW-S305-3，但原文信息极少。",
+      "_verification": []
+    },
+    {
+      "name": "黄园园",
+      "title": "副研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "黄园园是副研究员，但原文信息极少，仅提供姓名和职称。",
+      "_verification": []
+    },
+    {
+      "name": "周子超",
+      "title": "副研究员",
+      "research_interests": [
+        "Quantum computing",
+        "Quantum simulation",
+        "Quantum networking with trapped ions",
+        "Quantum metrology"
+      ],
+      "current_focus": {
+        "text": "近期研究集中在基于 trapped ions 的量子计算、量子模拟和量子网络，特别是大规模离子量子模拟器和双类型量子比特门操作。",
+        "evidence": [
+          "Quantum computing, quantum simulation, quantum networking with trapped ions, quantum metrology.",
+          "A site-resolved two-dimensional quantum simulator with hundreds of trapped ions . S-A Guo, Y-K Wu, J Ye, L Zhang, W-Q Lian, R Yao, Y Wang, R-Y Yan, Y-J Yi, Y-L Xu, B-W Li, Y-H Hou, Y-Z Xu, W-X Guo, C Zhang, B-X Qi, Z-C Zhou , Li He, L-M Duan. Nature 630, 613-618(2024).",
+          "Experimental realization of direct entangling gates between dual-type qubits . Chenxi Wang, Chuanxin Huang, Hongxuan Zhang, Hongyuan Hu, Zhichao Mao, Panyu Hou, Yukai Wu, Zichao Zhou , Luming Duan. Phys. Rev. Lett. 134, 010601(2025)."
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2018-present, Associate Researcher, Center for Quantum Information, Institute for Interdisciplinary Information Sciences, Tsinghua University.",
+          "2015-2016, Postdoctoral Research Associate, Joint Quant Institute and Army Research Lab, University of Maryland.",
+          "2012-2015, Postdoctoral Research Associate, Department of Physics, University of Washington.",
+          "2011-2012, Postdoctoral Research Associate, Frequency and Time Group, Institute for National Measurement and Standards, National Research Council of Canada."
+        ],
+        "note": "产出与资源较稳定，适合求稳深钻；但需确认其独立带组规模及近年一作/通讯论文节奏，避免陷入大组边缘化。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        "https://scholar.google.com/citations?hl=en&user=tUdJbEgAAAAJ&view_op=list_works&sortby=pubdate"
+      ],
+      "summary": "周子超是清华大学副研究员，专注于基于 trapped ions 的量子计算、量子模拟和量子网络研究。",
+      "_verification": []
+    },
+    {
+      "name": "张宏毅",
+      "title": "副研究员",
+      "research_interests": [
+        "超导量子信息处理",
+        "微波量子光学",
+        "量子器件"
+      ],
+      "current_focus": {
+        "text": "近期研究集中在超导量子计算、微波单光子量子开关、量子光脉冲产生等方向，并发表多篇相关论文。",
+        "evidence": [
+          "A cryogenic on-chip microwave pulse generator for large-scale superconducting quantum computing.",
+          "Quantum switch for itinerant microwave single photons with superconducting quantum circuits.",
+          "Frequency-tunable microwave quantum light source based on superconducting quantum circuits."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "I received my Ph.D. from the Institute of Semiconductors, Chinese Academy of Sciences, in 2014.",
+          "From 2014 to 2016, I conducted postdoctoral research at IIIS, Tsinghua University."
+        ],
+        "note": "青年建组初期，导师亲自带教意愿强、冲劲足，本科生进组机会较多；但组内设备、经费和论文积累尚浅，需接受成果周期较长、方向可能调整的现实。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [],
+      "summary": "张宏毅是清华大学交叉信息研究院的副研究员，从事超导量子信息处理、微波量子光学和量子器件研究，已发表多篇高水平论文。",
+      "_verification": []
+    },
+    {
+      "name": "姜越",
+      "title": null,
+      "research_interests": [
+        "离子阱量子计算与量子模拟",
+        "离子阱芯片研发"
+      ],
+      "current_focus": {
+        "text": "离子阱量子计算与量子模拟，离子阱芯片研发",
+        "evidence": [
+          "离子阱量子计算与量子模拟，离子阱芯片研发"
+        ]
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "姜越老师的研究方向为离子阱量子计算与量子模拟，以及离子阱芯片研发。",
+      "_verification": []
+    },
+    {
+      "name": "刘艳青",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "刘艳青是助理研究员，办公室在MMW-S313-6，但原文信息极少，无法获取更多细节。",
+      "_verification": []
+    },
+    {
+      "name": "祁宾祥",
+      "title": "助理研究员",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": null
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": null
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "祁宾祥是助理研究员，办公室在MMW-S305-2，但原文信息极少，无法获取更多细节。",
+      "_verification": []
+    },
+    {
+      "name": "王韦婷",
+      "title": null,
+      "research_interests": [
+        "超导量子信息处理",
+        "混合量子系统"
+      ],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": null,
+        "evidence": []
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提供任何招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "王韦婷老师的研究方向为超导量子信息处理和混合量子系统。",
+      "_verification": []
+    },
+    {
+      "name": "陈哨",
+      "title": "办公室主任",
+      "research_interests": [],
+      "current_focus": null,
+      "career_stage": null,
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "陈哨是清华大学办公室主任，负责行政工作。",
+      "_verification": []
+    },
+    {
+      "name": "王梦婷",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "张静",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "张喆",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "包欢欢",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "路洋",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "任翌鹏",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    }
+  ]
+}

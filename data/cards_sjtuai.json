@@ -1,0 +1,588 @@
+{
+  "count": 16,
+  "cards": [
+    {
+      "name": "曹钦翔",
+      "title": "副教授",
+      "research_interests": [
+        "程序验证",
+        "程序逻辑",
+        "交互式定理证明",
+        "人工智能技术在程序验证领域的应用"
+      ],
+      "current_focus": {
+        "text": "研究程序验证、程序逻辑与交互式定理证明，并研究人工智能技术在这些领域的应用。",
+        "evidence": [
+          "长期研究程序验证、程序逻辑与交互式定理证明，并研究人工智能技术在这些领域的应用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "他2013年本科毕业于北京大学获得哲学（逻辑与科学哲学）学士学位获得数学双学士学位，于2018年在美国普林斯顿大学获得计算机博士学位。"
+        ],
+        "note": "博士毕业约6年，处于青年阶段，可能亲自指导研究生，但资源积累尚在初期。"
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "招收硕士研究生与博士研究生，但仅招收有相关方向研究背景的学生。"
+        ],
+        "note": "明确招收硕博，但未提及本科生或访问学生，因此为🟡。"
+      },
+      "homepage_candidates": [],
+      "summary": "曹钦翔是上海交通大学人工智能学院的副教授，专注于程序验证与交互式定理证明，并招收有相关背景的研究生。",
+      "_verification": []
+    },
+    {
+      "name": "陈思衡",
+      "title": "副教授",
+      "research_interests": [
+        "Auto-Research"
+      ],
+      "current_focus": {
+        "text": "目前研究聚焦 Auto-Research",
+        "evidence": [
+          "目前 研究聚焦 Auto-Research 。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "副教授，美国卡内基梅隆大学（CMU）博士，入选国家级人才计划青年项目，曾就职于UBER ATG自动驾驶部门。"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源积累中。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://scholar.google.com/citations?hl=en&user=W_Q33RMAAAAJ",
+          "label": "https://scholar.google.com/citations?hl=en&user=W_Q33RMAAAAJ",
+          "type": "scholar"
+        }
+      ],
+      "summary": "陈思衡是上海交通大学人工智能学院副教授，CMU博士，研究聚焦Auto-Research，发表百余篇论文，引用过万。",
+      "_verification": []
+    },
+    {
+      "name": "蔡盼盼",
+      "title": "副教授",
+      "research_interests": [
+        "具身智能",
+        "机器人决策与学习",
+        "自动驾驶决策"
+      ],
+      "current_focus": {
+        "text": "研究领域为具身智能、机器人决策与学习、自动驾驶决策，在机器人顶刊及顶会发表论文，并担任编委等职务。",
+        "evidence": [
+          "研究领域为具身智能、机器人决策与学习、自动驾驶决策，在机器人顶刊及顶会IJRR、T-RO、RSS等发表大量高水平论文。",
+          "在国际上，她担任机器人顶刊IEEE T-RO编委、机器人会议ICRA、ISER编委，并在具身智能顶会RSS主办国际研讨会；在国内，她担任科技部重点研发计划课题负责人，主持青年科学基金项目，并担任中国具身智能大会组织主席。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "上海交通大学副教授，海外优青。",
+          "主持青年科学基金项目"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源积累中。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cindycia.github.io/",
+          "label": "https://cindycia.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "上海交通大学人工智能学院副教授，海外优青，研究具身智能、机器人决策与学习、自动驾驶决策。",
+      "_verification": []
+    },
+    {
+      "name": "程远",
+      "title": "副教授",
+      "research_interests": [
+        "光芯片",
+        "端侧计算",
+        "软硬协同",
+        "AI计算架构"
+      ],
+      "current_focus": {
+        "text": "聚焦光芯片、端侧计算、软硬协同、AI计算架构，并推动研究成果在光子处理器、具身智能等行业落地。",
+        "evidence": [
+          "研究方向聚焦光芯片、端侧计算、软硬协同、AI计算架构",
+          "研究成果落地应用于光子处理器、具身智能等行业并产生超十亿经济效益"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2021年在上海交通大学微电子系获得博士学位",
+          "个人入选2024福布斯中国30岁以下精英榜（Forbes U30）、胡润U30中国先锋榜（Hurun U30）"
+        ],
+        "note": "青年学者，刚建组不久，亲自指导学生的可能性高，但资源和名声仍在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://cyuan328.github.io/",
+          "label": "https://cyuan328.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "程远是上海交通大学人工智能学院的副教授、博导，研究方向为光芯片、端侧计算、软硬协同和AI计算架构，成果丰硕并入选福布斯U30。",
+      "_verification": []
+    },
+    {
+      "name": "陈立鹏",
+      "title": "副教授",
+      "research_interests": [
+        "机器人抓取和操作",
+        "运动控制",
+        "人机交互与协作"
+      ],
+      "current_focus": {
+        "text": "深度参与产学研实践项目，主导关键技术突破，如腾讯“小五”机器人，推动机器人技术从实验室向产业应用转化。",
+        "evidence": [
+          "近年来，他深度参与了多个产学研实践项目，并主导了多项关键技术突破， 如腾讯 “小五”机器人 。",
+          "其研究工作兼具理论创新与实用性，在推动机器人技术从实验室研究向产业应用的转化过程中积累了丰富的经验。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年博士毕业于英国利兹大学机器人学专业",
+          "随后分别在英国爱丁堡大学和腾讯机器人实验室担任博士后和高级研究员"
+        ],
+        "note": "青年学者，刚建组不久，可能亲自指导研究生，但资源积累尚在初期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://lipeng-chen.github.io/",
+          "label": "https://lipeng-chen.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "陈立鹏是上海交通大学人工智能学院副教授，研究方向为机器人抓取、运动控制与人机交互，有产业界经验，主导过腾讯“小五”机器人项目。",
+      "_verification": []
+    },
+    {
+      "name": "陈明达",
+      "title": "副教授",
+      "research_interests": [
+        "文本与多模态大模型"
+      ],
+      "current_focus": {
+        "text": "研究聚焦文本与多模态大模型，作为核心成员领导了多个大模型研发（如 ALBERT、Chameleon 与 LLaMA）。",
+        "evidence": [
+          "研究聚焦文本与多模态大模型，作为核心成员领导了多个大模型研发（如 ALBERT、Chameleon 与 LLaMA）。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "国家高层次青年人才",
+          "回国前任职于 Meta FAIR（基础人工智能研究团队）",
+          "博士期间获 Google PhD Fellowship（自然语言处理方向）"
+        ],
+        "note": "刚回国建组，处于事业上升期，可能亲自指导研究生，但资源积累尚在初期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://mingdachen.github.io/",
+          "label": "https://mingdachen.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "陈明达是上海交通大学人工智能学院的副教授、博士生导师，国家高层次青年人才，曾任Meta FAIR研究员，研究文本与多模态大模型，领导过ALBERT、Chameleon和LLaMA等大模型研发。",
+      "_verification": []
+    },
+    {
+      "name": "崔少波",
+      "title": "助理教授",
+      "research_interests": [
+        "因果智能",
+        "世界模型",
+        "大语言模型",
+        "AI 在医疗方向的前沿应用"
+      ],
+      "current_focus": {
+        "text": "研究聚焦于因果智能、世界模型、大语言模型、AI在医疗方向的前沿应用等。",
+        "evidence": [
+          "研究聚焦于：因果智能、世界模型、大语言模型、AI 在医疗方向的前沿应用等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称：助理教授",
+          "国家高层次青年人才"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源积累中。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://shaobo.info/",
+          "label": "https://shaobo.info/",
+          "type": "personal"
+        }
+      ],
+      "summary": "崔少波是上海交通大学人工智能学院的助理教授，博士生导师，国家高层次青年人才，研究聚焦因果智能、世界模型、大语言模型及AI医疗应用。",
+      "_verification": []
+    },
+    {
+      "name": "陈颢天",
+      "title": "助理研究员",
+      "research_interests": [
+        "大语言模型智能体",
+        "智能体工具学习",
+        "强化学习",
+        "自演化",
+        "高效决策"
+      ],
+      "current_focus": {
+        "text": "聚焦于提升智能体长难任务的解决能力，应用于深度研究、量化金融、GUI操作等真实世界场景。",
+        "evidence": [
+          "研究方向为大语言模型智能体，聚焦于提升智能体长难任务的解决能力，主要探索智能体工具学习、强化学习、自演化、高效决策等技术，应用于深度研究、量化金融、GUI操作等真实世界场景。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称：助理研究员",
+          "曾入选清华大学水木学者计划与国家资助博士后研究人员计划，主持中国博士后面上项目。"
+        ],
+        "note": "青年学者，可能亲自指导研究生，但资源积累初期，机会较多。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://hytn.github.io/",
+          "label": "https://hytn.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "陈颢天是上海交通大学人工智能学院的助理研究员，研究方向为大语言模型智能体，致力于提升智能体在长难任务中的解决能力。",
+      "_verification": []
+    },
+    {
+      "name": "戴国浩",
+      "title": "副教授",
+      "research_interests": [
+        "稀疏计算电路与系统"
+      ],
+      "current_focus": null,
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "分别于2014年和2019年在清华大学电子工程系获得工学学士和博士学位。"
+        ],
+        "note": "博士毕业约5年，处于青年阶段，可能亲自指导研究生，但资源积累中。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://dai.sjtu.edu.cn",
+          "label": "https://dai.sjtu.edu.cn",
+          "type": "personal"
+        }
+      ],
+      "summary": "戴国浩是上海交通大学人工智能学院的副教授、博导，研究方向为稀疏计算电路与系统，曾获多项最佳论文奖和青年荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "符芳诚",
+      "title": "副教授",
+      "research_interests": [
+        "机器/深度学习系统",
+        "人工智能",
+        "数据管理"
+      ],
+      "current_focus": {
+        "text": "专注于机器/深度学习系统、人工智能、数据管理领域的科学问题研究，并领导或参与系统框架的设计与研发。",
+        "evidence": [
+          "他专注于机器/深度学习系统、人工智能、数据管理领域的科学问题研究，相关研究工作在 SIGMOD、VLDB、SOSP、ASPLOS、ICML、NeurIPS、TKDE 等 CCF-A 类国际顶级学术会议/期刊上发表论文30余篇。",
+          "他领导或参与了数个系统框架的设计与研发，如分布式深度学习系统河图（Hetu）、安全联合计算框架 PowerFL、大数据分析和机器学习系统Angel等，通过这些系统项目，他的相关研究成果已在产业界的多个应用场景中落地。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "上海交通大学人工智能学院长聘教轨副教授",
+          "他曾入选中国博士后创新人才支持计划（博新计划），并曾获得ACM中国优秀博士论文奖（全国奖）"
+        ],
+        "note": "长聘教轨副教授通常为独立PI，处于学术上升期，可能亲自指导研究生，但资源积累尚在初期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息，建议直接邮件联系询问。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://ccchengff.github.io",
+          "label": "https://ccchengff.github.io",
+          "type": "personal"
+        }
+      ],
+      "summary": "符芳诚是上海交通大学人工智能学院的长聘教轨副教授，专注于机器/深度学习系统、人工智能和数据管理，已在顶级会议发表多篇论文，并领导多个系统项目。",
+      "_verification": []
+    },
+    {
+      "name": "冯二虎",
+      "title": "助理教授",
+      "research_interests": [
+        "操作系统",
+        "体系结构",
+        "AI加速器",
+        "大模型训推优化"
+      ],
+      "current_focus": {
+        "text": "研究领域为操作系统，体系结构、AI加速器与大模型训推优化等",
+        "evidence": [
+          "研究领域为操作系统，体系结构、AI加速器与大模型训推优化等"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "上海交通大学人工智能学院助理教授",
+          "博士期间获得首批博士研究生国家自然科学基金，入选首批青年人才托举工程博士生专项计划"
+        ],
+        "note": "青年助理教授，亲自带人概率高、机会多但资源和名声在积累期"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://ipads.se.sjtu.edu.cn/pub/members/erhu_feng",
+          "label": "https://ipads.se.sjtu.edu.cn/pub/members/erhu_feng",
+          "type": "personal"
+        }
+      ],
+      "summary": "上海交通大学人工智能学院助理教授，研究操作系统、体系结构、AI加速器与大模型训推优化，成果发表于顶级会议并落地于工业界。",
+      "_verification": []
+    },
+    {
+      "name": "郭宁",
+      "title": "助理研究员",
+      "research_interests": [
+        "视触觉感知机理与机器人灵巧操作",
+        "机器人多模态感知与生成式学习"
+      ],
+      "current_focus": {
+        "text": "视触觉感知机理与机器人灵巧操作，包括基于形变图像的六维力估计、跨模态视触觉感知与自适应力抓取、水下环境三维形貌重建等。",
+        "evidence": [
+          "主要研究方向为视触觉感知机理与机器人灵巧操作。",
+          "在机器人多模态感知与生成式学习领域取得系列创新成果，包括：首创基于形变图像的六维力估计方法，开发跨模态视触觉感知与自适应力抓取系统（AIS 2023封面论文）；突破水下环境三维形貌重建技术瓶颈，实现基于机器人触觉的高精度物体重建（IEEE T-RO 2024）。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "职称：助理研究员",
+          "南方科技大学工学博士"
+        ],
+        "note": "刚建组或独立初期，亲自指导学生的可能性高，但资源积累尚在初期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://gabriel-ning.github.io/",
+          "label": "https://gabriel-ning.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "郭宁是上海交通大学人工智能学院的助理研究员，研究方向为视触觉感知与机器人灵巧操作，在相关领域有创新成果。",
+      "_verification": []
+    },
+    {
+      "name": "金梦",
+      "title": "教授",
+      "research_interests": [
+        "海洋科学智能",
+        "文献度量",
+        "无源物联网"
+      ],
+      "current_focus": {
+        "text": "研究领域为海洋科学智能、文献度量、无源物联网",
+        "evidence": [
+          "金梦博士的研究领域为海洋科学智能、 文献度量、无源物联网。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2023 ACM 中国新星奖获得者， 2019 CCF 优博、 ACM 中国优博获得者。"
+        ],
+        "note": "获得优博和青年奖项，可能处于建组初期，亲自指导学生的概率较高。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://ai4earth.acemap.info",
+          "label": "https://ai4earth.acemap.info",
+          "type": "personal"
+        }
+      ],
+      "summary": "上海交通大学人工智能学院教授，研究海洋科学智能、文献度量、无源物联网，曾获ACM中国新星奖等荣誉。",
+      "_verification": []
+    },
+    {
+      "name": "卢策吾",
+      "title": "教授",
+      "research_interests": [
+        "计算机视觉",
+        "机器人"
+      ],
+      "current_focus": {
+        "text": "主要从事计算机视觉与机器人研究，已取得多项突破性研究成果，开源了如人体姿态估计系统Alphapose、HAKE（人体行为引擎）、GraspNet（高性能机器人抓取系统）等拥有国际先进水平的开源人工智能框架和数据集。",
+        "evidence": [
+          "主要从事计算机视觉与机器人研究，已取得多项突破性研究成果，开源了如人体姿态估计系统Alphapose（GitHub Star 5000+），HAKE（人体行为引擎），GraspNet（高性能机器人抓取系统）等拥有国际先进水平的开源人工智能框架和数据集。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2018年被《麻省理工科技评论》评选为中国35位35岁以下科技精英（MIT TR35）"
+        ],
+        "note": "青年学者，亲自带人概率高，但资源和名声在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://dnastorage.sjtu.edu.cn/info/1053/1168.htm",
+          "label": "https://dnastorage.sjtu.edu.cn/info/1053/1168.htm",
+          "type": "personal"
+        }
+      ],
+      "summary": "卢策吾是上海交通大学人工智能学院教授，国家级高层次人才，主要从事计算机视觉与机器人研究，开源了多个有国际影响力的AI框架。",
+      "_verification": []
+    },
+    {
+      "name": "连文昭",
+      "title": "教授",
+      "research_interests": [
+        "智能机器人",
+        "灵巧操作",
+        "机器学习"
+      ],
+      "current_focus": {
+        "text": "研发基于云边协同和人工智能的机器人操作系统平台，搭建软硬一体的类人形机器人，落地工业级产品，并研究通过单一样本示教习得可泛化的复杂操作技能。",
+        "evidence": [
+          "此前研发了基于云边协同和人工智能的机器人操作系统平台，搭建了软硬一体的类人形机器人，落地了多种形态的工业级产品，申请国际专利十余项。",
+          "包括实现了通过单一样本示教习得可泛化的复杂操作技能，操作精度达到亚毫米，提名RSS最佳论文。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "于2015年在美国杜克大学获得博士学位",
+          "曾任Google X资深研究科学家和Figure AI技术总监",
+          "教授，国家级青年人才"
+        ],
+        "note": "青年教授，刚建组或建组不久，亲自带人概率高，但资源积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://lianwenzhao.github.io/",
+          "label": "https://lianwenzhao.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "连文昭是上海交通大学人工智能学院教授，国家级青年人才，研究方向为智能机器人、灵巧操作和机器学习，拥有工业界经历，注重机器人操作技能的学习与泛化。",
+      "_verification": []
+    },
+    {
+      "name": "林洲汉",
+      "title": "副教授",
+      "research_interests": [
+        "机器学习和自然语言处理"
+      ],
+      "current_focus": {
+        "text": "研究领域为机器学习和自然语言处理，并担任多个国际会议领域主席。",
+        "evidence": [
+          "研究领域为机器学习和自然语言处理。",
+          "他还担任JMLR、ICLR、NeurIPS、ICML、AAAI、ACL、EMNLP、NAACL、AACL等国际顶级会议和杂志的审稿人，以及EMNLP、AAAI、AACL、COLING等国际顶会的领域主席。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "他于2019年从蒙特利尔大学的Mila实验室获得计算机科学博士学位",
+          "副教授，海外高层次人才计划青年项目获得者"
+        ],
+        "note": "青年学者，亲自指导学生的可能性高，但资源和名气仍在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://hantek.github.io/",
+          "label": "https://hantek.github.io/",
+          "type": "personal"
+        }
+      ],
+      "summary": "上海交通大学人工智能学院副教授，研究机器学习和自然语言处理，师从Yoshua Bengio，发表论文60余篇，引用量9000余次。",
+      "_verification": []
+    }
+  ]
+}

@@ -1,0 +1,1411 @@
+REPOMIRAGE: Probing Repository Context
+Reasoning in Code Agents with Perturbations
+Hanyu Li1∗
+Yichi Zhang2∗Speed Zhu3
+Hang Su2
+Jun Zhu2
+Yinpeng Dong2
+1 Beijing University of Posts and Telecommunications
+2 Tsinghua University
+3 Tencent
+Abstract
+Code agents are currently having skillful performance on repository-level software
+engineering benchmarks, but it remains unclear whether success on end-to-end
+tasks such as issue resolution truly reflects repository context reasoning, the ability
+to identify the task-relevant information across multiple files and reason over the
+relations among them. To investigate this question, we introduce REPOMIRAGE, a
+two-stage evaluation suite built on SWE-Bench Verified that adopts perturbation
+as a diagnostic tool to increase the demand for context reasoning by transforming
+how the repository is exposed. First, REPOMIRAGE-Perturb applies three types of
+semantics-preserving repository-level perturbations, revealing a clear performance
+drop when correct solving requires broader context access. REPOMIRAGE-Extend
+further turns perturbation-targeted structural bottlenecks into explicit tasks beyond
+issue resolution, where the average performance declines from 66.8% in the original
+setting to 25.3%, indicating a significant deficiency in repository context reasoning.
+Further trajectory analysis reveals an exploration drift, where agents access broader
+repository context but fail to turn it into effective structure information. Motivated
+by this observation, we propose REPOANCHOR, a structure-first prototype work-
+flow that separates repository exploration from downstream problem solving, and
+show that explicit structural scaffolding yields notable gains. These results uncover
+an previously overlooked gap in repository context reasoning for code agents and
+suggest that stronger structure-aware methods are potential to improve them.
+1
+Introduction
+Recent advances in large language models (LLMs) have extended code generation from function-
+level [1, 2] and single-file [3, 4] settings to repository-level software engineering tasks [5–8]. As the
+deployment of LLMs becomes increasingly wide in practice, spanning diverse settings such as vibe
+coding [9] and cybersecurity analysis [10], models are often required to operate over entire repositories
+rather than isolated code snippets [11, 12]. Accomplishing these project-level applications essentially
+requires gathering distributed evidence across multiple files. Taking issue resolution as an example,
+the observed issue in one place may be caused by errors in another module, so determining a correct
+fix demands tracing calling relationships and execution constraints elsewhere in the codebase [13, 14].
+Nevertheless, existing evaluations mostly treat such tasks in an end-to-end manner, without explicitly
+isolating the underlying ability to identify and organize task-relevant information across the code
+context [15, 16]. We refer to this capability as repository context reasoning, which typically involves
+multi-file understanding and cross-file reasoning in a repository.
+Despite the impressive progress of code agents on repository-level benchmarks, it remains unclear
+whether their increasing scores are a reliable indicator of repository context reasoning. We investigate
+this question through SWE-Bench Verified [17], where our experiments reveal a localized pattern in
+issue resolution. Among successfully resolved cases, advanced agents frequently inspect only a few
+∗Equal contribution; alphabetical order. (mail to: thestudent@bupt.edu.cn, zyc22@mails.tsinghua.edu.cn)
+Preprint.
+arXiv:2605.26177v1  [cs.SE]  25 May 2026
+
+A. RepoMirage-Perturb
+Gold Patch
+diff --git a/src/cache.py b/src/cache.py
+......
+- self.data.popitem()
++ self.data.popitem(last=True)
+src / 
+cache.py
+Target
+file
+# cache.py
+import json
+import re
+......
+index = 0
+data = json.loads("XXX")
+for i in range(0, len(list1)):
+    self.data.popitem()
+Dependency-Path Indirection
+Before
+Runtime-Target Masking
+Before
+import json
+import re
+json
+re
+After
+from p1 import lib1
+from p2 import lib2
+re
+json
+import json as lib1 import re as lib2
+app.py
+cache.py
+io.py
+After
+cache_v1.py
+cache_v2.py
+cache_v3.py
+normal.py
+cache
+__init__.py
+-if i <= self.capacity:
++if i > self.capacity:
+v1: Fake Bool 
+v2:  Fake Imports
+-import a as l1
+-import b as l2
++import a as l2
++import b as l1
+v3:  Fake Dependency
+-index=dep["k1"]
+-range(dep["k2"])
++index=dep["k2"]
++range(dep["k1"])
+Local-Value Externalization
+Before
+index = 0
+......
+for i in range(0, ...):
+......  
+index += 1
+Number 0
+Number 0
+Number 1
+After
+Dict: dep
+"key1": 0
+"key5": 20
+dep json 1
+"key2": 0
+"key8": -1
+dep json 2
+"key3": 1
+"key10": 2
+dep json 3
+B. RepoMirage-Extend
+Coordinating edits across
+multiple files.
+Input
+Perturbed
+Repository
+Test Rule
+Task1: Multi-File
+Origin
+SWE task
+Origin SWE FAIL_TO_PASS Scripts
+Task2: Proxy Chain
+Input
+Target File
+Proxy 1
+(Erased)
+Proxy 2
+Proxy 3
+Test Rule
+Task3: Runtime Target
+Input
+cache_v1.py
+cache_v2.py
+cache_v3.py
+normal.py
+cache
+__init__.py
+Repaired
+Wrapper
+Real File
+Test Rule
+Task4: Missing Constant
+Input
+Target File
+dep json 1
+"Erased": 0
+"key5": 20
+dep json 2
+"Erased": 0
+"key8": -1
+dep json 3
+"Erased": 1
+"key10": 2
+Test Rule
+CHECK 1
+dep["key1"] == 0
+Capabilities
+CHECK 1
+lib1.__name__=="json"
+CHECK 2
+lib2.__name__ == "re"
+Tracing dependency
+chains.
+Capabilities
+Proxy 1
+Capabilities
+Fake File
+Identifying runtime-relevant files.
+normal.py
+CHECK 2
+dep["key2"] == 0
+CHECK 3
+dep["key3"] == 1
+CHECK
+CHECK
+Capabilities
+Collecting distributed
+definitions.
+Key-Value
+Figure 1: Overview of REPOMIRAGE. REPOMIRAGE is an evaluation suite for probing repository
+context reasoning in code agents. A. REPOMIRAGE-Perturb. To test whether issue-resolution perfor-
+mance remains stable under higher repository-context demands, it applies three semantics-preserving
+perturbations while keeping the original task and evaluation unchanged. B. REPOMIRAGE-Extend.
+To make repository context reasoning directly measurable, it builds four explicit task families on fully
+perturbed repositories by turning structural bottlenecks into task objectives.
+files (see Fig. 2), which indicates that high success rates may not necessarily come from sufficient
+reasoning over broader repository context. At the same time, simply constructing new benchmarks
+with stronger multi-file demands would not address this challenge, because they are built on new
+environments with different task formulations [18, 19], making failures hard to attribute. Therefore,
+we need a controlled evaluation that probes repository context reasoning from the existing end-to-end
+benchmarks with the original task semantics and codebase instances unchanged, while selectively
+examining how much successful solutions depend on broader context access and cross-file reasoning.
+In this paper, we use perturbation as a diagnostic tool to facilitate this controlled evaluation, which has
+been adopted to study whether model success relies on robust understanding or superficial cues [20,
+21]. We introduce this methodology to construct REPOMIRAGE, a perturbation-based evaluation suite
+organized as a two-stage evaluation, as shown in Fig. 1. We begin with REPOMIRAGE-Perturb, which
+applies semantics-preserving perturbations to the task-relevant context in each benchmark instance
+while keeping the original task and evaluation protocol unaffected. This stage aims to reveal whether
+strong benchmark performance remains stable when successful resolution requires more repository
+context reasoning. Concretely, we design three perturbation strategies that obscure previously explicit
+dependency paths, hide true runtime targets behind structural indirection, and externalize locally
+available definitions into cross-file references, in order to force agents to read more files and reason
+over the context rather than following the localized pattern. Empirically, the resolved rates of eight
+leading models drop relatively by 27.0% on average while reading substantially more files, showing
+that strong performance on issue-solving benchmarks does not directly translate to context reasoning.
+Having established this notable performance gap under controlled perturbations, we then introduce
+REPOMIRAGE-Extend to make repository context reasoning more explicitly measurable through
+new task formulations. Starting from the same perturbed instances, REPOMIRAGE-Extend converts
+each perturbation strategy into a corresponding task objective, including proxy-chain completion,
+runtime target identification, and missing-constant recovery. These three tasks are combined with
+the original issue-resolution task involving multi-file gold patches. Derived from our perturbation
+strategies, these new tasks correspond to the fundamental structural relations practically common
+within project-level problems. On the same underlying benchmark instances, average performance
+across eight frontier models drops from 66.8% under the original issue-resolution task to 25.3% under
+our perturbation-derived task formulations, further indicating that successfully resolving an instance
+in the original benchmark does not imply the ability to understand and reason across the context in
+the repository. More importantly, the consistently low completion rates on these explicit tasks suggest
+that current code agents are still limited in repository context reasoning.
+2
+
+To better understand this deficiency, we delve into the behavioral patterns in agent trajectories under
+perturbations. We notice that while agents spend a larger proportion of their actions searching and
+reading files, it fails to result in effective solving. Instead, agents become increasingly prone to remain
+exploring rather than making editing decisions. This points to a mechanistic bottleneck where current
+agents can access a broader repository context, but often fail to organize the multi-file information into
+a coherent structural scaffold for task completion, which is validated by the improved performance
+when structural hints are provided. We then implement this idea into REPOANCHOR, a prototype
+workflow that separates task-related structure exploration from downstream problem solving, by first
+constructing a summary of relevant repository context and then using it to guide subsequent actions.
+The resulting performance gains with REPOANCHOR suggest that explicit structure understanding is
+a promising direction for improving repository context reasoning in code agents.
+We summarize our main contributions as: ①Conceptually: We identify an evaluation gap between
+strong performance on repository-level issue-resolution benchmarks and genuine repository context
+reasoning, showing that benchmark success does not necessarily arise from multi-file understanding
+and cross-file reasoning. ②Technically: We utilize perturbation as a diagostic tool for capability
+probing and present REPOMIRAGE, a perturbation-based evaluation suite, to quantitatively measure
+this gap through two complementary settings, REPOMIRAGE-Perturb and REPOMIRAGE-Extend,
+revealing the deficiency in repository context reasoning for code agents. ③Mechanistically: We
+provide practical evidence that current agents suffer from exploration drift under higher repository-
+context demands, and show that structure-first scaffolding can substantially improve performance.
+2
+Preliminary
+In this section, we describe our experimental setup and present an initial analysis of the file access
+behavior on repository-level issue resolution.
+2.1
+Experimental Setup
+We study whether existing benchmarks on project-level problem solving can reliably reflect repository
+context reasoning in code agents. For controlled evaluation, we use SWE-Bench Verified as the seed
+benchmark, since it is a widely used human-validated benchmark built on real GitHub codebases
+for repository-level issue resolution in LLMs. We preserve the program semantics and executable
+functionality of each instance under perturbations using the provided test cases. All runs are conducted
+with mini-swe-agent [14] under the standard bash-only setting, a simple but effective framework
+used in the SWE-Bench [7] leaderboard, which enables standardized comparison while minimizing
+confounding differences in agent design. We record agent trajectories, especially shell-command
+actions, for later analysis. We evaluate eight advanced LLMs, mainly using GPT-5 [22] and DeepSeek-
+V3.2 [23] for analysis. More details are provided in Appendix A.2.
+2.2
+File Access Analysis in Repository-Level Issue Resolution
+Figure 2: Numbers of accessed files per instance
+resolved in SWE-bench Verified for GPT-5 (avg.
+2.15) and DeepSeek-V3.2 (avg. 3.97).
+While prior work shows that more than 80% of
+SWE-Bench Verified instances ultimately require
+edits to only a single file [24], and that advanced
+models can identify a buggy file path with up
+to 76% accuracy even without repository struc-
+ture [25], these findings are descriptive and not
+grounded in the execution during issue resolution.
+We hereby directly examine how many files are
+actually accessed in successfully resolved SWE-
+Bench Verified instances. As shown in Fig. 2, file
+access is highly localized among resolved cases.
+For GPT-5, 53.8% of resolved instances involve
+inspecting only one file, and 88.0% involve no more than three files, while for DeepSeek-V3.2, 55.7%
+of resolved instances still stay within three files. These results suggest that successful issue resolution
+is often achieved after accessing only a narrow portion of the repository. This raises the question
+of whether strong performance on existing repository-level benchmarks reliably reflects repository
+context reasoning in code agents, and, if not, how this capability can be measured more directly.
+3
+
+3
+Uncovering Performance Gap Under Repository-Level Perturbations
+To probe repository context reasoning in code agents from the success in end-to-end issue-resolution
+benchmarks, we need a controlled evaluation to selectively isolate this capability while preserving the
+semantics and functionality of the original task. Perturbations provide a natural tool for this purpose.
+They have been widely used in vision and language tasks to study whether models rely on robust
+representations or superficial patterns by changing how input information is presented [21, 26, 27].
+In this paper, we introduce REPOMIRAGE, a perturbation-based evaluation suite built on the issue-
+resolution benchmark, which uses targeted interventions to emphasize repository context reasoning
+while preserving the underlying codebase semantics and executable behavior of each instance.
+In this section, we begin with REPOMIRAGE-Perturb, which applies repository-level perturbation
+strategies to the original benchmark instances, and evaluate the performance of code agents on the
+same task of issue resolution, aiming to see whether there is a gap due to increasing context reasoning.
+3.1
+Repository-Level Perturbation Strategies
+To realize the controlled evaluation, our repository-level perturbations are designed to make task-
+relevant information in the context less locally accessible, while keeping the instance semantically
+and functionally equivalent to the original setting. Then, performance changes can be interpreted
+more directly as evidence of limited repository context reasoning in current code agents. As illustrated
+in Fig. 1, we hereby propose the following repository-level perturbation strategies:
+1. Dependency-path indirection. Import statements often expose cross-file relations directly,
+allowing agents to localize relevant files without much structural inference over the context. To
+weaken this cue, we replace direct imports in target files with multi-hop proxy paths. Each
+imported library is rerouted through a constructed four-layer proxy chain, so that the visible import
+no longer directly reveals the true dependency. As a result, understanding the role of a referenced
+component requires tracing the dependency path across multiple files.
+2. Runtime-target masking. File names and paths often make the patch target easy to localize given
+issue descriptions, offering agents easier textual relevance as a proxy for runtime relevance. To
+weaken this cue, we rename the original target file, create a same-named module directory at its
+previous location, and use __init__.py to re-export the renamed file. We also place nearby fake
+files that remain globally similar to the target but contain locally perturbed details. As a result,
+the agent must distinguish files that merely appear relevant from the file that is actually used at
+runtime, requiring more cross-file comparison and reasoning.
+3. Local-value externalization. Task-relevant values such as constant definitions are often placed
+directly near the code using them. This local availability allows the agent to understand or modify
+the target logic within a single file, without understanding how program behavior depends on
+information stored elsewhere. To weaken this cue, we move local constant values from target
+files into external JSON resources and modify the code to load them at runtime. As a result, the
+agent must connect the local program logic with the external resource file and recover the value
+relationship across files, rather than relying on values that are directly accessible in the target file.
+To preserve comparability with the original benchmark, we verify that all perturbed instances retain
+their original semantics and functionality under the corresponding validation scripts. Full construction
+details and validation procedures are provided in the Appendix A.4.
+3.2
+Code Agent Performance on REPOMIRAGE-Perturb
+We apply three designed perturbations on the instances from SWE-Bench Verified and construct the
+dataset of REPOMIRAGE-Perturb, on which we examine how code agents perform on the same task
+of issue resolution. We report both final resolved rates and the average numbers of accessed files.
+Tab. 1 compares model performance on the original SWE-BENCH VERIFIED instances and their
+REPOMIRAGE-perturbed counterparts under the same issue-resolution task. Across all eight evaluated
+models, resolved rates consistently decrease under perturbation, with the average resolved rate
+dropping from 66.80% to 49.78% and relative drops ranging from 15.96% for Claude-Sonnet-
+4.6 [30] to 52.6% for GPT-4.1 [28]. This indicates that the success in issue resolution is not
+stable against the repository-level perturbations. Meanwhile, the perturbations substantially increase
+4
+
+Table 1: Performance on REPOMIRAGE-Perturb. We compare model performance on the original
+SWE-Bench instances and their perturbed counterparts under the same issue task.
+Model
+Resolved %
+Avg. #Files
+SWE-Bench
+Perturb
+Drop
+SWE-Bench
+Perturb
+Ratio
+GPT-4.1 [28]
+38.40
+18.20
+-52.60%
+1.69
+7.10
+4.20×
+GPT-5 [22]
+65.00
+49.00
+-24.61%
+2.83
+7.04
+2.49×
+Gemini-3.1-Pro [29]
+70.60
+54.40
+-22.95%
+17.32
+24.94
+1.44×
+Claude-Sonnet-4.6 [30]
+75.20
+63.20
+-15.96%
+2.20
+6.76
+3.07×
+DeepSeek-V3.2 [23]
+70.00
+52.00
+-25.71%
+4.66
+14.32
+3.07×
+MiniMax-M2.7 [31]
+78.20
+65.40
+-16.37%
+2.24
+6.92
+3.09×
+Qwen3-Coder-Next [32]
+69.20
+42.60
+-38.44%
+4.66
+26.90
+5.77×
+Qwen3.6-35B-A3B [33]
+67.80
+53.40
+-21.24%
+2.52
+11.90
+4.72×
+the amount of repository context that agents must access, with the average number of accessed
+files rising from 4.77 to 13.24. This confirms that REPOMIRAGE-Perturb successfully expands the
+codebase context necessary to solve the issues, further amplifying the importance of repository context
+reasoning in the task. Altogether, these results suggest that, even under the same issue-resolution task,
+increasing the demand for repository context reasoning leads to substantially worse performance,
+confirming that the gap between issue-resolution success and this capability is significant.
+Figure 3: Ablation study of different repository
+perturbations across models.
+We further examine whether the performance
+drop is driven by a single perturbation type or
+by their combined effect. Fig. 3 reports an abla-
+tion over dependency-path indirection, runtime-
+target masking, and local-value externalization.
+Each perturbation alone reduces performance
+relative to the baseline, indicating that agents
+benefit from all three types of direct local cues
+in standard issue resolution. Applying all pertur-
+bations together further lowers the resolved rates
+below any single-perturbation setting, showing
+that the three perturbations target complemen-
+tary aspects of repository context reasoning.
+Overall, these results suggest that standard issue-
+resolution tasks do not reliably reflect repository
+context reasoning in code agents. This moti-
+vates a more explicit probe of this capability by
+deriving new task formulations from the same
+instances to isolate the evaluation objective.
+4
+Measuring Repository Context Reasoning Beyond Issue Resolution
+In this section, we move beyond issue resolution and introduce REPOMIRAGE-Extend, a dataset built
+from the same perturbed instances as REPOMIRAGE-Perturb, which are reformulated into new tasks
+derived from the perturbation strategies that explicitly probe the repository context reasoning.
+4.1
+Perturbation-Derived Task Design
+The performance degradation under perturbations in the original issue-resolution task suggests that
+the structural relations targeted by REPOMIRAGE-Perturb are key elements of repository context
+reasoning, which indeed correspond to recurring capabilities in practical software engineering, such
+as tracing dependency chains, identifying runtime-relevant files, collecting distributed definitions, and
+coordinating edits across multiple files. Based on this observation, we construct four task families
+in REPOMIRAGE-Extend, with one of them inherited from the original setting while the other three
+derived directly from the corresponding perturbation strategies by turning each targeted structural
+bottleneck into an explicit task objective, which are illustrated in Fig. 1 and introduced below:
+5
+
+1. Multi-File Issue Resolution. We notice that a part of the original benchmark already involves
+gold patches spanning multiple files. Such cases naturally require stronger coordination across
+editing locations and therefore place higher demands on repository context reasoning. We retain
+these instances and evaluate how agents perform on them under perturbations, asking whether
+they can still reason over the context and produce multi-file edits that pass the official test cases.
+2. Proxy Chain Completion. Dependency-path indirection weakens the direct visibility of cross-
+file dependency relations, so agents can no longer recover the true imported component from
+local import statements alone. This places greater demands on tracing dependency chains across
+files. To make this demand explicit, we construct a proxy-chain completion task by erasing
+one intermediate import in the perturbed chain. The agent must reconstruct the missing proxy
+implementation so that the target file resolves to the correct underlying dependency. A task
+is considered solved if the restored chain passes dependency-specific checks and recovers the
+expected imported objects.
+3. Runtime Target Identification. Runtime-target masking weakens the direct correspondence
+between file-level surface cues and the file that is actually executed at runtime. As a result,
+successful solving requires distinguishing merely plausible files from the true runtime-relevant
+target. Starting from a REPOMIRAGE-Perturb repository, we conceal the reference inside the
+synthetic module that re-exports the true target file. The agent must inspect the wrapper module,
+compare the candidate files, and reconstruct the mapping from the synthetic module to the actual
+runtime target. This task is considered solved if the agent identifies the correct runtime file
+specified by the perturbed wrapper structure.
+4. Missing-Constant Recovery. Local-value externalization moves task-relevant values from the
+target file into external resources, requiring the agent to recover value associations across files
+rather than from local context alone. To evaluate this ability more explicitly, we remove the keys
+of several key-value pairs in the external JSON files while keeping their values unchanged. The
+agent must inspect the target code, identify where the missing entries are used, infer the role of
+each key from the local program logic, and reconstruct the corresponding key-value mapping. A
+task is considered solved if the recovered keys match the original externalized definitions.
+Figure 4: Task distribution
+in REPOMIRAGE-Extend.
+Instead of converting each benchmark instance into all four tasks, we
+assign every original instance to exactly one task family according to
+the structural signal it most naturally instantiates. Instances with multi-
+file gold patches are retained for Multi-File Issue Resolution, while
+the remaining instances are distributed across the three perturbation-
+derived tasks in a structure-aware manner based on the most salient
+structural signal for each instance. The task distribution is controlled
+to be roughly balanced and the distribution is displayed in Fig. 4. Full
+partition details are provided in the Appendix A.5.
+4.2
+Code Agent Performance on REPOMIRAGE-Extend
+We evaluate code agents instantiated with different frontier models on the four tasks in REPOMIRAGE-
+Extend. Tab. 2 reports the success rates on each task. Overall, REPOMIRAGE-Extend substantially
+reduces agent performance across models and task types compared to the original task of issue
+resolution on the same instances. Averaged across the models, the success rate over all instances
+drops from 66.80% in the original settings to 25.25% on REPOMIRAGE-Extend, showing that the
+deficiency of current agents in recovering the repository context through in-depth reasoning. Moreover,
+performance in the original setting does not show an exact correspondence with performance on
+new tasks. For instance MiniMax-M2.7 performs strongly on the original tasks but drops sharply
+on REPOMIRAGE-Extend. This mismatch indicates that standard issue-resolution benchmarks do
+not fully capture repository context reasoning, and that REPOMIRAGE-Extend measures a distinct
+capability beyond producing a passing patch.
+The difficulty also differs across task categories. Proxy Chain Recovery is the most challenging on
+average, with mean success dropping to 17.19%, indicating that tracing dependency paths across
+files remains difficult even for strong agents. Multi-File Issue Resolution is similarly challenging
+(17.86%), reflecting the difficulty of coordinating realistic multi-file edits under weakened repository
+cues. Runtime Target Identification and Missing Constant Recovery show larger variation across
+6
+
+Table 2: Performance on REPOMIRAGE-Extend. Org. denotes performance on the original SWE-
+Bench Verified for the same instance subset, and Extend denotes performance on REPOMIRAGE-
+Extend. Bold marks the best result, and underlining marks the second-best result.
+Model
+Multi-File
+Proxy Chain
+Runtime Target
+Missing Constant
+Avg.
+Org.
+Extend
+Org.
+Extend
+Org.
+Extend
+Org.
+Extend
+GPT-4.1 [28]
+10.00
+2.86
+45.14
+4.17
+40.14
+3.52
+43.75
+2.78
+3.40
+GPT-5 [22]
+31.43
+25.71
+70.83
+11.11
+68.31
+35.92
+72.22
+36.80
+27.60
+Gemini-3.1-Pro [29]
+38.57
+14.29
+77.08
+22.22
+76.06
+43.66
+74.31
+71.53
+41.40
+Claude-Sonnet-4.6 [30]
+41.43
+15.71
+80.56
+36.81
+80.28
+30.28
+81.25
+23.61
+28.20
+DeepSeek-V3.2 [23]
+35.71
+20.00
+74.31
+11.80
+75.35
+59.86
+77.08
+57.64
+39.80
+MiniMax-M2.7 [31]
+45.71
+22.86
+81.25
+7.64
+86.62
+26.76
+81.94
+6.25
+14.80
+Qwen3-Coder-Next [32]
+44.29
+17.14
+72.92
+29.17
+75.35
+7.04
+71.53
+34.03
+22.60
+Qwen3.6-35B-A3B [33]
+31.43
+24.29
+80.56
+14.58
+72.41
+19.01
+68.00
+38.89
+24.20
+models, with average success rates of 28.26% and 33.94%, respectively, suggesting that runtime-
+target localization and cross-file value association are not uniformly reliable across current agents.
+Overall, these results show that standard issue-resolution benchmarks do not fully reflect repository
+context reasoning. When this capability is made more explicit through REPOMIRAGE-Extend rather
+than being left implicit in end-to-end patch solving, current frontier models still perform far from
+satisfaction, indicating that repository context reasoning remains a clear limitation of code agents.
+5
+Diagnosing and Mitigating Failures in Repository Context Reasoning
+In this section, we diagnose these failures through the lens of repository exploration. We first analyze
+agent trajectories in REPOMIRAGE to examine how behavior changes under perturbations. We then
+test whether structural hints improve performance. Motivated by this, we introduce REPOANCHOR, a
+prototype that prioritizes structure exploration as a potential mitigation.
+***️
+***️
+***️
+***️
+***️
+***️
+**️
+***️
+Figure 5: Behavior shifts under REPOMIRAGE-Extend. ∆measures the change from SWE-
+Bench Verified to REPOMIRAGE-Extend. Files Inspected counts distinct opened files; Explore Stage
+Proportion is the pre-edit step ratio; transition metrics report action-transition changes. ¯∆and ∆0.5
+denote the mean and median, respectively.
+5.1
+Behavioral Diagnosis under Stronger Context Demands
+To understand why agents fail under stronger repository context demands, we analyze their action
+trajectories, similar to previous work [34–36]. We group agent operations into {explore, edit, test} by
+the specific shell commands. For each trajectory, we define the transition probability from actions as
+pa→b =
+#(a →b)
+P
+s∈S #(a →s),
+a, b ∈{explore, edit, test}.
+We summarize the differences compared to original issue resolution in the number of files explored
+and the steps of exploration in trajectories, as well as the action transition probabilities, to examine
+the behavioral patterns demonstrated by different agents during execution. Due to space limit, we
+report the analysis on REPOMIRAGE-Extend in the main text.
+As shown in Fig. 5, the perturbations and new tasks from REPOMIRAGE consistently encourage
+agents toward broader context exploration. For both GPT-5 and DeepSeek-V3.2, the number of files
+7
+
+Normal Agent
+Two-Stage RepoAnchor
+More exploration, still poor outcome.
+Stage 1 Exploration and Understanding
+Task
+Description
+Structure
+Summary
+Search & Read
+Runtime Testing
+INSTRUCTIONS.md
+# 1. Localization
+The target files are ..
+# 2. Structure
+Structure description
+of the target directory
+# 3. Tips & Unclear
+points ...
+Stage 2 Problem Solving
+Read the
+Summary
+Task
+Description
+Quickly check to verify
+the summary
+Concentrate on the
+reasoning of editing
+Validate & Refine
+Begin to edit, without usable structural understanding.
+Figure 6: Pipeline of REPOANCHOR. A normal agent mixes its actions in one trajectory, failing to
+retrieve usable information. REPOANCHOR separates the process into structure understanding and
+problem solving, using an intermediate INSTRUCTIONS.md file to pass repository context forward.
+explored before editing increases significantly and the pre-edit exploration stage becomes longer,
+indicating that agents need to search and read more broadly before taking action. At the same
+time, the transition probability from exploration to exploration increases, while the transition from
+exploration to editing decreases. This means that the additional exploration does not effectively
+translate into concrete editing decisions and agents frequently remain in the exploration stage.
+Together, this phenomenon of exploration drift suggests that while stronger demands on repository
+context reasoning trigger broader repository access, code agents still struggle to convert the collected
+multi-file information into effective problem solving. As discussed in Appendix B.1, we observe
+the same trend on REPOMIRAGE-Perturb, and finer-grained task-level analyses further confirm the
+stability of this conclusion while also showing that different task families induce different types of
+behavioral shift.
+5.2
+Validating the Bottleneck with Structural Hints
+Table 3: Effect of structural hints. Providing repository-
+structure hints substantially improves performance on RE-
+POMIRAGE-Extend.
+Model
+Multi Proxy Runtime Const.
+Avg.
+GPT-5 [22]
+25.71 11.11
+35.92
+36.80
+27.60
++ Hints
+28.57 81.94
+60.56
+61.81
+62.60
+DeepSeek-V3.2 [23] 20.00 11.80
+59.86
+57.64
+39.80
++ Hints
+24.29 86.11
+84.51
+85.42
+76.80
+The trajectory patterns above sug-
+gest a possible explanation that al-
+though agents explore more files, they
+may still fail to organize them into
+a usable structural understanding for
+downstream solving. To test this, we
+conduct a simple structural-hint inter-
+vention. Instead of requiring the agent
+to infer the perturbed repository struc-
+ture entirely from interaction, we pro-
+vide a compact summary describing the perturbation mechanism, the roles of the perturbed files, and
+the key structural relations needed for solving the task. These hints approximate the ideal outcome of
+repository exploration by directly supplying a structured view of the repository. As shown in Tab. 3,
+this intervention substantially improves performance, especially on the perturbation-derived tasks.
+This supports our interpretation that the main bottleneck is the failure to transform observed files into
+an actionable structural guidance. Full details of structural hints are provided in the Appendix A.7.
+5.3
+REPOANCHOR: Anchoring Code Agents by Prioritizing Repository Exploration
+Motivated by the validation above, we introduce REPOANCHOR, a initial mitigation method that
+separates structure exploration from downstream code construction. As shown in Fig. 6, instead of
+interleaving search, reading, editing, and testing within a single trajectory, REPOANCHOR organizes
+the process into two stages. In the first stage, the agent is instructed to examine the codebase and
+write a structured summary into an intermediate Markdown file. This summary is expected to record
+the extracted repository context, including potential editing locations, runtime relations, relevant
+files, and other salient cross-file dependencies. In the second stage, the agent takes this Markdown
+summary together with the task description, and then focuses on implementation, editing, and patch
+generation. With this interface to transfer repository understanding between stages, REPOANCHOR
+anchors downstream editing on a coherent structural view rather than on fragmented observations.
+8
+
+Figure 7: Performance gains from REPOANCHOR. Resolved rates of four representative models
+before and after applying REPOANCHOR. The consistent gains across task types and models show
+that structure-first repository understanding can improve downstream task solving.
+Fig. 7 shows that REPOANCHOR consistently improves performance across four evaluated models
+on all tasks in REPOMIRAGE-Extend, indicating that structure exploration provides a generally
+useful scaffold rather than benefiting only a specific model. Notably, the gains on Multi-File Issue
+Resolution are greater than those given the hints, rendering the informativeness of the structure
+summary. This suggests that explicit structure anchoring is a promising direction for improving code
+agents under complex repository settings demanding context reasoning.
+6
+Related Work
+6.1
+Code Agent Benchmarks
+Code evaluation has progressed from localized coding to repository-level software engineering. Early
+benchmarks target function-level completion [2, 37, 38] and single-file program generation [3, 4,
+39], while later work expands to class-level [1], data-science [40], and execution reasoning [41].
+Recent benchmarks further evaluate repository-level tasks [8, 42], cross-file reasoning [43], and real-
+repository settings [6]. SWE-bench [7, 17] requires agents to fix real issues, and later benchmarks
+extend this line with fresher tasks [18], broader ecosystems [5, 44], and harder engineering [15,
+16]. Despite these advances, existing benchmarks still primarily measure end-to-end success, so
+REPOMIRAGE weakens superficial cues to make repository context itself the object of evaluation.
+6.2
+Evaluation with Perturbations
+Perturbation-based evaluation tests model reliability under input changes [45], with early robustness
+studies showing neural models’ sensitivity to transformed inputs [46, 47]. In NLP, such benchmarks
+reveal brittle heuristics behind high accuracy [21, 48, 49]. Similar ideas have been applied to code
+generation. Prompt variations can change coding performance [50], while code transformations such
+as variable renaming [51] test reliance on surface code patterns rather than program logic [52–54].
+Recent work further studies code reasoning [55] and codebase-level understanding [56, 57] under
+altered inputs. Different from the study concerning robustness, we take perturbation as a diagnostic
+tool to probe the certain capability of repository context reasoning.
+7
+Conclusion
+In this paper, we aim to probe repository context reasoning in code agents from existing end-to-
+end benchmarks like SWE-Agent Verified. Using perturbation as a diagnostic tool, we introduce
+REPOMIRAGE, a perturbation-based evaluation containing two stages. First, we develop REPOMI-
+RAGE-Perturb by applying three perturbation strategies to change how task-relevant information is
+exposed in the context and find that frontier agents degrade substantially on issue resolution with
+perturbed repository context. Based on it, we turn these perturbation-targeted bottlenecks into explicit
+tasks and construct REPOMIRAGE-Extend, where the significant lower performance renders the
+deficiency in this capability. Our trajectory analysis further suggests that agents often fail to organize
+evidences into actionable structural understanding, which motivates REPOANCHOR, a structure-first
+scaffolding workflow, to improve the performance and provide a potential solution.
+9
+
+References
+[1] Xueying Du, Mingwei Liu, Kaixin Wang, Hanlin Wang, Junwei Liu, Yixuan Chen, Jiayi Feng,
+Chaofeng Sha, Xin Peng, and Yiling Lou. Evaluating large language models in class-level
+code generation. In Proceedings of the IEEE/ACM 46th International Conference on Software
+Engineering, pages 1–13, 2024.
+[2] Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique Ponde de Oliveira Pinto, Jared
+Kaplan, Harri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, Alex Ray, Raul Puri,
+Gretchen Krueger, Michael Petrov, et al. Evaluating large language models trained on code.
+arXiv preprint arXiv:2107.03374, 2021.
+[3] Naman Jain, King Han, Alex Gu, Wen-Ding Li, Fanjia Yan, Tianjun Zhang, Sida Wang, Ar-
+mando Solar-Lezama, Koushik Sen, and Ion Stoica. Livecodebench: Holistic and contamination
+free evaluation of large language models for code. arXiv preprint arXiv:2403.07974, 2024.
+[4] Dan Hendrycks, Steven Basart, Saurav Kadavath, Mantas Mazeika, Akul Arora, Ethan Guo,
+Collin Burns, Samir Puranik, Horace He, Dawn Song, and Jacob Steinhardt. Measuring coding
+challenge competence with apps. NeurIPS, 2021.
+[5] Daoguang Zan, Zhirong Huang, Wei Liu, Hanwu Chen, Linhao Zhang, Shulin Xin, Lu Chen,
+Qi Liu, Xiaojian Zhong, Aoyan Li, et al. Multi-swe-bench: A multilingual benchmark for issue
+resolving, 2025. arxiv preprint arXiv:2504.02605, 2025.
+[6] Qinyun Wu, Chao Peng, Pengfei Gao, Ruida Hu, Haoyu Gan, Bo Jiang, Jinhe Tang, Zhiwen
+Deng, Zhanming Guan, Cuiyun Gao, et al. Repomastereval: Evaluating code completion
+via real-world repositories. In 2025 40th IEEE/ACM International Conference on Automated
+Software Engineering (ASE), pages 3672–3683. IEEE, 2025.
+[7] Carlos E Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and
+Karthik R Narasimhan. SWE-bench: Can language models resolve real-world github issues? In
+The Twelfth International Conference on Learning Representations, 2024.
+[8] Tianyang Liu, Canwen Xu, and Julian McAuley. Repobench: Benchmarking repository-
+level code auto-completion systems. In The Twelfth International Conference on Learning
+Representations, 2023.
+[9] Ahmed Fawzy, Amjed Tahir, and Kelly Blincoe. Vibe coding in practice: Motivations, chal-
+lenges, and a future outlook – a grey literature review. arXiv preprint arXiv:2510.00328,
+2025.
+[10] HanXiang Xu, ShenAo Wang, Ningke Li, Kailong Wang, Yanjie Zhao, Kai Chen, Ting Yu,
+Yang Liu, and HaoYu Wang. Large language models for cyber security: A systematic literature
+review. ACM Transactions on Software Engineering and Methodology, 2024.
+[11] Kevin Zheyuan Cui, Mert Demirer, Sonia Jaffe, Leon Musolff, Sida Peng, and Tobias Salz.
+The effects of generative ai on high-skilled work: Evidence from three field experiments with
+software developers. Management Science, 2026.
+[12] Yuntong Zhang, Haifeng Ruan, Zhiyu Fan, and Abhik Roychoudhury. Autocoderover: Au-
+tonomous program improvement. In Proceedings of the 33rd ACM SIGSOFT International
+Symposium on Software Testing and Analysis, pages 1592–1604, 2024.
+[13] Chunqiu Steven Xia, Yinlin Deng, Soren Dunn, and Lingming Zhang. Agentless: Demystifying
+llm-based software engineering agents. arXiv preprint arXiv:2407.01489, 2024.
+[14] John Yang, Carlos E Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik
+Narasimhan, and Ofir Press. Swe-agent: Agent-computer interfaces enable automated software
+engineering. Advances in Neural Information Processing Systems, 37:50528–50652, 2024.
+[15] Muhammad Shihab Rashid, Christian Bock, Yuan Zhuang, Alexander Buchholz, Tim Esler,
+Simon Valentin, Luca Franceschi, Martin Wistuba, Prabhu Teja Sivaprasad, Woo Jung Kim,
+et al. Swe-polybench: A multi-language benchmark for repository level evaluation of coding
+agents. arXiv preprint arXiv:2504.08703, 2025.
+10
+
+[16] Xiang Deng, Jeff Da, Edwin Pan, Yannis Yiming He, Charles Ide, Kanak Garg, Niklas Lauffer,
+Andrew Park, Nitin Pasari, Chetan Rane, et al. Swe-bench pro: Can ai agents solve long-horizon
+software engineering tasks? arXiv preprint arXiv:2509.16941, 2025.
+[17] Neil Chowdhury, James Aung, Chan Jun Shern, Oliver Jaffe, Dane Sherburn, Giulio Starace,
+Evan Mays, Rachel Dias, Marwan Aljubeh, Mia Glaese, Carlos E. Jimenez, John Yang, Leyton
+Ho, Tejal Patwardhan, Kevin Liu, and Aleksander Madry. Introducing SWE-bench verified,
+2024. URL https://openai.com/index/introducing-swe-bench-verified/.
+[18] Linghao Zhang, Shilin He, Chaoyun Zhang, Yu Kang, Bowen Li, Chengxing Xie, Junhao Wang,
+Maoquan Wang, Yufan Huang, Shengyu Fu, Elsie Nallipogu, Qingwei Lin, Yingnong Dang, Sar-
+avan Rajmohan, and Dongmei Zhang. Swe-bench goes live! arXiv preprint arXiv:2505.23419,
+2025.
+[19] John Yang, Kilian Lieret, Carlos E Jimenez, Alexander Wettig, Kabir Khandpur, Yanzhe Zhang,
+Binyuan Hui, Ofir Press, Ludwig Schmidt, and Diyi Yang. Swe-smith: Scaling data for software
+engineering agents. arXiv preprint arXiv:2504.21798, 2025.
+[20] Yinpeng Dong, Fangzhou Liao, Tianyu Pang, Hang Su, Jun Zhu, Xiaolin Hu, and Jianguo
+Li. Boosting adversarial attacks with momentum. In Proceedings of the IEEE conference on
+computer vision and pattern recognition, pages 9185–9193, 2018.
+[21] R Thomas McCoy, Ellie Pavlick, and Tal Linzen. Right for the wrong reasons: Diagnosing
+syntactic heuristics in natural language inference. In Proceedings of the 57th annual meeting of
+the association for computational linguistics, pages 3428–3448, 2019.
+[22] Aaditya Singh, Adam Fry, Adam Perelman, Adam Tart, Adi Ganesh, Ahmed El-Kishky, Aidan
+McLaughlin, Aiden Low, AJ Ostrow, Akhila Ananthram, et al. Openai gpt-5 system card. arXiv
+preprint arXiv:2601.03267, 2025.
+[23] Aixin Liu, Aoxue Mei, Bangcai Lin, Bing Xue, Bingxuan Wang, Bingzheng Xu, Bochao Wu,
+Bowei Zhang, Chaofan Lin, Chen Dong, et al. Deepseek-v3. 2: Pushing the frontier of open
+large language models. arXiv preprint arXiv:2512.02556, 2025.
+[24] Mahir Labib Dihan, Faria Binta Awal, and Md Ishrak Ahsan. Patchrecall: Patch-driven retrieval
+for automated program repair. arXiv preprint arXiv:2604.10481, 2026.
+[25] Shanchao Liang, Spandan Garg, and Roshanak Zilouchian Moghaddam. The swe-bench illusion:
+When state-of-the-art llms remember instead of reason. arXiv preprint arXiv:2506.12286, 2025.
+[26] Andrew Ilyas, Shibani Santurkar, Dimitris Tsipras, Logan Engstrom, Brandon Tran, and
+Aleksander Madry. Adversarial examples are not bugs, they are features. Advances in neural
+information processing systems, 32, 2019.
+[27] Marco Tulio Ribeiro, Tongshuang Wu, Carlos Guestrin, and Sameer Singh. Beyond accuracy:
+Behavioral testing of nlp models with checklist. In Proceedings of the 58th annual meeting of
+the association for computational linguistics, pages 4902–4912, 2020.
+[28] OpenAI. Introducing GPT-4.1 in the api, April 2025. URL https://openai.com/index/
+gpt-4-1/.
+[29] Google. Gemini-3.1-Pro model card, February 2025. URL https://deepmind.google/
+models/model-cards/gemini-3-1-pro/.
+[30] Anthropic. Claude system card, 2026. URL https://www.anthropic.com/system-cards.
+[31] Google. MiniMax-M2.7 model card, March 2026. URL https://www.minimax.io/models/
+text/m27.
+[32] Qwen Team.
+Qwen3-coder-next technical report.
+Technical report,
+February
+2026.
+URL https://github.com/QwenLM/Qwen3-Coder/blob/main/qwen3_coder_
+next_tech_report.pdf.
+[33] Qwen Team. Qwen3.6-35B-A3B: Agentic coding power, now open to all, April 2026. URL
+https://qwen.ai/blog?id=qwen3.6-35b-a3b.
+11
+
+[34] Islem Bouzenia and Michael Pradel. Understanding software engineering agents: A study of
+thought-action-result trajectories. arXiv preprint arXiv:2506.18824, 2025.
+[35] Ira Ceka, Saurabh Pujar, Shyam Ramji, Luca Buratti, Gail Kaiser, and Baishakhi Ray. Under-
+standing software engineering agents through the lens of traceability: An empirical study. arXiv
+preprint arXiv:2506.08311, 2025.
+[36] Myeongsoo Kim, Dingmin Wang, Siwei Cui, Farima Farmahinifarahani, Shweta Garg,
+Baishakhi Ray, Terry Yue Zhuo, Rajdeep Mukherjee, and Varun Kumar. Trajeval: Decomposing
+code agent trajectories for fine-grained diagnosis. arXiv preprint arXiv:2603.24631, 2026.
+[37] Jacob Austin, Augustus Odena, Maxwell Nye, Maarten Bosma, Henryk Michalewski, David
+Dohan, Ellen Jiang, Carrie Cai, Michael Terry, Quoc Le, et al. Program synthesis with large
+language models. arXiv preprint arXiv:2108.07732, 2021.
+[38] Jiawei Liu, Chunqiu Steven Xia, Yuyao Wang, and Lingming Zhang. Is your code generated
+by chatgpt really correct? rigorous evaluation of large language models for code generation.
+Advances in neural information processing systems, 36:21558–21572, 2023.
+[39] Yujia Li, David Choi, Junyoung Chung, Nate Kushman, Julian Schrittwieser, Rémi Leblond,
+Tom Eccles, James Keeling, Felix Gimeno, Agustin Dal Lago, et al. Competition-level code
+generation with alphacode. Science, 378(6624):1092–1097, 2022.
+[40] Yuhang Lai, Chengxi Li, Yiming Wang, Tianyi Zhang, Ruiqi Zhong, Luke Zettlemoyer, Wen-
+tau Yih, Daniel Fried, Sida Wang, and Tao Yu. Ds-1000: A natural and reliable benchmark
+for data science code generation. In International Conference on Machine Learning, pages
+18319–18345. PMLR, 2023.
+[41] Alex Gu, Baptiste Rozière, Hugh Leather, Armando Solar-Lezama, Gabriel Synnaeve, and
+Sida I Wang. Cruxeval: A benchmark for code reasoning, understanding and execution. arXiv
+preprint arXiv:2401.03065, 2024.
+[42] Fengji Zhang, Bei Chen, Yue Zhang, Jin Liu, Daoguang Zan, Yi Mao, Jian-Guang Lou, and
+Weizhu Chen. Repocoder: Repository-level code completion through iterative retrieval and
+generation. arXiv preprint arXiv:2303.12570, 2023.
+[43] Yangruibo Ding, Zijian Wang, Wasi Ahmad, Hantian Ding, Ming Tan, Nihal Jain, Murali Kr-
+ishna Ramanathan, Ramesh Nallapati, Parminder Bhatia, Dan Roth, et al. Crosscodeeval:
+A diverse and multilingual benchmark for cross-file code completion. Advances in Neural
+Information Processing Systems, 36:46701–46723, 2023.
+[44] Lilin Wang, Lucas Ramalho, Alan Celestino, Phuc Anthony Pham, Yu Liu, Umang Kumar
+Sinha, Andres Portillo, Onassis Osunwa, and Gabriel Maduekwe. Swe-bench++: A framework
+for the scalable generation of software engineering benchmarks from open-source repositories.
+arXiv preprint arXiv:2512.17419, 2025.
+[45] Rohan Taori, Achal Dave, Vaishaal Shankar, Nicholas Carlini, Benjamin Recht, and Ludwig
+Schmidt. Measuring robustness to natural distribution shifts in image classification. Advances
+in Neural Information Processing Systems, 33:18583–18599, 2020.
+[46] Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfel-
+low, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199,
+2013.
+[47] Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversar-
+ial examples. arXiv preprint arXiv:1412.6572, 2014.
+[48] Marco Tulio Ribeiro, Tongshuang Wu, Carlos Guestrin, and Sameer Singh. Beyond accuracy:
+Behavioral testing of nlp models with checklist. In Proceedings of the 58th annual meeting of
+the association for computational linguistics, pages 4902–4912, 2020.
+[49] Matt Gardner, Yoav Artzi, Victoria Basmov, Jonathan Berant, Ben Bogin, Sihao Chen, Pradeep
+Dasigi, Dheeru Dua, Yanai Elazar, Ananth Gottumukkala, et al. Evaluating models’ local deci-
+sion boundaries via contrast sets. In Findings of the Association for Computational Linguistics:
+EMNLP 2020, pages 1307–1323, 2020.
+12
+
+[50] Shiqi Wang, Zheng Li, Haifeng Qian, Chenghao Yang, Zijian Wang, Mingyue Shang, Varun
+Kumar, Samson Tan, Baishakhi Ray, Parminder Bhatia, et al. Recode: Robustness evaluation
+of code generation models. In Proceedings of the 61st Annual Meeting of the Association for
+Computational Linguistics (Volume 1: Long Papers), pages 13818–13843, 2023.
+[51] Jin Wen, Qiang Hu, Yuejun Guo, Maxime Cordy, and Yves Le Traon. Variable renaming-based
+adversarial test generation for code model: Benchmark and enhancement. ACM Transactions
+on Software Engineering and Methodology, 35(1):1–28, 2025.
+[52] Zongjie Li, Chaozheng Wang, Zhibo Liu, Haoxuan Wang, Dong Chen, Shuai Wang, and
+Cuiyun Gao. Cctest: Testing and repairing code completion systems. In 2023 IEEE/ACM 45th
+International Conference on Software Engineering (ICSE), pages 1238–1250. IEEE, 2023.
+[53] CheolWon Na, YunSeok Choi, and Jee-Hyong Lee. Dip: Dead code insertion based black-box
+attack for programming language model. In Proceedings of the 61st Annual Meeting of the
+Association for Computational Linguistics (Volume 1: Long Papers), pages 7777–7791, 2023.
+[54] Pedro Orvalho and Marta Kwiatkowska. Are large language models robust in understanding
+code against semantics-preserving mutations? arXiv preprint arXiv:2505.10443, 2025.
+[55] Nickil Maveli, Antonio Vergari, and Shay B Cohen. What can large language models capture
+about code functional equivalence? In Findings of the Association for Computational Linguistics:
+NAACL 2025, pages 6865–6903, 2025.
+[56] Man Ho Lam, Chaozheng Wang, Jen-tse Huang, and Michael R. Lyu. Codecrash: Stress testing
+llm reasoning under structural and semantic perturbations. arXiv preprint arXiv:2504.14119,
+2025.
+[57] Hyunji Lee, Minseon Kim, Chinmay Singh, Matheus Pereira, Atharv Sonwane, Isadora White,
+Elias Stengel-Eskin, Mohit Bansal, Zhengyan Shi, Alessandro Sordoni, et al. Gistify! codebase-
+level understanding via runtime execution. arXiv preprint arXiv:2510.26790, 2025.
+[58] Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu,
+Joseph E. Gonzalez, Hao Zhang, and Ion Stoica. Efficient memory management for large lan-
+guage model serving with pagedattention. In Proceedings of the ACM SIGOPS 29th Symposium
+on Operating Systems Principles, 2023.
+13
+
+A
+Experimental Details
+A.1
+Compute Resources
+All experiments were executed in Docker-based SWE-Bench repository environments on Ubuntu
+20.04.6 LTS servers. The main execution server was equipped with two AMD EPYC 7542 32-core
+processors, approximately 1 TiB RAM, and 6.8 TB storage, using Docker 27.1.1. Most proprietary
+models were accessed through their commercial APIs, so no local GPU inference was required for
+these models. For open-weight models, Qwen3-Coder-Next and Qwen3.6-35B-A3B were deployed
+locally using vLLM [58] on four NVIDIA A800-SXM4-80GB GPUs.
+A.2
+Agent Framework and Execution Protocol
+To ensure fair comparison across models, we use the same agent framework and execution protocol
+for all experiments. Each evaluated model is instantiated as the backbone of mini-swe-agent [14]
+and runs under the standard bash-only setting. The agent interacts with the repository through shell
+commands. We keep the agent framework, prompt format, execution environment, and stopping
+criteria fixed across all models and task settings. The only varying component is the backbone
+language model.
+For each instance, the agent is initialized in the corresponding repository environment using docker
+images. The input includes the task instruction and the current repository state. The agent proceeds
+until it submits a final answer, reaches the maximum step budget of 250, which is the same as
+the standard bash-only setting. Unless otherwise specified, we use default temperature, top-p, and
+maximum generation length.
+A.3
+Models
+We evaluate eight frontier language models as agent backbones: GPT-4.1, GPT-5, DeepSeek-V3.2,
+Gemini-3.1-Pro, Claude-Sonnet-4.6, MiniMax-M2.7, Qwen3-Coder-Next, and Qwen3.6-35B-A3B.
+These models are selected to cover major model families from different providers, including both
+proprietary and open-weight systems. For each family, we choose either the latest available model
+or a widely used stable version at the time of our experiments. This selection is intended to provide
+broad and representative coverage of current code-agent backbones, rather than focusing on a single
+model provider or model type.
+A.4
+Perturbation Construction and Functionality Preservation
+We implement repository perturbations mainly with LibCST. Instead of relying on unstable regular-
+expression rewriting, we transform source files use the syntax-tree. This allows us to preserve the
+original code structure more reliably and to ensure that the extracted dependency paths, externalized
+values and other expected structures follow our intended perturbation design. We validate each
+perturbed instance from two perspectives, functionality preservation and solvability. For functionality
+preservation, after applying REPOMIRAGE-Perturb to the original repository, we run the official
+SWE-Bench PASS_TO_PASS test scripts to ensure that existing correct behaviors are not broken by
+our transformations. For solvability, we first apply the gold patch to the original repository, then apply
+the same perturbations, and finally run the official FAIL_TO_PASS test scripts. This verifies that the
+perturbed instance remains solvable under the gold solution and that the original task are preserved.
+For Dependency-path indirection, we only construct proxy chains for absolute imports whose
+targets are independent of the repository-internal file layout. For example, modules such as json
+and re can be safely rerouted because they do not depend on relative paths inside the benchmark
+repository. This avoids introducing ambiguity or import errors caused by fragile relative-import
+semantics. For each imported module, the generated proxy-chain path is uniquely determined, so the
+dependency routing is deterministic and reproducible.
+For Runtime-target masking, we rename the original target file and create a package-level wrapper
+using the original target-file name. This preserves the original import path, so other modules in the
+repository can still reference the target through the same package name after perturbation. It also
+keeps the task partially solvability for issues that can only be traced through the package name. An
+agent may still locate the wrapper, but must further inspect its loading logic to identify the actual
+14
+
+runtime implementation file. Instead of relying on direct relative imports, the wrapper dynamically
+loads the renamed implementation file from its explicit file path while preserving the intended package
+name. This avoids edge cases and ensures that the runtime binding remains consistent after the
+perturbation. Meanwhile, the generated fake files are placed near the real runtime file, but they are
+never imported or executed by the program. They therefore do not affect repository functionality.
+For Local-value externalization, we extract only local constant values from the target file. When
+more than three constants are extracted, we group every three values into one external JSON file,
+increasing the number of cross-file dependencies. The target file reads all related JSON files, merges
+them into a single dictionary, and replaces the original values with corresponding dictionary-key
+references. This transformation preserves the logic while moving value definitions outside the file.
+Overall, the three perturbations mainly modify files around the target file and the relations between
+the target file and external resources. They only introduce little change to the internal control flow
+and semantic logic of the original code. This design allows REPOMIRAGE to focus on repository
+context reasoning, rather than evaluating robustness to code obfuscation.
+A.5
+Task Construction and Validation
+For REPOMIRAGE-Extend, we also construct tasks under two perspectives, solvability and verifi-
+ability. A valid task should have at least one feasible solution, and the submitted solution should
+be automatically checkable by deterministic scripts. All REPOMIRAGE tasks are built on top of
+REPOMIRAGE-Perturb instances. That is, each task is constructed in a repository where all three
+perturbations have already been applied. Agents still interact with the repository through the standard
+mini-swe-agent command-line interface.
+Before creating each derived task, we first run the corresponding checker on REPOMIRAGE-Perturb
+repository before erasing proxy files, modifying wrappers, or removing dependency keys. The
+checker must pass at this stage, which ensures that the task has at least one known feasible solution.
+During evaluation, the task prompt specifies the exact set of files that the agent is allowed to modify.
+The checker also verifies that no irrelevant files are changed, preventing agents from bypassing the
+intended task objective through unrelated edits.
+For Proxy Chain Completion, we erase proxy files located in the middle of dependency-routing
+paths. The erased proxy files are selected so that their upstream and downstream nodes remain intact,
+allowing the missing forwarding logic to be inferred from surrounding files. We also select erased
+proxy files from different module-routing paths to avoid reducing the task to repeated copying. Ideally,
+the agent should first locate the erased proxy files, trace which lower-level proxy files import them,
+follow the chain to the runtime target file, infer which real module each chain is intended to expose,
+and then restore the erased forwarding files accordingly. For validation, the agent is only allowed to
+modify the erased proxy files. After applying the agent patch, the checker imports the dependency
+aliases exposed from the target file and compares the resolved modules with the expected original
+modules. In this way, we evaluate whether the dependency path has been functionally restored,
+without requiring the agent to reproduce the exact original proxy implementation.
+For Runtime Target Identification, the task is constructed by removing the wrapper reference to the
+real runtime file. The main challenge is to distinguish the actual implementation file from nearby
+fake files. These fake files are generated through small but behaviorally meaningful changes, such
+as boolean-condition reversal, shuffled import aliases, or mismatched dependency-key usage. Such
+files remain superficially similar to the real target file, but can be distinguished by reasoning about
+repository context and by designing targeted runtime probes. Ideally, the agent should identify the
+wrapper, collect the candidate implementation files, understand their roles in the local directory, and
+determine which file should be loaded by the wrapper. For validation, the agent is only allowed to
+modify the wrapper __init__.py. The checker then verifies whether the wrapper correctly resolves
+to the real runtime implementation file.
+For Missing Constant Recovery, we erase selected keys in external dependency JSON files while
+keeping their values unchanged. Ideally, the agent should first locate the JSON files with missing
+keys, inspect the target file that loads and merges these JSON resources, identify where the missing
+keys are referenced, and infer the role of each missing value from the surrounding code context, such
+as loop control, index offsets, or special arithmetic constants. The agent then matches the erased
+keys with the remaining values. For validation, the agent is only allowed to modify the JSON files
+15
+
+containing erased keys. The checker loads all related JSON files and merges them into a dictionary
+following the same logic as the target file, then verifies whether the reconstructed key-value relations
+are correct. This task does not require a unique file-level assignment: if equivalent values appear in
+different JSON files and are merged into the same final dictionary, the agent only needs to recover the
+correct key-value mapping after merging.
+For Multi-File Issue Resolution, the tasks are selected from SWE-Bench Verified instances whose
+gold patches modify multiple files. Since these tasks are still issue-resolution tasks on perturbed
+SWE-Bench repositories, their solvability and validation follow the original SWE-Bench protocol.
+The agent must submit a patch that passes the official evaluation tests.
+Overall, REPOMIRAGE-Extend converts the structural bottlenecks introduced by REPOMIRAGE-
+Perturb into solvable and automatically verifiable tasks. These tasks can be generated through
+rule-based procedures and checked with deterministic scripts. By making the perturbed repository
+relations explicit task objectives, REPOMIRAGE-Extend amplifies the evaluation signal for repository
+context reasoning.
+A.6
+File Access and Trajectory Metrics
+We record the full shell-command trajectory generated by mini-swe-agent for each run. To analyze
+agent behavior, we first classify each command into four operation types: edit, test, search, and
+read. The classification is implemented by a rule-based matcher over shell commands. Editing
+commands include patch application, in-place rewriting, file creation, file deletion, and script-based
+file writes. Testing commands include unit-test execution, task-specific checkers, compilation checks,
+and runtime validation commands. Search commands include repository-level locating operations
+such as rg, grep, find, ls, and directory traversal. Read commands include commands that inspect
+file contents or metadata, such as cat, sed -n, head, tail, and script-based file reads.
+For transition analysis, we merge search and read into a single explore state, because both correspond
+to gathering repository information before or during problem solving. This produces a three-state
+trajectory and we compute the transition probability use the formula in Section 5.1. We compute
+transition matrices for each trajectory and aggregate them across instances for each model and task
+setting. When comparing two settings, we report the difference in transition probabilities, denoted as
+∆pa→b.
+We also compute file-access statistics from the same trajectories. A repository file is counted as
+accessed only when its contents are explicitly exposed to the agent, mainly through read commands
+or content-producing search commands. We normalize file paths and deduplicate repeated accesses
+to the same file within one trajectory. Directory listing commands, such as ls and find, are treated
+as exploration actions, but files merely listed by these commands are not counted as accessed unless
+their contents are later inspected. Temporary files, generated logs, patch files, virtual-environment
+files, and version-control metadata are excluded from the file-access count. Finally, we measure the
+exploration stage before editing. The exploration-stage length is defined as the share of steps before
+the first edit operation. These metrics indicate whether agents can convert repository exploration into
+concrete editing decisions, or instead remain in repeated exploration under stronger repository-context
+demands.
+A.7
+Structural Hint Prompts
+To diagnose whether agents fail because they cannot access repository information or because they
+cannot organize it into a useful structural understanding, we additionally evaluate a hint-based setting.
+In this setting, we prepend a structural hint prompt to the original task instruction. The hint describes
+the general perturbation mechanisms used in REPOMIRAGE-Perturb, including renamed runtime
+files, decoy files, proxy import chains, external dependency JSON files, and wrapper folders. An
+example prompt is shown in Fig. 8.
+The structural hints do not reveal the concrete solution of an instance. They do not specify which file
+should be edited, which proxy file should be restored, which candidate file is the real runtime target,
+or which missing key should be filled. Instead, they only describe the repository-level structural facts
+that are shared across perturbed instances. Therefore, the agent still needs to inspect the repository,
+trace file relations, and produce the final solution by itself.
+16
+
+# Structural Hint Prompt
+The task is {Original Problem Statement}.
+# Repository Structure
+The repository you are working on has been intentionally perturbed. Before solving the task, you
+should understand the following structural facts.
+1. Renamed Files: Some files that contain the real runtime logic are renamed, we call them "real
+runtime files" below.
+2. Decoy Files: For each renamed real file, here are also distracting files. These files are decoy only,
+may be very similar to the real file. 
+3. Proxy Files: Files whose names start with `proxy_` are proxy import files. Together, they form a
+four-layer import graph. The real runtime files do not directly import the final Python library; instead,
+it reaches that library through this proxy chain.
+4. JSON Files: Files whose names start with `dependency_` are external dependency files. Some
+constants originally belonging to the real runtime files have been extracted into these dependency
+files, and the real runtime files reads those values from them.
+5. Wrapper Folder: The real runtime files are not directly imported by the rest of the repository
+under its own filename. Instead, at the same directory level, there is a folder whose name is the
+original runtime name of that code unit. Inside that folder, an `__init__.py` file re-exports or imports
+the original file. In other words, the repository wraps some files inside a package layer, so the
+effective runtime entry is the package name, not the raw file name itself. When tracing usage, you
+should keep in mind that other files may import the package, which then forwards to the original file.
+Figure 8: Prompt for repository structural hints.
+We use the same hint template for all models under the corresponding task setting. The only instance-
+specific part is the original problem statement, which is inserted into the prompt. This design makes
+the hint experiment a controlled diagnostic intervention. It approximates the structural understanding
+that an ideal exploration process should recover, while keeping the downstream reasoning and editing
+process unchanged.
+A.8
+REPOANCHOR Prompts
+RepoAnchor uses a two-stage prompting strategy to separate repository-structure exploration from
+downstream task solving. In the first stage, the agent works for repository localization and structure-
+understanding. As shown in Fig. 9, this agent is explicitly instructed not to complete the task or edit
+source code. Instead, it must identify the task-relevant directory, explore the local file structure, infer
+file roles and dependency relations, and write the resulting structural summary into INSTRUCTION.md.
+The exploration prompt emphasizes runtime evidence rather than surface-level cues. The agent
+is encouraged to inspect files, trace import or loading relations, and use lightweight validation
+commands when necessary. The generated INSTRUCTION.md follows a fixed structure, including the
+files inspected, their roles, relationships between files, runtime evidence, and remaining uncertainties.
+This intermediate document serves as the structural anchor passed to the second-stage agent.
+In the second stage, the agent also uses an additional guide to read and utilize the generated
+INSTRUCTION.md, as shown in Fig. 10. The prompt reminds the agent that the summary contains
+the localized target directory, relevant files, and structural relations produced by the exploration-stage
+agent. It also allows the agent to verify uncertain points in the summary rather than blindly following
+it. Thus, REPOANCHOR separates repository exploration from code construction: the first stage
+produces an explicit structural anchor, and the second stage uses it to guide editing, testing, and
+submission.
+17
+
+# RepoAnchor Exploration Stage Prompt
+{Original mini-swe-agent instruction prompt}
+You are a repository localization and structure understanding agent.
+Your job is not to complete the task.
+Your goal is to:
+1. Locate the directory or directories most relevant to the task.
+2. Thoroughly explore and understand the structure inside that area.
+3. Infer relative file roles.
+4. Write a structured summary into /testbed/INSTRUCTION.md inside the target directory.
+5. Stop after finishing /testbed/INSTRUCTION.md.
+A second agent will later perform editing based on your output.
+## Guide
+1. First make a reasonable guess about the aiming directory based on the task description and
+repository layout. The aiming may be multiple.
+2. Enter the guessed aiming directory and list the local files and subdirectories.
+3. Read the files that you think are relevant to the task or necessary for understanding the structure. 
+4. Read the files related to the candidate files carefully.
+5. Understanding the structure and logic, you should use small validation testing commands that
+follows the same loading or resolution logic as the code whenever possible. Your final answer must
+based on runtime evidence, do not only trust the searching and reading, do not trust the filename or the
+other surface patterns. You should explore deeply into the actual structure, beyond surface cues.
+## Strict Structure of INSTRUCTION.md
+1. The directories and all files you have read, and your runtime evidence
+- filename1: XXX; which file uses it: XXX; which file is used by it: XXX; description: XXX.
+- filename2: XXX; which file uses it: XXX; which file is used by it: XXX; description: XXX.
+......
+2. The detailed struture of the directory. The relationships between files. And your runtime evidence.
+......
+3. Other unclear points
+(Do not mention any unclear points that is obviously irrelative to the task)
+Figure 9: Prompt for exploration stage of REPOANCHOR.
+B
+Additional Analysis and Examples
+B.1
+Behavior Shifts on REPOMIRAGE-Perturb
+Fig. 11 shows the behavior shifts on REPOMIRAGE-Perturb, where agents still solve the original
+issue-resolution task but under perturbed repository structures. The results show a pattern consistent
+with the trajectory changes observed on REPOMIRAGE-Extend. After perturbation, both GPT-5
+and DeepSeek-V3.2 inspect more files and spend a larger proportion of their trajectories before
+the first edit operation, indicating that the perturbations indeed increase the need for repository
+exploration. At the transition level, the probability of exploration-to-exploration transitions increases,
+while the probability of exploration-to-edit transitions decreases. This suggests that even when the
+task objective remains unchanged, repository-level perturbations make agents more likely to stay in
+repeated exploration rather than turning gathered information into concrete edits. These results further
+support the main paper’s observation that stronger repository-context demands induce exploration
+drift.
+18
+
+# RepoAnchor Problem Solving Stage Prompt
+{Original mini-swe-agent instruction prompt}
+## Guide
+1. Your colleague has written an INSTRUCTION.md in the /teatbed directory, detailing the
+location of the task target directory and files, the structure of task related files in the target directory. 
+2. You should read and utilize this document reasonably. The purpose of this document is to reduce the
+time required for you to understand the directory structure. 
+3. You can also focus on any unclear points in the document, since the content here may be wrong and
+it may be an important point.
+Figure 10: Prompt for problem solving stage of REPOANCHOR.
+***️
+***️
+***️
+***️
+***️
+***️
+***️
+***️
+Figure 11: Behavior shifts under REPOMIRAGE-Perturb. ∆measures the change from SWE-
+Bench Verified to REPOMIRAGE-Perturb. Files Inspected counts distinct opened files; Explore Stage
+Proportion is the pre-edit step ratio; transition metrics report action-transition changes. ¯∆and ∆0.5
+denote the mean and median, respectively.
+B.2
+Task-Level Transition Comparison
+Fig. 12 provides task-level transition heatmaps for GPT-5 on REPOMIRAGE-Extend. We observe
+a consistent pattern across all four tasks: the transition from exploration to exploration increases,
+while the transition from exploration to editing decreases. This consistent pattern further supports
+the observation in the main paper that agents tend to remain in repeated exploration under stronger
+repository-context demands, rather than converting the gathered information into concrete editing
+actions.
+At the same time, the heatmaps also reveal task-specific differences. In Multi-File Issue Resolution,
+the increase from testing back to exploration suggests that failed tests often expose missing related
+files, pushing the agent to search for additional edit locations. In Proxy Chain Completion, the
+strong exploration persistence reflects the need to trace dependency paths across several proxy files
+before making a local restoration. In Runtime Target Identification, the larger testing-related
+transitions suggest that agents often rely on runtime probes to distinguish the real target file from
+decoys. In Missing Constant Recovery, the sharp shift from testing back to exploration indicates
+that failed validation frequently forces the agent to revisit the relation between JSON values and their
+usage contexts. These differences show that the four tasks impose distinct forms of repository-context
+reasoning, while sharing the same general exploration bottleneck.
+B.3
+Example of REPOANCHOR Instruction Summary
+Fig. 13 shows an example of the intermediate INSTRUCTIONS.md generated by REPOANCHOR on the
+instance django__django-14631 with GPT-5. In the exploration stage, REPOANCHOR identifies
+the wrapper modules, the renamed runtime files, and their usage relationships. For example, it records
+that django/forms/__init__.py dynamically loads the perturbed implementation file for the form
+19
+
+Figure 12: Task-level transition probability differences. Each heatmap corresponds to one RE-
+POMIRAGE-Extend task for GPT-5. Rows denote the current action state, columns denote the next
+action state, and each cell reports the transition-probability difference between the REPOMIRAGE-
+Extend setting and SWE-Bench setting. Red cells indicate positive shifts, blue cells indicate negative
+shifts, and the annotated values give the exact differences.
+system, while django/forms/boundfield/__init__.py loads the perturbed implementation file
+for BoundField. It also summarizes the core relation between Field.get_bound_field() and
+BoundField, which is directly relevant to the issue.
+This example illustrates how REPOANCHOR converts scattered repository observations into an
+explicit structural summary. Instead of forcing the problem-solving agent to rediscover wrappers,
+renamed files, and cross-file relations from scratch, the generated INSTRUCTION.md provides a
+compact anchor for later editing and validation.
+C
+Further Discussions
+C.1
+Limitations
+REPOMIRAGE still has several limitations. First, due to the substantial engineering complexity
+required by repository-level perturbations, our current construction is limited to Python repositories,
+where syntax-tree transformation and runtime validation are relatively tractable. Extending REPOMI-
+RAGE to languages with more complex build systems or stricter compilation constraints remains
+future work. Second, our tasks still follow a relatively classical problem-solving format, where agents
+are asked to modify a repository to satisfy a given objective. Future evaluations could further explore
+more diverse software-engineering scenarios, such as code review, repository-level test generation,
+refactoring, and maintenance-oriented tasks.
+C.2
+Broader Impacts
+REPOMIRAGE can have positive impacts by helping researchers and practitioners better evaluate the
+reliability of code agents, reducing over-reliance on benchmark scores that may not reflect genuine
+repository context reasoning. At the same time, stronger repository-aware agents may increase the
+capability of automated code modification systems, which could be misused for harmful code changes
+or over-trusted in high-stakes software maintenance. We therefore encourage using REPOMIRAGE as
+a diagnostic benchmark together with controlled deployment, human review, and repository-level
+validation safeguards.
+D
+Release Format and Reproducibility
+We provide an anonymized open-source repository at https://anonymous.4open.science/r/
+RepoMirage. REPOMIRAGE is released as an executable benchmark-generation and evaluation
+toolkit rather than a separately hosted static dataset. We do not redistribute modified copies of SWE-
+Bench repositories or Docker images. Instead, our code operates on existing SWE-Bench-compatible
+Docker environments and reconstructs perturbed repositories and derived task environments through
+documented scripts.
+20
+
+# INSTRUCTIONS.md from exploration stage
+## 1. Files read and runtime evidence (usage relationships)
+- django/forms/forms/__init__.py
+Shadow loader for the actual Form implementation.
+Which file is used by it: Dynamically loads and exposes django/forms/flux_cinder_hh.py.
+Runtime evidence: Builds _impl_path = .../flux_cinder_hh.py, then
+spec_from_file_location and exec_module(_module), updates ... to the resolved path.
+- django/forms/flux_cinder_hh.py
+Implementation of the Form system (DeclarativeFieldsMetaclass, BaseForm, Form).  
+......
+- django/forms/boundfield/__init__.py  
+Shadow loader for the BoundField implementation.  
+......
+- Which file is used by it: Dynamically loads and exposes django/forms/matrix_echo_glyph_mk46.py. 
+......
+- django/forms/matrix_echo_glyph_mk46.py  
+  Implementation of BoundField and BoundWidget.  
+......
+## 2. Detailed structure and relationships (with evidence)
+......
+- Core classes flow
+- BoundField and Field interaction:  
+    - fields.py imports BoundField and defines Field.get_bound_field() returning a
+BoundField(form, self, field_name). 
+......
+## 3. Other unclear points
+- The code uses several obfuscated/proxy modules (e.g., `from proxy_4n108 import dep_ko4r22 as _lll_reit` in
+flux_cinder_hh.py) to provide utilities like deepcopy or constants ......
+- Attempting to import the full `django.forms` package in this environment fails due to missing external
+dependencies ......   
+# Issue (For ease of presentation, it has been simplified)
+Refactor BaseForm._clean_fields() and changed_data to access values via BoundField (e.g.,
+adding BoundField._did_change()) for consistency and to reduce duplicate code paths.
+# Target files
+django/forms/froms.py (Origin) → django/forms/flux_cinder_hh.py (Perturbed)
+django/forms/boundfield.py (Origin) → django/forms/matrix_echo_glyph_mk46.py (Perturbed)
+Figure 13: An example of INSTRUCTION.md generated by REPOANCHOR
+The released code contains two main components. RepoMirage_Perturb/ builds REPOMIRAGE-
+Perturb repository images, applies repository-level perturbations, and exports per-instance metadata.
+RepoMirage_Extend/ uses this metadata to assign instances to task families, generate REPOMI-
+RAGE-Extend task images, and provide deterministic validation scripts for agent submissions. The
+repository also includes optional utilities for exporting generated task lists into local Hugging Face-
+style datasets for mini-swe-agent-style runners.
+Users can reproduce the benchmark by first preparing the original SWE-Bench Verified environments,
+then running the released perturbation and task-construction workflows. This release format keeps
+the source benchmark assets under their original distribution channels while making our perturbation
+procedures, task-generation rules, checkers, and evaluation logic reproducible. Since REPOMIRAGE
+does not introduce a separately hosted static dataset, we provide executable code and references to
+the SWE-Bench Verified resources instead of a dataset metadata file.
+21
+
+E
+The Use of Large Language Models
+We used large language models (LLMs) only to assist with polishing the writing of this paper,
+including grammar checking and rephrasing for clarity. No LLM was used to generate research ideas,
+design experiments, conduct analysis, produce results, or write substantive technical content. All
+technical contributions, analyses, and results are the authors’ own work.
+22

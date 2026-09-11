@@ -1,0 +1,3118 @@
+{
+  "count": 126,
+  "cards": [
+    {
+      "name": "葛亮",
+      "title": "副教授",
+      "research_interests": [
+        "细胞自噬",
+        "非经典分泌",
+        "细胞器互作"
+      ],
+      "current_focus": {
+        "text": "研究细胞在外界压力下如何维持内部稳态平衡，聚焦于细胞自噬、非经典分泌和细胞器互作三个相互关联的细胞学过程。",
+        "evidence": [
+          "我们致力于解答“细胞在外界压力下如何维持内部稳态平衡？”这一细胞生物学的本质问题。",
+          "我们研究主要集中在三个相互关联的细胞学过程：细胞自噬（应激状态下细胞自我清理和更新内部物质的过程）、非经典分泌（近来发现的应激状态下不依赖于传统内质网高尔基体运输的分泌过程）和细胞器互作（细胞器之间通过接触相互协作调控细胞生命活动和应激的过程）。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2017-清华大学生命科学学院-生命科学联合中心 副教授"
+        ],
+        "note": "青年副教授刚建组，亲自带人意愿强、方向新，但平台积累和稳定产出尚在爬坡期，适合敢闯敢拼、能接受不确定性的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究细胞自噬、非经典分泌和细胞器互作，以揭示细胞应激稳态机制。",
+      "_verification": []
+    },
+    {
+      "name": "孟安明",
+      "title": "教授",
+      "research_interests": [
+        "脊椎动物胚胎早期发育的分子机制",
+        "胚胎卵裂期和早期囊胚的细胞命运决定机制",
+        "胚层诱导和分化的调控机制",
+        "背-腹轴和头-尾轴的形成机制"
+      ],
+      "current_focus": {
+        "text": "研究脊椎动物胚胎早期发育的分子机制，重点关注卵源因子在胚胎发育中的作用。",
+        "evidence": [
+          "研究领域为脊椎动物胚胎早期发育的分子机制。",
+          "主要以斑马鱼和小鼠为模式动物，研究胚胎卵裂期和早期囊胚的细胞命运决定机制、胚层诱导和分化的调控机制、背-腹轴和头-尾轴的形成机制等，重点关注卵源因子在这些发育过程中的作用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "中国科学院院士",
+          "世界科学院院士",
+          "1998至今，清华大学教授"
+        ],
+        "note": "名头极响、资源雄厚，但日常指导大概率由小导师或博后承担；需核实组内是否有本科生一作先例，否则可能沦为“挂名”经历。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "孟安明是清华大学教授，中国科学院院士，长期从事脊椎动物胚胎早期发育的分子机制研究。",
+      "_verification": []
+    },
+    {
+      "name": "潘俊敏",
+      "title": "教授",
+      "research_interests": [
+        "纤毛生物学",
+        "微藻合成生物学"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于纤毛生物学与微藻合成生物学，具体包括纤毛运动、发生的分子机理，以及微藻合成生物学工具开发和高价值附加产物研发。",
+        "evidence": [
+          "主要有两个研究方向，纤毛生物学与微藻合成生物学。",
+          "我们聚焦模式生物衣藻和动物细胞，利用遗传，细胞，生化和各种组学手段研究纤毛运动、发生的分子机理，研究成果对纤毛相关疾病的发病机制、医疗诊断和治疗提供科学依据和借鉴。",
+          "在微藻合成生物学方面，主要是开发微藻合成生物学工具以及研发潜在的高价值附加产物。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "1986年／河北师范大学／学士",
+          "1996年／德国弗莱堡大学／博士",
+          "2006年-至今／清华大学生命科学学院／教授"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担；需核实组内是否有本科生一作先例，并主动争取独立课题机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "潘俊敏是清华大学生命科学学院教授，主要研究纤毛生物学与微藻合成生物学，在纤毛运动机制和微藻合成生物学工具开发方面有深入研究。",
+      "_verification": []
+    },
+    {
+      "name": "陶庆华",
+      "title": "教授",
+      "research_interests": [
+        "细胞、发育和遗传生物学",
+        "脊椎胚胎早期发育中的细胞命运决定和分化的分子机理",
+        "胚胎发育的跨代调控机理",
+        "受精卵及早期胚胎发育的代谢调控与自组织机理研究",
+        "Wnt, TGF-β, FGF等生长因子诱导胚胎多潜能细胞定向分化的机理"
+      ],
+      "current_focus": {
+        "text": "研究脊椎胚胎早期发育中的细胞命运决定和分化的分子机理，包括母源因子调控胚胎背腹体轴决定、bHLH家族母源转录因子调控胚层决定、新亲源因子分离与鉴定，以及代谢调控和生长因子诱导分化等。",
+        "evidence": [
+          "综合运用基因组学、蛋白质组学、分子生物学、遗传学等技术，研究脊椎胚胎早期发育中的细胞命运决定和分化的分子机理，助力人类先天性疾病、发育不良结局机理探索。",
+          "1、 胚胎发育的跨代调控机理： 1）母源因子如何调控胚胎背腹体轴决定（母源决定因子“葫芦娃”课题方向Science 2018）。 2) bHLH家族母源转录因子调控胚层决定于分化的机理研究。 3）新亲源（母源、父源）因子的分离与鉴定。",
+          "2、 受精卵及早期胚胎发育的代谢调控与自组织机理研究。",
+          "3、 Wnt, TGF-β, FGF等生长因子诱导胚胎多潜能细胞定向分化的机理。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2008-至今 清华大学生命科学学院 教授"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需先查清组内是否有本科生一作先例，避免沦为“挂名”经历。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，研究脊椎动物胚胎早期发育的分子机理，重点关注母源因子调控、代谢调控及生长因子诱导分化。",
+      "_verification": []
+    },
+    {
+      "name": "吴畏",
+      "title": "教授",
+      "research_interests": [
+        "细胞、发育和遗传生物学",
+        "成体干细胞增殖分化与组织稳态",
+        "肿瘤发生机制",
+        "肠干细胞分化及癌变的表观遗传调控"
+      ],
+      "current_focus": {
+        "text": "利用小鼠和类器官培养技术，结合基因组编辑和化学生物学手段，研究肠干细胞分化以及癌变的表观遗传调控机制及其干预位点和干预手段。",
+        "evidence": [
+          "我们利用小鼠和体外类器官（organoid）培养技术，结合基因组编辑和化学生物学手段，研究肠干细胞分化以及癌变的表观遗传调控机制及其干预位点和干预手段。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2005-现在 ,   清华大学教授"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需确认组内是否有本科生直接参与核心课题的先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "吴畏博士是清华大学教授，研究成体干细胞分化与肿瘤发生的表观遗传调控机制。",
+      "_verification": []
+    },
+    {
+      "name": "郗乔然",
+      "title": "副教授",
+      "research_interests": [
+        "TGF-beta信号传导在胚胎干细胞的自我更新和胚胎发育及癌症发生过程中的作用机制",
+        "TGF-beta及相关信号传导通路如何通过与表观遗传图谱相互作用，在时间和空间上紧密调控基因表达从而调控胚胎发育及癌症发生"
+      ],
+      "current_focus": {
+        "text": "研究TGF-beta信号传导在胚胎干细胞自我更新和胚胎发育及癌症发生中的作用机制，以及TGF-beta信号与表观遗传图谱的相互作用。",
+        "evidence": [
+          "本课题组的学术研究主要是运用细胞生物学，生物化学，分子生物学，基因组学等方法研究TGF-beta信号传导在胚胎干细胞的自我更新和胚胎发育及癌症发生过程中的作用机制；针对性研究TGF-beta及相关信号传导通路如何通过与表观遗传图谱相互作用，在时间和空间上紧密调控基因表达从而调控胚胎发育及癌症发生。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2013年至今，  清华大学生命科学学院　　　　助理教授、副教授"
+        ],
+        "note": "组已过建组期，产出和经费较稳，但正处上升关键期，亲自带教仍多，适合求稳又想出成果的学生，需关注其近年文章方向是否匹配。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "郗乔然博士是清华大学生命科学学院的副教授，主要研究TGF-beta信号传导在胚胎干细胞和癌症中的作用机制。",
+      "_verification": []
+    },
+    {
+      "name": "徐成冉",
+      "title": "教授 九坤讲席教授",
+      "research_interests": [
+        "干细胞生物学与再生医学",
+        "发育生物学",
+        "系统生物学"
+      ],
+      "current_focus": {
+        "text": "研究干细胞生物学与再生医学、发育生物学和系统生物学，具体包括胚胎干细胞定向分化、哺乳动物内胚层来源器官发育机制以及细胞信号与表观遗传调控。",
+        "evidence": [
+          "干细胞生物学与再生医学：胚胎干细胞定向分化及组织器官再生；",
+          "发育生物学：哺乳动物内胚层来源器官（肝脏、胰腺等）的发育机制；",
+          "系统生物学：细胞信号与表观遗传机制对发育和再生过程中基因调控网络的协同调控。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2013 - 2020 , 北京大学生命科学学院，研究员",
+          "2021 - 2026 , 北京大学基础医学院，研究员",
+          "2026 - 至今 , 清华大学生命科学学院，教授"
+        ],
+        "note": "组处于上升期，资源与产出稳定增长，导师亲自指导且方向明确，适合求稳深钻，但竞争可能已较激烈，需提前展现匹配度。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "徐成冉是清华大学生命科学学院教授，研究干细胞生物学、发育生物学和系统生物学，重点关注肝脏和胰腺等内胚层器官的发育与再生。",
+      "_verification": []
+    },
+    {
+      "name": "俞立",
+      "title": "教授",
+      "research_interests": [
+        "细胞生物学",
+        "遗传学",
+        "生物化学",
+        "分子生物学"
+      ],
+      "current_focus": {
+        "text": "研究新细胞器迁移体（Migrasome）的机制与功能",
+        "evidence": [
+          "综合细胞生物学，遗传学，生物化学，分子生物学等研究方法，以不同模式生物为模型研究俞立实验室发现的新细胞器迁移体（Migrasome）的机制与功能。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2008-至今 清华大学生命科学学院 教授，博士生导师"
+        ],
+        "note": "组已成熟、资源稳定，适合求稳深钻；但需确认其近年是否仍亲自带学生，避免指导被高年级博后分担。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://liyu-lab-tsinghua.github.io/",
+          "label": "https://liyu-lab-tsinghua.github.io/",
+          "type": "lab"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，主要研究新细胞器迁移体的机制与功能。",
+      "_verification": []
+    },
+    {
+      "name": "周帆",
+      "title": "副教授",
+      "research_interests": [
+        "利用和发展新型单细胞多组学分析解析哺乳动物和人类胚胎发育过程中谱系特化的分子表达规律",
+        "发展体内外模型从功能维度上理解胚胎发育过程中细胞命运转变的分子机制",
+        "探索胚胎着床相关调控机制和生殖系统肿瘤演进过程"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于利用单细胞多组学技术解析胚胎发育和着床机制，并发展相关模型。",
+        "evidence": [
+          "利用和发展新型单细胞多组学分析解析哺乳动物和人类胚胎发育过程中谱系特化的分子表达规律；发展体内外模型从功能维度上理解胚胎发育过程中细胞命运转变的分子机制；探索胚胎着床相关调控机制和生殖系统肿瘤演进过程。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020-至今 清华大学生命科学学院，助理教授、副教授",
+          "2016-2020 北京大学，博士后"
+        ],
+        "note": "亲自带教意愿强、课题方向新但尚未定型，本科生进组机会较多；但组内资源、文章积累和稳定产出尚在爬坡，需接受节奏快、试错多的现实。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，专注于单细胞多组学解析胚胎发育与着床机制。",
+      "_verification": []
+    },
+    {
+      "name": "江鹏",
+      "title": "副教授",
+      "research_interests": [
+        "肿瘤和免疫代谢"
+      ],
+      "current_focus": {
+        "text": "研究肿瘤和免疫细胞中代谢异常发生的调控机制，以及细胞感知微环境中代谢物质改变的分子机制和生理、病理功能。",
+        "evidence": [
+          "实验室主要研究肿瘤和免疫细胞中代谢异常发生的调控机制，以及细胞感知微环境中代谢物质改变的分子机制和生理、病理功能。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2014-2021年 清华大学生命科学学院 助理教授",
+          "2021-         清华大学生命科学学院 副教授"
+        ],
+        "note": "组内产出和资源进入稳定期，适合求稳深钻；但需确认他是否仍亲自带学生，以及近年学生一作比例是否理想。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究方向为肿瘤和免疫代谢，重点关注代谢异常调控机制及微环境感知。",
+      "_verification": []
+    },
+    {
+      "name": "刘万里",
+      "title": "教授",
+      "research_interests": [
+        "淋巴细胞基础免疫学",
+        "抗原受体介导的免疫活化和抗体应答的分子机制",
+        "此过程调控紊乱与相关疾病发生发展的关系"
+      ],
+      "current_focus": {
+        "text": "聚焦淋巴细胞基础免疫学，探索抗原受体介导的免疫活化和抗体应答的分子机制，并分析此过程调控紊乱与相关疾病发生发展的关系。",
+        "evidence": [
+          "聚焦淋巴细胞基础免疫学，探索抗原受体介导的免疫活化和抗体应答的分子机制，并分析此过程调控紊乱与相关疾病发生发展的关系。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2011.12 –   清华大学生命科学学院  副教授、教授"
+        ],
+        "note": "【实际含义】产出与资源相对稳定，适合求稳深钻；但需确认其近年是否仍亲自带学生，以及组内是否有本科生一作先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/info/1263/1131.htm",
+          "label": "http://www.cls.edu.cn/info/1263/1131.htm",
+          "type": "personal"
+        },
+        {
+          "url": "https://loop.frontiersin.org/people/99619/overview",
+          "label": "https://loop.frontiersin.org/people/99619/overview",
+          "type": "other"
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%28Liu%2C+Wanli%5BAuthor%5D+AND+Tsinghua%5BAffiliation%5D%29+OR+%28Liu%2C+Wanli%5BAuthor%5D+AND+Pierce%2C+Susan+%5BAuthor%5D+AND+Rockville%5BAffiliation%5D%29&sort=date",
+          "label": "",
+          "type": "scholar"
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=wanli%20liu%2C%20tsinghua%2C%20or%2C%20wanli%20liu%2C%20NIH&sort=date",
+          "label": "https://pubmed.ncbi.nlm.nih.gov/?term=wanli%20liu%2C%20tsinghua%2C%20or%2C%20wanli%20liu%2C%20NIH&sort=date",
+          "type": "scholar"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，聚焦淋巴细胞基础免疫学，研究抗原受体介导的免疫活化与抗体应答机制。",
+      "_verification": []
+    },
+    {
+      "name": "罗永章",
+      "title": "教授",
+      "research_interests": [
+        "衰老与抗衰老机制研究",
+        "神经退行性疾病机制研究",
+        "代谢相关性疾病机制研究",
+        "心血管病机制研究"
+      ],
+      "current_focus": {
+        "text": "研究衰老、神经退行性疾病、代谢性疾病和心血管病的机制及临床转化",
+        "evidence": [
+          "研究方向主要包括以下几个方面： 1. 衰老与抗衰老机制研究 从全新视角探讨生命演化中维持健康寿命的核心通路与系统性干预手段； 2. 神经退行性疾病机制研究 聚焦阿尔茨海默病 (AD)、帕金森病 (PD) 的致病机制研究及临床试验； 3. 代谢相关性疾病机制研究 从全局视角探讨2 型糖尿病、肥胖与脂代谢（含实验室首次发现的白蛋白体 \"Albumosome\"）、肌肉萎缩与修复、骨质疏松、类风湿关节炎的致病机制及临床转化； 4. 心血管病机制研究 核心方向：心肌肥大、心脏纤维化、房颤的致病机制及临床转化探索。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "1981-1985 兰州大学化学系物理化学专业，学士",
+          "1989-1993 加州大学伯克利分校分子与细胞生物学系生物化学专业，博士",
+          "现任清华大学生命科学学院教授、蛋白质技术国家工程研究中心主任"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师/博后承担，需留意组内是否有本科生一作先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，研究衰老、神经退行性疾病、代谢病和心血管病的机制与转化。",
+      "_verification": []
+    },
+    {
+      "name": "王强",
+      "title": "副教授",
+      "research_interests": [
+        "棕色和米色脂肪活化与能量代谢",
+        "肥胖和Ⅱ型糖尿病的干预治疗"
+      ],
+      "current_focus": {
+        "text": "研究棕色脂肪、米色脂肪功能活化以及白色脂肪与米色脂肪相互转变的分子机理",
+        "evidence": [
+          "我们课题组综合运用生物化学、分子生物学、细胞生物学、生物信息学、代谢生理学等手段研究生理病理条件下棕色脂肪、米色脂肪功能活化以及白色脂肪与米色脂肪相互转变的分子机理，为肥胖、Ⅱ型糖尿病等的干预治疗提供新思路。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2023.3-至今 清华大学生命科学学院 助理教授、副教授"
+        ],
+        "note": "亲自带教概率高、冲劲足，但组刚起步，方向或设备仍在磨合，适合敢闯敢试者，需接受初期成果不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究棕色脂肪和米色脂肪的活化机制，以期为肥胖和糖尿病提供治疗策略。",
+      "_verification": []
+    },
+    {
+      "name": "王一国",
+      "title": "教授",
+      "research_interests": [
+        "能量过剩引发的代谢性疾病",
+        "激素在维持能量平衡中的关键调控作用",
+        "新型激素的发现及其在代谢性疾病治疗中的临床转化"
+      ],
+      "current_focus": {
+        "text": "研究围绕抑制能量摄入、减少能量储存及增强能量消耗的激素展开，系统解析其分子机制，优化功能特性，并探索其在代谢性疾病治疗中的临床转化潜力。",
+        "evidence": [
+          "本实验室已发现多种新型激素，研究将重点围绕抑制能量摄入、减少能量储存及增强能量消耗的激素展开，系统解析其分子机制，优化功能特性，并探索其在代谢性疾病治疗中的临床转化潜力。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2012.9 － 清华大学生命科学学院  助理教授、副教授、教授"
+        ],
+        "note": "产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其近年是否仍亲自带学生，避免被高年级博后代管。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，研究代谢性疾病相关激素，已发现多种新型激素并探索其临床转化。",
+      "_verification": []
+    },
+    {
+      "name": "陈春来",
+      "title": "副教授",
+      "research_interests": [
+        "发展新型单分子荧光技术",
+        "蛋白在DNA上的靶向搜寻机制的研究",
+        "CRISPR系列蛋白靶向和剪切机制的研究"
+      ],
+      "current_focus": {
+        "text": "近期研究涉及单分子荧光技术、蛋白-DNA相互作用、CRISPR系统机制等，并发表多篇相关论文。",
+        "evidence": [
+          "1) 发展新型单分子荧光技术； 2) 蛋白在DNA上的靶向搜寻机制的研究； 3) CRISPR系列蛋白靶向和剪切机制的研究。",
+          "代表性论文 1.  Yu Miao (#), Yuxiao Cheng (#), Yushi Xia, Yongzhen Hei, Wenjuan Wang, Qionghai Dai (*), Jinli Suo (*), Chunlai Chen (*) , (2025) Supervised multi-frame dual-channel denoising enables long-term single-molecule FRET under extremely low photon budget, Nat Commun , 16(1), 74"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2015-2018       清华大学生命科学学院                   助理教授",
+          "2018-至今       清华大学生命科学学院                   副教授"
+        ],
+        "note": "组内产出与资源进入稳定期，导师仍有精力亲自指导，适合求稳深钻，但需确认其近年课题方向是否与你的长期兴趣匹配。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究方向为单分子荧光技术及CRISPR机制，发表多篇高水平论文。",
+      "_verification": []
+    },
+    {
+      "name": "陈柱成",
+      "title": "教授",
+      "research_interests": [
+        "生物物理与结构生物学",
+        "染色质调控因子的三维结构、分子工作机制与生物学功能"
+      ],
+      "current_focus": {
+        "text": "运用生物物理手段结合生物化学及多学科交叉技术，系统研究染色质调控因子的三维结构、分子工作机制与生物学功能，解析表观遗传信息的精确读取与靶向编辑。",
+        "evidence": [
+          "本实验室主要运用生物物理手段，结合生物化学及多学科交叉技术，系统研究染色质调控因子的三维结构、分子工作机制与生物学功能。",
+          "我们的研究目标是为解析表观遗传信息的精确读取与靶向编辑提供关键结构基础，深化对基因表达调控、DNA损伤修复等核心生命过程的理解，同时为相关疾病的机制研究与靶向药物开发奠定重要理论支撑。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2011-至今 清华大学生命学院 副教授、教授"
+        ],
+        "note": "产出与资源相对稳定，方向成熟，适合求稳深钻；但需确认他是否仍亲自带学生，还是已转由高年级博后或小导师代管日常指导。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.chenzclab.com/",
+          "label": "http://www.chenzclab.com/",
+          "type": "lab"
+        }
+      ],
+      "summary": "清华大学生命学院教授，主要运用生物物理和结构生物学手段研究染色质调控机制。",
+      "_verification": []
+    },
+    {
+      "name": "李赛",
+      "title": "副教授",
+      "research_interests": [
+        "高分辨冷冻电子断层术（cryo-ET）",
+        "新发囊膜病毒的原位结构与功能"
+      ],
+      "current_focus": {
+        "text": "利用cryo-ET研究病毒组装、感染及免疫的原位结构，并开发相关技术。",
+        "evidence": [
+          "我们以cryo-ET为主要方法，系统研究多种新发致病型囊膜病毒组装、感染、及免疫的原位结构及机制，最终目的是找到病毒的弱点，并为抗体、疫苗设计提供新思路。",
+          "Cryo-ET技术发展迅速，正填补从病毒到细胞，甚至组织维度间的结构生物学空白。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2018年-至今： 清华大学生命学院 助理教授、副教授",
+          "2013－2017年：牛津大学纳菲尔德医学部结构生物学中心﻿（STRUBI）博士后"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步、平台和资源有限；适合想拼一作、能扛压的学生，需留意课题方向是否已稳定。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命学院副教授，专注于高分辨冷冻电子断层术及新发囊膜病毒的原位结构与功能研究。",
+      "_verification": []
+    },
+    {
+      "name": "李丕龙",
+      "title": "副教授",
+      "research_interests": [
+        "相分离现象的普适化调控机制与规律",
+        "相分离在自噬、转录调控、表观遗传等领域的生物学意义",
+        "基于相分离的技术开发与应用"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于相分离的调控机制及其在生物学功能中的应用，并开发基于相分离的技术平台。",
+        "evidence": [
+          "相分离现象的普适化调控机制与规律",
+          "相分离在自噬、转录调控、表观遗传等领域的生物学意义",
+          "基于相分离的技术开发与应用"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2016-至今 清华大学生命科学学院 助理教授、副教授"
+        ],
+        "note": "组已过建组期、资源与产出较稳，适合求稳深钻；但需确认其是否仍亲自带学生，避免沦为“挂名导师”下的普通劳动力。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，专注于生物大分子相分离的机制与功能研究。",
+      "_verification": []
+    },
+    {
+      "name": "李雪明",
+      "title": "教授",
+      "research_interests": [
+        "冷冻电子显微学理论和方法研究",
+        "生物结构超高分辨率三维重构",
+        "电子显微学在结构生物学中的应用"
+      ],
+      "current_focus": {
+        "text": "发展先进的实验及图像处理分析技术，以及人工智能技术，刻画从组织到细胞的纳米甚至原子级分辨率结构，推动冷冻电镜技术在药物设计以及医疗等领域中的应用。",
+        "evidence": [
+          "未来希望发展先进的实验及图像处理分析技术，以及人工智能技术，刻画从组织到细胞的纳米甚至原子级分辨率结构，使我们能在原子或分子水平上理解生命活动的本质，并推动冷冻电镜技术在药物设计以及医疗等领域中的应用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2014年至今 清华大学生命科学学院 助理教授、副教授、教授"
+        ],
+        "note": "产出与资源已趋稳定，适合求稳深钻；但需确认其近年是否仍亲自带学生，避免指导被高年级博后分流。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，专注于冷冻电子显微学方法发展和结构生物学应用。",
+      "_verification": []
+    },
+    {
+      "name": "梁鑫",
+      "title": "副教授",
+      "research_interests": [
+        "细胞与发育生物学",
+        "细胞骨架复合物在发育过程中的结构特征、功能机制及其动态组装规律"
+      ],
+      "current_focus": {
+        "text": "研究分子如何自组织形成细胞以及细胞如何通过相互作用构建复杂的组织，聚焦于细胞与发育生物学领域，解析生命系统中的精细结构与动态过程。",
+        "evidence": [
+          "分子如何自组织形成细胞？细胞又如何通过相互作用构建复杂的组织？这些基本生物学问题构成了本课题组研究的核心。",
+          "我们聚焦于细胞与发育生物学领域，致力于解析生命系统中的精细结构与动态过程。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2015-  助理教授、副教授 清华大学生命科学学院"
+        ],
+        "note": "产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其近年论文署名和指导风格是否仍亲力亲为。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "梁鑫博士是清华大学生命科学学院副教授，主要研究细胞骨架在发育中的结构与功能，利用多种前沿技术揭示细胞动力学调控的普适性原理。",
+      "_verification": []
+    },
+    {
+      "name": "刘俊杰",
+      "title": "副教授",
+      "research_interests": [
+        "生物物理与结构生物学",
+        "开发新型分子工具与生物计算方法",
+        "探索细菌免疫复合物（如CRISPR-Cas）、RNA核酶、转座子等生物大分子机器的多样性",
+        "探索AI与具身智能在生命科学领域的应用"
+      ],
+      "current_focus": {
+        "text": "开发新型分子工具与生物计算方法，探索细菌免疫复合物、RNA核酶、转座子等生物大分子机器的多样性，以及AI与具身智能在生命科学领域的应用。",
+        "evidence": [
+          "我们的团队致力于开发新型分子工具与生物计算方法，驱动生命科学领域的前沿研究：",
+          "（1）探索细菌免疫复合物（如CRISPR-Cas）、RNA核酶、转座子等生物大分子机器的多样性，开发新型生物大分子工具，设计并优化用于核酸操控与检测的先进分子工具。",
+          "（2）探索AI与具身智能在生命科学领域的应用，利用人工智能和具身智能技术，深入研究生物进化、基因组多样性等生物学问题。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020至今  清华大学生命科学学院，助理教授、副教授",
+          "2016-2018 劳伦斯-伯克利国家实验室--生物物理和生物成像中心，博士后",
+          "2018-2020 加州大学伯克利分校--细胞分子生物学系，博士后"
+        ],
+        "note": "亲自带人概率高、冲劲足，方向前沿但组刚起步，设备与资源有限，适合敢闯敢拼、能独立扛事的学生，但需接受初期成果周期长。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        },
+        {
+          "url": "https://www.sciengine.com/NSO/home",
+          "label": "National Science Open",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，专注于生物物理与结构生物学，利用CRISPR等系统开发新型分子工具，并探索AI在生命科学中的应用。",
+      "_verification": []
+    },
+    {
+      "name": "隋森芳",
+      "title": "教授，博士生导师，中国科学院院士",
+      "research_interests": [
+        "生物物理与结构生物学",
+        "蛋白质复合体、复杂蛋白质机器和膜蛋白的结构、功能与工作机制",
+        "囊泡运输中的分子机制，蛋白质与膜脂的相互作用，生物膜与重大疾病的关系"
+      ],
+      "current_focus": {
+        "text": "利用冷冻电子显微学，结合生物化学、生物物理学和细胞生物学等技术手段，研究蛋白质复合体、复杂蛋白质机器和膜蛋白的结构、功能与工作机制，以及囊泡运输中的分子机制等。",
+        "evidence": [
+          "我们利用冷冻电子显微学，结合生物化学、生物物理学和细胞生物学等技术手段，研究： （1）蛋白质复合体、复杂蛋白质机器和膜蛋白的结构、功能与工作机制； （2）囊泡运输中的分子机制，蛋白质与膜脂的相互作用，生物膜与重大疾病的关系。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "中国科学院院士",
+          "1991.1-至今 清华大学生命科学学院（2009年9月以前为生物科学与技术系），教授、博导"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需先查清组内是否有本科生一作先例，避免“挂名”式参与。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "隋森芳是清华大学生命科学学院的教授、博导，中国科学院院士，长期从事生物物理与结构生物学研究，主要利用冷冻电子显微学等技术研究蛋白质复合体、膜蛋白及囊泡运输等分子机制。",
+      "_verification": []
+    },
+    {
+      "name": "王宏伟",
+      "title": "教授、博士生导师",
+      "research_interests": [
+        "利用冷冻电子显微学研究生物大分子复合体的结构与分子机理",
+        "更高效、更高分辨率的冷冻电镜方法学开发",
+        "核酸质量控制的分子机制和调控",
+        "细胞骨架和生物膜系统的协调机制"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于冷冻电镜方法学开发及生物大分子复合体结构解析，代表性论文涉及Dicer-2、微管组装、藻类光合复合体等。",
+        "evidence": [
+          "利用冷冻电子显微学研究生物大分子复合体的结构与分子机理。",
+          "1. 更高效、更高分辨率的冷冻电镜方法学开发； 2. 核酸质量控制的分子机制和调控； 3. 细胞骨架和生物膜系统的协调机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2010.12-至今 清华大学生命科学学院，教授、博导",
+          "2016.04-2021.04 清华大学生命科学学院院长"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需留意组内是否有本科生一作先例，并确认你能否直接接触其核心课题。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "王宏伟博士是清华大学教授、博导，曾任生命科学学院院长，长期从事冷冻电镜方法学及生物大分子复合体结构研究。",
+      "_verification": []
+    },
+    {
+      "name": "王佳伟",
+      "title": "副教授",
+      "research_interests": [
+        "细菌磷酸转移酶系统（PTS）的膜蛋白结构",
+        "X射线晶体学和冷冻电镜方法"
+      ],
+      "current_focus": {
+        "text": "近期主要研究细菌素与Man-PTS作用的杀菌机制，并发展新的结构分析方法。",
+        "evidence": [
+          "本实验室主要利用X射线晶体学和冷冻电镜方法研究细菌磷酸转移酶系统（PTS）的膜蛋白结构。",
+          "后续将继续通过晶体学和冷冻电镜等手段研究细菌素与Man-PTS作用后的杀菌机制，并为新型抗菌药物和食品添加剂的设计研发提供思路。",
+          "本课题组同时探索结构解析过程中的困难问题，发展新的结构分析方法。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2011－2017年／清华大学生命科学学院／助理教授",
+          "2017年-至今／清华大学生命科学学院／副教授"
+        ],
+        "note": "组已过建组期、产出稳定，资源够用且本人仍在一线指导，适合求稳做扎实课题；但上升期压力大，需主动争取独立课题机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "王佳伟博士是清华大学生命科学学院副教授，主要利用X射线晶体学和冷冻电镜研究细菌磷酸转移酶系统膜蛋白结构及细菌素杀菌机制。",
+      "_verification": []
+    },
+    {
+      "name": "王新泉",
+      "title": "教授",
+      "research_interests": [
+        "结构生物学",
+        "细胞因子介导的宿主免疫反应",
+        "病毒侵染及免疫逃逸的结构机理"
+      ],
+      "current_focus": {
+        "text": "利用X-射线晶体学为主要研究手段，结合其他生物化学及生物物理技术，研究细胞因子介导的宿主免疫反应和病毒侵染及免疫逃逸的结构机理。",
+        "evidence": [
+          "主要研究方向为结构生物学。利用X-射线晶体学为主要研究手段，结合其他生物化学及生物物理技术，研究细胞因子介导的宿主免疫反应和病毒侵染及免疫逃逸的结构机理。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2008-2013 清华大学生命学院，准聘副教授",
+          "2013-至今 清华大学生命学院，长聘教授"
+        ],
+        "note": "组已进入稳定产出期，方向明确、经费充足，但教授本人可能更关注整体布局而非逐字改稿，需主动争取独立课题和直接交流机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命学院长聘教授，主要运用结构生物学方法研究免疫反应与病毒侵染机制。",
+      "_verification": []
+    },
+    {
+      "name": "薛毅",
+      "title": "副教授",
+      "research_interests": [
+        "运用液态核磁共振技术和计算结构生物学方法（特别是分子动力学模拟和AI）来研究非编码RNA和固有无序蛋白的结构和动态特性，以及核酸构象动态的理性设计",
+        "发展新的核磁手段，样品标记方法，以及化学探针技术来研究RNA、DNA、蛋白质及其复合物的三维结构和构象变化",
+        "发展新的计算方法把实验上获得的各种数据结合起来对构象高度可变的生物大分子进行结构建模，并且在此基础上开展高通量药物筛选"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于RNA的粗粒化分子动力学模型（PlanarFold）以及基于分子动力学轨迹模拟衍射图等，同时涉及SARS-CoV-2核衣壳蛋白结构等。",
+        "evidence": [
+          "Xiang, L. and Xue, Y. (2026). PlanarFold: a coarse-grained molecular dynamics model of RNA in two-dimensional space. Nat. Commun. Accepted",
+          "Liu N, Mikhailovskii O, Skrynnikov NR* and Xue Y* . (2023). Simulating diffraction photographs based on molecular dynamics trajectories of a protein crystal: a new option to examine structure-solving strategies in protein crystallography. IUCrJ 10, 16-26",
+          "Luan X, Li X, Li Y, Su G, Yin W, Jiang Y, Xu N, Wang F, Cheng W, Jin Y, Zhang L, Xu HE*, Xue Y* and Zhang S*. (2022). Antiviral drug design based on structural insights into the N-terminal domain and C-terminal domain of the SARS-CoV-2 nucleocapsid protein. Science Bulletin 67, 2327-2335"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2016-2024 清华大学生命科学学院 助理教授",
+          "2024-至今 清华大学生命科学学院 副教授"
+        ],
+        "note": "产出与资源进入稳定上升期，组内方向已初步成型，亲自指导仍较频繁，但竞争激烈，适合有明确科研规划、能主动推进的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "薛毅博士是清华大学生命科学学院副教授，主要运用核磁共振和计算结构生物学研究RNA和蛋白质的结构与动态，并发展相关计算方法与药物筛选。",
+      "_verification": []
+    },
+    {
+      "name": "闫创业",
+      "title": "副教授",
+      "research_interests": [
+        "X-射线晶体学以及冷冻电镜方法的开发及应用",
+        "重要膜蛋白的结构生物学研究以及细胞分裂过程中亚显微结构的研究",
+        "真核细胞中剪接体的结构和功能以及前体信使RNA剪接机制的研究"
+      ],
+      "current_focus": {
+        "text": "近期主要研究真核细胞中剪接体的结构和功能以及前体信使RNA剪接机制，并发表多篇相关论文。",
+        "evidence": [
+          "真核细胞中剪接体的结构和功能以及前体信使RNA剪接机制的研究。",
+          "Yan, C.*, Wan, R.* & Shi, Y.. Molecular Mechanisms of pre-mRNA Splicing through Structural Biology of the Spliceosome. Cold Spring Harb Perspect Biol 11(2019)."
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2019－至今 ／清华大学生命科学学院／助理教授、副教授"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，方向可能多变，资源与产出尚不稳定；适合敢闯敢拼、能接受高不确定性并愿共同成长的本科生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，主要研究方向为结构生物学，尤其关注剪接体的结构与功能。",
+      "_verification": []
+    },
+    {
+      "name": "闫永彬",
+      "title": "副教授",
+      "research_interests": [
+        "蛋白质折叠和错误折叠相关疾病",
+        "核糖核酸酶与mRNA代谢调控",
+        "细胞能量稳态调控"
+      ],
+      "current_focus": {
+        "text": "研究生物大分子的结构、折叠、组装、代谢以及与疾病的关系，具体包括蛋白质错误折叠相关疾病、mRNA代谢调控和细胞能量稳态调控。",
+        "evidence": [
+          "主要利用生物物理、生物化学和细胞生物学等技术手段，研究生物大分子的结构、折叠、组装、代谢以及与疾病的关系。",
+          "1．蛋白质折叠和错误折叠相关疾病：遗传突变和病理条件对蛋白质的结构、功能和聚集的影响，特别是眼部疾病的分子机制和聚集体/包涵体的形成机制；",
+          "2．核糖核酸酶与mRNA代谢调控：核糖核酸酶的结构、功能和其在mRNA代谢调控中的作用，细胞内RNA小体的结构、组装和生理功能；",
+          "3．细胞能量稳态调控：蛋白质相互作用所介导的肌酸激酶调控细胞能量稳态的分子机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2001/08—至今  清华大学生命科学学院     教师、讲师(2001)； 副研究员(2004)， 博士生导师(2008)， 研究员(2012)"
+        ],
+        "note": "组已稳定运转、经费充足，导师有精力指导但非手把手，适合有明确方向、能自主推进的学生，产出和资源较均衡。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究方向为生物物理与结构生物学，主要研究蛋白质折叠、mRNA代谢和细胞能量稳态。",
+      "_verification": []
+    },
+    {
+      "name": "杨茂君",
+      "title": "教授",
+      "research_interests": [
+        "结构生物学",
+        "细胞与分子生物学",
+        "生物化学"
+      ],
+      "current_focus": {
+        "text": "以结构生物学结合细胞与分子生物学和生物化学为研究手段，从事细胞感应外界信号以及细胞能量代谢相关蛋白质的结构与功能研究，并以这些生物大分子的高分辨结构为基础开展药物设计及临床应用研究。",
+        "evidence": [
+          "主要以结构生物学结合细胞与分子生物学和生物化学为研究手段，从事细胞感应外界信号以及细胞能量代谢相关蛋白质的结构与功能研究，并以这些生物大分子的高分辨结构为基础开展药物设计及临床应用研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2013- 至今  清华大学生命科学学院，教授、博导"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需留意组内是否有本科生一作先例，避免“挂名”式参与。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，主要从事结构生物学研究，关注细胞信号感应与能量代谢相关蛋白质的结构与功能。",
+      "_verification": []
+    },
+    {
+      "name": "陈国强",
+      "title": "教授",
+      "research_interests": [
+        "合成生物学",
+        "微生物代谢工程",
+        "生物材料",
+        "工业生物技术"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于利用极端微生物（如Halomonas）进行下一代生物技术开发，包括生物塑料PHA的生产、塑料降解与回收等。",
+        "evidence": [
+          "Next-generation biotechnology inspired by extremes. EMBO Reports 27 (2025) 1-5",
+          "Exploring biotechnology for plastic recycling，degradation, and upcycling for a sustainable future. Biotechnology Advances 81 (2025) 108544"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "1997-至今     清华大学生命科学学院，教授、博导"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需核实组内是否有本科生一作先例，避免期望落空。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [],
+      "summary": "陈国强是清华大学生命科学学院的资深教授，长期从事合成生物学、微生物代谢工程和生物材料研究，尤其在PHA生物塑料领域有深厚积累。",
+      "_verification": []
+    },
+    {
+      "name": "邓海腾",
+      "title": "教授",
+      "research_interests": [
+        "发展和应用蛋白质组学、代谢组学和化学生物学的技术和方法",
+        "研究氧化还原生物学在衰老和疾病中的功能和作用机制",
+        "发展衰老及其疾病相关的生物标志物",
+        "开发提高健康寿命的天然小分子、纳米抗体和疫苗",
+        "研究病原微生物-宿主细胞的相互作用",
+        "鉴定肿瘤早期诊断的标记物并研究蛋白质药物的修饰和作用机制"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于衰老相关疾病、氧化还原生物学、蛋白质组学与代谢组学应用，以及天然小分子和纳米抗体开发。",
+        "evidence": [
+          "发展和应用蛋白质组学、代谢组学和化学生物学的技术和方法。研究氧化还原生物学在衰老和疾病中的功能和作用机制。发展衰老及其疾病相关的生物标志物。开发提高健康寿命的天然小分子、纳米抗体和疫苗。研究病原微生物-宿主细胞的相互作用。 鉴定肿瘤早期诊断的标记物并研究蛋白质药物的修饰和作用机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "3/2011-Present  教授（2017年），清华大学",
+          "9/2009-2/2011   研究副教授和蛋白质组中心主任，洛克菲勒大学"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需确认组内是否有本科生直接参与核心课题的先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "邓海腾是清华大学教授，长期从事蛋白质组学、代谢组学及化学生物学研究，聚焦氧化还原生物学、衰老与疾病机制及生物标志物开发。",
+      "_verification": []
+    },
+    {
+      "name": "龚海鹏",
+      "title": "副教授",
+      "research_interests": [
+        "发展计算机算法根据氨基酸序列预测蛋白质三维结构",
+        "发展分子动力学模拟的新方法用于定量分析生物大分子的大尺度构象变化"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于蛋白质结构预测和分子动力学模拟方法的发展，包括基于深度神经网络的片段采样、残基间距离预测、构象搜索加速等。",
+        "evidence": [
+          "1. 发展计算机算法根据氨基酸序列预测蛋白质三维结构",
+          "2. 发展分子动力学模拟的新方法用于定量分析生物大分子的大尺度构象变化",
+          "Wenze Ding# and Haipeng Gong*, “Predicting the real-valued inter-residue distances for proteins”, Advanced Science, 7: 2001314, 2020.",
+          "Juanrong Zhang# and Haipeng Gong*, “Frontier Expansion Sampling: A Method to Accelerate Conformational Search by Identifying Novel Seed Structures for Restart”, Journal of Chemical Theory and Computation, 16(8): 4813-4821, 2020.",
+          "Wenzhi Mao#, Wenze Ding, Yaoguang Xing, and Haipeng Gong*, “AmoebaContact and GDFold as a pipeline for rapid de novo protein structure prediction”, Nature Machine Intelligence, 2: 25-33, 2020.",
+          "Tong Wang#, Yanhua Qiao, Wenze Ding, Wenzhi Mao, Yaoqi Zhou*, and Haipeng Gong*, “Improved fragment sampling for ab initio protein structure prediction using deep neural networks”, Nature Machine Intelligence, 1: 347-355, 2019."
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2009-2014  清华大学生命学院  助理教授",
+          "2015-至今   清华大学生命学院  副教授"
+        ],
+        "note": "组已过建组期、产出稳定，资源够用且本人仍有带学生精力，适合求稳做扎实课题；但上升势头不如青年期，需关注组内近年文章节奏。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://structpred.life.tsinghua.edu.cn",
+          "label": "Website",
+          "type": "lab"
+        }
+      ],
+      "summary": "龚海鹏博士是清华大学生命学院副教授，研究方向为蛋白质结构预测和分子动力学模拟方法的发展。",
+      "_verification": [
+        "⚠️ homepage_candidates[0] 的 url 不在详情页外链列表中：http://structpred.life.tsinghua.edu.cn..."
+      ]
+    },
+    {
+      "name": "刘念",
+      "title": "副教授",
+      "research_interests": [
+        "转座子活性调控机理",
+        "转座子在发育和疾病中的功能",
+        "RNA调控功能"
+      ],
+      "current_focus": {
+        "text": "研究转座子活性调控机理及其在发育和疾病中的功能，并探索RNA调控功能。",
+        "evidence": [
+          "我们利用分子、细胞、生化、高通量测序和生统筹手段主攻转座子活性是如何被调控的机理，及其在发育和疾病中的具体功能。",
+          "此外，我们还在积极探索RNA调控功能的未知领域。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2019年-2022年／清华大学生命科学学院-生命科学联合中心／助理教授",
+          "2022年-至今／清华大学生命科学学院-生命科学联合中心／副教授"
+        ],
+        "note": "亲自带教多、课题方向新且灵活，本科生进组机会较大；但实验室平台和成果积累尚浅，需接受节奏快、压力大，且发文章周期可能偏长。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究转座子调控与功能，以及RNA调控。",
+      "_verification": []
+    },
+    {
+      "name": "李栋",
+      "title": "教授，清华大学兴华讲席教授",
+      "research_interests": [
+        "光学显微成像技术",
+        "人工智能算法与光学显微成像技术的交叉研究",
+        "超分辨显微镜",
+        "单分子成像与追踪",
+        "多光子非线性显微成像",
+        "细胞与发育生物学研究"
+      ],
+      "current_focus": {
+        "text": "通过人工智能算法与光学显微成像技术的交叉研究，开发多模态结构光照明显微镜（Multi-SIM）、重分布光片显微镜（SR-LSM）等技术，并提出合理化深度学习（rDL）超分辨显微成像技术框架，用于高时空分辨率下捕捉细胞内生物过程的动态分子事件。",
+        "evidence": [
+          "李栋课题组通过人工智能算法与光学显微成像技术的交叉研究，在硬件上自主研发、并系统掌握了多模态结构光照明显微镜（Multi-SIM）、重分布光片显微镜（SR-LSM）等技术；在软件通过人工智能算法与光学显微成像技术的交叉研究，将光学成像模型及物理先验与神经网络架构设计相融合，提出了合理化深度学习（rationalized deep learning，rDL）超分辨显微成像技术框架。",
+          "这些技术方法实现了在低信噪比条件下可获得高保真、可定量的高质量超分辨图像，并利用这些新型成像技术开展细胞与发育生物学研究，可在高时空分辨率下连续捕捉细胞内生物过程的动态分子事件，提供与测序、生化、质谱等方法相互补的时空动态信息。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2015-2024年 中国科学院生物物理研究所 研究员",
+          "2024年- 清华大学生命科学学院 教授，博士生导师"
+        ],
+        "note": "组已过爬坡期、资源稳定，但正处方向转型期；适合求稳深钻的学生，需关注新实验室磨合与指导精力分配。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "李栋是清华大学兴华讲席教授，专注于光学显微成像与人工智能交叉研究，开发超分辨成像技术并应用于细胞与发育生物学。",
+      "_verification": []
+    },
+    {
+      "name": "鲁志",
+      "title": "副教授",
+      "research_interests": [
+        "生物信息学技术",
+        "癌症、自身免疫等复杂疾病的精准诊疗",
+        "非编码RNA (ncRNA) 为核心的多组学数据",
+        "生物信息驱动的精准医疗",
+        "AI驱动的RNA靶标和药物设计"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于利用机器学习和多组学数据，特别是非编码RNA，开发精准医疗和RNA药物设计的新方法，并探索早期癌症检测。",
+        "evidence": [
+          "我们致力于发展 生物信息学技术 ，并探索其在 癌症、自身免疫等复杂疾病 的 精准诊疗 上的具体实践。",
+          "我们利用机器学习等 人工智能技术 ，结合 非编码RNA (ncRNA) 为核心的 多组学数据 ，来研究遗传信息是如何被编码在结构化的DNA和RNA分子之中，以及它们是如何在一个生命体系中相互作用、彼此调控。",
+          "实验室围绕着 非编码RNA (ncRNA) 主要有两个研究方向: 1.生物信息驱动的精准医疗；2.AI驱动的 RNA靶标和药物设计 。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2011-2016 清华大学 生命科学学院 助理教授，博士生导师",
+          "2017-至今 清华大学 生命科学学院 副教授,博士生导师"
+        ],
+        "note": "产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其近年文章方向和组内学生毕业去向，避免陷入瓶颈期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://www.ncRNAlab.org",
+          "label": "https://www.ncRNAlab.org",
+          "type": "lab"
+        }
+      ],
+      "summary": "鲁志博士是清华大学生命科学学院的副教授，专注于生物信息学与人工智能在癌症等复杂疾病精准诊疗中的应用，尤其以非编码RNA为核心，并领导实验室开展相关研究。",
+      "_verification": []
+    },
+    {
+      "name": "王建斌",
+      "title": "副教授",
+      "research_interests": [
+        "分子病理测量技术",
+        "高通量精准定量分析",
+        "解析复杂病理表型的底层化学逻辑"
+      ],
+      "current_focus": {
+        "text": "利用自主开发的分子测量技术推动解析新冠病毒的传播和进化轨迹、癌症分子病理机制、气道炎症复发免疫学机制等。",
+        "evidence": [
+          "近年来利用自主开发的分子测量技术推动解析新冠病毒的传播和进化轨迹、癌症分子病理机制、气道炎症复发免疫学机制等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2015－2021年／清华大学生命科学学院／助理教授",
+          "2021年-至今／清华大学生命科学学院／长聘副教授"
+        ],
+        "note": "组已过建组期、产出稳定，正值上升通道；资源够用且亲自带学生，但竞争激烈，需明确自身能否跟上其节奏。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://accuquantbio.life.tsinghua.edu.cn",
+          "label": "网站/Website",
+          "type": "lab"
+        }
+      ],
+      "summary": "王建斌博士是清华大学长聘副教授，专注于分子病理测量技术开发，并利用自主技术研究新冠病毒、癌症和气道炎症等疾病机制。",
+      "_verification": [
+        "⚠️ homepage_candidates[0] 的 url 不在详情页外链列表中：http://accuquantbio.life.tsinghua.edu.cn..."
+      ]
+    },
+    {
+      "name": "王海峰",
+      "title": "副教授",
+      "research_interests": [
+        "开发CRISPR技术研究细胞发育生物学和疾病相关机理",
+        "开发CRISPR合成生物学工具从多维度研究基因组和转录组的调控机理",
+        "利用新型工具探求疾病发育过程中基因组和转录组的时空变化和基因调控的机理",
+        "精准医学：针对疾病相关的基因组或转录组异常，开发相应的诊断和靶向治疗方法"
+      ],
+      "current_focus": {
+        "text": "本实验室将在哺乳动物细胞及模式生物中，开发利用CRISPR技术研究细胞发育生物学和疾病相关机理，并应用于精准医学诊断治疗。",
+        "evidence": [
+          "本实验室将在哺乳动物细胞及模式生物中，开发利用CRISPR技术研究细胞发育生物学和疾病相关机理，并应用于精准医学诊断治疗。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2021-2025 清华大学生命科学学院 助理教授",
+          "2025-至今 清华大学生命科学学院 副教授"
+        ],
+        "note": "亲自带教和发文章意愿强，方向新但组刚起步，平台资源有限，适合敢闯敢拼、能独立扛课题的学生，但需接受初期试错和成果不确定性。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.wanglab-thu.org.cn/",
+          "label": "http://www.wanglab-thu.org.cn/",
+          "type": "lab"
+        }
+      ],
+      "summary": "王海峰博士是清华大学生命科学学院副教授，研究方向为利用CRISPR技术研究基因组调控和精准医学。",
+      "_verification": []
+    },
+    {
+      "name": "王童",
+      "title": "助理教授",
+      "research_interests": [
+        "人工智能+生物结构",
+        "AI驱动的生物分子动力学模拟",
+        "几何深度学习算法和生物结构基础模型",
+        "动力学模拟和动态结构模型应用于生物机理发现和药物设计"
+      ],
+      "current_focus": {
+        "text": "开发人工智能和深度学习算法对生物和药物分子进行表征学习、性质预测、动态模拟和结构设计，以揭示生命活动动态机理和助力药物发现。",
+        "evidence": [
+          "本实验室研究围绕“人工智能+生物结构”展开，开发人工智能和深度学习算法和技术对生物和药物分子进行表征学习、性质预测、动态模拟和结构设计，以期揭示生命活动的动态机理和助力药物发现"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2019-2025    微软研究院 高级研究员",
+          "2025-至今     清华大学生命学院 助理教授"
+        ],
+        "note": "青年建组期：亲自带人概率高、冲劲足，但方向刚起步，资源与产出尚在积累，适合敢闯敢拼、能接受不确定性的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "王童博士是清华大学生命学院助理教授，研究方向为人工智能与生物结构交叉领域，致力于开发AI算法用于生物分子模拟、建模与应用。",
+      "_verification": []
+    },
+    {
+      "name": "王志新",
+      "title": "教授，中国科学院院士",
+      "research_interests": [
+        "分子酶学",
+        "生物信息学"
+      ],
+      "current_focus": {
+        "text": "分子酶学与生物信息学，具体研究蛋白质激酶的自激活机制、MAPK信号通路调控等",
+        "evidence": [
+          "研究兴趣、领域： 分子酶学 生物信息学",
+          "Mechanistic studies of the autoactivation of PAK2: a two-step model of cis initiation followed by trans amplification.",
+          "A conserved motif in JNK/p38-specific MAPK phosphatases as a determinant for JNK1 recognition and inactivation."
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "1997年当选中国科学院院士",
+          "1999年当选第三世界科学院院士",
+          "2003 -至今    清华大学生命科学学院，教授"
+        ],
+        "note": "名头极响、资源雄厚，但日常指导多由小导师或博后代劳；申请前需查清组内是否有本科生一作先例，否则易成“挂名式”参与。"
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "本科生选修课程《蛋白质的结构、功能和进化》"
+        ],
+        "note": "开设本科生课程，但未明确说明招收本科生或访问学生。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "王志新教授是中国科学院院士，长期从事分子酶学和生物信息学研究，在蛋白质激酶自激活机制和MAPK信号通路调控方面有重要贡献。",
+      "_verification": []
+    },
+    {
+      "name": "魏迪明",
+      "title": "副教授",
+      "research_interests": [
+        "DNA纳米科技及其在材料科学与生命科学方面的应用"
+      ],
+      "current_focus": {
+        "text": "DNA纳米科技及其在材料科学与生命科学方面的应用",
+        "evidence": [
+          "DNA纳米科技及其在材料科学与生命科学方面的应用"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2014至今 清华大学生命科学学院  助理教授、副教授"
+        ],
+        "note": "亲自带教多、想法新、冲劲足，本科生进组机会较大；但组刚起步，平台积累和稳定产出尚在爬坡，需接受更多试错。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "魏迪明博士是清华大学副教授，研究方向为DNA纳米科技及其在材料科学与生命科学方面的应用。",
+      "_verification": []
+    },
+    {
+      "name": "吴琼",
+      "title": "副教授",
+      "research_interests": [
+        "合成生物学与再生医学",
+        "以RNA技术为核心的细胞状态感应与命运操控",
+        "基因与细胞治疗及原位再生修复"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于合成生物学与再生医学，包括构建复杂逻辑基因线路、开发原位再生修复技术、设计RNA元件及模块、开发原核真核跨界合成生物学装置。",
+        "evidence": [
+          "合成生物学与再生医学：以RNA技术为核心的细胞状态感应与命运操控，应用于基因与细胞治疗及原位再生修复。",
+          "1、运用合成生物学手段构建复杂逻辑基因线路，探究哺乳动物细胞在肿瘤进展、创伤愈合中的状态变化与调控。",
+          "2、开发原位再生修复技术，以肺纤维化、类风湿性关节炎、肠道炎症为模型，进行再生修复机理探索及细胞工程化改造。",
+          "3、理性设计RNA元件及模块，实现目的基因的可控复制和表达，为精准化疫苗平台的搭建提供技术支持。",
+          "4、开发原核真核跨界合成生物学装置，构建工程化底盘细胞，用于生物制造、生物治疗、人工生物系统重建等。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2001年8月—至今：清华大学生物科学与技术系讲师（2001）、副研究员（2006）、博士生导师（2010）、长聘副教授（2016）"
+        ],
+        "note": "组内资源与产出处于稳定上升期，导师指导精力较充沛，适合求稳深钻；但需确认其近年课题方向是否仍具前沿性，以及是否有本科生直接参与一作的机会。"
+      },
+      "recruitment": {
+        "level": "🟡",
+        "evidence": [
+          "目前承担生命学院本科生“基础遗传学实验”教学"
+        ],
+        "note": "原文提及承担本科生教学，但未明确说明招收本科生/实习生/访问学生。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "吴琼博士是清华大学长聘副教授，研究方向为合成生物学与再生医学，以RNA技术为核心，致力于细胞状态感应与命运操控，并应用于基因治疗及再生修复。",
+      "_verification": []
+    },
+    {
+      "name": "颉伟",
+      "title": "博士 教授 钱塘教授",
+      "research_interests": [
+        "表观遗传学",
+        "基因组学",
+        "发育生物学"
+      ],
+      "current_focus": {
+        "text": "研究动物胚胎早期发育和干细胞分化中的表观遗传调控机制，以及调控序列和三维基因组在发育和细胞命运决定中的功能。",
+        "evidence": [
+          "研究兴趣包括表观遗传学，基因组学和发育生物学。",
+          "本实验室将致力于：（1）动物胚胎早期发育过程中的表观遗传调控；（2）干细胞分化过程中的表观遗传调控；（3）调控序列如启动子、增强子、绝缘子以及三维基因组在发育和细胞命运决定过程中的功能；（4）表观遗传相关人类疾病的调控机理。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2013年-， 清华大学生命科学学院  助理教授、副教授、教授"
+        ],
+        "note": "组已过建组期，产出与资源较稳，适合求稳深钻；但需确认他近年是否仍亲自带学生，还是重心转向行政与申请大项目。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "颉伟是清华大学教授，专注于表观遗传学、基因组学和发育生物学，研究早期胚胎发育和干细胞分化中的表观遗传调控机制。",
+      "_verification": []
+    },
+    {
+      "name": "杨雪瑞",
+      "title": "教授",
+      "research_interests": [
+        "生物信息学与RNA生物学",
+        "多模态、跨尺度、复杂生命组学数据的人工智能挖掘策略",
+        "时空解析度下RNA转录后加工、定位、翻译过程的耦合与细胞特异性调控",
+        "非编码转录组生理功能的系统鉴定与分子机制解析",
+        "肿瘤等复杂疾病的RNA干预靶点鉴定与功能性人工RNA分子设计"
+      ],
+      "current_focus": {
+        "text": "开发新的生物信息与人工智能算法，解析遗传信息传递与调控机制，鉴定RNA干预靶点，指导RNA生物学过程的人工设计与改造。",
+        "evidence": [
+          "针对转录后RNA加工、翻译与非编码RNA调控等过程，开发新的生物信息与人工智能算法，通过复杂生命组学数据的深度挖掘与分子、细胞生物学机制研究，解析生理与病理状态下遗传信息多层级传递与调控的过程与机制，鉴定RNA干预靶点，指导RNA生物学过程的人工设计与改造。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2012-至今  清华大学生命科学学院，助理教授、副教授、教授"
+        ],
+        "note": "中年（2012年至今清华，从助理教授升至教授）：组已成熟稳定，资源充足，但上升期已过，需关注其近年论文产出与指导风格，适合求稳但竞争激烈。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，专注于生物信息学与RNA生物学，开发人工智能算法解析RNA调控机制。",
+      "_verification": []
+    },
+    {
+      "name": "张强锋",
+      "title": "副教授",
+      "research_interests": [
+        "RNA结构组技术及算法",
+        "单细胞基因组测序技术及算法",
+        "基于冷冻电镜的蛋白质结构建模",
+        "人工智能算法开发"
+      ],
+      "current_focus": {
+        "text": "实验室致力于人工智能和生命科学交叉领域研究，结合人工智能和大数据分析进行结构生物学、基因组学、RNA生物学等技术开发和科学问题研究，并探索人工智能在生命科学中的新范式。",
+        "evidence": [
+          "我们实验室致力于新兴的人工智能和生命科学交叉领域研究。",
+          "我们通过结合人工智能和大数据分析，进行结构生物学、基因组学、RNA生物学等技术开发和科学问题研究，研究兴趣包括并不限于RNA结构组技术及算法、单细胞基因组测序技术及算法、基于冷冻电镜的蛋白质结构建模等。",
+          "另外，我们还对一些人工智能算法开发特别感兴趣，特别是，现阶段人工智能方法能解决什么生命科学问题？生物医学数据的人工智能方法有哪些特殊的不同于其他人工智能领域之处？人工智能是否会带来生命科学研究的新的范式？"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2015-2018 清华大学生命科学学院 助理教授",
+          "2018-至今 清华大学生命科学学院 副教授"
+        ],
+        "note": "组已过建组期、产出稳定，导师有精力亲自指导但非手把手，适合想踏实做课题、求稳定产出的学生，竞争可能略高于青年组。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://zhanglab.net",
+          "label": "http://zhanglab.net",
+          "type": "lab"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，专注于人工智能与生命科学交叉领域，研究RNA结构、单细胞测序及冷冻电镜蛋白质结构建模等。",
+      "_verification": []
+    },
+    {
+      "name": "张维民",
+      "title": "助理教授",
+      "research_interests": [
+        "开发新一代哺乳动物基因组编写与编辑技术",
+        "构建新型动物和细胞模型",
+        "解析基因组中大尺度调控元件及复杂基因组区域的功能",
+        "揭示人类疾病发生发展的分子机制"
+      ],
+      "current_focus": {
+        "text": "开发新一代哺乳动物基因组编写与编辑技术，构建新型动物和细胞模型，重点解析基因组中大尺度调控元件及复杂基因组区域的功能，希望在更接近生理状态的模型中揭示人类疾病发生发展的分子机制，为疾病治疗提供新的理论基础和干预策略。",
+        "evidence": [
+          "本实验室致力于开发新一代哺乳动物基因组编写与编辑技术，构建新型动物和细胞模型，重点解析基因组中大尺度调控元件及复杂基因组区域的功能。",
+          "我们希望在更接近生理状态的模型中揭示人类疾病发生发展的分子机制，为疾病治疗提供新的理论基础和干预策略。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2023-2026 纽约大学医学院，研究助理教授",
+          "2026-至今 清华大学生科院，助理教授"
+        ],
+        "note": "青年建组初期，亲自带教意愿强、课题方向新，本科生进组机会较多；但组内资源、文章积累尚浅，需接受节奏快、成果周期不确定的现实。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://zhanglab.net",
+          "label": "",
+          "type": "lab"
+        }
+      ],
+      "summary": "张维民博士是清华大学助理教授，专注于基因组编写与编辑技术，利用动物和细胞模型研究疾病机制。",
+      "_verification": []
+    },
+    {
+      "name": "贾晓轩",
+      "title": "副教授",
+      "research_interests": [
+        "系统、计算和认知神经学",
+        "视觉系统层级结构的信息表征",
+        "单神经元大脑网络的动态信息传递"
+      ],
+      "current_focus": {
+        "text": "研究视觉系统层级结构如何表征信息以及单神经元大脑网络如何动态传递信息",
+        "evidence": [
+          "我们实验室致力于理解视觉系统的层级结构如何表征信息以及单神经元大脑网络如何动态传递信息。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2012-2015/美国麻省理工学院脑与认知科学系/博士后",
+          "2016-2022/美国艾伦脑科学研究所/独立研究员",
+          "2022-至今/清华大学生命科学学院/副教授"
+        ],
+        "note": "中年阶段且海外顶尖机构独立研究经历扎实，回国建组不久，资源与产出正处上升期，亲自指导概率高，但组内体系尚在搭建，适合求稳深钻且能适应快速节奏的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "贾晓轩博士是清华大学生命科学学院副教授，研究方向为系统、计算和认知神经科学，主要关注视觉系统的信息处理机制。",
+      "_verification": []
+    },
+    {
+      "name": "李坤",
+      "title": "副教授",
+      "research_interests": [
+        "情绪和社会行为的神经机制",
+        "大脑如何整合内在生理与情绪状态以及外界社会信息",
+        "异常情绪与社会行为障碍的精准干预新策略"
+      ],
+      "current_focus": {
+        "text": "研究情绪和社会行为的神经机制，重点关注大脑如何整合内在生理与情绪状态以及外界社会信息，并据此生成适应性或异常的社会行为策略。",
+        "evidence": [
+          "实验室长期致力于研究情绪和社会行为的神经机制，重点关注大脑如何整合内在生理与情绪状态以及外界社会信息，并据此生成适应性或异常的社会行为策略。",
+          "我们综合运用在体神经记录、行为分析、神经调控、神经计算、人工智能建模和组学测序前沿技术，系统解析这一过程的基本规律及其在两性差异、个体差异和精神障碍相关社会功能异常中的神经机制，并进一步发展面向异常情绪与社会行为障碍的精准干预新策略。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年9月-至今      清华大学生命科学学院，助理教授、副教授"
+        ],
+        "note": "亲自带教和发文章机会多，但组刚起步、方向可能未定型，需接受试错和资源有限，适合敢闯敢拼、想快速成长的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究情绪和社会行为的神经机制，运用多学科前沿技术，并致力于异常情绪与社会行为障碍的干预策略。",
+      "_verification": []
+    },
+    {
+      "name": "吝易",
+      "title": "副教授",
+      "research_interests": [
+        "生物大分子相分离及神经退行性疾病相关研究"
+      ],
+      "current_focus": {
+        "text": "解析生物大分子相分离的分子机制，探索神经系统中特异的无膜细胞器及其生理意义，并研究如何通过人工干预调控病理状态下的异常相变以治疗神经退行性疾病。",
+        "evidence": [
+          "清华大学吝易实验室主要致力于生物大分子相分离及神经退行性疾病相关研究。",
+          "1、解析驱动生物大分子相分离发生的分子机制。 2、探索神经系统中特异的无膜细胞器及理解其重要生理意义。 3、如何通过人工干预的手段调控病理状态下的异常相变，从而治疗神经退行性疾病。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年-至今  清华大学生命科学学院，助理教授、副教授"
+        ],
+        "note": "亲自带教多、想法新、冲劲足，本科生进组机会较大；但组刚起步，平台积累和稳定产出尚在爬坡，需接受试错期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "吝易博士是清华大学生命科学学院副教授，主要研究生物大分子相分离及其在神经退行性疾病中的作用。",
+      "_verification": []
+    },
+    {
+      "name": "米达",
+      "title": "副教授",
+      "research_interests": [
+        "大脑皮层发育过程中细胞命运决定和神经细胞多样性形成的分子、细胞调控机制",
+        "非人灵长类和人类特有的大脑皮层发育机制",
+        "多种发育性脑疾病（儿童脑胶质瘤、儿童癫痫、自闭症等）的分子病理机制研究"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于大脑皮层发育的细胞命运决定机制，以及人类特有的皮层发育和发育性脑疾病的分子病理机制。",
+        "evidence": [
+          "我们应用多种模式动物，结合单细胞测序、空间转录组测序、大脑类器官培养、细胞谱系追踪等技术手段，探索大脑皮层发育过程中细胞命运决定和神经细胞多样性形成的分子、细胞调控机制，以及非人灵长类和人类特有的大脑皮层发育机制。",
+          "同时，我们也开展多种发育性脑疾病（儿童脑胶质瘤、儿童癫痫、自闭症等）的分子病理机制研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020年-至今／清华大学生命科学学院／助理教授、副教授"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，方向可能多变，资源与论文积累有限；适合敢闯敢拼、能扛压的学生，但需确认导师能否提供稳定支持。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "米达博士是清华大学生命科学学院的副教授，研究方向为大脑皮层发育的细胞命运决定机制及发育性脑疾病的分子病理机制。",
+      "_verification": []
+    },
+    {
+      "name": "欧光朔",
+      "title": "教授",
+      "research_interests": [
+        "细胞生物学",
+        "神经发育"
+      ],
+      "current_focus": {
+        "text": "研究细胞骨架和信号分子调控不对称细胞分裂、定向细胞迁移、以及纤毛发生的机理",
+        "evidence": [
+          "我们以模式动物和哺乳类细胞为对象，综合运用超分辨活体成像、冷冻和常温电镜技术、条件性基因编辑和生化分析等方法，研究细胞骨架和信号分子调控不对称细胞分裂、定向细胞迁移、以及纤毛发生的机理。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2011-2013   中国科学院生物物理研究所，研究员，博士生导师",
+          "现任清华大学生命科学学院教授、博士生导师"
+        ],
+        "note": "中年（教授中段）：产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其当前课题组规模及亲自指导精力是否仍充足。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，研究方向为细胞生物学和神经发育，利用模式动物研究细胞骨架和信号分子调控的细胞分裂、迁移和纤毛发生。",
+      "_verification": []
+    },
+    {
+      "name": "时松海",
+      "title": "教授",
+      "research_interests": [
+        "神经生物学",
+        "神经系统发育组装",
+        "动物行为认知",
+        "神经干细胞调控",
+        "神经环路组装",
+        "神经发育疾病机制"
+      ],
+      "current_focus": {
+        "text": "研究哺乳动物大脑的组装和运行机制，集中于活体神经干细胞的调控、神经细胞的产生分化迁移、神经环路的精准组装和运行、以及动物行为的神经基础；同时致力于与神经发育和功能相关的重大疾病如小脑症和自闭症的致病机制研究。",
+        "evidence": [
+          "我们运用神经生物学（如电生理和成像）、遗传学、分子、细胞和发育生物学等方法研究哺乳动物大脑的组装和运行机制，集中于活体神经干细胞的调控、神经细胞的产生分化迁移、神经环路的精准组装和运行、以及动物行为的神经基础；同时致力于与神经发育和功能相关的重大疾病如小脑症和自闭症的致病机制研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2006-2019／美国纪念斯隆-凯特琳癌症中心／助理研究员／副研究员／研究员",
+          "2006-2019／美国康奈尔医学院／助理教授／副教授／教授",
+          "2019-至今／清华大学生命科学学院 & 清华大学-IDG/麦戈文脑科学研究院／教授 & 院长"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需确认组内是否有本科生直接参与核心课题的先例。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "时松海教授是神经生物学领域的资深学者，现任清华大学生命科学学院教授及麦戈文脑科学研究院院长，主要研究哺乳动物大脑的组装与运行机制。",
+      "_verification": []
+    },
+    {
+      "name": "姚骏",
+      "title": "副教授",
+      "research_interests": [
+        "情感障碍（双相情感障碍和抑郁症）的发病机理",
+        "遗传学、分子和神经环路"
+      ],
+      "current_focus": {
+        "text": "课题组致力于从遗传学、分子和神经环路等多个维度阐明情感障碍（双相情感障碍和抑郁症）的发病机理。",
+        "evidence": [
+          "课题组致力于从遗传学、分子和神经环路等多个维度阐明情感障碍（双相情感障碍和抑郁症）的发病机理。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2013-             清华大学生命科学学院                                          助理教授、副教授"
+        ],
+        "note": "产出与资源相对稳定的窗口期，适合求稳深钻，但需确认其近年是否仍亲自带学生、组内方向是否已固化。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://www.yaolablife.com/",
+          "label": "实验室主页",
+          "type": "lab"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究情感障碍的发病机理，利用iPSC、类脑和小鼠模型等。",
+      "_verification": [
+        "⚠️ homepage_candidates[0] 的 url 不在详情页外链列表中：https://www.yaolablife.com/..."
+      ]
+    },
+    {
+      "name": "于典昆",
+      "title": "助理教授",
+      "research_interests": [
+        "神经发育",
+        "神经免疫"
+      ],
+      "current_focus": {
+        "text": "利用人源性模型如类器官、人类胚脑组织等，结合转基因小鼠模型、单细胞测序、CRISPR-Cas9筛选等技术探索人脑的发育机制、神经免疫调控网络及神经元–胶质细胞互作规律。",
+        "evidence": [
+          "本实验室致力于神经发育及神经免疫领域研究，利用人源性模型如类器官、人类胚脑组织等，结合转基因小鼠模型、单细胞测序、CRISPR-Cas9 筛选、以及其他分子和细胞生物学技术来探索人脑的发育机制、神经免疫调控网络及神经元–胶质细胞互作规律。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2026-至今 清华大学生命科学学院，助理教授",
+          "2018-2024 加州大学旧金山分校， 博士后"
+        ],
+        "note": "亲自带教概率高、冲劲足，方向新但组尚在积累期；适合敢闯敢拼者，但需留意设备与文章产出尚不稳定。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院助理教授，专注于神经发育与神经免疫研究，利用类器官等模型探索人脑发育机制。",
+      "_verification": []
+    },
+    {
+      "name": "张伟",
+      "title": "副教授",
+      "research_interests": [
+        "神经生物学",
+        "体内感受的分子与神经环路机制",
+        "神经-器官双向通讯与生理调控"
+      ],
+      "current_focus": {
+        "text": "研究大脑与体内器官的双向交流，探讨体内感受的分子与神经环路机制，并进行神经-器官双向通讯与生理调控的多维度研究。",
+        "evidence": [
+          "大脑与体内器官的双向交流由复杂的神经和激素系统控制，对维持人体的生理和心理稳态起着至关重要的作用。",
+          "我们实验室采用“受体的生物物理学--神经元的细胞生物学—神经环路的功能学—动物行为学”这一自下而上的模式，探讨体内感受的分子与神经环路机制, 并进行神经-器官双向通讯与生理调控的多维度研究。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2017年至今   清华大学生命科学学院      助理教授、副教授"
+        ],
+        "note": "中年副教授，建组约7年，资源与产出已趋稳，但仍在上升期；亲自带学生概率中等，适合求稳且想发扎实文章的学生，需主动争取指导机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究大脑与器官双向交流的神经机制，特别是体内感受的分子与环路基础。",
+      "_verification": []
+    },
+    {
+      "name": "赵昕宇",
+      "title": "副教授",
+      "research_interests": [
+        "神经生物学",
+        "计算科学"
+      ],
+      "current_focus": {
+        "text": "研究大脑学习的算法，包括神经网络在学习过程中调整神经元连接的算法，以及抽象知识迁移的机制。",
+        "evidence": [
+          "我们关注的问题是：大脑是如何学习的？",
+          "具体来讲，我们希望借助神经生物学与计算科学的结合，回答以下两个方面的问题：1. 神经网络通过什么样的算法在学习过程中调整神经元之间的连接？ 2. 神经网络如何做到将已学习到的抽象知识迁移到之后新的学习任务中？"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2022-现在，清华大学生命科学学院，助理教授、副教授",
+          "2014-2021，美国霍华德休斯医学研究所Janelia研究园区，博士后/研究科学家"
+        ],
+        "note": "青年建组期，亲自带人意愿强、课题方向新，本科生进组机会较大，但实验室声誉和稳定产出尚在积累，需主动争取资源。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "赵昕宇博士是清华大学生命科学学院的副教授，研究大脑学习机制，结合神经生物学与计算科学。",
+      "_verification": []
+    },
+    {
+      "name": "钟毅",
+      "title": "教授",
+      "research_interests": [
+        "学习、记忆和遗忘的生物学机制",
+        "人类记忆相关疾病病理机制的研究和潜在治疗药物的开发",
+        "生物智能的深层机理并为人工智能的研究提供启发"
+      ],
+      "current_focus": {
+        "text": "综合利用果蝇和小鼠等模式生物的研究优势，探究学习、记忆和遗忘的生物学机制。",
+        "evidence": [
+          "综合利用果蝇和小鼠等模式生物的研究优势，探究学习、记忆和遗忘的生物学机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2013年至今，清华大学生命科学学院              教授",
+          "2004-2013年，美国冷泉港实验室                   教授"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需核实组内是否有本科生一作先例，且竞争激烈、自主性要求高。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "钟毅教授是清华大学生命科学学院的教授，长期研究学习记忆与遗忘的神经机制，并探索相关疾病治疗与人工智能启发。",
+      "_verification": []
+    },
+    {
+      "name": "张颖",
+      "title": "副教授",
+      "research_interests": [
+        "神经生物学",
+        "丘脑的非转导功能及其在神经精神疾病中的作用"
+      ],
+      "current_focus": {
+        "text": "结合基因编辑、电生理、在体钙成像等技术，从基因到环路等多个层面探索丘脑的“非转导”功能及其在各种神经精神疾病中的作用，以求找到相应的丘脑靶向的致病治疗策略。",
+        "evidence": [
+          "我们结合基因编辑，电生理，在体钙成像等技术，从基因到环路等多个层面探索丘脑的“非转导”功能及其在各种神经精神疾病中的作用，以求找到相应的丘脑靶向的致病治疗策略。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2023-至今 清华大学生命科学学院，助理教授、副教授"
+        ],
+        "note": "亲自带人概率高、冲劲足，但组刚起步，课题和资源在积累期，适合敢闯敢拼、能扛压的学生，需主动争取机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "张颖博士是清华大学生命科学学院的副教授，主要研究丘脑的非转导功能及其在神经精神疾病中的作用。",
+      "_verification": []
+    },
+    {
+      "name": "张元龙",
+      "title": "助理教授",
+      "research_interests": [
+        "神经生物学",
+        "光学与计算方法",
+        "大规模在体神经记录",
+        "神经环路计算模型",
+        "类脑智能"
+      ],
+      "current_focus": {
+        "text": "开发新型光学与计算方法，提升大规模在体神经记录的时空通量、准确性及成像深度极限，并探索感觉信息编码、神经表征与内部状态交互、类脑智能等核心问题。",
+        "evidence": [
+          "为解决这一问题，我们开创了一系列新型光学与计算方法，持续提升大规模在体神经记录的时空通量、准确性及成像深度极限，并深入理解神经环路的计算模型。",
+          "依托这些技术，我们致力于探索以下核心问题： • 信息论与计算层面：感觉信息如何在哺乳动物大脑的不同处理层次上编码、转换与表征； • 系统神经科学层面：神经表征如何与内部状态（如动机、注意力和记忆）交互，以驱动特定行为； • 类脑智能层面：基于大脑工作机制优化人工神经网络的开发。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2025—至今     清华大学 生命科学学院 助理教授",
+          "2022—2024    清华大学 自动化系 博士后"
+        ],
+        "note": "青年助理教授刚建组，亲自带人概率高、冲劲足，本科生机会相对多，但组的名声、设备和资源可能还在积累期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "张元龙博士是清华大学生命科学学院助理教授，专注于开发新型光学与计算方法以研究大脑功能网络，并探索神经编码、内部状态交互及类脑智能。",
+      "_verification": []
+    },
+    {
+      "name": "陈浩东",
+      "title": "副教授",
+      "research_interests": [
+        "植物生物学",
+        "植物重力感受与信号传递机制",
+        "植物向重力性方向决定机制",
+        "植物地上株型与根系构型调控机制及其应用"
+      ],
+      "current_focus": {
+        "text": "研究植物重力感受与信号传递机制，并应用于农业生产实践，具体包括植物感受重力的机制、向重力性方向决定机制、株型与根系构型调控机制。",
+        "evidence": [
+          "本实验室综合运用小立碗藓、拟南芥、大豆等植物材料，探究植物中重力感受与信号传递的机制，并致力于将这些机制应用于农业生产实践。",
+          "具体研究：（1）植物感受重力的机制；（2）植物向重力性方向决定的机制;（3）植物地上株型与根系构型的调控机制及其应用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2010 – 2020    北京大学生命科学学院 副研究员",
+          "2020 – 2023     清华大学生命科学学院 助理教授",
+          "2023 – 至今     清华大学生命科学学院 副教授"
+        ],
+        "note": "组处于上升期但未完全定型，资源与产出较稳，亲自指导仍较多，适合想兼顾深度与成长空间的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究植物重力感受与信号传递机制，并致力于将基础研究应用于农业生产实践。",
+      "_verification": []
+    },
+    {
+      "name": "方晓峰",
+      "title": "副教授",
+      "research_interests": [
+        "生物大分子相分离",
+        "植物生物学"
+      ],
+      "current_focus": {
+        "text": "研究相分离在植物生长发育和应对胁迫过程中的作用及机制",
+        "evidence": [
+          "实验室综合利用遗传学、生物化学、生物信息学、细胞生物学等手段研究相分离在植物生长发育和应对胁迫过程中的作用及机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020 - 至今 清华大学生命科学学院, 助理教授、副教授"
+        ],
+        "note": "亲自带教多、想法新、冲劲足，本科生进组机会较大；但平台积累尚浅，需主动争取资源，且成果稳定性待观察。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/myncbi/xiaofeng.fang.1/bibliography/public/",
+          "label": "https://www.ncbi.nlm.nih.gov/myncbi/xiaofeng.fang.1/bibliography/public/",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究生物大分子相分离在植物中的功能与机制。",
+      "_verification": []
+    },
+    {
+      "name": "黄善金",
+      "title": "教授",
+      "research_interests": [
+        "细胞骨架动态组装调控机制和生物学功能",
+        "无膜细胞器的组装、功能和调控机制"
+      ],
+      "current_focus": {
+        "text": "综合分子遗传学、生物化学和细胞生物学等手段，解析植物生长发育以及植物与环境互作的细胞生物学机制",
+        "evidence": [
+          "综合分子遗传学、生物化学和细胞生物学等手段，解析植物生长发育以及植物与环境互作的细胞生物学机制，具体研究： 1） 细胞骨架动态组装调控机制和生物学功能； 2） 无膜细胞器的组装、功能和调控机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2006~2016 中国科学院植物研究所 研究员",
+          "2014~至今 清华大学生命科学学院  副教授、教授"
+        ],
+        "note": "产出稳定、平台资源好，适合求稳深钻；但组内规模可能较大，需确认他是否亲自指导你，而非交给小导师或博后。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，研究植物细胞骨架动态调控及无膜细胞器机制。",
+      "_verification": []
+    },
+    {
+      "name": "刘栋",
+      "title": "教授",
+      "research_interests": [
+        "植物对营养胁迫反应的信号转导机制",
+        "调控植物根系发育的分子基础"
+      ],
+      "current_focus": {
+        "text": "近期研究植物对磷饥饿的转录调控、根发育响应及铁信号等机制",
+        "evidence": [
+          "PHOSPHATE RESPONSE 1 family members act distinctly to regulate transcriptional responses to phosphate starvation.",
+          "Root developmental responses to phosphorus nutrition.",
+          "Genetic dissection of Fe-dependent signaling in root developmental responses to phosphate deficiency."
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2005-现在 清华大学 教授",
+          "1984年 华东师范大学 学士",
+          "1994年 美国普渡大学 博士"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需先查组内近年本科生一作或独立课题先例，判断实际参与度。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，长期从事植物营养胁迫信号转导和根系发育分子机制研究。",
+      "_verification": []
+    },
+    {
+      "name": "刘玉乐",
+      "title": "教授",
+      "research_interests": [
+        "植物免疫的信号传导与调控",
+        "植物病毒病理的分子基础",
+        "植物细胞自噬",
+        "植物功能基因组"
+      ],
+      "current_focus": {
+        "text": "近期研究集中在植物免疫信号传导、植物病毒病理、细胞自噬及功能基因组学，并发表了多篇高水平论文。",
+        "evidence": [
+          "植物免疫的信号传导与调控、植物病毒病理的分子基础、植物细胞自噬、植物功能基因组。",
+          "Wang Z, Han L, Gao L, Zhang L, Xie Y, Liu H, Fan J, Wu M, Yue N, Wang Y, Han M, Sun T, Ding Q, Zheng X, Cao J, Shen X, Wang H, Aizitili T, Wu C, Wu X, Liu Z, Hong Y, Lei X*, Liu Y* . Genetic basis of phytoalexin-mediated chemical defense in plants, Cell. 189(13):4059-4074, 2026"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2007.1 ---至今        清华大学                              教授，\"百人计划\"责任教授"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需确认组内是否有本科生一作先例，避免沦为“挂名”经历。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "刘玉乐是清华大学教授，长期从事植物免疫、病毒病理及细胞自噬等研究，成果丰硕。",
+      "_verification": [
+        "⚠️ career_stage 的 evidence 在原文中找不到：2007.1 ---至今        清华大学                          ..."
+      ]
+    },
+    {
+      "name": "戚益军",
+      "title": "教授",
+      "research_interests": [
+        "植物RNA生物学和表观遗传"
+      ],
+      "current_focus": {
+        "text": "研究植物中RNA调控的生物学功能和作用机制、表观遗传信息的跨代传递机制、RNA和表观遗传调控在作物重要农艺性状形成中的作用",
+        "evidence": [
+          "植物RNA生物学和表观遗传。主要研究：1）植物中RNA调控的生物学功能和作用机制；2）表观遗传信息的跨代传递机制；3）RNA和表观遗传调控在作物重要农艺性状形成中的作用。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2011-至今，清华大学生命科学学院，副教授、教授"
+        ],
+        "note": "名头响、资源多，但日常指导多由小导师或博后承担，需确认组内是否有本科生一作先例，避免“挂名式”参与。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        },
+        {
+          "url": "http://f1000.com/prime/14263986",
+          "label": "http://f1000.com/prime/14263986",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院教授，主要研究植物RNA生物学和表观遗传学。",
+      "_verification": []
+    },
+    {
+      "name": "齐天从",
+      "title": "副教授",
+      "research_interests": [
+        "植物与病原微生物互作机理解析",
+        "植物抗病免疫分子机制及病原菌致病机理"
+      ],
+      "current_focus": {
+        "text": "实验室致力于植物与病原微生物互作机理解析，结合遗传学、细胞生物学、生物信息学和结构生物学等策略，研究植物抗病免疫分子机制及病原菌致病机理，为植物抗病育种与生产提供线索。",
+        "evidence": [
+          "实验室致力于植物与病原微生物互作机理解析，结合遗传学、细胞生物学、生物信息学和结构生物学等策略，研究植物抗病免疫分子机制及病原菌致病机理，为植物抗病育种与生产提供线索。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2019 – 2022      清华大学生命科学学院, 助理教授",
+          "2023-至今          清华大学生命科学学院, 副教授"
+        ],
+        "note": "亲自带教意愿强、课题方向新但尚未定型，本科生进组机会较大；但组内积累有限，需主动争取资源，且成果发表周期可能偏长。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "齐天从博士是清华大学副教授，研究方向为植物与病原微生物互作，聚焦植物抗病免疫分子机制。",
+      "_verification": []
+    },
+    {
+      "name": "孙前文",
+      "title": "副教授",
+      "research_interests": [
+        "植物生物学",
+        "基因组调控",
+        "染色质状态",
+        "半自主细胞器"
+      ],
+      "current_focus": {
+        "text": "研究新型染色质状态Transcription Resistive的形成与调控机制和生物学意义，以及半自主细胞器的发育和发生机制。",
+        "evidence": [
+          "我们实验室感兴趣各个层面的基因组调控事件，近期研究重点：（1）一种新型染色质状态Transcription Resistive的形成与调控机制和生物学意义；（2）半自主细胞器的发育和发生机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2022-今        副教授，清华大学 生命科学学院",
+          "2014-2021    助理教授，清华大学 生命科学学院"
+        ],
+        "note": "组已过建组期、处于产出稳定上升期，资源人脉较扎实，但导师精力可能被行政分散，需确认实际带教投入及近三年学生去向。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，研究植物基因组调控，重点关注新型染色质状态和半自主细胞器。",
+      "_verification": []
+    },
+    {
+      "name": "王继纵",
+      "title": "助理教授",
+      "research_interests": [
+        "植物光感知、信号转导与能量利用",
+        "植物红光/远红光信号转导",
+        "光合色素的生物合成"
+      ],
+      "current_focus": {
+        "text": "聚焦植物光感知、信号转导与能量利用的前沿领域，综合运用生物化学、结构生物学及遗传学等多学科手段，研究植物红光/远红光信号转导和光合色素的生物合成。",
+        "evidence": [
+          "本实验室聚焦植物光感知、信号转导与能量利用的前沿领域，综合运用生物化学、结构生物学及遗传学等多学科手段，致力于以下研究： 1.植物红光/远红光信号转导； 2.光合色素的生物合成。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020 - 2025 北京大学现代农学院 助理教授",
+          "2025 - 至今 清华大学生命科学学院 助理教授"
+        ],
+        "note": "亲自带人概率高、冲劲足，但刚换校建组，平台与资源尚在重搭，课题方向或有调整期，适合敢闯敢试、能扛不确定性的学生。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "王继纵博士是清华大学生命科学学院助理教授，主要研究植物光信号转导和光合色素合成，利用结构生物学等手段揭示植物光敏色素的作用机制。",
+      "_verification": []
+    },
+    {
+      "name": "谢道昕",
+      "title": "教授",
+      "research_interests": [
+        "植物生物学",
+        "植物激素调控植物生长发育和防御反应的分子机制",
+        "茉莉素和独脚金内酯的受体感知机制"
+      ],
+      "current_focus": {
+        "text": "研究植物激素调控植物生长发育和防御反应的分子机制，以及茉莉素和独脚金内酯的受体感知机制。",
+        "evidence": [
+          "谢道昕实验室主要从事植物激素的研究工作，研究植物激素调控植物生长发育和防御反应的分子机制，研究茉莉素和独脚金内酯的受体感知机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "中国科学院院士",
+          "2006-现在：清华大学（教授）"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需留意组内是否有本科生一作先例，且竞争激烈、自主性要求高。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息。"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "谢道昕是清华大学教授、中国科学院院士，长期从事植物激素特别是茉莉素和独脚金内酯的受体感知与信号传导机制研究。",
+      "_verification": []
+    },
+    {
+      "name": "陈功",
+      "title": "讲师",
+      "research_interests": [
+        "鸟类的鸣声和羽饰在物种间和物种内的分化现象、分化的可能原因以及分化所起到的作用",
+        "鸟类鸣声的语法特征及其演化，以及鸟类鸣声与人类音乐的相似之处"
+      ],
+      "current_focus": {
+        "text": "研究鸟类鸣声和羽饰的分化及鸣声语法演化",
+        "evidence": [
+          "1. 鸟类的鸣声和羽饰在物种间和物种内的分化现象、分化的可能原因以及分化所起到的作用",
+          "2. 鸟类鸣声的语法特征及其演化，以及鸟类鸣声与人类音乐的相似之处"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020-2022年 清华大学生命科学学院，博士后",
+          "2022年8月-现在 清华大学生命科学学院，讲师"
+        ],
+        "note": "青年讲师刚独立建组，亲自带人意愿强、冲劲足，本科生进组机会较多；但组内资源、文章积累尚浅，需做好从零打拼的心理准备。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院讲师，研究鸟类鸣声与羽饰的演化及鸣声语法，具有南极科考经历。",
+      "_verification": []
+    },
+    {
+      "name": "陈金春",
+      "title": "副教授",
+      "research_interests": [
+        "工业微生物学",
+        "生物化工",
+        "生物材料"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于PHA共聚物的生物合成、代谢工程改造以及相关微生物发酵工程。",
+        "evidence": [
+          "Production of PHA copolymers consisting of 3-hydroxybutyrate and 3-hydroxyhexanoate (PHBHHx) by recombinant Halomonas bluephagenesis.",
+          "Engineering biosynthesis of polyhydroxyalkanoates (PHA) for diversity and cost reduction."
+        ]
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2005-现在  清华大学      生命科学学院          副教授"
+        ],
+        "note": "组内产出与资源处于稳定期，适合求稳深钻；但副教授阶段可能带学生数量有限，需确认是否有直接指导名额及一作机会。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "陈金春是清华大学生命科学学院的副教授，长期从事工业微生物学、生物化工和生物材料研究，尤其在PHA生物合成与代谢工程方面有丰富成果。",
+      "_verification": []
+    },
+    {
+      "name": "韩再铭",
+      "title": "讲师",
+      "research_interests": [
+        "微塑料污染对软体动物合浦珠母贝生物矿化的影响及其作用机制",
+        "利用嗜盐单胞菌合成生物可降解塑料PHA及自调控系统的开发应用"
+      ],
+      "current_focus": {
+        "text": "研究微塑料污染对软体动物生物矿化的影响，以及利用嗜盐单胞菌合成生物可降解塑料PHA及自调控系统的开发应用。",
+        "evidence": [
+          "微塑料污染对软体动物合浦珠母贝生物矿化的影响及其作用机制",
+          "利用嗜盐单胞菌合成生物可降解塑料PHA及自调控系统的开发应用"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2022-2026年 清华大学生命科学学院，博士后",
+          "2026年1月-至今 清华大学生命科学学院，讲师"
+        ],
+        "note": "刚起步的年轻导师，亲自带教意愿强、科研冲劲足，学生能深度参与课题；但组内资源、平台积累有限，成果产出和学术影响力尚在爬坡期。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "韩再铭博士是清华大学生命科学学院讲师，研究微塑料对软体动物生物矿化的影响及生物可降解塑料的合成，并承担多门课程教学。",
+      "_verification": []
+    },
+    {
+      "name": "李珍",
+      "title": "教授",
+      "research_interests": [
+        "脂联素多聚体形成和分泌的分子机制",
+        "2型糖尿病新型药物靶点的筛选与鉴定"
+      ],
+      "current_focus": {
+        "text": "近期研究聚焦于脂联素多聚体形成和分泌的分子机制，以及2型糖尿病新型药物靶点的筛选与鉴定。",
+        "evidence": [
+          "脂联素多聚体形成和分泌的分子机制",
+          "2型糖尿病新型药物靶点的筛选与鉴定"
+        ]
+      },
+      "career_stage": {
+        "stage": "资深",
+        "evidence": [
+          "2004年-至今   清华大学生命科学学院     副教授、教授"
+        ],
+        "note": "名头响、资源多，但日常指导可能由小导师或博后承担，需留意组内是否有本科生一作先例，避免期望落差。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "李珍是清华大学生命科学学院的教授，研究脂联素多聚体形成和分泌的分子机制及2型糖尿病药物靶点，并教授本科生课程。",
+      "_verification": []
+    },
+    {
+      "name": "王田",
+      "title": "副教授",
+      "research_interests": [
+        "能量稳态的维持",
+        "转录因子和共转录因子在压力环境下对机体代谢的调节机制"
+      ],
+      "current_focus": {
+        "text": "研究转录因子和共转录因子在压力环境下对机体代谢的调节机制",
+        "evidence": [
+          "我们利用分子生物学，遗传学，生物化学和生物信息学等方法，研究转录因子和共转录因子在压力环境下，对机体代谢的调节机制。"
+        ]
+      },
+      "career_stage": {
+        "stage": "青年",
+        "evidence": [
+          "2020.09-至今／清华大学生命科学学院／讲师、副教授"
+        ],
+        "note": "亲自带教概率高、想法新、冲劲足，本科生易获深度参与；但组刚起步，资源、文章积累和稳定产出尚在爬坡期，需接受试错风险。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "王田博士是清华大学生命科学学院的副教授，研究能量稳态和代谢调控，曾获多项教学奖项。",
+      "_verification": []
+    },
+    {
+      "name": "杨扬",
+      "title": "副教授",
+      "research_interests": [],
+      "current_focus": {
+        "text": null,
+        "evidence": []
+      },
+      "career_stage": {
+        "stage": "中年",
+        "evidence": [
+          "2012年－至今  清华大学生命科学学院          讲师、副教授"
+        ],
+        "note": "组已过建组期，产出和经费相对稳定，适合求稳深钻；但讲师/副教授阶段带学生精力仍足，需确认其独立PI身份及实际指导投入。"
+      },
+      "recruitment": {
+        "level": "⚪",
+        "evidence": null,
+        "note": "原文未提及招生信息"
+      },
+      "homepage_candidates": [
+        {
+          "url": "http://www.cls.edu.cn/",
+          "label": "生命科学联合中心",
+          "type": "other"
+        }
+      ],
+      "summary": "清华大学生命科学学院副教授，主要教学方向为现代生物学导论、生命科学简史等，曾获多项教学奖项。",
+      "_verification": []
+    },
+    {
+      "name": "杜万清",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "付彦",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "雷建林",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李艳",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "刘晓蕙",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "刘媛",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "马健",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "钱文丽",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "阮华斌",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "孙珊",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "邵雯",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "单晓昳",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "王燕",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "吴赴清",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "吴小童",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "徐俐",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "徐倩华",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "袁亚飞",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "周瑞",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "靳雪芹",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李张强",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "臧杰",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "陈宇凌",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "常在",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "崔立虹",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "丁晓岚",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "范仕龙",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "冯倩倩",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "江轶",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李鹏",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李德",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李英",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李文奇",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李晓敏",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "李玉明",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "刘春春",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "罗雪春",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "麻彩萍",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "王菁兰",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "王伟",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "王文娟",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "王宏英",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "王喆旻",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "魏香",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "谢忠忱",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "徐梦雪",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "徐宁",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "徐艳姬",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "杨涛",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "杨帆",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "张静",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    },
+    {
+      "name": "周昵昀",
+      "skipped": true,
+      "reason": "无详情页",
+      "_verification": []
+    }
+  ]
+}
