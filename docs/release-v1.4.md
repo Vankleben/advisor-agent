@@ -1,0 +1,26 @@
+## 新增
+
+- **Europe PMC 数据源** — 覆盖 PubMed 及 Cell / Nature / Molecular Cell 等生物医学期刊。
+  之前查不到生物医学方向老师的论文，根本原因是 arXiv 以 CS / 物理 / 数学为主，生命科学论文基本不在上面。
+- 支持机构过滤（如 Tsinghua），用 AFF 字段排除同名学者。
+
+## 修复
+
+- 作者名匹配兼容 Europe PMC 的「姓 + 名缩写」格式（Shen X ↔ Xiaohua Shen）。
+
+## Agent 行为改进
+
+- search_papers 改为双源返回（arXiv + Europe PMC），新增 affiliation 参数。
+- 明确规则：**若两个源的检索结果方向都与老师的实际方向不符，判定为同名学者，如实告知「未检索到本人论文」，绝不把别人的论文当成果硬报。**
+
+## 实测效果
+
+查询某位非编码 RNA 方向教授：
+
+| | 修复前 | 修复后 |
+|---|---|---|
+| 检索结果 | 3 篇（**地质/岩石断裂方向，同名学者污染**） | 10 篇真实论文 |
+| 期刊 | 无 | Cell 2025 / Nature Structural & Molecular Biology / Molecular Cell ×2 / Nature Genetics ×2 / Cell Stem Cell |
+| 末位作者（导师主导） | — | 5 篇 |
+
+> 这个案例也验证了反幻觉设计的价值：工具如实报告了「查到的论文和老师方向不符」，而不是假装查到了。
