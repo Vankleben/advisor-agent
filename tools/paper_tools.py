@@ -59,6 +59,67 @@ def search_papers(author_en: str, max_results: int = 15) -> list[dict]:
     return papers
 
 
+def search_europepmc(author_en: str, affiliation: str = "", max_results: int = 15) -> list[dict]:
+    """
+    按作者英文名检索 Europe PMC（覆盖 PubMed + 预印本，即 Cell/Nature/... 等生物医学期刊）。
+    适配 arXiv 检索不到的方向（生命科学/医学）。
+
+    同名去歧义：给了 affiliation（如 "Tsinghua"）时按机构过滤，能过滤掉绝大多数同名学者。
+    作者检索是模糊匹配，逐个确认目标作者真的在作者列表里；末位作者标记沿用 arXiv 侧语义。
+    """
+    query = f'AUTH:"{author_en}"'
+    if affiliation:
+        query += f' AND AFF:"{affiliation}"'
+    params = {"query": query, "format": "json", "pageSize": max_results,
+              "sort": "P_PDATE_D desc", "resultType": "core"}
+    r = requests.get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+                     params=params, headers=HEADERS, timeout=30)
+    r.raise_for_status()
+
+    papers = []
+    # Europe PMC 返回的作者名多为 "Shen X"（姓 + 名缩写）或全名，需兼容两种格式匹配
+    parts = author_en.split()
+    last = parts[-1].lower()          # Xiaohua Shen -> shen
+    first_init = parts[0][0].lower() if parts else ""   # -> x
+
+    def _match(a: str) -> bool:
+        al = a.lower().replace("-", " ").strip()
+        if author_en.lower().replace("-", " ") in al:      # 全名直接命中
+            return True
+        toks = al.split()
+        if not toks:
+            return False
+        # "shen x" / "shen, x" 形式：姓在末位 token 或首 token
+        if last in toks[0] and len(toks) >= 2 and toks[1].startswith(first_init):
+            return True
+        if last in toks[-1] and len(toks) >= 2 and toks[0].startswith(first_init):
+            return True
+        return False
+
+    for it in r.json().get("resultList", {}).get("result", []):
+        auth_list = ((it.get("authorList") or {}).get("author") or [])
+        authors = [a.get("fullName") or a.get("lastName", "") for a in auth_list]
+        pos = next((i for i, a in enumerate(authors) if _match(a)), None)
+        if pos is None:
+            continue
+        jinfo = (it.get("journalInfo") or {}).get("journal") or {}
+        papers.append({
+            "source": "europepmc",
+            "pmid": it.get("pmid", ""),
+            "doi": it.get("doi", ""),
+            "title": (it.get("title") or "").rstrip("."),
+            "journal": jinfo.get("title") or it.get("bookOrReportDetails", {}).get("publisher", ""),
+            "published": str(it.get("pubYear") or ""),
+            "authors": authors,
+            "author_position": f"{pos + 1}/{len(authors)}" if authors else "",
+            "is_last_author": bool(authors) and pos == len(authors) - 1 and len(authors) > 1,
+            "url": (f"https://pubmed.ncbi.nlm.nih.gov/{it['pmid']}/" if it.get("pmid")
+                    else f"https://doi.org/{it.get('doi', '')}"),
+            "abstract": " ".join((it.get("abstractText") or "").split())[:800],
+        })
+    return papers
+
+
 def resolve_arxiv_id(arg: str) -> str:
     """支持两种输入：arXiv id 直接返回；纯数字视为最近一次搜索结果的序号。"""
     if re.fullmatch(r"\d{1,3}", arg):

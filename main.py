@@ -28,7 +28,7 @@ PAPERS_DIR = DATA_DIR / "papers"
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "tools"))
 from config import PROVIDER, API_KEY
-from paper_tools import search_papers, fetch_paper
+from paper_tools import search_papers, search_europepmc, fetch_paper
 import analyze_paper as ap
 import critique_thinking as ct
 import advisor_deepdive as ad
@@ -203,19 +203,40 @@ def tool_monitor_show() -> str:
 
 # ============ 工具二：论文链路 ============
 
-def tool_search_papers(author_en: str) -> str:
-    """按作者英文名查 arXiv 近期论文"""
+def tool_search_papers(author_en: str, affiliation: str = "") -> str:
+    """双源检索论文：arXiv（CS/物理/数学）+ Europe PMC（生物医学期刊）。
+    有 affiliation 时用 Europe PMC 按机构过滤，解决同名学者混淆。"""
+    result = {}
+    # 源1：arXiv
     try:
-        papers = search_papers(author_en)
+        arxiv = search_papers(author_en)
+        result["arXiv"] = [
+            {"序号": i, "id": p["arxiv_id"], "发表": p["published"], "标题": p["title"],
+             "作者位置": p["author_position"], "末位作者": p["is_last_author"]}
+            for i, p in enumerate(arxiv)]
+        (PAPERS_DIR / f"search_{author_en.replace(' ', '_')}.json").write_text(
+            json.dumps(arxiv, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception as e:
-        tb = traceback.format_exc()[-500:]
-        return json.dumps({"error": f"检索失败：{e}", "traceback": tb}, ensure_ascii=False)
-    out = PAPERS_DIR / f"search_{author_en.replace(' ', '_')}.json"
-    out.write_text(json.dumps(papers, ensure_ascii=False, indent=2), encoding="utf-8")
-    brief = [{"序号": i, "id": p["arxiv_id"], "发表": p["published"],
-              "标题": p["title"], "作者位置": p["author_position"],
-              "末位作者": p["is_last_author"]} for i, p in enumerate(papers)]
-    return json.dumps(brief or "未找到该作者的论文（检查英文名拼写）", ensure_ascii=False)
+        result["arXiv"] = f"检索失败：{e}"
+
+    # 源2：Europe PMC（生物医学）
+    try:
+        epmc = search_europepmc(author_en, affiliation)
+        result["EuropePMC"] = [
+            {"序号": i, "期刊": p["journal"], "年份": p["published"], "标题": p["title"],
+             "作者位置": p["author_position"], "末位作者": p["is_last_author"],
+             "链接": p["url"]}
+            for i, p in enumerate(epmc)]
+    except Exception as e:
+        result["EuropePMC"] = f"检索失败：{e}"
+
+    # 汇总提示，防止 Agent 误把同名学者当成目标老师
+    if affiliation:
+        result["提示"] = (f"已按机构 '{affiliation}' 过滤同名学者；若无结果请去掉 affiliation 重试"
+                          f"（但需人工核对是否为目标老师本人）")
+    else:
+        result["提示"] = "未按机构过滤，结果可能混入同名学者，请核对研究方向是否吻合"
+    return json.dumps(result, ensure_ascii=False)
 
 
 def tool_paper_decision(arxiv_id: str) -> str:
@@ -385,9 +406,10 @@ TOOLS = [
         "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {
         "name": "search_papers",
-        "description": "查某老师近期发表的论文。参数是作者英文名（拼音），中文名由你负责转成拼音",
+        "description": "查某老师近期发表的论文（双源：arXiv 覆盖 CS/物理/数学，Europe PMC 覆盖生物医学期刊如 Cell/Nature）。中文名由你转拼音。若老师是生命科学/医学方向，务必传 affiliation（如 Tsinghua）过滤同名学者；若两源结果方向都对不上，说明是重名，如实告知用户而非硬报",
         "parameters": {"type": "object", "properties": {
-            "author_en": {"type": "string", "description": "作者英文名，如 Yinpeng Dong"}},
+            "author_en": {"type": "string", "description": "作者英文名，如 Yinpeng Dong"},
+            "affiliation": {"type": "string", "description": "机构英文名（如 Tsinghua / Peking），用于过滤同名学者，强烈建议填", "default": ""}},
             "required": ["author_en"]}}},
     {"type": "function", "function": {
         "name": "paper_decision",
@@ -464,7 +486,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
 4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页调 add_school(url, 站点代号)；add_school 内部会**自动跑 enrich_faculty 和 batch_cards 生成卡片**，跑完后 list_sites/list_teachers 就能直接查到该站点，不要再让用户去终端敲命令；一个学院有分页师资页时（第2页/第3页...），把每个分页都调一次 add_school 用**同一站点代号**合并，add_school 会按姓名去重累加；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；收录后若用户继续问该学院老师，直接用 list_teachers/get_card。
-5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers -> 展示结果（重点推荐末位作者的论文，那是他主导的）-> 用户选定后先调 paper_decision 出决策卡 -> 用户明确说精读/拆解才调 deep_dive；
+5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers（生命科学/医学方向务必同时传 affiliation 过滤同名，如 Tsinghua）-> 展示两个源的结果（arXiv + Europe PMC；重点推荐末位作者的论文，那是他主导的）-> **若两源结果的研究方向都与该老师实际方向不符，说明是重名学者，必须如实告知用户"未检索到本人论文"，绝不可把同名者的论文当成他的**；如果是生物医学方向且 Europe PMC 命中的期刊/标题与该老师方向吻合，以 Europe PMC 结果为准 -> 用户选定后先调 paper_decision 出决策卡（仅 arXiv 论文支持下载精读）-> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
 7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
 8. M2深潜流程：用户说深挖/深入了解某位老师时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；
