@@ -2,6 +2,13 @@
 工具五：通用师资抓取器（LLM 驱动，适配任意学校）
 用法：python tools/universal_crawl.py <师资页URL> <站点代号>
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import re
 import sys

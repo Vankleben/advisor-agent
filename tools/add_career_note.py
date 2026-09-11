@@ -4,6 +4,13 @@ M1 增量补丁：给已有 career_stage 的卡片补"对申请者的含义一�
 
 用法：python tools/add_career_note.py
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import sys
 import glob

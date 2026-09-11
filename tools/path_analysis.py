@@ -4,6 +4,13 @@ M4：进组路径分析
 反幻觉规则：需求侧必须引用深潜报告里的 evidence 原文，无证据的判断不输出
 用法（独立测试）：python tools/path_analysis.py 俞立
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import sys
 from pathlib import Path

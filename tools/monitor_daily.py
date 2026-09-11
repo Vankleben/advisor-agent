@@ -8,6 +8,13 @@ M6 每日自动监测：定时任务入口（Windows 计划任务 / 手动 daily
 把简报写入 data/monitor/今日简报.txt 并打印；否则打印"今日无变化"。
 适合配 Windows 任务计划每天自动执行，有变化时主动留痕。
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import sys
 import datetime
 from pathlib import Path

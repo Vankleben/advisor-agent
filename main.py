@@ -8,6 +8,13 @@ v4.2 改动：新增 M4 进组路径分析工具 path_analysis
 多行输入：/m 回车后逐行粘贴，最后单独一行输入 EOF 结束
 文件输入：/f 路径（读取整个文件当一条消息）
 """
+
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+import sys as _sys
+if hasattr(_sys.stdout, "reconfigure"):
+    _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import traceback
 import sys
@@ -127,14 +134,16 @@ def tool_get_card(name: str, site: str = "") -> str:
 def tool_add_school(url: str, site_name: str) -> str:
     crawl = subprocess.run([sys.executable, str(BASE_DIR / "tools" / "universal_crawl.py"),
                             url, site_name],
-                           capture_output=True, text=True, timeout=300, cwd=str(BASE_DIR))
+                           capture_output=True, text=True, timeout=300, cwd=str(BASE_DIR),
+                           encoding="utf-8", errors="replace")
     out = (crawl.stdout or "") + (crawl.stderr or "")
 
     # 名单落盘后自动补齐详情页与卡片，让 list_sites/list_teachers 立即可见
     for script in ("enrich_faculty", "batch_cards"):
         step = subprocess.run([sys.executable, str(BASE_DIR / "tools" / f"{script}.py"),
                                site_name],
-                              capture_output=True, text=True, timeout=900, cwd=str(BASE_DIR))
+                              capture_output=True, text=True, timeout=900, cwd=str(BASE_DIR),
+                              encoding="utf-8", errors="replace")
         out += "\n" + ((step.stdout or "") + (step.stderr or "")).strip()
     out += f"\n提示：{site_name} 站点卡片已自动生成。如果名单不完整（如分页师资页），请把剩余分页的 URL 再调 add_school 合并。"
     return out
