@@ -114,7 +114,8 @@ def render_url(url: str, max_chars: int = 12000, budget_ms: int = 30000) -> dict
              f"--virtual-time-budget={budget_ms}", "--run-all-compositor-stages-before-draw",
              "--ignore-certificate-errors",
              url],
-            capture_output=True, text=True, timeout=180)
+            capture_output=True, text=True, timeout=180,
+            encoding="utf-8", errors="replace")
         html = r.stdout or ""
     except Exception as e:
         return {"url": url, "title": "", "text": "", "links": [], "error": f"渲染失败: {e}"}
@@ -139,6 +140,64 @@ def render_url(url: str, max_chars: int = 12000, budget_ms: int = 30000) -> dict
     out["raw_links"] = uniq[:800]
     out["url"] = url
     return out
+
+
+def render_site(url: str, max_pages: int = 7, budget_ms: int = 25000,
+                per_page_chars: int = 6000) -> dict:
+    """
+    多页抓取：渲染首页 → 发现站内子页面 → 逐页渲染 → 聚合全文。
+    专治 SPA/JS 站点（如实验室网站）：内容分布在 /research /people /join 等子路由里。
+    返回 {"url", "pages": [{"url","title","text"}], "text": "聚合全文", "error"}
+    """
+    home = render_url(url, max_chars=per_page_chars, budget_ms=budget_ms)
+    if home.get("error"):
+        return {"url": url, "pages": [], "text": "", "error": home["error"]}
+
+    host = urlparse(url).netloc
+    # 关键词排序：实验室站点最相关的页面优先
+    KEY = ("research", "people", "member", "team", "publication", "paper",
+           "join", "recruit", "position", "news", "lab", "about")
+
+    def score(u: str) -> int:
+        p = urlparse(u).path.lower().strip("/")
+        if not p:
+            return 99
+        for i, k in enumerate(KEY):
+            if k in p:
+                return i
+        return 50
+
+    # 收集同域子页链接（跳过锚点/文件/明显无关）
+    cand = {}
+    for l in home.get("raw_links", []) + home.get("links", []):
+        u = l["url"].split("#")[0].rstrip("/")
+        if urlparse(u).netloc != host:
+            continue
+        if u == url.rstrip("/"):
+            continue
+        if any(u.lower().endswith(ext) for ext in
+               (".pdf", ".jpg", ".png", ".gif", ".zip", ".mp4", ".doc", ".docx")):
+            continue
+        cand[u] = l.get("text", "")
+
+    ordered = sorted(cand, key=score)[:max_pages - 1]
+
+    pages = [{"url": url, "title": home.get("title", ""), "text": home.get("text", "")}]
+    seen_text = home.get("text", "")
+    for u in ordered:
+        r = render_url(u, max_chars=per_page_chars, budget_ms=budget_ms)
+        if r.get("error") or not r.get("text"):
+            continue
+        t = r["text"]
+        # 去重：子页与首页/其他页高度重复时跳过
+        if t[:200] and t[:200] in seen_text:
+            continue
+        pages.append({"url": u, "title": r.get("title", ""), "text": t})
+        seen_text += "\n" + t[:500]
+
+    agg = "\n\n".join(f"【页面{i+1}】{p['url']}\n{p['text']}"
+                      for i, p in enumerate(pages))
+    return {"url": url, "pages": pages, "text": agg, "error": ""}
 
 
 def save_faculty(site_name: str, school: str, faculty: list, note: str = "") -> dict:

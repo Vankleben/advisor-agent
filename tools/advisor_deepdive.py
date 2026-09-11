@@ -38,6 +38,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                          "AppleWebKit/537.36 (KHTML, like Gecko) "
                          "Chrome/120.0 Safari/537.36"}
 MAX_SRC_CHARS = 8000
+_PAGE_SEP = "\n\n@@PAGE@@\n\n"   # 多页抓取的页面分隔符（上层据此拆成多个信源）
 
 DEEP_PROMPT = """你是导师深潜分析员，服务对象是一名想找实验室的 CS 大三学生。
 我会给你某位老师多个网页的正文（已编号），请提取对学生选导师真正有用的深度情报。
@@ -93,6 +94,22 @@ def fetch_text(url: str) -> str:
                 print(f"✅ 渲染后获取到 {len(text)} 字符")
         except Exception:
             pass
+    # 仍是 SPA 骨架（React/Vue 站点只有导航壳，内容在子路由）→ 多页抓取全站
+    if len(text) < 800:
+        try:
+            from web_fetch import render_site
+            print(f"⚠️ 疑似 SPA 骨架({len(text)}字符)，多页抓取子页面...")
+            site = render_site(url, max_pages=7)
+            if not site.get("error") and len(site.get("text", "")) > len(text):
+                # 每页单独作为一个信源（保留 source 编号语义），用 \n\n===\n\n 分隔由上层切分
+                pages = site.get("pages") or []
+                if pages:
+                    text = _PAGE_SEP.join(f"[{p['url']}] {p['text']}" for p in pages)
+                else:
+                    text = re.sub(r"\s+", " ", site["text"]).strip()
+                print(f"✅ 多页抓取完成：{len(pages)} 页 / {len(text)} 字符")
+        except Exception as e:
+            print(f"⚠️ 多页抓取失败：{e}")
     return text
 
 
@@ -135,8 +152,16 @@ def verify_report(report: dict, src_texts: list) -> list:
                 warnings.append(f"⚠️ {section}[{i}] source 编号越界：{item.get('point', '')}")
                 continue
             for q in (item.get("evidence") or []):
-                if flatten(str(q)) not in flats[src_idx]:
-                    warnings.append(f"⚠️ {section}[{i}] 的 evidence 在来源{src_idx + 1}中找不到："
+                fq = flatten(str(q))
+                if fq in flats[src_idx]:
+                    continue
+                # 标的来源未命中时，检查是否在其他来源中命中（LLM 常把多页站点标错页码）
+                others = [j + 1 for j, ft in enumerate(flats) if fq in ft]
+                if others:
+                    warnings.append(f"⚠️ {section}[{i}] 的 evidence 标为来源{src_idx + 1}，"
+                                    f"实际在第 {others} 个来源中命中（引句真实，仅编号有误）")
+                else:
+                    warnings.append(f"⚠️ {section}[{i}] 的 evidence 在所有来源中均未找到："
                                     f"{str(q)[:50]}...")
     return warnings
 
@@ -165,9 +190,20 @@ def run_deepdive(client: OpenAI, name: str, site: str = "", url: str = "") -> di
     src_texts, src_urls, failed = [], [], []
     for u in candidates:
         try:
-            t = fetch_text(u)[:MAX_SRC_CHARS]
-            src_texts.append(t)
-            src_urls.append(u)
+            t = fetch_text(u)
+            # 多页抓取结果：拆成独立信源，保留 LLM 标注 source 编号的语义
+            if _PAGE_SEP in t:
+                for i, part in enumerate(t.split(_PAGE_SEP), 1):
+                    part = part.strip()
+                    if not part:
+                        continue
+                    # 提取 [url] 前缀作为信源地址
+                    m = re.match(r"\[(https?://[^\]]+)\]\s*(.*)", part, re.S)
+                    src_urls.append(m.group(1) if m else f"{u}#p{i}")
+                    src_texts.append((m.group(2) if m else part)[:MAX_SRC_CHARS])
+            else:
+                src_texts.append(t[:MAX_SRC_CHARS])
+                src_urls.append(u)
         except Exception as e:
             failed.append(f"{u} 抓取失败：{e}")
 
