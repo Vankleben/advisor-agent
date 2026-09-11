@@ -58,7 +58,11 @@ def fetch_url(url: str, max_chars: int = 8000) -> dict:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                           "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }
-        resp = requests.get(url, headers=headers, timeout=15, allow_redirects=True)
+        try:
+            resp = requests.get(url, headers=headers, timeout=15, allow_redirects=True)
+        except requests.exceptions.SSLError:
+            print(f"⚠️ SSL 证书验证失败({url})，降级跳过验证")
+            resp = requests.get(url, headers=headers, timeout=15, allow_redirects=True, verify=False)
         resp.encoding = resp.apparent_encoding or "utf-8"
         html = resp.text
     except Exception as e:
@@ -101,6 +105,7 @@ def render_url(url: str, max_chars: int = 12000, budget_ms: int = 30000) -> dict
         r = subprocess.run(
             [exe, "--headless=new", "--disable-gpu", "--no-sandbox", "--dump-dom",
              f"--virtual-time-budget={budget_ms}", "--run-all-compositor-stages-before-draw",
+             "--ignore-certificate-errors",
              url],
             capture_output=True, text=True, timeout=180)
         html = r.stdout or ""
