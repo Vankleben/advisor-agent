@@ -28,7 +28,7 @@ PAPERS_DIR = DATA_DIR / "papers"
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "tools"))
 from config import PROVIDER, API_KEY
-from paper_tools import search_papers, search_europepmc, fetch_paper
+from paper_tools import search_papers, search_europepmc, fetch_lab_publications, fetch_paper
 import analyze_paper as ap
 import critique_thinking as ct
 import advisor_deepdive as ad
@@ -239,6 +239,19 @@ def tool_search_papers(author_en: str, affiliation: str = "") -> str:
     return json.dumps(result, ensure_ascii=False)
 
 
+def tool_lab_publications(lab_url: str) -> str:
+    """从实验室官网 Publications 页提取论文列表（arXiv/Europe PMC 都查不到时的兜底）"""
+    try:
+        papers = fetch_lab_publications(lab_url)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"提取失败：{e}", "traceback": tb}, ensure_ascii=False)
+    if papers and papers[0].get("error"):
+        return json.dumps(papers[0], ensure_ascii=False)
+    return json.dumps({"来源": "实验室官网 Publications 页（PI 自己维护，最权威）",
+                       "论文数": len(papers), "papers": papers}, ensure_ascii=False)
+
+
 def tool_paper_decision(arxiv_id: str) -> str:
     """第0步：下载论文并出阅读决策卡"""
     try:
@@ -412,6 +425,12 @@ TOOLS = [
             "affiliation": {"type": "string", "description": "机构英文名（如 Tsinghua / Peking），用于过滤同名学者，强烈建议填", "default": ""}},
             "required": ["author_en"]}}},
     {"type": "function", "function": {
+        "name": "lab_publications",
+        "description": "从实验室官网 Publications 页提取论文列表（PI 自己维护，最权威）。兜底手段：当 search_papers 在 arXiv 和 Europe PMC 都查不到目标老师论文时（新组/冷门方向/中文站点），用他的实验室网站 URL 调这个",
+        "parameters": {"type": "object", "properties": {
+            "lab_url": {"type": "string", "description": "实验室网站 URL（如 https://www.xshenlab.com）；会自动定位其中的 Publications/论文 页面"}},
+            "required": ["lab_url"]}}},
+    {"type": "function", "function": {
         "name": "paper_decision",
         "description": "对某篇论文出阅读决策卡：定位/匹配度/建议/前置缺口。用户选定一篇论文后先调这个",
         "parameters": {"type": "object", "properties": {
@@ -471,6 +490,7 @@ DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "monitor": tool_monitor,
             "monitor_show": tool_monitor_show,
             "search_papers": tool_search_papers, "paper_decision": tool_paper_decision,
+            "lab_publications": tool_lab_publications,
             "deep_dive": tool_deep_dive,
             "critique_thinking": tool_critique_thinking,
             "appeal_grading": tool_appeal_grading,
@@ -486,7 +506,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
 4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页调 add_school(url, 站点代号)；add_school 内部会**自动跑 enrich_faculty 和 batch_cards 生成卡片**，跑完后 list_sites/list_teachers 就能直接查到该站点，不要再让用户去终端敲命令；一个学院有分页师资页时（第2页/第3页...），把每个分页都调一次 add_school 用**同一站点代号**合并，add_school 会按姓名去重累加；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；收录后若用户继续问该学院老师，直接用 list_teachers/get_card。
-5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers（生命科学/医学方向务必同时传 affiliation 过滤同名，如 Tsinghua）-> 展示两个源的结果（arXiv + Europe PMC；重点推荐末位作者的论文，那是他主导的）-> **若两源结果的研究方向都与该老师实际方向不符，说明是重名学者，必须如实告知用户"未检索到本人论文"，绝不可把同名者的论文当成他的**；如果是生物医学方向且 Europe PMC 命中的期刊/标题与该老师方向吻合，以 Europe PMC 结果为准 -> 用户选定后先调 paper_decision 出决策卡（仅 arXiv 论文支持下载精读）-> 用户明确说精读/拆解才调 deep_dive；
+5. 论文流程：用户给中文老师名 -> 你转成拼音调 search_papers（生命科学/医学方向务必同时传 affiliation 过滤同名，如 Tsinghua）-> 展示两个源的结果（arXiv + Europe PMC；重点推荐末位作者的论文，那是他主导的）-> **若两源结果的研究方向都与该老师实际方向不符，说明是重名学者，必须如实告知用户"未检索到本人论文"，绝不可把同名者的论文当成他的**；如果是生物医学方向且 Europe PMC 命中的期刊/标题与该老师方向吻合，以 Europe PMC 结果为准 -> **若两源都没有结果、或老师有实验室网站（深潜报告的 sources 里有），调 lab_publications(实验室URL) 从官网 Publications 页提取——这是 PI 自己维护的成果列表，最权威，尤其适用于新组/冷门方向/非 arXiv 领域** -> 用户选定后先调 paper_decision 出决策卡（仅 arXiv 论文支持下载精读，官网论文列出标题/期刊/年份供参考）-> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
 7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
 8. M2深潜流程：用户说深挖/深入了解某位老师时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；

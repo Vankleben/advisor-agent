@@ -120,6 +120,82 @@ def search_europepmc(author_en: str, affiliation: str = "", max_results: int = 1
     return papers
 
 
+def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
+    """
+    从实验室官网的 Publications 页提取论文列表（PI 自己维护，是最权威的成果列表）。
+    兜底场景：arXiv/Europe PMC 都查不到时用这个（如 CS 之外的冷门方向、新组、中文站点）。
+
+    支持的页面形态：SPA（React/Vue，需渲染）与静态页；返回 [{title, authors, venue, year, url}]。
+    """
+    import sys as _s
+    from pathlib import Path as _P
+    _s.path.insert(0, str(_P(__file__).resolve().parent))
+    from web_fetch import render_site, render_url
+
+    # 1. 定位 publications 页：优先在站点里找，找不到就把传入 URL 当 publications 页
+    page_url = lab_url
+    low = lab_url.lower()
+    if not any(k in low for k in ("publication", "paper", "achievement", "成果", "论文")):
+        try:
+            site = render_site(lab_url, max_pages=8)
+            for p in site.get("pages", []):
+                pl = p["url"].lower()
+                if any(k in pl for k in ("publication", "paper")):
+                    page_url = p["url"]
+                    break
+        except Exception:
+            pass
+
+    # 2. 抓页面正文（先普通抓，内容太少就渲染）
+    text = ""
+    try:
+        r = render_url(page_url, max_chars=25000, budget_ms=30000)
+        if not r.get("error"):
+            text = r["text"]
+    except Exception as e:
+        return [{"error": f"抓取失败：{e}"}]
+    if not text:
+        return [{"error": f"未获取到内容：{page_url}"}]
+
+    # 3. 交给 LLM 抽取结构化论文条目
+    import sys as _sys2
+    D = _P(__file__).resolve().parent.parent
+    _sys2.path.insert(0, str(D))
+    from config import PROVIDER, API_KEY
+    from openai import OpenAI
+    from web_fetch import _find_browser  # noqa
+
+    PROVIDERS = {"moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-32k"),
+                 "deepseek": ("https://api.deepseek.com", "deepseek-chat")}
+    base_url, model = PROVIDERS[PROVIDER]
+    client = OpenAI(api_key=API_KEY, base_url=base_url)
+
+    prompt = (
+        "从下面这个实验室官网的论文页面正文中，提取所有论文条目。\n"
+        "严格规则：只提取原文中真实出现的论文，禁止补充你知道的其他论文；"
+        "找不到的字段填 null。\n\n"
+        f"输出 JSON：{{\"papers\": [{{\"title\": \"标题\", \"authors\": \"作者串\", "
+        f"\"venue\": \"期刊/会议\", \"year\": \"年份\", \"url\": \"链接或null\"}}]}}\n\n"
+        f"正文：\n{text[:20000]}"
+    )
+    resp = client.chat.completions.create(
+        model=model, temperature=0.1,
+        response_format={"type": "json_object"},
+        messages=[{"role": "user", "content": prompt}])
+    papers = json.loads(resp.choices[0].message.content).get("papers", [])
+
+    # 4. 反幻觉：标题必须能在原文中找到（归一化比对，免疫空格/连字符差异）
+    norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", str(s or "")).lower()
+    flat = norm(text)
+    ok = []
+    for p in papers[:max_papers]:
+        if p.get("title") and norm(p["title"])[:60] in flat:
+            p["source"] = "lab_publications"
+            p["page"] = page_url
+            ok.append(p)
+    return ok
+
+
 def resolve_arxiv_id(arg: str) -> str:
     """支持两种输入：arXiv id 直接返回；纯数字视为最近一次搜索结果的序号。"""
     if re.fullmatch(r"\d{1,3}", arg):
