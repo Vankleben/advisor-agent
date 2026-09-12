@@ -16,6 +16,7 @@ if hasattr(_sys.stdout, "reconfigure"):
     _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
+import re
 import traceback
 import sys
 import subprocess
@@ -29,7 +30,7 @@ sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "tools"))
 from config import PROVIDER, API_KEY
 from paper_tools import (search_papers, search_europepmc, fetch_lab_publications,
-                         merge_paper_sources, fetch_paper)
+                         merge_paper_sources, fetch_fulltext, fetch_paper)
 import analyze_paper as ap
 import critique_thinking as ct
 import advisor_deepdive as ad
@@ -283,14 +284,16 @@ def tool_search_papers(author_en: str, affiliation: str = "",
          "来源": p.get("sources"),
          "末位作者": p.get("is_last_author", False),
          "作者位置": p.get("author_position", ""),
-         "arxiv_id": p.get("arxiv_id", ""),   # 有则可下载精读
+         "arxiv_id": p.get("arxiv_id", ""),   # 有则可直接精读
+         "doi": p.get("doi", ""),             # 有则可 fetch_fulltext(doi) 尝试获取全文
+         "pdf": p.get("pdf", ""),             # 官网PDF直链，有则可直接 fetch_fulltext(pdf)
          "链接": p.get("url", "")}
         for p in merged
     ]
     result["提示"] = ("'来源'列显示该论文命中哪些渠道，多源命中=互相印证可信度更高；"
-                      "只有带 arxiv_id 的能用 paper_decision/deep_dive 精读，"
-                      "官网/PMC 论文列出标题期刊年份供参考；"
-                      "若全部结果的研究方向都与该老师实际方向不符，说明是同名学者，请如实告知用户")
+                      "获取全文精读：arxiv_id 直接传 paper_decision/deep_dive；"
+                      "非 arXiv 论文先调 fetch_fulltext（优先用 pdf 直链，其次 doi），"
+                      "拿到返回的 paper_id 再精读；非开放获取的论文会明确报错，此时如实告知用户拿不到全文")
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -307,13 +310,38 @@ def tool_lab_publications(lab_url: str) -> str:
                        "论文数": len(papers), "papers": papers}, ensure_ascii=False)
 
 
-def tool_paper_decision(arxiv_id: str) -> str:
-    """第0步：下载论文并出阅读决策卡"""
+def _ensure_paper_text(paper_id: str):
+    """获取论文全文：本地缓存优先 → arXiv 下载 → 否则提示先调 fetch_fulltext。
+    返回 (txt_file, error_str 或 None)"""
+    safe = paper_id.strip().replace("/", "_")
+    f = PAPERS_DIR / f"{safe}.txt"
+    if f.exists():
+        return f, None
+    if re.fullmatch(r"\d{4}\.\d{4,5}(v\d+)?", paper_id.strip()):
+        try:
+            txt_file, _, _ = fetch_paper(paper_id.strip())
+            return txt_file, None
+        except Exception as e:
+            return None, f"arXiv 下载失败：{e}"
+    return None, (f"本地没有该论文全文，请先调 fetch_fulltext('{paper_id}') 获取"
+                  f"（支持 DOI / 官网PDF直链），再重试")
+
+
+def tool_fetch_fulltext(identifier: str) -> str:
+    """多级全文获取：arXiv id / DOI（OpenAlex查OA）/ PDF直链（实验室官网）/ 本地PDF路径 / PMCID"""
     try:
-        txt_file, _, _ = fetch_paper(arxiv_id)
+        r = fetch_fulltext(identifier)
     except Exception as e:
         tb = traceback.format_exc()[-500:]
-        return json.dumps({"error": f"论文下载失败：{e}", "traceback": tb}, ensure_ascii=False)
+        return json.dumps({"error": f"获取失败：{e}", "traceback": tb}, ensure_ascii=False)
+    return json.dumps(r, ensure_ascii=False)
+
+
+def tool_paper_decision(paper_id: str) -> str:
+    """第0步：获取论文全文并出阅读决策卡（支持 arXiv id / DOI / fetch_fulltext 返回的 paper_id）"""
+    txt_file, err = _ensure_paper_text(paper_id)
+    if err:
+        return json.dumps({"error": err}, ensure_ascii=False)
     try:
         text = txt_file.read_text(encoding="utf-8")
         card = ap.step0_decision_card(CLIENT, P["fast"], text)
@@ -323,13 +351,11 @@ def tool_paper_decision(arxiv_id: str) -> str:
     return json.dumps(card, ensure_ascii=False)
 
 
-def tool_deep_dive(arxiv_id: str) -> str:
-    """精读：七段框架完整拆解 + 反幻觉校验（耗时1-2分钟）"""
-    try:
-        txt_file, _, _ = fetch_paper(arxiv_id)
-    except Exception as e:
-        tb = traceback.format_exc()[-500:]
-        return json.dumps({"error": f"论文下载失败：{e}", "traceback": tb}, ensure_ascii=False)
+def tool_deep_dive(paper_id: str) -> str:
+    """精读：七段框架完整拆解 + 反幻觉校验（耗时1-2分钟）。支持 arXiv id / DOI / paper_id"""
+    txt_file, err = _ensure_paper_text(paper_id)
+    if err:
+        return json.dumps({"error": err}, ensure_ascii=False)
     try:
         text = txt_file.read_text(encoding="utf-8")
         analysis = ap.full_analysis(CLIENT, P["long"], text)
@@ -337,7 +363,7 @@ def tool_deep_dive(arxiv_id: str) -> str:
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"精读失败：{e}", "traceback": tb}, ensure_ascii=False)
-    out = PAPERS_DIR / f"{arxiv_id.replace('/', '_')}_analysis.json"
+    out = PAPERS_DIR / f"{paper_id.replace('/', '_')}_analysis.json"
     out.write_text(json.dumps({"analysis": analysis, "verification_warnings": warnings},
                               ensure_ascii=False, indent=2), encoding="utf-8")
     return json.dumps({"analysis": analysis,
@@ -488,17 +514,23 @@ TOOLS = [
             "lab_url": {"type": "string", "description": "实验室网站 URL（如 https://www.xshenlab.com）；会自动定位其中的 Publications/论文 页面"}},
             "required": ["lab_url"]}}},
     {"type": "function", "function": {
-        "name": "paper_decision",
-        "description": "对某篇论文出阅读决策卡：定位/匹配度/建议/前置缺口。用户选定一篇论文后先调这个",
+        "name": "fetch_fulltext",
+        "description": "获取论文全文（非 arXiv 论文的精读前置步骤）。支持：DOI（自动查开放获取）、官网PDF直链、本地PDF路径、PMCID。返回 paper_id 后可传给 paper_decision/deep_dive。非开放获取的论文会明确报错——此时如实告知用户拿不到全文，不要硬编",
         "parameters": {"type": "object", "properties": {
-            "arxiv_id": {"type": "string", "description": "arXiv id，如 2605.18309v1"}},
-            "required": ["arxiv_id"]}}},
+            "identifier": {"type": "string", "description": "DOI（如 10.1038/s41586-020-2179-y）/ PDF直链 / 本地PDF路径 / PMCID / arXiv id"}},
+            "required": ["identifier"]}}},
+    {"type": "function", "function": {
+        "name": "paper_decision",
+        "description": "对某篇论文出阅读决策卡：定位/匹配度/建议/前置缺口。用户选定一篇论文后先调这个。arXiv 论文直接传 id；其他论文先 fetch_fulltext 拿 paper_id 再传",
+        "parameters": {"type": "object", "properties": {
+            "paper_id": {"type": "string", "description": "arXiv id 或 fetch_fulltext 返回的 paper_id"}},
+            "required": ["paper_id"]}}},
     {"type": "function", "function": {
         "name": "deep_dive",
-        "description": "对论文做七段框架完整拆解（目标/背景/实验/方法/概念/结果/复现）。仅当用户明确说要精读/拆解时才调用",
+        "description": "对论文做七段框架完整拆解（目标/背景/实验/方法/概念/结果/复现）。仅当用户明确说要精读/拆解时才调用。arXiv 论文直接传 id；其他论文先 fetch_fulltext 拿 paper_id 再传",
         "parameters": {"type": "object", "properties": {
-            "arxiv_id": {"type": "string", "description": "arXiv id，如 2605.18309v1"}},
-            "required": ["arxiv_id"]}}},
+            "paper_id": {"type": "string", "description": "arXiv id 或 fetch_fulltext 返回的 paper_id"}},
+            "required": ["paper_id"]}}},
     {"type": "function", "function": {
         "name": "critique_thinking",
         "description": "M5思考批改：用户读完一篇已精读过的论文后提交了自己写的思考文字时调用。做事实纠错/偏题检测/费曼追问/凝练段落。thinking 必须原样传入用户写的思考全文，禁止改写删减",
@@ -547,6 +579,7 @@ DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "monitor": tool_monitor,
             "monitor_show": tool_monitor_show,
             "search_papers": tool_search_papers, "paper_decision": tool_paper_decision,
+            "fetch_fulltext": tool_fetch_fulltext,
             "lab_publications": tool_lab_publications,
             "deep_dive": tool_deep_dive,
             "critique_thinking": tool_critique_thinking,
@@ -563,7 +596,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
 4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页调 add_school(url, 站点代号)；add_school 内部会**自动跑 enrich_faculty 和 batch_cards 生成卡片**，跑完后 list_sites/list_teachers 就能直接查到该站点，不要再让用户去终端敲命令；一个学院有分页师资页时（第2页/第3页...），把每个分页都调一次 add_school 用**同一站点代号**合并，add_school 会按姓名去重累加；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；收录后若用户继续问该学院老师，直接用 list_teachers/get_card。
-5. 论文流程：用户给中文老师名 -> 转成拼音调 search_papers（一次调用即三源并列检索：arXiv + Europe PMC + 实验室官网Publications，自动去重合并；务必传 affiliation 过滤同名，传 name_cn 以自动查找实验室网址）-> 展示合并后的论文列表（'来源'列标明命中渠道，多源命中可信度更高；重点推荐末位作者的论文，那是他主导的）+ 统计信息（各源命中数）-> **若全部结果的研究方向都与该老师实际方向不符，说明是重名学者，必须如实告知"未检索到本人论文"，绝不可把同名者的论文当成他的** -> 带 arxiv_id 的可用 paper_decision 出决策卡并精读；官网/PMC 论文列出标题/期刊/年份供参考（无法下载精读）-> 用户明确说精读/拆解才调 deep_dive；
+5. 论文流程：用户给中文老师名 -> 转成拼音调 search_papers（一次调用即三源并列检索：arXiv + Europe PMC + 实验室官网Publications，自动去重合并；务必传 affiliation 过滤同名，传 name_cn 以自动查找实验室网址）-> 展示合并后的论文列表（'来源'列标明命中渠道，多源命中可信度更高；重点推荐末位作者的论文，那是他主导的）+ 统计信息（各源命中数）-> **若全部结果的研究方向都与该老师实际方向不符，说明是重名学者，必须如实告知"未检索到本人论文"，绝不可把同名者的论文当成他的** -> 精读流程：①带 arxiv_id 的直接传 paper_decision/deep_dive；②非 arXiv 论文（PMC/官网）先调 fetch_fulltext：优先传 pdf 直链（官网PDF最快），其次传 doi（自动查开放获取全文），拿到返回的 paper_id 后传 paper_decision/deep_dive；③fetch_fulltext 报"非开放获取"时，如实告知用户拿不到全文并给替代建议（图书馆/作者主页），**绝不编造论文内容** -> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
 7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
 8. M2深潜流程：用户说深挖/深入了解某位老师时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；
