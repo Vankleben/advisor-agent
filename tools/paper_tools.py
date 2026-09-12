@@ -106,7 +106,9 @@ def search_europepmc(author_en: str, affiliation: str = "", max_results: int = 1
         papers.append({
             "source": "europepmc",
             "pmid": it.get("pmid", ""),
+            "pmcid": it.get("pmcid", ""),
             "doi": it.get("doi", ""),
+            "is_oa": it.get("isOpenAccess") == "Y",
             "title": (it.get("title") or "").rstrip("."),
             "journal": jinfo.get("title") or it.get("bookOrReportDetails", {}).get("publisher", ""),
             "published": str(it.get("pubYear") or ""),
@@ -147,11 +149,17 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
             pass
 
     # 2. 抓页面正文（先普通抓，内容太少就渲染）
-    text = ""
+    text, pdf_links = "", []
     try:
         r = render_url(page_url, max_chars=25000, budget_ms=30000)
         if not r.get("error"):
             text = r["text"]
+            # 收集页面里的 PDF 直链（供后续 fetch_fulltext 下载全文）
+            for l in r.get("raw_links", []):
+                u = l["url"]
+                if u.lower().endswith(".pdf") or "pdf" in (l.get("text") or "").lower():
+                    if u.lower().endswith(".pdf"):
+                        pdf_links.append(u)
     except Exception as e:
         return [{"error": f"抓取失败：{e}"}]
     if not text:
@@ -170,13 +178,18 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
     base_url, model = PROVIDERS[PROVIDER]
     client = OpenAI(api_key=API_KEY, base_url=base_url)
 
+    pdf_block = "\n".join(pdf_links[:40]) if pdf_links else "（无）"
     prompt = (
         "从下面这个实验室官网的论文页面正文中，提取所有论文条目。\n"
-        "严格规则：只提取原文中真实出现的论文，禁止补充你知道的其他论文；"
-        "找不到的字段填 null。\n\n"
+        "严格规则：只提取正文中真实出现的论文，禁止补充你知道的其他论文；"
+        "找不到的字段填 null。\n"
+        "pdf 字段：若该论文在'可用PDF链接列表'中有对应 PDF（按文件名中的作者/期刊/年份/标题关键词匹配），"
+        "必须原样填入该链接；无法确定对应关系时填 null，禁止编造链接。\n\n"
         f"输出 JSON：{{\"papers\": [{{\"title\": \"标题\", \"authors\": \"作者串\", "
-        f"\"venue\": \"期刊/会议\", \"year\": \"年份\", \"url\": \"链接或null\"}}]}}\n\n"
-        f"正文：\n{text[:20000]}"
+        f"\"venue\": \"期刊/会议\", \"year\": \"年份\", \"url\": \"论文页链接或null\", "
+        f"\"pdf\": \"对应PDF直链或null\"}}]}}\n\n"
+        f"正文：\n{text[:18000]}\n\n"
+        f"可用PDF链接列表（只能从中选择，不能编造）：\n{pdf_block}"
     )
     resp = client.chat.completions.create(
         model=model, temperature=0.1,
@@ -184,12 +197,15 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
         messages=[{"role": "user", "content": prompt}])
     papers = json.loads(resp.choices[0].message.content).get("papers", [])
 
-    # 4. 反幻觉：标题必须能在原文中找到（归一化比对，免疫空格/连字符差异）
+    # 4. 反幻觉：标题必须能在原文中找到（归一化比对）；pdf 链接必须在实际抓到的链接列表里
     norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", str(s or "")).lower()
     flat = norm(text)
+    valid_pdfs = set(pdf_links)
     ok = []
     for p in papers[:max_papers]:
         if p.get("title") and norm(p["title"])[:60] in flat:
+            if p.get("pdf") and p["pdf"] not in valid_pdfs:
+                p["pdf"] = None   # 编造的 PDF 链接直接丢弃
             p["source"] = "lab_publications"
             p["page"] = page_url
             ok.append(p)
@@ -273,6 +289,144 @@ def fetch_paper(arxiv_id: str) -> tuple:
     text = "\n".join(page.get_text() for page in doc)
     txt_file.write_text(text, encoding="utf-8")
     return txt_file, len(doc), len(text)
+
+
+def _download_bytes(url: str, timeout: int = 120, tries: int = 2) -> bytes:
+    """带重试的二进制下载（PDF 等）；SSL 证书失败时降级跳过验证"""
+    last = None
+    for i in range(tries):
+        try:
+            try:
+                r = requests.get(url, headers=HEADERS, timeout=timeout)
+                r.raise_for_status()
+            except requests.exceptions.SSLError:
+                print(f"⚠️ SSL 证书验证失败({url[:60]})，降级跳过验证")
+                r = requests.get(url, headers=HEADERS, timeout=timeout, verify=False)
+                r.raise_for_status()
+            return r.content
+        except requests.RequestException as e:
+            last = e
+            time.sleep(3)
+    raise RuntimeError(f"下载失败：{last}")
+
+
+def find_oa_pdf_url(doi: str) -> str:
+    """用 OpenAlex 查该 DOI 的开放获取 PDF 直链（无则返回空串）"""
+    try:
+        r = requests.get(f"https://api.openalex.org/works/doi:{doi}",
+                         headers={"User-Agent": "advisor-agent/1.0 (mailto:advisor@example.com)"},
+                         timeout=20)
+        if r.status_code != 200:
+            return ""
+        loc = (r.json().get("best_oa_location") or {})
+        return loc.get("pdf_url") or ""
+    except Exception:
+        return ""
+
+
+def fetch_pmc_fulltext(pmcid: str) -> str:
+    """从 Europe PMC 取开放获取全文 XML 并转为纯文本（无则返回空串）"""
+    try:
+        r = requests.get(f"https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML",
+                         headers=HEADERS, timeout=40)
+        if r.status_code != 200:
+            return ""
+        xml = r.text
+        xml = re.sub(r"(?is)<(ref-list|back|table-wrap|fig).*?</\1>", " ", xml)  # 去参考文献等
+        text = re.sub(r"(?s)<[^>]+>", " ", xml)
+        text = re.sub(r"\s+", " ", text).strip()
+        return text if len(text) > 2000 else ""
+    except Exception:
+        return ""
+
+
+def fetch_fulltext(identifier: str) -> dict:
+    """
+    通用全文获取（多级途径），支持：
+      - arXiv id（如 2606.09669v2）
+      - DOI（如 10.1038/s41586-020-2179-y）→ OpenAlex 查 OA PDF → Europe PMC 全文
+      - PDF 直链（如实验室官网的 /file/xxx.pdf）→ 直接下载
+      - 本地 PDF 路径 → 直接解析
+    成功返回 {"paper_id", "txt_file", "source", "chars", "preview"}；失败返回 {"error", "hint"}
+    paper_id 可直接用于 paper_decision / deep_dive。
+    """
+    ident = identifier.strip().strip('"')
+    paper_id, pdf_url, source = "", "", ""
+
+    # 1) 本地 PDF
+    if ident.lower().endswith(".pdf") and Path(ident).exists():
+        paper_id = Path(ident).stem
+        content = Path(ident).read_bytes()
+        source = "本地PDF"
+    # 2) PDF 直链 / 任意 http
+    elif ident.startswith("http"):
+        paper_id = re.sub(r"\.pdf$", "", ident.split("/")[-1], flags=re.I)[:80]
+        content = _download_bytes(ident)
+        source = "PDF直链"
+    # 3) arXiv
+    elif re.fullmatch(r"\d{4}\.\d{4,5}(v\d+)?", ident):
+        txt, _, _ = fetch_paper(ident)
+        return {"paper_id": ident, "txt_file": str(txt), "source": "arXiv",
+                "chars": len(txt.read_text(encoding="utf-8")),
+                "preview": txt.read_text(encoding="utf-8")[:300]}
+    # 4) DOI
+    elif ident.lower().startswith("10."):
+        paper_id = ident.replace("/", "_")
+        # 4a. OpenAlex 找 OA PDF
+        pdf_url = find_oa_pdf_url(ident)
+        content = None
+        if pdf_url:
+            try:
+                content = _download_bytes(pdf_url)
+                source = f"OpenAlex OA ({pdf_url.split('/')[2] if '//' in pdf_url else ''})"
+            except Exception:
+                content = None
+        # 4b. Europe PMC 全文
+        if content is None:
+            try:
+                rs = requests.get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+                                  params={"query": f'DOI:"{ident}"', "format": "json",
+                                          "resultType": "core", "pageSize": 1},
+                                  headers=HEADERS, timeout=25)
+                it = (rs.json().get("resultList", {}).get("result", []) or [{}])[0]
+                pmcid = it.get("pmcid") or ""
+                full = fetch_pmc_fulltext(pmcid) if pmcid else ""
+                if full:
+                    txt_file = PAPERS_DIR / f"{paper_id}.txt"
+                    txt_file.write_text(full, encoding="utf-8")
+                    return {"paper_id": paper_id, "txt_file": str(txt_file),
+                            "source": f"Europe PMC 全文 ({pmcid})", "chars": len(full),
+                            "preview": full[:300]}
+            except Exception:
+                pass
+            return {"error": f"该论文（DOI: {ident}）未找到开放获取全文",
+                    "hint": "非开放获取论文无法自动下载。可尝试：①去实验室官网 Publications 页找 [PDF]；"
+                            "②作者主页/ResearchGate；③学校图书馆。拿到 PDF 后把本地路径传给 fetch_fulltext"}
+    # 5) PMCID
+    elif ident.upper().startswith("PMC"):
+        full = fetch_pmc_fulltext(ident)
+        if full:
+            txt_file = PAPERS_DIR / f"{ident}.txt"
+            txt_file.write_text(full, encoding="utf-8")
+            return {"paper_id": ident, "txt_file": str(txt_file),
+                    "source": "Europe PMC 全文", "chars": len(full), "preview": full[:300]}
+        return {"error": f"{ident} 无开放获取全文"}
+    else:
+        return {"error": f"无法识别的标识符：{ident}",
+                "hint": "支持 arXiv id / DOI / PDF 直链 / 本地 PDF 路径 / PMCID"}
+
+    # 解析 PDF
+    try:
+        doc = pymupdf.open(stream=content, filetype="pdf")
+        text = "\n".join(page.get_text() for page in doc)
+    except Exception as e:
+        return {"error": f"PDF 解析失败：{e}（可能不是 PDF 或已损坏）"}
+    if len(text) < 1000:
+        return {"error": "PDF 正文过短（可能是扫描版图片PDF，无法提取文字）"}
+    txt_file = PAPERS_DIR / f"{paper_id}.txt"
+    txt_file.write_text(text, encoding="utf-8")
+    return {"paper_id": paper_id, "txt_file": str(txt_file), "source": source,
+            "chars": len(text), "preview": text[:300]}
 
 
 def main():
