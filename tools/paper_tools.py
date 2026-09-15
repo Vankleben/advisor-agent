@@ -29,14 +29,34 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 NS = {"a": "http://www.w3.org/2005/Atom"}
 
 
+def _get_with_retry(url: str, params: dict = None, timeout: int = 30,
+                    tries: int = 3, headers: dict = None) -> requests.Response:
+    """统一外部 API 请求封装：对 429 限流 / 5xx / 连接重置做退避重试（3→6→12s）。"""
+    import requests as _rq
+    last = None
+    for i in range(tries):
+        try:
+            r = requests.get(url, params=params, headers=headers or HEADERS, timeout=timeout)
+            if r.status_code in (429, 500, 502, 503):
+                last = _rq.HTTPError(f"HTTP {r.status_code}", response=r)
+                print(f"⚠️ 接口限流/异常（HTTP {r.status_code}），{2 ** (i + 1) * 3}s 后重试...")
+                time.sleep(2 ** (i + 1) * 3)   # 6→12→24s
+                continue
+            r.raise_for_status()
+            return r
+        except _rq.RequestException as e:
+            last = e
+            print(f"⚠️ 请求失败（{type(e).__name__}），{2 ** (i + 1) * 3}s 后重试...")
+            time.sleep(2 ** (i + 1) * 3)
+    raise RuntimeError(f"重试 {tries} 次仍失败：{last}")
+
+
 def search_papers(author_en: str, max_results: int = 15) -> list[dict]:
-    """按作者英文名检索 arXiv 近期论文（按提交时间倒序）。"""
+    """按作者英文名检索 arXiv 近期论文（按提交时间倒序）。带限流退避重试。"""
     params = {"search_query": f'au:"{author_en}"',
               "sortBy": "submittedDate", "sortOrder": "descending",
               "max_results": max_results}
-    r = requests.get("http://export.arxiv.org/api/query",
-                     params=params, headers=HEADERS, timeout=30)
-    r.raise_for_status()
+    r = _get_with_retry("http://export.arxiv.org/api/query", params=params, timeout=30)
 
     papers = []
     key = author_en.lower().replace(" ", "")
@@ -57,6 +77,70 @@ def search_papers(author_en: str, max_results: int = 15) -> list[dict]:
             "abstract": " ".join(e.find("a:summary", NS).text.split()),
         })
     return papers
+
+
+def search_by_seed(seed_title: str, author_name: str = "", max_results: int = 40) -> list[dict]:
+    """
+    种子论文策略（重名终结者）：
+    用一篇已知的代表作（如深潜报告里的 aiXcoder-7B）当"种子"，反查作者，
+    再按【姓名级合作者交集】过滤其全部论文——精准命中本人，滤掉同名的其他学者。
+
+    实测：'Jia Li' 100 篇污染列表 → 过滤后仅保留 6 篇真实 CS 论文。
+    """
+    UA = {"User-Agent": "advisor-agent/1.0 (mailto:advisor@example.com)"}
+    # 1. 用标题找种子论文
+    r = _get_with_retry("https://api.openalex.org/works",
+                        params={"search": seed_title, "per-page": 5},
+                        timeout=25, headers=UA)
+    results = r.json().get("results", [])
+    if not results:
+        return [{"error": f"未找到种子论文：{seed_title}"}]
+    # 选标题最匹配的一条
+    norm = lambda s: re.sub(r"[^0-9a-z]+", "", str(s or "").lower())
+    seed = min(results, key=lambda w: 0 if norm(seed_title)[:20] in norm(w.get("display_name")) else 1)
+
+    # 2. 定位目标作者 + 建立合作者名单（姓名级，绕开被污染的 author id）
+    seed_authors = [a for a in seed.get("authorships", []) if a.get("author", {}).get("display_name")]
+    target = None
+    if author_name:
+        tkey = norm(author_name)
+        target = next((a for a in seed_authors
+                       if tkey in norm(a["author"]["display_name"])), None)
+    if target is None:
+        return [{"error": f"种子论文《{seed.get('display_name', '')[:50]}》作者中找不到 {author_name or '（未提供）'}",
+                 "seed_authors": [a["author"]["display_name"] for a in seed_authors]}]
+    co_names = {norm(a["author"]["display_name"])
+                for a in seed_authors
+                if a is not target and a.get("author", {}).get("display_name")}
+    target_id = (target.get("author", {}).get("id") or "").split("/")[-1]
+    if not target_id:
+        return [{"error": "无法获取该作者的 OpenAlex 档案 ID"}]
+
+    # 3. 拉该作者名下全部论文，用合作者姓名交集过滤
+    r2 = _get_with_retry("https://api.openalex.org/works",
+                         params={"filter": f"author.id:{target_id}",
+                                 "per-page": 100, "sort": "publication_year:desc"},
+                         timeout=30, headers=UA)
+    kept, dropped = [], 0
+    for w in r2.json().get("results", []):
+        wnames = {norm(a["author"]["display_name"])
+                  for a in w.get("authorships", []) if a.get("author", {}).get("display_name")}
+        if not (names := wnames & co_names):
+            dropped += 1
+            continue
+        venue = ((w.get("primary_location") or {}).get("source") or {}).get("display_name") or ""
+        doi = (w.get("doi") or "").replace("https://doi.org/", "")
+        kept.append({
+            "title": w.get("display_name", ""),
+            "year": str(w.get("publication_year") or ""),
+            "venue": venue,
+            "doi": doi,
+            "matched_coauthors": sorted(names)[:3],
+            "cited_by": w.get("cited_by_count", 0),
+            "source": "seed",
+        })
+    kept.sort(key=lambda p: (p["year"] or "0"), reverse=True)
+    return kept[:max_results] if kept else [{"error": "合作者交集过滤后无结果（可能该作者在该库的档案被合并，请人工核对）"}]
 
 
 def search_europepmc(author_en: str, affiliation: str = "", max_results: int = 15) -> list[dict]:
@@ -212,10 +296,11 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
     return ok
 
 
-def merge_paper_sources(arxiv: list, epmc: list, lab: list) -> list[dict]:
+def merge_paper_sources(arxiv: list, epmc: list, lab: list, seed: list = None) -> list[dict]:
     """
     跨源合并去重：同标题（归一化比对）的论文合并为一条，sources 字段记录命中来源。
     价值：官网论文可补上 arXiv/PMC 缺失的条目，多源命中则互相印证，可信度更高。
+    种子策略（seed）结果作为第 4 源参与合并——它按合作者网络过滤，是重名场景下的高置信来源。
     """
     norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", str(s or "")).lower()[:70]
     merged: dict[str, dict] = {}
@@ -245,6 +330,9 @@ def merge_paper_sources(arxiv: list, epmc: list, lab: list) -> list[dict]:
         add(p, "EuropePMC")
     for p in lab:
         add(p, "实验室官网")
+    for p in (seed or []):
+        if not p.get("error"):
+            add(p, "种子策略")
     return list(merged.values())
 
 
