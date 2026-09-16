@@ -40,6 +40,7 @@ import web_fetch as wf
 import knowledge_store as ks
 import monitor as mon
 import memory as mem
+import chat_history as ch
 
 PROVIDERS = {
     "moonshot": {"base_url": "https://api.moonshot.cn/v1",
@@ -57,6 +58,13 @@ def read_user_input():
     first = input("你：").strip()
     if first.lower() in ("quit", "exit"):
         return None
+    if first == "/history" or first.startswith("/history "):
+        arg = first[len("/history"):].strip()
+        try:
+            print(ch.handle(arg))
+        except Exception as e:
+            print(f"读取历史失败：{e}")
+        return ""
     if first == "/m":
         print("[多行模式] 逐行输入/粘贴，最后单独一行输入 EOF 结束：")
         lines = []
@@ -729,9 +737,11 @@ def build_system_prompt() -> str:
 
 
 def main():
+    session = ch.new_session()          # 本次会话的历史记录文件
     messages = [{"role": "system", "content": build_system_prompt()}]
     print("导师情报 Agent（论文拆解 + 思考批改 + 导师深潜 + 进组路径分析 + 对比视图）已启动，输入 quit 退出")
-    print("长文本技巧：/m 进入多行模式（EOF 结束）；/f 文件路径 读取整个文件\n")
+    print("长文本技巧：/m 进入多行模式（EOF 结束）；/f 文件路径 读取整个文件")
+    print("历史记录：/history 查看过去会话；/history 关键词 搜索\n")
 
     while True:
         user = read_user_input()
@@ -745,6 +755,7 @@ def main():
         except Exception:
             pass
         messages.append({"role": "user", "content": user})
+        ch.append(session, "user", user)
 
         # function calling 循环：LLM 可能连续调用多个工具才给出回答
         for _ in range(10):
@@ -757,11 +768,13 @@ def main():
                 for call in msg.tool_calls:
                     args = json.loads(call.function.arguments or "{}")
                     print(f"  [调用工具] {call.function.name}({str(args)[:200]})")
+                    ch.append(session, "tool", f"{call.function.name}({str(args)[:200]})")
                     result = DISPATCH[call.function.name](**args)
                     messages.append({"role": "tool", "tool_call_id": call.id,
                                      "content": result})
             else:
                 print(f"\nAgent：{msg.content}\n")
+                ch.append(session, "assistant", msg.content or "")
                 messages.append(msg)
                 break
 

@@ -42,6 +42,8 @@ python web_server.py    # 浏览器打开 http://127.0.0.1:8080
 
 > Web 界面零依赖（Python 内置 http.server），支持 markdown 表格渲染、证据折叠展开、工具调用过程可视化，多轮会话自动保持。
 
+> 终端增强命令：`/m` 多行输入（EOF 结束）；`/f 路径` 读取文件；**`/history` 回看历史会话**（`/history 3` 看第 3 次、`/history 关键词` 搜索）。对话自动存到本地 `archive/chat_history/`，关掉终端不丢，不上传。
+
 ---
 
 ## 使用示例（真实对话）
