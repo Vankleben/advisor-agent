@@ -5,7 +5,7 @@
 用法：
   python tools/knowledge_store.py rebuild                     # 从所有批改产物重建已读论文库
   python tools/knowledge_store.py show                        # 查看两个档案
-  python tools/knowledge_store.py bookmark 俞立 --note 备注    # 收藏/更新目标老师
+  python tools/knowledge_store.py bookmark 张三 --note 备注    # 收藏/更新目标老师
 """
 
 

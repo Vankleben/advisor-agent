@@ -4,7 +4,7 @@ M1.5：对比视图
 档二：深度对比 —— 选2-5人，读卡片+深潜报告，调LLM打七项指标分，输出对比矩阵
 用法（独立测试）：
   python tools/compare_advisors.py --panorama
-  python tools/compare_advisors.py --compare 俞立 张三
+  python tools/compare_advisors.py --compare 张三 李四
 """
 
 
@@ -161,7 +161,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("用法：")
         print("  python tools/compare_advisors.py --panorama        全景表")
-        print("  python tools/compare_advisors.py --compare 俞立 张三  深度对比（2-5人）")
+        print("  python tools/compare_advisors.py --compare 张三 李四  深度对比（2-5人）")
         sys.exit(1)
 
     if sys.argv[1] == "--panorama":

@@ -15,14 +15,14 @@ M6：实时情报监测
 
 要启用某位老师的主页/arXiv/GitHub 监测，在 archive/target_advisors.json 的该老师条目加：
   "urls": [...可选覆盖监测来源...]  （默认取深潜报告 sources）
-  "author_en": "英文名拼音，如 Yu Li",
+  "author_en": "英文名拼音，如 John Smith",
   "keywords": ["研究主题词1", "主题词2"],   （用于 arXiv 归属过滤）
   "github": "GitHub用户名"
 - 输出：情报简报（按老师分组的 change list），存档到 data/monitor/{name}_briefing.json 与快照。
 
 用法：
   python tools/monitor.py scan              # 扫描全部收藏老师
-                      scan --name 俞立      # 只扫某人
+                      scan --name 张三      # 只扫某人
                       show                   # 看历史简报
 """
 

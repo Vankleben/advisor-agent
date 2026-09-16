@@ -2,7 +2,7 @@
 M4：进组路径分析
 输入老师名 → 读取其 M2 深潜报告 + 用户画像 → 产出需求侧/供给侧/行动方案
 反幻觉规则：需求侧必须引用深潜报告里的 evidence 原文，无证据的判断不输出
-用法（独立测试）：python tools/path_analysis.py 俞立
+用法（独立测试）：python tools/path_analysis.py 张三
 """
 
 

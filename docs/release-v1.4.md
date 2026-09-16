@@ -6,7 +6,7 @@
 
 ## 修复
 
-- 作者名匹配兼容 Europe PMC 的「姓 + 名缩写」格式（Shen X ↔ Xiaohua Shen）。
+- 作者名匹配兼容 Europe PMC 的「姓 + 名缩写」格式（Smith J ↔ John Smith）。
 
 ## Agent 行为改进
 

@@ -257,7 +257,7 @@ def tool_search_papers(author_en: str, affiliation: str = "",
                        seed_title: str = "") -> str:
     """四源并列检索论文，跨源去重合并：
     ① arXiv（CS/物理/数学）② Europe PMC（生物医学）③ 实验室官网 Publications ④ 种子策略（合作者网络）。
-    重名场景（如 'Jia Li'）：用种子论文（代表作标题）反查作者，按合作者交集过滤，精准命中本人。"""
+    重名场景（如 'Wei Wang'）：用种子论文（代表作标题）反查作者，按合作者交集过滤，精准命中本人。"""
     result = {}
     arxiv_raw, epmc_raw, lab_raw, seed_raw = [], [], [], []
 
@@ -540,9 +540,9 @@ TOOLS = [
         "name": "search_papers",
         "description": "查某老师近期发表的论文——四源并列检索并跨源去重：arXiv（CS/物理/数学）+ Europe PMC（生物医学期刊）+ 实验室官网 Publications + 种子策略。中文名转拼音填入；建议同时传 affiliation（机构，过滤同名学者）和 name_cn（中文名，用于自动发现实验室网址）。【重名场景】若结果全是同名学者（研究方向不符），用返回的'代表作线索'里的标题作 seed_title 重试——种子策略用代表作反查作者+合作者网络过滤，能精准锁定本人",
         "parameters": {"type": "object", "properties": {
-            "author_en": {"type": "string", "description": "作者英文名，如 Yinpeng Dong / Xiaohua Shen"},
+            "author_en": {"type": "string", "description": "作者英文名，如 John Smith"},
             "affiliation": {"type": "string", "description": "机构英文名（如 Tsinghua），过滤同名学者，建议填", "default": ""},
-            "name_cn": {"type": "string", "description": "老师中文名（如 沈晓骅），用于自动查找其实验室网址、自动提取代表作线索", "default": ""},
+            "name_cn": {"type": "string", "description": "老师中文名（中文名），用于自动查找其实验室网址、自动提取代表作线索", "default": ""},
             "lab_url": {"type": "string", "description": "实验室网站 URL，直接指定则跳过自动查找", "default": ""},
             "seed_title": {"type": "string", "description": "种子论文标题（该老师的代表作，如 'aiXcoder-7B'）——用于重名场景精准定位本人", "default": ""}},
             "required": ["author_en"]}}},

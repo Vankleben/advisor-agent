@@ -76,8 +76,8 @@ Agent：北大智能学院共收录 36 位老师：
 🔧 advisor_deepdive({'name': '某教授 A'})
 
 Agent：
-【近期研究】migrasome（迁移体）相关细胞生物学研究
-  证据: "The Li Yu Laboratory ... migrasome ..."  ← 来源1 个人主页
+【近期研究】<该组研究方向>
+  证据: "The XXX Laboratory ... <原文引句>"  ← 来源1 个人主页
 
 【研究轨迹】持续深耕细胞膜相关结构研究
 【招生意向】...
@@ -104,8 +104,8 @@ Agent：
 ### ④ 论文精读 —— 从检索到精读的完整链路
 
 ```
-你：查一下 Yinpeng Dong 近期的论文
-🔧 search_papers({'author_en': 'Yinpeng Dong'})     # ⭐ 标出末位作者=导师主导
+你：查一下某位老师近期的论文
+🔧 search_papers({'author_en': 'John Smith'})     # ⭐ 标出末位作者=导师主导
 
 你：第 7 篇先出个决策卡
 🔧 paper_decision({'arxiv_id': '2606.09669v2'})
@@ -152,7 +152,7 @@ Agent：
 Agent：
 【需求侧】组里需要能做图像分析/数据挖掘的人（附深潜报告原句）
 【供给侧】你已具备：YOLO 实战、Python 数据处理；可快速补齐：细胞图像分割
-【敲门砖项目】斑马鱼胚胎 migrasome 显微图像分割 demo
+【敲门砖项目】<该组研究材料的图像分割 demo>
    → 设备 B（RTX3060），预估 4-6 周，用 Cellpose 微调即可
    ✅ 已通过算力红线检查（设备 A 仅支持 ≤3B 量化推理）
 ```

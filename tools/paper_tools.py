@@ -1,6 +1,6 @@
 """
 工具六：论文检索与全文获取 v2（arXiv）
-用法：python tools/paper_tools.py search "Yinpeng Dong"   # 查某老师近期论文
+用法：python tools/paper_tools.py search "John Smith"   # 查某老师近期论文
       python tools/paper_tools.py fetch 3                 # 用搜索结果的序号下载
       python tools/paper_tools.py fetch 2603.02798v1      # 或直接用 arXiv id
 注意：作者名用英文（拼音）。⭐ = 目标作者是末位作者（CS 领域通常是导师主导的工作）。
@@ -85,7 +85,7 @@ def search_by_seed(seed_title: str, author_name: str = "", max_results: int = 40
     用一篇已知的代表作（如深潜报告里的 aiXcoder-7B）当"种子"，反查作者，
     再按【姓名级合作者交集】过滤其全部论文——精准命中本人，滤掉同名的其他学者。
 
-    实测：'Jia Li' 100 篇污染列表 → 过滤后仅保留 6 篇真实 CS 论文。
+    实测：'Wei Wang' 100 篇污染列表 → 过滤后仅保留 6 篇真实 CS 论文。
     """
     UA = {"User-Agent": "advisor-agent/1.0 (mailto:advisor@example.com)"}
     # 1. 用标题找种子论文
@@ -161,9 +161,9 @@ def search_europepmc(author_en: str, affiliation: str = "", max_results: int = 1
     r.raise_for_status()
 
     papers = []
-    # Europe PMC 返回的作者名多为 "Shen X"（姓 + 名缩写）或全名，需兼容两种格式匹配
+    # Europe PMC 返回的作者名多为 "Smith J"（姓 + 名缩写）或全名，需兼容两种格式匹配
     parts = author_en.split()
-    last = parts[-1].lower()          # Xiaohua Shen -> shen
+    last = parts[-1].lower()          # John Smith -> smith
     first_init = parts[0][0].lower() if parts else ""   # -> x
 
     def _match(a: str) -> bool:

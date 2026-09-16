@@ -1,7 +1,7 @@
 """
 工具三：LLM 导师卡片生成器 v2.2
 改动：homepage_candidates 提取收紧——优先级排序 + 反幻觉校验外链来源
-用法：python tools/llm_card.py 董胤蓬           （默认在 collegeai 库里找）
+用法：python tools/llm_card.py 张三           （默认在 collegeai 库里找）
       python tools/llm_card.py 葛亮 life
 """
 
@@ -123,7 +123,7 @@ def verify_evidence(card: dict, teacher: dict) -> list[str]:
 
 
 def main():
-    name = sys.argv[1] if len(sys.argv) > 1 else "董胤蓬"
+    name = sys.argv[1] if len(sys.argv) > 1 else "张三"
     site = sys.argv[2] if len(sys.argv) > 2 else "collegeai"
     with open(DATA_DIR / f"faculty_{site}_enriched.json", encoding="utf-8") as f:
         teachers = json.load(f)["teachers"]

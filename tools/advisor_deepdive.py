@@ -2,8 +2,8 @@
 工具九：M2 导师深潜 v1.3
 改动：1. 兼容旧格式卡片（homepage_candidates 为字符串数组时，直接跳过，走 fallback）
       2. fallback 触发条件改为"candidates 为空 *或* 全部抓取失败"，不再被 candidates 非空挡住
-用法：python tools/advisor_deepdive.py 董胤蓬
-      python tools/advisor_deepdive.py 董胤蓬 --url https://xxx.github.io
+用法：python tools/advisor_deepdive.py 张三
+      python tools/advisor_deepdive.py 张三 --url https://xxx.github.io
 产出：data/deepdive/{name}_report.json        深潜报告
       data/deepdive/{name}_src{i}.txt         信源原文缓存
 """
