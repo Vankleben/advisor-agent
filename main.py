@@ -39,6 +39,7 @@ import compare_advisors as ca
 import web_fetch as wf
 import knowledge_store as ks
 import monitor as mon
+import memory as mem
 
 PROVIDERS = {
     "moonshot": {"base_url": "https://api.moonshot.cn/v1",
@@ -201,6 +202,31 @@ def tool_monitor_show() -> str:
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"读取监测历史失败：{e}", "traceback": tb}, ensure_ascii=False)
+
+
+# ============ 工具九：动态记忆 ============
+
+def tool_remember(text: str, category: str = "note") -> str:
+    """把用户口述的新信息写入长期画像（学会的技能/在学内容/新项目/新兴趣/备注）"""
+    try:
+        result = mem.remember(text, category)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"记忆写入失败：{e}", "traceback": tb}, ensure_ascii=False)
+    result["说明"] = "已写入长期画像，下次对话会在【用户画像】中看到"
+    return json.dumps(result, ensure_ascii=False)
+
+
+def tool_show_profile() -> str:
+    """展示当前用户画像与近期记忆（用户问"我的画像/我做过什么/你记得我什么"时调用）"""
+    try:
+        from user_profile import load_profile
+        p = load_profile()
+        return json.dumps({"画像": p, "最近记忆": mem.recent_digest(15)},
+                          ensure_ascii=False)
+    except Exception as e:
+        tb = traceback.format_exc()[-500:]
+        return json.dumps({"error": f"读取画像失败：{e}", "traceback": tb}, ensure_ascii=False)
 
 
 # ============ 工具二：论文链路 ============
@@ -404,6 +430,15 @@ def tool_deep_dive(paper_id: str) -> str:
     out = PAPERS_DIR / f"{paper_id.replace('/', '_')}_analysis.json"
     out.write_text(json.dumps({"analysis": analysis, "verification_warnings": warnings},
                               ensure_ascii=False, indent=2), encoding="utf-8")
+    # 动态记忆：把本篇的"档案外新概念"沉淀到画像的学习列表
+    try:
+        concepts = analysis.get("concepts") or []
+        new_terms = [c.get("term") for c in concepts
+                     if isinstance(c, dict) and c.get("known") is False]
+        added = mem.add_learning(new_terms[:8], source=f"精读 {paper_id}")
+        mem.log_event("论文精读", f"精读 {paper_id}（新增待学概念 {len(added)} 个）", paper_id)
+    except Exception:
+        pass
     return json.dumps({"analysis": analysis,
                        "verification_warnings": warnings or "全部通过"},
                       ensure_ascii=False)
@@ -418,6 +453,12 @@ def tool_critique_thinking(arxiv_id: str, thinking: str) -> str:
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"批改失败：{e}", "traceback": tb}, ensure_ascii=False)
+    # 动态记忆：批改事件留痕（事实错误本身已由 critique_thinking 写入 error_patterns）
+    try:
+        n_err = len(result.get("fact_errors") or [])
+        mem.log_event("思考批改", f"批改 {arxiv_id}：{n_err} 个事实错误", arxiv_id)
+    except Exception:
+        pass
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -452,6 +493,15 @@ def tool_path_analysis(name: str) -> str:
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"路径分析失败：{e}", "traceback": tb}, ensure_ascii=False)
+    # 动态记忆："可快速补齐"的技能沉淀到学习列表 + 事件留痕
+    try:
+        path = result.get("path") or {}
+        quick = (path.get("supply") or {}).get("quick") or []
+        added = mem.add_learning(quick[:6], source=f"进组分析（{name}）")
+        n_actions = len(path.get("actions") or [])
+        mem.log_event("进组分析", f"{name}：{n_actions} 个敲门砖方案（新增待补技能 {len(added)} 项）", name)
+    except Exception:
+        pass
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -537,6 +587,17 @@ TOOLS = [
         "description": "查看 M6 监测的历史简报（过去几轮扫描结果）",
         "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {
+        "name": "remember",
+        "description": "把用户告知的新信息写入长期画像（动态记忆）。当用户说'记住：…'、'我最近在学 X'、'我学会了 X'、'我在做 X 项目'、'我对 X 感兴趣'时调用。category 按内容选：skill_known(已掌握技能)/skill_learning(正在学)/project(项目，文本用'名称：说明'格式)/interest(兴趣方向)/note(其他备注)",
+        "parameters": {"type": "object", "properties": {
+            "text": {"type": "string", "description": "要记忆的内容（一句话）"},
+            "category": {"type": "string", "description": "skill_known / skill_learning / project / interest / note", "default": "note"}},
+            "required": ["text"]}}},
+    {"type": "function", "function": {
+        "name": "show_profile",
+        "description": "展示当前用户画像与近期记忆（用户问'我的画像/你记得我什么/我做过什么项目'时调用）",
+        "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {
         "name": "search_papers",
         "description": "查某老师近期发表的论文——四源并列检索并跨源去重：arXiv（CS/物理/数学）+ Europe PMC（生物医学期刊）+ 实验室官网 Publications + 种子策略。中文名转拼音填入；建议同时传 affiliation（机构，过滤同名学者）和 name_cn（中文名，用于自动发现实验室网址）。【重名场景】若结果全是同名学者（研究方向不符），用返回的'代表作线索'里的标题作 seed_title 重试——种子策略用代表作反查作者+合作者网络过滤，能精准锁定本人",
         "parameters": {"type": "object", "properties": {
@@ -617,6 +678,8 @@ DISPATCH = {"list_sites": tool_list_sites, "list_teachers": tool_list_teachers,
             "list_targets": tool_list_targets,
             "monitor": tool_monitor,
             "monitor_show": tool_monitor_show,
+            "remember": tool_remember,
+            "show_profile": tool_show_profile,
             "search_papers": tool_search_papers, "paper_decision": tool_paper_decision,
             "fetch_fulltext": tool_fetch_fulltext,
             "lab_publications": tool_lab_publications,
@@ -643,11 +706,30 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 10. M1.5对比视图流程：用户说全览/有哪些老师/一览时调 panorama（无参数），结果展示为表格（姓名/职称/方向/招生信号/有无深潜）；用户说对比/比较几位老师时调 deep_compare（names 传中文名列表，2-5人），结果展示为七项打分矩阵表格 + 总结建议；无深潜报告的老师如实标注；用户只选了1人时提示至少选2人才能对比；
 11. 长期档案流程：用户说收藏某老师/想盯某老师时调 bookmark_advisor；用户汇报接触进展（读完论文了/发邮件了/老师回复了）时调 bookmark_advisor 更新 status（已读论文/已发邮件/已回复）；用户问收藏清单时调 list_targets；
 12. M6监测流程：用户说看看收藏的老师有什么新动态/情报/监测下他们时调 monitor（无参数扫全部，或传名字扫某人）；返回的 per_teacher 里 changes（主页新增内容）、arxiv（新论文）、github（GitHub 新仓库/活跃）分老师展示，[首次监测]说明该老师刚建立基线下次才有变化对比；"未监测"提示可深潜补主页URL以便开始监测；若要监测 arXiv/GitHub，需在收藏档案里为该老师填 author_en+keywords / github（让用户确认归属）；
-12. 回答用简洁中文，列表用表格。"""
+13. 用户画像与长期记忆：系统提示末尾附有【用户画像】和【最近记忆】——回答方向建议/技能规划/项目推荐/匹配度等问题时必须结合它做个性化分析（可引用其项目经历、已掌握技能、硬件条件），禁止忽略画像给通用答案；当用户告知新动态（学会新技能/在做新项目/新兴趣/明确说"记住"）时调 remember 更新画像（category 按内容选 skill_known/skill_learning/project/interest/note）；用户问"我做过什么/我学过什么/我的画像"时基于画像如实回答；
+14. 回答用简洁中文，列表用表格。"""
+
+
+def build_system_prompt() -> str:
+    """在基础 SYSTEM 后附加用户画像 + 近期记忆（每次调用实时读取，画像更新即生效）"""
+    parts = [SYSTEM]
+    try:
+        from user_profile import format_profile, format_hardware
+        parts += ["\n\n【用户画像（持久记忆，个性化回答的依据）】", format_profile(),
+                  "", "【硬件红线】", format_hardware()]
+    except Exception:
+        pass
+    try:
+        digest = mem.recent_digest()
+        if digest:
+            parts += ["", "【最近记忆（近期事件时间线）】", digest]
+    except Exception:
+        pass
+    return "\n".join(parts)
 
 
 def main():
-    messages = [{"role": "system", "content": SYSTEM}]
+    messages = [{"role": "system", "content": build_system_prompt()}]
     print("导师情报 Agent（论文拆解 + 思考批改 + 导师深潜 + 进组路径分析 + 对比视图）已启动，输入 quit 退出")
     print("长文本技巧：/m 进入多行模式（EOF 结束）；/f 文件路径 读取整个文件\n")
 
@@ -657,6 +739,11 @@ def main():
             break
         if not user:
             continue
+        # 每轮刷新系统提示：画像/记忆可能在上一轮被更新（remember 工具或工具自动沉淀）
+        try:
+            messages[0]["content"] = build_system_prompt()
+        except Exception:
+            pass
         messages.append({"role": "user", "content": user})
 
         # function calling 循环：LLM 可能连续调用多个工具才给出回答

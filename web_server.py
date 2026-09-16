@@ -92,9 +92,15 @@ class Handler(BaseHTTPRequestHandler):
             if not user_text:
                 self._send_json({"error": "空消息"}, 400)
                 return
-            # 注入系统提示
+            # 注入系统提示（每次请求实时重建：包含最新画像 + 近期记忆，画像更新即生效）
+            try:
+                sys_prompt = agent.build_system_prompt()
+            except Exception:
+                sys_prompt = agent.SYSTEM
             if not messages or messages[0].get("role") != "system":
-                messages.insert(0, {"role": "system", "content": agent.SYSTEM})
+                messages.insert(0, {"role": "system", "content": sys_prompt})
+            else:
+                messages[0]["content"] = sys_prompt
             messages.append({"role": "user", "content": user_text})
 
             tool_log = []
