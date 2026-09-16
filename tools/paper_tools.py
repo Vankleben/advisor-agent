@@ -82,7 +82,7 @@ def search_papers(author_en: str, max_results: int = 15) -> list[dict]:
 def search_by_seed(seed_title: str, author_name: str = "", max_results: int = 40) -> list[dict]:
     """
     种子论文策略（重名终结者）：
-    用一篇已知的代表作（如深潜报告里的 aiXcoder-7B）当"种子"，反查作者，
+    用一篇已知的代表作（如深潜报告里提取的论文标题）当"种子"，反查作者，
     再按【姓名级合作者交集】过滤其全部论文——精准命中本人，滤掉同名的其他学者。
 
     实测：'Wei Wang' 100 篇污染列表 → 过滤后仅保留 6 篇真实 CS 论文。
@@ -432,7 +432,7 @@ def fetch_fulltext(identifier: str) -> dict:
     """
     通用全文获取（多级途径），支持：
       - arXiv id（如 2606.09669v2）
-      - DOI（如 10.1038/s41586-020-2179-y）→ OpenAlex 查 OA PDF → Europe PMC 全文
+      - DOI（如 10.xxxx/xxxxx）→ OpenAlex 查 OA PDF → Europe PMC 全文
       - PDF 直链（如实验室官网的 /file/xxx.pdf）→ 直接下载
       - 本地 PDF 路径 → 直接解析
     成功返回 {"paper_id", "txt_file", "source", "chars", "preview"}；失败返回 {"error", "hint"}

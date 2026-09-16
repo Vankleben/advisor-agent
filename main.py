@@ -260,7 +260,7 @@ def _find_lab_url(name_cn: str) -> str:
 
 
 def _seed_hints(name_cn: str) -> list:
-    """从深潜报告里提取代表作线索（英文专名，如 aiXcoder-7B），供种子策略反查作者"""
+    """从深潜报告里提取代表作线索（英文专名），供种子策略反查作者"""
     if not name_cn:
         return []
     rp = DATA_DIR / "deepdive" / f"{name_cn}_report.json"
@@ -357,7 +357,7 @@ def tool_search_papers(author_en: str, affiliation: str = "",
                       "非 arXiv 论文先调 fetch_fulltext（优先用 pdf 直链，其次 doi），"
                       "拿到返回的 paper_id 再精读；非开放获取的论文会明确报错，此时如实告知用户拿不到全文；"
                       "**若判定结果全是同名学者（研究方向不符），用'代表作线索'里的标题调 seed_title 重试——"
-                      "种子策略按合作者网络过滤，能精准锁定本人（如 seed_title='aiXcoder-7B'）**")
+                      "种子策略按合作者网络过滤，能精准锁定本人（把代表作标题传给 seed_title 即可）**")
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -605,7 +605,7 @@ TOOLS = [
             "affiliation": {"type": "string", "description": "机构英文名（如 Tsinghua），过滤同名学者，建议填", "default": ""},
             "name_cn": {"type": "string", "description": "老师中文名（中文名），用于自动查找其实验室网址、自动提取代表作线索", "default": ""},
             "lab_url": {"type": "string", "description": "实验室网站 URL，直接指定则跳过自动查找", "default": ""},
-            "seed_title": {"type": "string", "description": "种子论文标题（该老师的代表作，如 'aiXcoder-7B'）——用于重名场景精准定位本人", "default": ""}},
+            "seed_title": {"type": "string", "description": "种子论文标题（该老师的代表作，该代表作标题）——用于重名场景精准定位本人", "default": ""}},
             "required": ["author_en"]}}},
     {"type": "function", "function": {
         "name": "lab_publications",
@@ -617,7 +617,7 @@ TOOLS = [
         "name": "fetch_fulltext",
         "description": "获取论文全文（非 arXiv 论文的精读前置步骤）。支持：DOI（自动查开放获取）、官网PDF直链、本地PDF路径、PMCID。返回 paper_id 后可传给 paper_decision/deep_dive。非开放获取的论文会明确报错——此时如实告知用户拿不到全文，不要硬编",
         "parameters": {"type": "object", "properties": {
-            "identifier": {"type": "string", "description": "DOI（如 10.1038/s41586-020-2179-y）/ PDF直链 / 本地PDF路径 / PMCID / arXiv id"}},
+            "identifier": {"type": "string", "description": "DOI（如 10.xxxx/xxxxx）/ PDF直链 / 本地PDF路径 / PMCID / arXiv id"}},
             "required": ["identifier"]}}},
     {"type": "function", "function": {
         "name": "paper_decision",
@@ -698,7 +698,7 @@ SYSTEM = """你是导师情报与论文伴读助手，服务对象是一名想�
 2. 工具返回什么就说什么，查不到就如实说"未收录/无数据"；如果工具返回了 traceback 字段，请截取最后几行关键报错（包含文件名和行号）告诉用户，不要只说"内部错误"；
 3. 展示老师信息时保留招生信号标记和 evidence 原文引用；
 4. M1收录流程：用户问到未收录的学校/学院时，不要直接要网址——先调 fetch_url 自主导航：从学校主页（知名高校域名你通常知道，如清华大学 https://www.tsinghua.edu.cn）出发，沿"院系设置/机构设置/师资队伍/教师名单/教职工"等链接逐层找与用户兴趣相关的学院（计算机/人工智能/交叉信息等优先）；找到师资名单页调 add_school(url, 站点代号)；add_school 内部会**自动跑 enrich_faculty 和 batch_cards 生成卡片**，跑完后 list_sites/list_teachers 就能直接查到该站点，不要再让用户去终端敲命令；一个学院有分页师资页时（第2页/第3页...），把每个分页都调一次 add_school 用**同一站点代号**合并，add_school 会按姓名去重累加；导航失败（页面打不开/找不到入口）再请用户提供师资页网址，不要瞎猜编造 URL；收录后若用户继续问该学院老师，直接用 list_teachers/get_card。
-5. 论文流程：用户给中文老师名 -> 转成拼音调 search_papers（一次调用即四源并列检索：arXiv + Europe PMC + 实验室官网Publications + 种子策略；务必传 affiliation 过滤同名，传 name_cn 以自动查找实验室网址并提取代表作线索）-> 展示合并后的论文列表（'来源'列标明命中渠道，多源命中可信度更高；重点推荐末位作者的论文，那是他主导的）-> **重名处理：若结果的研究方向都与该老师实际方向不符（如 CS 老师查到生物医学论文），判定为同名学者污染，不要直接下结论——用返回的'代表作线索'（如 aiXcoder-7B）作 seed_title 重调 search_papers，种子策略会按合作者网络精准锁定本人；重试后仍无结果才如实告知"未检索到本人论文"** -> 精读流程：①带 arxiv_id 的直接传 paper_decision/deep_dive；②非 arXiv 论文（PMC/官网）先调 fetch_fulltext：优先传 pdf 直链（官网PDF最快），其次传 doi（自动查开放获取全文），拿到返回的 paper_id 后传 paper_decision/deep_dive；③fetch_fulltext 报"非开放获取"时，如实告知用户拿不到全文并给替代建议（图书馆/作者主页），**绝不编造论文内容** -> 用户明确说精读/拆解才调 deep_dive；
+5. 论文流程：用户给中文老师名 -> 转成拼音调 search_papers（一次调用即四源并列检索：arXiv + Europe PMC + 实验室官网Publications + 种子策略；务必传 affiliation 过滤同名，传 name_cn 以自动查找实验室网址并提取代表作线索）-> 展示合并后的论文列表（'来源'列标明命中渠道，多源命中可信度更高；重点推荐末位作者的论文，那是他主导的）-> **重名处理：若结果的研究方向都与该老师实际方向不符（如 CS 老师查到生物医学论文），判定为同名学者污染，不要直接下结论——用返回的'代表作线索'（如某代表作标题）作 seed_title 重调 search_papers，种子策略会按合作者网络精准锁定本人；重试后仍无结果才如实告知"未检索到本人论文"** -> 精读流程：①带 arxiv_id 的直接传 paper_decision/deep_dive；②非 arXiv 论文（PMC/官网）先调 fetch_fulltext：优先传 pdf 直链（官网PDF最快），其次传 doi（自动查开放获取全文），拿到返回的 paper_id 后传 paper_decision/deep_dive；③fetch_fulltext 报"非开放获取"时，如实告知用户拿不到全文并给替代建议（图书馆/作者主页），**绝不编造论文内容** -> 用户明确说精读/拆解才调 deep_dive；
 6. deep_dive 返回的 analysis 要完整展示给用户，逐段呈现并保留原文引用；verification_warnings 非空时要如实告知哪些引句未通过校验；
 7. M5批改流程：用户对已精读的论文提交思考后，原样传入 critique_thinking（禁止替用户改写思考）；返回结果分四块呈现——fact_errors 逐条列出并保留 quote 原文引用与 correction；verification_warnings 非空时如实告知可申诉；depth.probes 以提问形式抛给用户；condensed 作为凝练段落完整展示；用户对批改不认可时调 appeal_grading，不要自行辩护；
 8. M2深潜流程：用户说深挖/深入了解某位老师时调 advisor_deepdive（name 传老师中文名）；返回的 report 按五个维度分块展示并保留每条 evidence 与来源编号；verification_warnings 非空时如实告知；fit_questions 以提问清单形式呈现给用户；如果返回 error 说没有外链，请用户提供该老师个人主页网址后带 url 参数重试；

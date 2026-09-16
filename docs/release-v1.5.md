@@ -21,13 +21,7 @@
 
 ### 实测
 
-某非编码 RNA 实验室网站 → 提取 **14 篇论文**，含：
-
-- Nature (2020) — U1 snRNP regulates chromatin retention of noncoding RNAs
-- Cell Stem Cell (2016) — Divergent lncRNAs regulate gene expression and lineage differentiation
-- Cell Research (2021) — Homotypic clustering of L1 and B1/Alu repeats
-- Molecular Cell / Nature Genetics 等
-
+某实验室网站 → 提取 **14 篇论文**（含 Nature、Cell Stem Cell、Cell Research 等期刊）；
 标题、作者、期刊、年份全部完整，未混入任何虚构条目。
 
 ---
