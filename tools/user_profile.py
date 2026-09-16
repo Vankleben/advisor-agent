@@ -26,9 +26,18 @@ def load_profile() -> dict:
 
 
 def format_profile(p: dict = None) -> str:
-    """把画像格式化为 prompt 用的文本块（知识储备/学习中/项目经历/兴趣方向）"""
+    """把画像格式化为 prompt 用的文本块（身份/知识储备/学习中/项目经历/兴趣方向）"""
     p = p or load_profile()
-    lines = ["【知识储备-已掌握】"]
+    lines = []
+    ident = p.get("identity") or {}
+    if ident:
+        bits = "，".join(x for x in (ident.get("name"), ident.get("school"),
+                                     ident.get("major"), ident.get("grade")) if x)
+        if bits:
+            lines.append(f"【身份】{bits}")
+        if ident.get("homepage"):
+            lines.append(f"【个人主页】{ident['homepage']}")
+    lines.append("【知识储备-已掌握】")
     lines += [f"- {k}" for k in p.get("known", [])]
     if p.get("learning"):
         lines.append("【学习中】")
