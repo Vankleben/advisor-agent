@@ -21,11 +21,15 @@ import pymupdf
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from fetch_common import UA
+from llm_client import make_client, model_for
+from text_norm import loose
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 PAPERS_DIR = BASE_DIR / "data" / "papers"
 PAPERS_DIR.mkdir(parents=True, exist_ok=True)
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+HEADERS = {"User-Agent": UA}
 NS = {"a": "http://www.w3.org/2005/Atom"}
 
 
@@ -96,7 +100,8 @@ def search_by_seed(seed_title: str, author_name: str = "", max_results: int = 40
     if not results:
         return [{"error": f"未找到种子论文：{seed_title}"}]
     # 选标题最匹配的一条
-    norm = lambda s: re.sub(r"[^0-9a-z]+", "", str(s or "").lower())
+    # 标题/作者名归一化比对（唯一实现见 text_norm.loose；纯英文名与旧实现等价）
+    norm = loose
     seed = min(results, key=lambda w: 0 if norm(seed_title)[:20] in norm(w.get("display_name")) else 1)
 
     # 2. 定位目标作者 + 建立合作者名单（姓名级，绕开被污染的 author id）
@@ -213,9 +218,6 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
 
     支持的页面形态：SPA（React/Vue，需渲染）与静态页；返回 [{title, authors, venue, year, url}]。
     """
-    import sys as _s
-    from pathlib import Path as _P
-    _s.path.insert(0, str(_P(__file__).resolve().parent))
     from web_fetch import render_site, render_url
 
     # 1. 定位 publications 页：优先在站点里找，找不到就把传入 URL 当 publications 页
@@ -250,17 +252,7 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
         return [{"error": f"未获取到内容：{page_url}"}]
 
     # 3. 交给 LLM 抽取结构化论文条目
-    import sys as _sys2
-    D = _P(__file__).resolve().parent.parent
-    _sys2.path.insert(0, str(D))
-    from config import PROVIDER, API_KEY
-    from openai import OpenAI
-    from web_fetch import _find_browser  # noqa
-
-    PROVIDERS = {"moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-32k"),
-                 "deepseek": ("https://api.deepseek.com", "deepseek-chat")}
-    base_url, model = PROVIDERS[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=base_url)
+    client = make_client()
 
     pdf_block = "\n".join(pdf_links[:40]) if pdf_links else "（无）"
     prompt = (
@@ -276,18 +268,17 @@ def fetch_lab_publications(lab_url: str, max_papers: int = 30) -> list[dict]:
         f"可用PDF链接列表（只能从中选择，不能编造）：\n{pdf_block}"
     )
     resp = client.chat.completions.create(
-        model=model, temperature=0.1,
+        model=model_for("mid"), temperature=0.1,
         response_format={"type": "json_object"},
         messages=[{"role": "user", "content": prompt}])
     papers = json.loads(resp.choices[0].message.content).get("papers", [])
 
     # 4. 反幻觉：标题必须能在原文中找到（归一化比对）；pdf 链接必须在实际抓到的链接列表里
-    norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", str(s or "")).lower()
-    flat = norm(text)
+    flat = loose(text)
     valid_pdfs = set(pdf_links)
     ok = []
     for p in papers[:max_papers]:
-        if p.get("title") and norm(p["title"])[:60] in flat:
+        if p.get("title") and loose(p["title"])[:60] in flat:
             if p.get("pdf") and p["pdf"] not in valid_pdfs:
                 p["pdf"] = None   # 编造的 PDF 链接直接丢弃
             p["source"] = "lab_publications"
@@ -302,11 +293,10 @@ def merge_paper_sources(arxiv: list, epmc: list, lab: list, seed: list = None) -
     价值：官网论文可补上 arXiv/PMC 缺失的条目，多源命中则互相印证，可信度更高。
     种子策略（seed）结果作为第 4 源参与合并——它按合作者网络过滤，是重名场景下的高置信来源。
     """
-    norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", str(s or "")).lower()[:70]
     merged: dict[str, dict] = {}
 
     def add(p: dict, src: str):
-        key = norm(p.get("title"))
+        key = loose(p.get("title"))[:70]
         if not key:
             return
         if key in merged:
