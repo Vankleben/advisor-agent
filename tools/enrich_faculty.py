@@ -31,6 +31,7 @@ DATA_DIR = BASE_DIR / "data"
 CONTENT_SELECTORS = {
     "collegeai.tsinghua.edu.cn": [".con", ".v_news_content", ".box0"],
     "life.tsinghua.edu.cn": ["#vsb_content"],
+    "smart.org.cn": [".left-page"],       # 深圳医学科学院导师页：整块学者信息区，避开巨长的导航
 }
 
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
