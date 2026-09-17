@@ -34,12 +34,12 @@ DATA_DIR = BASE_DIR / "data"
 PAPERS_DIR = DATA_DIR / "papers"
 ARCHIVE_DIR = BASE_DIR / "archive"
 FENCE = chr(96) * 3
-sys.path.insert(0, str(BASE_DIR))
-sys.path.insert(0, str(BASE_DIR / "tools"))
-from config import PROVIDER   # noqa: E402
 
-# 批改需容纳论文全文，选长上下文模型（与 main.py 的 P["long"] 同角色）
-GRADING_MODEL = {"moonshot": "moonshot-v1-128k", "deepseek": "deepseek-chat"}[PROVIDER]
+# 批改需容纳论文全文，用长上下文模型（与 main.py 的 LONG_MODEL 同角色）
+from llm_client import make_client, model_for      # noqa: E402
+from text_norm import loose                        # noqa: E402
+
+GRADING_MODEL = model_for("long")
 
 # 用户画像从 archive/profile.json 读取（唯一权威版本），禁止在此硬编码
 from user_profile import format_profile  # noqa: E402
@@ -97,14 +97,13 @@ def _verify_quotes(quotes: list, paper_text: str) -> list:
         if q_no_punct and q_no_punct in p_no_punct:
             continue
         # 归一化兜底：剥掉所有非字母数字汉字字符后比对，
-        # 免疫 PDF 提取的折行连字符/换行/空白差异（与 analyze_paper._norm 同方案）
-        norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", s).lower()
-        if q_clean and norm(q_clean) in norm(paper_text):
+        # 免疫 PDF 提取的折行连字符/换行/空白差异（唯一实现见 text_norm.loose）
+        if q_clean and loose(q_clean) in loose(paper_text):
             continue
         # 省略号兜底：LLM 可能合法截断长句（尾部带省略号），剥掉后再归一化比对。
         # 不做"前N字符命中即通过"的宽松匹配——那会放过"真前缀+编造尾部"的引句
         q_ell = re.sub(r"(?:\.{3,}|…+)\s*$", "", q_clean).strip()
-        if q_ell and q_ell != q_clean and norm(q_ell) in norm(paper_text):
+        if q_ell and q_ell != q_clean and loose(q_ell) in loose(paper_text):
             continue
         # 都没找到
         warnings.append({"quote": q_clean, "reason": "在论文原文中未找到此引句，可能为LLM幻觉"})
@@ -318,9 +317,8 @@ def appeal(arxiv_id: str) -> dict:
                 "verdict": "引句逐字存在于论文原文中",
             })
         else:
-            # 归一化兜底：免疫 PDF 折行/空白/连字差异（与 _verify_quotes 同方案）
-            norm = lambda s: re.sub(r"[^0-9a-zA-Z一-鿿]+", "", s).lower()
-            if quote and norm(quote) in norm(paper_text):
+            # 归一化兜底：免疫 PDF 折行/空白/连字差异（唯一实现见 text_norm.loose）
+            if quote and loose(quote) in loose(paper_text):
                 review.append({
                     "index": i,
                     "quote": quote,
@@ -331,7 +329,7 @@ def appeal(arxiv_id: str) -> dict:
             else:
                 # 省略号兜底：LLM 合法截断的长句，剥掉省略号后再比对
                 q_ell = re.sub(r"(?:\.{3,}|…+)\s*$", "", quote).strip()
-                if q_ell and q_ell != quote and norm(q_ell) in norm(paper_text):
+                if q_ell and q_ell != quote and loose(q_ell) in loose(paper_text):
                     review.append({
                         "index": i,
                         "quote": quote,
@@ -362,17 +360,7 @@ def appeal(arxiv_id: str) -> dict:
 
 
 if __name__ == "__main__":
-    import sys
-    sys.path.insert(0, str(BASE_DIR))
-    from config import PROVIDER, API_KEY
-    from openai import OpenAI
-
-    PROVIDERS = {
-        "moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-8k"),
-        "deepseek": ("https://api.deepseek.com", "deepseek-chat"),
-    }
-    base_url, model = PROVIDERS[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=base_url)
+    client = make_client()
 
     if len(sys.argv) < 2:
         print("用法：")
