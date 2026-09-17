@@ -19,6 +19,15 @@
   - 一律用占位符：张三 / 李四 / John Smith / 某教授 A / 某实验室；
 - 提交前用 `git status` 检查一遍，确认没有数据文件混入暂存区。
 
+## 环境与验证（硬规则）
+
+- **项目运行在 conda 环境 `advisor`（Python 3.11）**：`D:\conda\envs\advisor\python.exe`。
+  本机 shell 里默认的 `python` 是 3.14，**不能用它验收**——3.14 起注解延迟求值（PEP 649），
+  "删了 import 却留着类型注解"这类错误在 3.14 不报错、在 3.11 直接 NameError（曾导致 main.py 起不来）。
+- 验证命令一律写全路径：`D:\conda\envs\advisor\python.exe tools/selftest.py`，
+  必要时再用该解释器实跑一次入口：`D:\conda\envs\advisor\python.exe main.py`（喂 `quit` 即可）。
+- 改完共享层或工具后先跑自检（`tools/selftest.py`，不联网/不调 LLM/不改数据），全绿再提交。
+
 ## 代码结构（硬规则）
 
 **要 LLM、要抓网页、要比引句、要读卡片/深潜报告时，一律调用共享层，禁止再抄一份。**
