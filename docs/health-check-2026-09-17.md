@@ -48,7 +48,7 @@
 
 ## 四、没改的 / 剩余风险
 
-- **arXiv 接口不稳定（环境问题，非代码问题）**：`export.arxiv.org` 的 http 会 301 到 https，而该域名 https 从本机常年偏慢——实测同一台机器上 14s 成功与 >30s 超时交替出现，高峰返回 429 限流。已把接口超时 30s→45s 并保留 3 次退避重试；失败会明确报错而非静默返回空。Europe PMC 与国内站点正常。**建议换个时段再验证一次论文检索。**
+- **arXiv 接口不稳定（环境问题，非代码问题）**：`export.arxiv.org` 的 http 会 301 到 https，而该接口主机从本机常年偏慢——实测同一台机器上 14s 成功与 >30s 超时交替出现，多次请求后返回 429 限流；同时 `arxiv.org`（网站主机，非接口）1.1s 即可达。已把接口超时 30s→45s 并保留 3 次退避重试；失败时 `tool_search_papers` 会记入 `arXiv_错误` 并继续用其余三源（Europe PMC / 官网 / 种子策略），不会静默返回空。**建议换个时段再验证论文检索；若长期如此，可考虑换用其他论文元数据源。**
 - **M6 的 GitHub 监测实际未启用**：当前 7 位收藏老师都没填 `github` 字段（`author_en` 同理），所以 P1 修复的是"潜伏 bug"。填上账号后即可生效（归属需人工确认）。
 - **两个档案库只写不读**：`archive/read_papers.json`、`archive/error_patterns.json` 由 M5 批改写入，但 Agent 没有读取入口（只能 `python tools/knowledge_store.py show`）。若希望 Agent 回答"我读过哪些论文/我常犯哪类错"，需要新增工具。
 - **只写不读的产物**：`data/deepdive/{name}_path.json`、`data/deepdive/compare_result.json`、`data/monitor/每日简报_*.txt` 落盘后无消费方（留痕性质）。
