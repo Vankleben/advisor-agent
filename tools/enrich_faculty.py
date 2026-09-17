@@ -18,6 +18,7 @@ import sys
 import time
 import requests
 from bs4 import BeautifulSoup
+from html import unescape
 from urllib.parse import urlparse
 from datetime import date
 from pathlib import Path
@@ -35,7 +36,64 @@ CONTENT_SELECTORS = {
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
 
 
+# ---- 站点专用抽取器：整站 JS 渲染、但内容已内嵌在页面脚本字段里的站点 ----
+# 西湖大学教师主页：页面无正文、无外链，服务端把各栏目写进 JS 字符串字段
+# （post 所属学院 / subject 研究方向 / lab 实验室 / biographyStr 简介 /
+#   historyStr 教育与工作经历 / researchStr 学术成果及研究方向 / content 详情正文）。
+# 抽取这些字段即可，无需无头浏览器渲染。
+# 注意 keywords / brief / phone / title 等字段在本站是页头页尾的 UI 文案（如 "Support Us"），
+# 不是教师信息，不能收。
+
+WESTLAKE_FIELDS = (("post", "所属学院"), ("subject", "研究方向"), ("lab", "实验室"),
+                   ("biographyStr", "个人简介"), ("historyStr", "教育与工作经历"),
+                   ("researchStr", "学术成果及研究方向"))
+
+_JS_STR_RE = re.compile(r'([A-Za-z_][A-Za-z0-9_]*)\s*:\s*"((?:[^"\\]|\\.)*)"')
+
+
+def _js_unescape(text: str) -> str:
+    """还原 JS 字符串转义（\\/ \\" \\n \\uXXXX 等）。"""
+    text = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), text)
+    for a, b in (("\\/", "/"), ('\\"', '"'), ("\\n", "\n"), ("\\r", ""),
+                 ("\\t", " "), ("\\'", "'")):
+        text = text.replace(a, b)
+    return text
+
+
+def _html_fragment_to_text(fragment: str) -> str:
+    return BeautifulSoup(_js_unescape(fragment), "lxml").get_text("\n", strip=True)
+
+
+def parse_westlake_detail(html: str, page_url: str) -> dict:
+    """西湖大学教师主页：按内嵌字段抽取正文（返回结构与 parse_detail 一致）。"""
+    parts = []
+    for key, label in WESTLAKE_FIELDS:
+        for m in _JS_STR_RE.finditer(html):
+            if m.group(1) == key:
+                val = m.group(2)
+                if val.strip():
+                    parts.append(f"【{label}】{_html_fragment_to_text(val)}")
+                break
+    # content 字段会有多段（研究介绍、代表论文等），全部保留
+    for i, m in enumerate((m for m in _JS_STR_RE.finditer(html) if m.group(1) == "content"), 1):
+        val = m.group(2)
+        if len(val) > 100:
+            parts.append(f"【详情内容{i}】{_html_fragment_to_text(val)}")
+
+    text = "\n".join(p for p in parts if p.strip())
+    emails = list(dict.fromkeys(EMAIL_RE.findall(text)))
+    return {"detail_text": text[:3000], "emails": emails,
+            "external_links": [], "fallback": True}
+
+
+def _is_westlake_profile(page_url: str) -> bool:
+    u = urlparse(page_url)
+    return "westlake.edu.cn" in u.netloc and "/faculty/" in u.path
+
+
 def parse_detail(html: str, page_url: str) -> dict:
+    if _is_westlake_profile(page_url):
+        return parse_westlake_detail(html, page_url)
     soup = BeautifulSoup(html, "lxml")
     domain = urlparse(page_url).netloc
     selectors = CONTENT_SELECTORS.get(domain)
