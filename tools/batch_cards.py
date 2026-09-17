@@ -19,7 +19,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
-sys.path.insert(0, str(BASE_DIR / "tools"))
+
 from llm_card import build_card, verify_evidence
 
 

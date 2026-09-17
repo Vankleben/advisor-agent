@@ -12,20 +12,14 @@ if hasattr(_sys.stdout, "reconfigure"):
     _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
-import re
 import sys
 from pathlib import Path
-from openai import OpenAI
+
+from llm_client import make_client, model_for
+from text_norm import flat
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
-sys.path.insert(0, str(BASE_DIR))
-from config import PROVIDER, API_KEY
-
-PROVIDERS = {
-    "moonshot": {"base_url": "https://api.moonshot.cn/v1", "model": "moonshot-v1-8k"},
-    "deepseek": {"base_url": "https://api.deepseek.com", "model": "deepseek-chat"},
-}
 
 SYSTEM_PROMPT = """你是导师情报分析员。我会给你一位高校老师的官方网页原文，你的任务是提取结构化信息。
 
@@ -77,10 +71,9 @@ def build_card(teacher: dict) -> dict:
   "summary": "一句话概括这位老师"
 }}"""
 
-    p = PROVIDERS[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=p["base_url"])
+    client = make_client()
     resp = client.chat.completions.create(
-        model=p["model"],
+        model=model_for("fast"),
         messages=[{"role": "system", "content": SYSTEM_PROMPT},
                   {"role": "user", "content": user_msg}],
         response_format={"type": "json_object"},
@@ -93,7 +86,7 @@ def verify_evidence(card: dict, teacher: dict) -> list[str]:
     """反幻觉校验：evidence 必须能在原文搜到；homepage_candidates 的 url 必须来自外链列表。"""
     detail = teacher.get("detail") or {}
     text = detail.get("detail_text", "")
-    text_flat = re.sub(r"\s+", "", text)
+    text_flat = flat(text)
     external_urls = {link["url"] for link in detail.get("external_links", [])
                       if isinstance(link, dict) and "url" in link}
     warnings = []
@@ -103,7 +96,7 @@ def verify_evidence(card: dict, teacher: dict) -> list[str]:
             return
         quotes = ev if isinstance(ev, list) else [ev]
         for q in quotes:
-            if re.sub(r"\s+", "", str(q)) not in text_flat:
+            if flat(str(q)) not in text_flat:
                 warnings.append(f"⚠️ {field} 的 evidence 在原文中找不到：{str(q)[:50]}...")
 
     check("current_focus", (card.get("current_focus") or {}).get("evidence")

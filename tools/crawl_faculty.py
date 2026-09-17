@@ -13,16 +13,12 @@ if hasattr(_sys.stdout, "reconfigure"):
     _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
 import sys
-import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import date
 from pathlib import Path
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-}
+from fetch_common import get
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -31,10 +27,8 @@ DATA_DIR.mkdir(exist_ok=True)
 # ============ 通用层：换任何学校都不动 ============
 
 def fetch(url: str) -> str:
-    resp = requests.get(url, headers=HEADERS, timeout=15)
-    resp.raise_for_status()
-    resp.encoding = resp.apparent_encoding
-    return resp.text
+    """抓名单页 HTML（UA/编码/SSL 由 fetch_common 统一处理）。"""
+    return get(url, timeout=15).text
 
 
 def merge_by_name(records: list[dict]) -> list[dict]:

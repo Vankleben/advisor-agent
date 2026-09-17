@@ -22,10 +22,7 @@ from urllib.parse import urlparse
 from datetime import date
 from pathlib import Path
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-}
+from fetch_common import get
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -103,9 +100,7 @@ def main():
             url = re.sub(r"<.*$", "", url).strip()
             t["detail_url"] = url
             try:
-                resp = requests.get(url, headers=HEADERS, timeout=15)
-                resp.raise_for_status()
-                resp.encoding = resp.apparent_encoding
+                resp = get(url, timeout=15)
                 t["detail"] = parse_detail(resp.text, url)
                 if not t.get("email") and t["detail"]["emails"]:
                     t["email"] = t["detail"]["emails"][0]

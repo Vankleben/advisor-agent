@@ -12,23 +12,18 @@ if hasattr(_sys.stdout, "reconfigure"):
 import json
 import re
 import sys
-import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import date
 from pathlib import Path
-from openai import OpenAI
+
+from crawl_faculty import merge_by_name
+from fetch_common import get
+from llm_client import make_client, model_for
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 DATA_DIR.mkdir(exist_ok=True)
-sys.path.insert(0, str(BASE_DIR))
-sys.path.insert(0, str(BASE_DIR / "tools"))
-from config import PROVIDER, API_KEY
-from crawl_faculty import merge_by_name, HEADERS
-
-LONG_MODEL = {"moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-32k"),
-              "deepseek": ("https://api.deepseek.com", "deepseek-chat")}
 
 EXTRACT_PROMPT = """你是网页结构化提取器。我给你一个高校师资名单页的 HTML（已清洗），请提取页面上所有教职工。
 
@@ -57,8 +52,8 @@ def main():
         return
     url, site = sys.argv[1], sys.argv[2]
 
-    base_url, model = LONG_MODEL[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=base_url)
+    client = make_client()
+    model = model_for("mid")
 
     def _extract(html_text: str) -> tuple:
         cleaned = clean_html(html_text)
@@ -79,9 +74,7 @@ def main():
                 dropped.append(t.get("name"))
         return ok, dropped
 
-    resp = requests.get(url, headers=HEADERS, timeout=15)
-    resp.raise_for_status()
-    resp.encoding = resp.apparent_encoding
+    resp = get(url, timeout=15)
     html_clean = clean_html(resp.text)
 
     ok, dropped = _extract(html_clean)
