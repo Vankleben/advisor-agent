@@ -14,21 +14,26 @@ import json
 import re
 import sys
 from pathlib import Path
-from openai import OpenAI
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PAPERS_DIR = BASE_DIR / "data" / "papers"
-sys.path.insert(0, str(BASE_DIR))
-from config import PROVIDER, API_KEY
 
-PROVIDERS = {
-    "moonshot": {"base_url": "https://api.moonshot.cn/v1",
-                 "fast": "moonshot-v1-8k", "long": "moonshot-v1-128k"},
-    "deepseek": {"base_url": "https://api.deepseek.com",
-                 "fast": "deepseek-chat", "long": "deepseek-chat"},
-}
+from llm_client import make_client, model_for   # noqa: E402
+from text_norm import loose                     # noqa: E402
 
-PROFILE = json.loads((BASE_DIR / "archive" / "profile.json").read_text(encoding="utf-8"))
+
+def profile_block() -> str:
+    """读者档案文本（含硬件红线），经 user_profile 从 archive/profile.json 读取。
+
+    画像缺失不再让 import 直接崩（此前在模块级读文件，导致全新克隆仓库连 main.py 都启动不了）；
+    同时改为经 user_profile 取，避免"唯一权威版本"被绕过。
+    """
+    try:
+        from user_profile import format_profile, format_hardware
+        return f"{format_profile()}\n【硬件红线】\n{format_hardware()}"
+    except Exception as e:
+        print(f"[M3] 用户画像读取失败（{e}），本次拆解不注入画像")
+        return "（画像缺失：archive/profile.json 不可读）"
 
 
 def load_paper(arxiv_id: str) -> str:
@@ -55,7 +60,7 @@ def step0_decision_card(client, model: str, text: str) -> dict:
 "建议": "精读/速读/跳过",
 "预计耗时": "如 2小时",
 "前置知识缺口": ["读者档案里没有、但读这篇需要的概念"]}"""
-    user = f"""读者档案：{json.dumps(PROFILE, ensure_ascii=False)}
+    user = f"""读者档案：{profile_block()}
 
 论文开头（含标题摘要）：
 {text[:3000]}"""
@@ -81,7 +86,7 @@ def full_analysis(client, model: str, text: str) -> dict:
  "concepts": [{"term": "概念名", "known": true或false, "explanation": "解释"}],
  "results_limits": {"text": "结果含义与局限", "quotes": ["原句"]},
  "reproduction": {"text": "复现可行性与设备建议", "quotes": ["原句"]}}"""
-    user = f"""读者档案：{json.dumps(PROFILE, ensure_ascii=False)}
+    user = f"""读者档案：{profile_block()}
 
 论文全文：
 {text[:90000]}"""
@@ -89,9 +94,8 @@ def full_analysis(client, model: str, text: str) -> dict:
 
 
 def _norm(s: str) -> str:
-    """归一化：剥掉所有非字母数字汉字字符。
-    免疫 PDF 提取的折行连字符(Re-bound\\nForce)、空格、标点差异。"""
-    return re.sub(r"[^0-9a-zA-Z一-鿿]+", "", s).lower()
+    """归一化比对（唯一实现见 text_norm.loose）：免疫 PDF 提取的折行连字符、空格、标点差异。"""
+    return loose(s)
 
 
 def verify_quotes(analysis: dict, text: str) -> list[str]:
@@ -134,10 +138,9 @@ def print_analysis(a: dict):
 def main():
     arxiv_id = sys.argv[1]
     text = load_paper(arxiv_id)
-    p = PROVIDERS[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=p["base_url"])
+    client = make_client()
 
-    card = step0_decision_card(client, p["fast"], text)
+    card = step0_decision_card(client, model_for("fast"), text)
     print_card(card)
 
     if input("\n进入精读拆解？(y/n)：").strip().lower() != "y":
@@ -145,7 +148,7 @@ def main():
         return
 
     print("\n精读拆解中（全文较长，需要 1-2 分钟）...")
-    analysis = full_analysis(client, p["long"], text)
+    analysis = full_analysis(client, model_for("long"), text)
     print_analysis(analysis)
 
     print("\n===== 反幻觉校验 =====")
