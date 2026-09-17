@@ -18,3 +18,19 @@
 - 代码与文档中**不得出现**：真实姓名、学校/单位名、硬件具体型号、具体老师姓名与个人主页；
   - 一律用占位符：张三 / 李四 / John Smith / 某教授 A / 某实验室；
 - 提交前用 `git status` 检查一遍，确认没有数据文件混入暂存区。
+
+## 代码结构（硬规则）
+
+**要 LLM、要抓网页、要比引句、要读卡片/深潜报告时，一律调用共享层，禁止再抄一份。**
+
+| 需求 | 用哪个 | 禁止 |
+|---|---|---|
+| 调 LLM | `tools/llm_client.py`：`make_client()` + `model_for("fast"\|"mid"\|"long")` | 自己写 `OpenAI(...)` 或模型表 |
+| 抓网页 | `tools/fetch_common.py`：`get()` / `strip_html()` / `clean()` | 自己 `requests.get` + UA + 清洗正则 |
+| 比对引句是否真在原文 | `tools/text_norm.py`：`flat()` / `loose()` | 自己写正则归一化 |
+| 读卡片 / 深潜报告 | `tools/store.py`：`find_card()` / `iter_cards()` / `load_deepdive_report()` | 自己 glob `cards_*.json` 拼路径 |
+| 用户画像 | `tools/user_profile.py`（源头 `archive/profile.json`） | 自己读 profile.json 或硬编码画像 |
+
+- 新增/修改工具后先跑 `python tools/selftest.py`（不联网、不调 LLM、不改数据），全绿再提交；
+- 跨模块传消息不要靠"字符串前缀约定"（历史事故：monitor 写"新仓库/新动态"、判定查"新仓库/新推送"，功能静默失效）——要沉淀成模块级常量或结构化字段，并由自检覆盖；
+- 修 bug 时优先找同类重复实现：同一个坑往往不止一处。
