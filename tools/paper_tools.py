@@ -21,7 +21,7 @@ import pymupdf
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from fetch_common import UA
+from fetch_common import UA, get
 from llm_client import make_client, model_for
 from text_norm import loose
 
@@ -35,20 +35,24 @@ NS = {"a": "http://www.w3.org/2005/Atom"}
 
 def _get_with_retry(url: str, params: dict = None, timeout: int = 30,
                     tries: int = 3, headers: dict = None) -> requests.Response:
-    """统一外部 API 请求封装：对 429 限流 / 5xx / 连接重置做退避重试（3→6→12s）。"""
-    import requests as _rq
+    """统一外部 API 请求封装：对 429 限流 / 5xx / 连接重置做退避重试（3→6→12s）。
+
+    传输层仍走 fetch_common.get（统一 UA 与 SSL 降级），这里只叠加"学术接口限流退避"策略
+    ——页面抓取不需要退避，接口调用需要，故保留这一层。
+    """
     last = None
     for i in range(tries):
         try:
-            r = requests.get(url, params=params, headers=headers or HEADERS, timeout=timeout)
+            r = get(url, params=params, timeout=timeout, headers=headers or HEADERS,
+                    check_status=False)
             if r.status_code in (429, 500, 502, 503):
-                last = _rq.HTTPError(f"HTTP {r.status_code}", response=r)
+                last = requests.HTTPError(f"HTTP {r.status_code}", response=r)
                 print(f"⚠️ 接口限流/异常（HTTP {r.status_code}），{2 ** (i + 1) * 3}s 后重试...")
                 time.sleep(2 ** (i + 1) * 3)   # 6→12→24s
                 continue
             r.raise_for_status()
             return r
-        except _rq.RequestException as e:
+        except requests.RequestException as e:
             last = e
             print(f"⚠️ 请求失败（{type(e).__name__}），{2 ** (i + 1) * 3}s 后重试...")
             time.sleep(2 ** (i + 1) * 3)
@@ -60,7 +64,9 @@ def search_papers(author_en: str, max_results: int = 15) -> list[dict]:
     params = {"search_query": f'au:"{author_en}"',
               "sortBy": "submittedDate", "sortOrder": "descending",
               "max_results": max_results}
-    r = _get_with_retry("http://export.arxiv.org/api/query", params=params, timeout=30)
+    # 超时放宽到 45s：export.arxiv.org 的 http 会 301 跳到 https，而该域名 https 常年偏慢
+    # （实测同一台机器上 14s 成功与 >30s 超时交替出现），30s 阈值误报率偏高
+    r = _get_with_retry("http://export.arxiv.org/api/query", params=params, timeout=45)
 
     papers = []
     key = author_en.lower().replace(" ", "")
@@ -161,9 +167,8 @@ def search_europepmc(author_en: str, affiliation: str = "", max_results: int = 1
         query += f' AND AFF:"{affiliation}"'
     params = {"query": query, "format": "json", "pageSize": max_results,
               "sort": "P_PDATE_D desc", "resultType": "core"}
-    r = requests.get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",
-                     params=params, headers=HEADERS, timeout=30)
-    r.raise_for_status()
+    r = get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+            params=params, headers=HEADERS, timeout=30)
 
     papers = []
     # Europe PMC 返回的作者名多为 "Smith J"（姓 + 名缩写）或全名，需兼容两种格式匹配
@@ -354,8 +359,7 @@ def fetch_paper(arxiv_id: str) -> tuple:
     for attempt in range(3):
         try:
             print("下载中（arxiv 服务器较慢，耐心等待）...")
-            r = requests.get(url, headers=HEADERS, timeout=120)
-            r.raise_for_status()
+            r = get(url, headers=HEADERS, timeout=120)
             break
         except requests.RequestException as e:
             print(f"第 {attempt + 1} 次下载失败：{type(e).__name__}，5 秒后重试")
@@ -370,18 +374,11 @@ def fetch_paper(arxiv_id: str) -> tuple:
 
 
 def _download_bytes(url: str, timeout: int = 120, tries: int = 2) -> bytes:
-    """带重试的二进制下载（PDF 等）；SSL 证书失败时降级跳过验证"""
+    """带重试的二进制下载（PDF 等）；SSL 证书降级与 UA 由 fetch_common.get 统一处理"""
     last = None
     for i in range(tries):
         try:
-            try:
-                r = requests.get(url, headers=HEADERS, timeout=timeout)
-                r.raise_for_status()
-            except requests.exceptions.SSLError:
-                print(f"⚠️ SSL 证书验证失败({url[:60]})，降级跳过验证")
-                r = requests.get(url, headers=HEADERS, timeout=timeout, verify=False)
-                r.raise_for_status()
-            return r.content
+            return get(url, headers=HEADERS, timeout=timeout).content
         except requests.RequestException as e:
             last = e
             time.sleep(3)
@@ -391,9 +388,9 @@ def _download_bytes(url: str, timeout: int = 120, tries: int = 2) -> bytes:
 def find_oa_pdf_url(doi: str) -> str:
     """用 OpenAlex 查该 DOI 的开放获取 PDF 直链（无则返回空串）"""
     try:
-        r = requests.get(f"https://api.openalex.org/works/doi:{doi}",
-                         headers={"User-Agent": "advisor-agent/1.0 (mailto:advisor@example.com)"},
-                         timeout=20)
+        r = get(f"https://api.openalex.org/works/doi:{doi}",
+                headers={"User-Agent": "advisor-agent/1.0 (mailto:advisor@example.com)"},
+                timeout=20, check_status=False)
         if r.status_code != 200:
             return ""
         loc = (r.json().get("best_oa_location") or {})
@@ -405,8 +402,8 @@ def find_oa_pdf_url(doi: str) -> str:
 def fetch_pmc_fulltext(pmcid: str) -> str:
     """从 Europe PMC 取开放获取全文 XML 并转为纯文本（无则返回空串）"""
     try:
-        r = requests.get(f"https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML",
-                         headers=HEADERS, timeout=40)
+        r = get(f"https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML",
+                headers=HEADERS, timeout=40, check_status=False)
         if r.status_code != 200:
             return ""
         xml = r.text
@@ -462,10 +459,10 @@ def fetch_fulltext(identifier: str) -> dict:
         # 4b. Europe PMC 全文
         if content is None:
             try:
-                rs = requests.get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",
-                                  params={"query": f'DOI:"{ident}"', "format": "json",
-                                          "resultType": "core", "pageSize": 1},
-                                  headers=HEADERS, timeout=25)
+                rs = get("https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+                         params={"query": f'DOI:"{ident}"', "format": "json",
+                                 "resultType": "core", "pageSize": 1},
+                         headers=HEADERS, timeout=25, check_status=False)
                 it = (rs.json().get("resultList", {}).get("result", []) or [{}])[0]
                 pmcid = it.get("pmcid") or ""
                 full = fetch_pmc_fulltext(pmcid) if pmcid else ""
