@@ -214,3 +214,15 @@ python web_server.py          # 浏览器打开 http://127.0.0.1:8080
 - 单页聊天，前端渲染 markdown 表格/证据折叠/工具调用痕迹；支持多轮历史（messages 整段回传）。
 - 后端 `web_server.py`：http.server + POST /chat，agent.SYSTEM/TOOLS/DISPATCH 复用；ChatCompletionMessage 转 JSON 安全 dict。
 - 与 CLI `python main.py` 功能完全一致，只是多了可读性更好的页面。
+
+## 14. 站点适配笔记（JS 重站点的两个真实案例）
+
+收录时遇到的"整站 JS 渲染、requests 拿不到内容"的站点，按以下顺序排查，不要一上来就写无头浏览器：
+
+1. **先看原始 HTML 里有没有内嵌数据**——不少 CMS 会把整份数据写进页面脚本（比渲染更稳、更快、不依赖本机 Chrome）。已落地的两个例子：
+   - 西湖大学工学院名录：`crawl_faculty.parse_westlake_engineering` 直接解析内嵌的 `teamList` 对象数组（含姓名/系别/实验室/研究方向/个人主页）；
+   - 西湖大学教师主页：`enrich_faculty.parse_westlake_detail` 按内嵌字段抽取（`post` 所属学院 / `subject` 研究方向 / `lab` / `biographyStr` / `historyStr` / `researchStr` / `content`）。注意同名字段可能是页头页尾的 UI 文案（如 `keywords: "Support Us"`），必须逐字段核对再收。
+2. **再看是不是 TLS 层被拒**：某些站点按客户端 TLS 指纹拒绝 Python requests（报 `SSLEOFError`，`verify=False` 也无效），但 curl / 浏览器正常。`fetch_common.get()` 已内置三级降级（requests → 跳过证书校验 → curl 兜底），无需各工具自己处理。
+3. **最后才用无头浏览器**（`web_fetch.render_url`）：注意它返回的是清洗后的文本与链接，不含原始 HTML 的 `href` 结构；且同一站点可能时通时不通，不适合作为唯一路径。
+
+尚未收录的西湖交叉方向院系（如需扩充）：生命科学学院 `/Our_Faculty/`、理学院 `science.westlake.edu.cn`。前者名录由 JS 动态加载（渲染结果时有时无），后者的数据接口 `/chemistry_api/faculty-data` 返回 401 需鉴权；两者都建议先人工确认可用的列表页 URL 再动手。
