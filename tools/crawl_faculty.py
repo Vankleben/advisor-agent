@@ -164,6 +164,37 @@ def parse_westlake_engineering(html: str, base_url: str, cs_only: bool = True) -
     return records
 
 
+# ---- 适配器 #4：深圳医学科学院（SMART）导师风采 ----
+# 条目形如：<div class="item itemlist" data-title="姓名" data-xueke=".." data-danwei="..">
+#              <a href="/smart-fellow/xxx">…</a>
+# 姓名在 data-title 属性里，详情页链接在 href（数字 id 与拼音 slug 两种形态并存）。
+# 名录分页，每页 20 条；页面是服务端渲染的，普通抓取即可。
+
+SMART_FELLOW_PAGES = ["https://smart.org.cn/smart-fellow"] + [
+    f"https://smart.org.cn/smart-fellow?index=&unit=&subject=&page={n}"
+    for n in range(2, 6)          # 实测 5 页；名录增长后在 range 上界加页
+]
+
+
+def parse_smart_fellows(html: str, base_url: str) -> list[dict]:
+    """适配器 #4：SMART 导师名录单页解析（姓名 + 详情页）。职称/研究方向在详情页，由后续步骤提取。"""
+    records = []
+    for m in re.finditer(r'<div class="item itemlist"[^>]*data-title="([^"]+)"[^>]*>\s*'
+                         r'<a href="([^"]+)"', html):
+        name, href = m.group(1).strip(), m.group(2).strip()
+        if not name or not href:
+            continue
+        records.append({
+            "name": name,
+            "title": None,                 # 详情页里才有职称，卡片阶段提取
+            "section": "SMART 导师",
+            "research": None,              # 同上
+            "email": None,
+            "detail_url": urljoin(base_url, href),
+        })
+    return records
+
+
 # ============ 站点注册表：加新学校只动这里 ============
 
 SITES = {
@@ -171,19 +202,47 @@ SITES = {
     "life": ("https://life.tsinghua.edu.cn/szdw/jzyg1.htm", parse_life),
     "wlcs": ("https://engineering.westlake.edu.cn/Faculty/Directory/",
              parse_westlake_engineering),
+    "smart": (SMART_FELLOW_PAGES, parse_smart_fellows),
 }
 
 
 def main():
-    site = sys.argv[1] if len(sys.argv) > 1 else "collegeai"
+    args = sys.argv[1:]
+    site = args[0] if args and not args[0].startswith("--") else "collegeai"
     if site not in SITES:
         print(f"未知站点 {site}，可选：{list(SITES)}")
         return
-    url, parser = SITES[site]
+    urls, parser = SITES[site]
+    if isinstance(urls, str):
+        urls = [urls]
 
-    teachers = merge_by_name(parser(fetch(url), url))
+    # --only 名字1,名字2：只收录指定的人（用于"先收这一位"，避免整站批量跑卡片）
+    only = set()
+    if "--only" in args:
+        idx = args.index("--only")
+        if idx + 1 < len(args):
+            only = {n.strip() for n in args[idx + 1].split(",") if n.strip()}
+
+    records = []
+    for u in urls:
+        try:
+            records += parser(fetch(u), u)
+        except Exception as e:
+            print(f"⚠️ 页面抓取失败：{u}（{type(e).__name__}: {e}）")
+
+    if not records:
+        print("❌ 没有抓到任何记录，保留原有名单不变（不覆盖）")
+        return
+
+    if only:
+        records = [r for r in records if r["name"] in only]
+        missing = only - {r["name"] for r in records}
+        if missing:
+            print(f"⚠️ 名录里没找到：{sorted(missing)}")
+
+    teachers = merge_by_name(records)
     output = {
-        "source_url": url,
+        "source_url": " | ".join(urls),
         "crawl_date": date.today().isoformat(),
         "count": len(teachers),
         "teachers": teachers,
