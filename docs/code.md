@@ -27,21 +27,34 @@
 
 ```
 advisor_agent/
-├── main.py                  # Agent 主程序 v4.3：聊天循环 + function calling 派发（13 个工具）
+├── main.py                  # Agent 主程序：聊天循环 + function calling 派发（22 个工具）
+├── web_server.py            # 本地 Web 聊天页后端（复用 main 的 CLIENT/TOOLS/DISPATCH）
 ├── config.py                # LLM 提供商与 API_KEY（已被 .gitignore 排除，不入库）
 ├── tools/
+│   ├── llm_client.py        # ★共享层：模型表与 LLM 客户端的唯一来源（fast/mid/long 三档角色）
+│   ├── fetch_common.py      # ★共享层：抓取（UA/超时/SSL 降级/编码修正/HTML 清洗）
+│   ├── text_norm.py         # ★共享层：引句归一化比对（反幻觉校验的唯一实现）
+│   ├── store.py             # ★共享层：卡片与深潜报告读取归口
+│   ├── selftest.py          # 离线自检：跑一遍确认共享层与关键契约没退化
 │   ├── crawl_faculty.py     # 工具一：师资名单抓取器（通用层 fetch/合并/落盘 + 站点适配器）
 │   ├── enrich_faculty.py    # 工具二：详情页追踪器 v2.2（抓教师详情页正文 + 外链列表）
 │   ├── llm_card.py          # 工具三：LLM 导师卡片生成器 v2.2（含 verify_evidence 反幻觉校验）
 │   ├── batch_cards.py       # 工具四：批量卡片生成器 v2.1
 │   ├── universal_crawl.py   # 工具五：通用师资抓取器（LLM 驱动，适配任意学校的师资页）
-│   ├── paper_tools.py       # 工具六：arXiv 论文检索与全文获取（⭐标记末位作者=导师主导）
+│   ├── paper_tools.py       # 工具六：论文检索与全文获取（arXiv/EuropePMC/OpenAlex/官网PDF）
 │   ├── analyze_paper.py     # 工具七：论文拆解器 v2（决策卡 + 七段精读 + verify_quotes）
 │   ├── critique_thinking.py # 工具八：M5 思考批改（run_grading 批改 + appeal 申诉复核）
-│   ├── advisor_deepdive.py  # 工具九：M2 导师深潜 v1.3（主页抓取失败时 fallback 搜索引擎）
+│   ├── advisor_deepdive.py  # 工具九：M2 导师深潜（多信源抓取 + 逐字证据校验）
 │   ├── path_analysis.py     # M4 进组路径分析（需求侧/供给侧/敲门砖项目 + 双硬件红线检查）
 │   ├── compare_advisors.py  # M1.5 对比视图（panorama 全景表纯本地 / deep_compare 调LLM打分）
-│   └── web_fetch.py         # 通用网页抓取 fetch_url（正文清洗+链接列表，尚未接入主循环）
+│   ├── monitor.py           # M6 实时情报监测（主页快照 diff + arXiv + GitHub）
+│   ├── monitor_daily.py     # M6 定时任务入口（Windows 计划任务调用）
+│   ├── knowledge_store.py   # 长期档案：已读论文库 + 目标老师清单
+│   ├── memory.py            # 动态记忆：画像自动生长 + 事件时间线
+│   ├── chat_history.py      # 会话历史落盘与回看（/history）
+│   ├── user_profile.py      # 用户画像唯一权威读取口（archive/profile.json）
+│   ├── web_fetch.py         # 网页抓取（给 Agent 的 fetch_url + 无头浏览器渲染）
+│   └── add_career_note.py   # 历史一次性补丁（已完成，保留备查，勿再依赖）
 ├── prompts/                 # 预留目录（暂空）
 ├── archive/                 # 长期知识档案
 │   ├── profile.json         # 用户画像：兴趣方向 / 已掌握 / 学习中 / 双硬件红线
@@ -51,8 +64,29 @@ advisor_agent/
     ├── faculty_{site}_enriched.json # 追踪详情页后的名单（含 detail_text + external_links）
     ├── cards_{site}.json            # 导师卡片库（Agent 检索的主要数据源）
     ├── papers/                      # 论文全文(.txt)、检索结果(search_*.json)、拆解与批改产物
-    └── deepdive/                    # M2 深潜报告、信源缓存、M4 路径报告、M1.5 对比结果
+    ├── deepdive/                    # M2 深潜报告、信源缓存、M4 路径报告、M1.5 对比结果
+    └── monitor/                     # M6 主页快照、arXiv/GitHub 已见记录、情报简报
 ```
+
+### 4.1 共享基础设施（新增工具前必读）
+
+**规则：需要 LLM / 抓网页 / 比对引句 / 读卡片与报告时，一律调用共享层，禁止再抄一份。**
+
+| 共享模块 | 提供 | 曾经的问题 |
+|---|---|---|
+| `llm_client` | `make_client()` / `model_for("fast"\|"mid"\|"long")` | 曾 11 份模型表副本、10 处各自新建客户端，同类任务在不同入口用了不同模型 |
+| `fetch_common` | `get()` / `strip_html()` / `clean()` / `UA` | 曾 6 套独立抓取、4 种 UA、4 种超时与 SSL 策略 |
+| `text_norm` | `flat()`（去空白）/ `loose()`（去标点并小写） | 曾 6 个文件各写一份归一化，反幻觉校验标准不一致 |
+| `store` | `find_card()` / `iter_cards()` / `load_deepdive_report()` / `has_deepdive()` | 曾"按姓名找卡片"在 3 处、报告路径拼接在 4 处各写一遍 |
+
+模型角色按**上下文长度**而非功能命名：`fast`=短任务（决策卡/卡片/深潜/路径/对比）、`mid`=中等长文（名单与官网论文提取）、`long`=长文（精读拆解、M5 批改）。换模型只改 `llm_client.py` 一处。
+
+改动共享层或工具后，先跑离线自检确认没退化：
+
+```bash
+python tools/selftest.py      # 不联网、不调 LLM、不改动 data/archive
+```
+
 
 ## 5. 数据产物（data/ 目录）
 
@@ -98,7 +132,7 @@ LLM 配置在 `config.py`：`PROVIDER` 支持 `moonshot`（fast=8k / long=128k �
 | M5 批改 | 精读后 `/f thinking.txt` 提交思考；不认可结果就说"我要申诉" |
 | M4 进组 | "我想进某位老师的组，帮我规划一下该做什么项目" |
 
-## 7. Agent 工具清单（main.py 注册的 18 个 function）
+## 7. Agent 工具清单（main.py 注册的 22 个 function）
 
 | 工具 | 模块 | 说明 |
 |---|---|---|
@@ -111,7 +145,11 @@ LLM 配置在 `config.py`：`PROVIDER` 支持 `moonshot`（fast=8k / long=128k �
 | `list_targets` | 档案 | 查看目标老师清单 |
 | `monitor` | M6 | 扫描收藏老师主页 + arXiv 新论文，输出情报简报 |
 | `monitor_show` | M6 | 查看监测历史简报 |
+| `remember` | 记忆 | 用户口述新信息写入长期画像（技能/在学/项目/兴趣/备注） |
+| `show_profile` | 记忆 | 展示当前画像与近期记忆 |
 | `search_papers` | M3 | 按作者英文名查 arXiv 近期论文 |
+| `fetch_fulltext` | M3 | 多级获取论文全文（DOI/PDF直链/PMCID/本地PDF），返回 paper_id |
+| `lab_publications` | M3 | 单独提取实验室官网 Publications 页论文列表 |
 | `paper_decision` | M3 | 第0步阅读决策卡（定位/匹配度/建议/前置缺口） |
 | `deep_dive` | M3 | 七段框架精读 + 反幻觉校验 |
 | `critique_thinking` | M5 | 事实纠错/偏题检测/费曼追问/凝练段落 |
@@ -152,13 +190,14 @@ System Prompt 中固化了 11 条行为规则：工具返回什么就说什么�
 | 5 | 全景表按列排序、勾选交互 | 目前为固定精简列表 |
 | 6 | ~~档案自动化回流 + 双轨画像合一~~ | ◐ 2026-09-04 完成画像合一（profile.json 唯一权威）；已读论文库/目标老师清单/错误库已落；仍缺：知识水位自动更新、技能 gap 清单、机会档案 |
 | 7 | M2 深潜的"合作网络/工程足迹"维度（GitHub 数据） | 深潜五维度中未单列，依赖个人主页内容 |
-| 8 | M1 卡片增强：职业阶段简评（对申请者的实际含义）、无主页标注、官网/主页冲突标注 | career_stage 已有 stage+evidence，缺一句话简评 |
-| 9 | 收录流程自动化：enrich+batch 目前需用户在终端手动跑两步 | 可做成 Agent 工具或后台任务 |
+| 8 | ~~M1 卡片增强：职业阶段简评（对申请者的实际含义）~~ | ✅ 已完成：`career_stage.note` 已回填（`add_career_note.py` 一次性补丁，325 张有 stage 的卡片均带简评）；无主页标注、官网/主页冲突标注仍未做 |
+| 9 | ~~收录流程自动化：enrich+batch 目前需用户在终端手动跑两步~~ | ✅ 已完成：`add_school` 内部串行调用 universal_crawl → enrich_faculty → batch_cards，Agent 无需用户敲命令 |
 
 ## 11. 已知问题
 
-- `critique_thinking.py` 文件头 docstring 错位（写成了"工具九：M2 导师深潜"，实际是 M5 批改工具），待修；
-- `search_papers` 只支持 arXiv，依赖作者英文名拼音正确，中文名转拼音由 Agent 负责；
+- **arXiv 接口不稳定（环境相关）**：`export.arxiv.org` 的 http 会 301 到 https，而该域名 https 从本机常年偏慢（实测 14s 成功与 >30s 超时交替出现），高峰时返回 429 限流。`search_papers` 已把接口超时放宽到 45s 并带 3 次退避重试（6→12→24s），失败时会明确报错而非静默返回空。Europe PMC 与国内站点访问正常。
+- **已读论文库 / 错误模式库没有 Agent 读取入口**：`archive/read_papers.json`、`archive/error_patterns.json` 目前只写不读（写入由 M5 批改触发），只能用 `python tools/knowledge_store.py show` 在终端查看；若要让 Agent 引用（如"我读过哪些论文"），需要新增工具。
+- **若干产物只写不读**：`data/deepdive/{name}_path.json`（M4）、`data/deepdive/compare_result.json`（M1.5）、`data/monitor/每日简报_*.txt`（M6 定时任务）落盘后没有消费方，属于留痕而非数据源。
 - arXiv 版本 ≠ 发表版本，引用时未做版本标注（设计文档数据源表中的注意事项）。
 
 ## 12. 明确不做（划界，来自设计审计文档）
