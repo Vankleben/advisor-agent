@@ -1,5 +1,11 @@
 """
-M1 增量补丁：给已有 career_stage 的卡片补"对申请者的含义一句话简评（note）"
+M1 增量补丁（历史一次性脚本，使命已完成，保留备查）。
+
+执行状态：全部卡片的 career_stage 均已带 note，本脚本再跑不会改动任何文件
+（无 stage 或已有 note 的卡片会被跳过）。新增卡片请直接改 llm_card.py 的提示词回填，
+不要再依赖本脚本。
+
+原本用途：给已有 career_stage 的卡片补"对申请者的含义一句话简评（note）"，
 不重跑全量卡片（省 API），只对有 stage 无 note 的卡片调一次 LLM 生成 note。
 
 用法：python tools/add_career_note.py
@@ -12,23 +18,16 @@ if hasattr(_sys.stdout, "reconfigure"):
     _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
-import sys
 import glob
 from pathlib import Path
 
+from llm_client import make_client, model_for
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
-sys.path.insert(0, str(BASE_DIR))
-sys.path.insert(0, str(BASE_DIR / "tools"))
-from config import PROVIDER, API_KEY
-from openai import OpenAI
 
-PROVIDERS = {
-    "moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-8k"),
-    "deepseek": ("https://api.deepseek.com", "deepseek-chat"),
-}
-base_url, model = PROVIDERS[PROVIDER]
-client = OpenAI(api_key=API_KEY, base_url=base_url)
+client = make_client()
+model = model_for("fast")
 
 SYSTEM = """你是科研申请顾问。我给你一位老师的职业阶段，请用一句话给出"对打算申请他实验室的学生"的实际含义。
 要求：基于一般规律的经验性判断，务实、不夸大、不贬低，80字以内，纯中文，不要 JSON 包裹。

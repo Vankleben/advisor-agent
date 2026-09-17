@@ -17,10 +17,12 @@ import json
 import sys
 from pathlib import Path
 
+from llm_client import make_client, model_for
+from store import find_card, has_deepdive, iter_cards, load_deepdive_report
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 DEEPDIVE_DIR = DATA_DIR / "deepdive"
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 FENCE = chr(96) * 3
 
@@ -70,30 +72,25 @@ def strip_code_fence(text: str) -> str:
 def panorama() -> str:
     """档一：全景表，读所有卡片输出精简列表"""
     rows = []
-    for f in sorted(DATA_DIR.glob("cards_*.json")):
-        site = f.stem.replace("cards_", "")
-        with open(f, encoding="utf-8") as fp:
-            cards = json.load(fp)["cards"]
-        for c in cards:
-            if c.get("skipped"):
-                continue
-            recruitment = c.get("recruitment") or {}
-            interests = c.get("research_interests") or []
-            if isinstance(interests, list):
-                interests_str = "; ".join(str(x) for x in interests[:3])
-            else:
-                interests_str = str(interests)[:100]
-            has_deepdive = (DEEPDIVE_DIR / f"{c.get('name')}_report.json").exists()
-            rows.append({
-                "name": c.get("name", ""),
-                "site": site,
-                "title": c.get("title", ""),
-                "sections": c.get("sections", ""),
-                "interests": interests_str,
-                "recruitment": recruitment.get("level", ""),
-                "has_deepdive": has_deepdive,
-                "summary": (c.get("summary") or "")[:120],
-            })
+    for site, c in iter_cards():
+        if c.get("skipped"):
+            continue
+        recruitment = c.get("recruitment") or {}
+        interests = c.get("research_interests") or []
+        if isinstance(interests, list):
+            interests_str = "; ".join(str(x) for x in interests[:3])
+        else:
+            interests_str = str(interests)[:100]
+        rows.append({
+            "name": c.get("name", ""),
+            "site": site,
+            "title": c.get("title", ""),
+            "sections": c.get("sections", ""),
+            "interests": interests_str,
+            "recruitment": recruitment.get("level", ""),
+            "has_deepdive": has_deepdive(c.get("name", "")),
+            "summary": (c.get("summary") or "")[:120],
+        })
     return json.dumps(rows or "没有收录任何老师", ensure_ascii=False)
 
 
@@ -101,25 +98,15 @@ def deep_compare(client, model, names: list) -> dict:
     """档二：深度对比，读卡片+深潜报告，调LLM打七项指标分"""
     teachers_data = []
     for name in names:
-        # 找卡片
-        card = None
-        for f in sorted(DATA_DIR.glob("cards_*.json")):
-            with open(f, encoding="utf-8") as fp:
-                for c in json.load(fp)["cards"]:
-                    if c.get("name") == name:
-                        card = c
-                        break
-            if card:
-                break
+        # 找卡片（读取逻辑见 store.find_card）
+        card = find_card(name)
         if not card:
             teachers_data.append({"name": name, "error": "未收录"})
             continue
 
         # 找深潜报告
-        report_file = DEEPDIVE_DIR / f"{name}_report.json"
-        report = None
-        if report_file.exists():
-            report = json.loads(report_file.read_text(encoding="utf-8"))
+        report = load_deepdive_report(name)
+        if report:
             report = report.get("report", report)
 
         teachers_data.append({
@@ -151,12 +138,7 @@ def deep_compare(client, model, names: list) -> dict:
 
 
 if __name__ == "__main__":
-    sys.path.insert(0, str(BASE_DIR))
-    from config import PROVIDER, API_KEY
-    from openai import OpenAI
-    P = {"moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-8k"),
-         "deepseek": ("https://api.deepseek.com", "deepseek-chat")}[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=P[0])
+    client = make_client()
 
     if len(sys.argv) < 2:
         print("用法：")
@@ -171,7 +153,7 @@ if __name__ == "__main__":
         if len(names) < 2:
             print("至少选2位老师")
             sys.exit(1)
-        r = deep_compare(client, P[1], names)
+        r = deep_compare(client, model_for("fast"), names)
         print(json.dumps(r, ensure_ascii=False, indent=2))
     else:
         print(f"未知参数：{sys.argv[1]}")

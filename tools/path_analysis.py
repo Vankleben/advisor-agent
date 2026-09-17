@@ -15,9 +15,11 @@ import json
 import sys
 from pathlib import Path
 
+from llm_client import make_client, model_for
+from store import load_deepdive_report
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEEPDIVE_DIR = BASE_DIR / "data" / "deepdive"
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 FENCE = chr(96) * 3   # markdown 代码围栏字符，动态构造避免显示问题
 
@@ -59,11 +61,10 @@ def strip_code_fence(text: str) -> str:
 
 
 def run_path_analysis(client, model, name: str, site: str = "") -> dict:
-    # 1. 找深潜报告
-    report_file = DEEPDIVE_DIR / f"{name}_report.json"
-    if not report_file.exists():
+    # 1. 找深潜报告（读取逻辑见 store.load_deepdive_report）
+    report = load_deepdive_report(name)
+    if not report:
         return {"error": f"没有 {name} 的深潜报告，请先对该老师执行 M2 深潜（advisor_deepdive）"}
-    report = json.loads(report_file.read_text(encoding="utf-8"))
 
     # 2. 组 prompt 调 LLM
     prompt = PROMPT.format(profile=format_profile(), hardware=format_hardware(),
@@ -84,15 +85,10 @@ def run_path_analysis(client, model, name: str, site: str = "") -> dict:
 
 if __name__ == "__main__":
     # 独立测试模式
-    sys.path.insert(0, str(BASE_DIR))
-    from config import PROVIDER, API_KEY
-    from openai import OpenAI
-    P = {"moonshot": ("https://api.moonshot.cn/v1", "moonshot-v1-8k"),
-         "deepseek": ("https://api.deepseek.com", "deepseek-chat")}[PROVIDER]
-    client = OpenAI(api_key=API_KEY, base_url=P[0])
+    client = make_client()
     name = sys.argv[1] if len(sys.argv) > 1 else ""
     if not name:
         print("用法：python tools/path_analysis.py 老师中文名")
         sys.exit(1)
-    r = run_path_analysis(client, P[1], name)
+    r = run_path_analysis(client, model_for("fast"), name)
     print(json.dumps(r, ensure_ascii=False, indent=2))
