@@ -146,6 +146,19 @@ def main():
 
     teachers = []
     total = len(data["teachers"])
+
+    def _save():
+        """增量落盘：长任务中断后可直接续传，不必从头再抓一遍（与 batch_cards 同策略）。"""
+        output = {
+            "source_url": data["source_url"],
+            "crawl_date": data["crawl_date"],
+            "enrich_date": date.today().isoformat(),
+            "count": len(teachers),
+            "teachers": teachers,
+        }
+        with open(out_file, "w", encoding="utf-8") as f:
+            json.dump(output, f, ensure_ascii=False, indent=2)
+
     for i, t in enumerate(data["teachers"]):
         if t["name"] in done:
             teachers.append(done[t["name"]])
@@ -167,18 +180,11 @@ def main():
         teachers.append(t)
 
         if (i + 1) % 10 == 0:
-            print(f"进度 {i + 1}/{total}")
+            print(f"进度 {i + 1}/{total}", flush=True)
+            _save()
         time.sleep(0.5)
 
-    output = {
-        "source_url": data["source_url"],
-        "crawl_date": data["crawl_date"],
-        "enrich_date": date.today().isoformat(),
-        "count": len(teachers),
-        "teachers": teachers,
-    }
-    with open(out_file, "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=2)
+    _save()
 
     ok = sum(1 for t in teachers if t.get("detail")
              and not t["detail"].get("error") and not t["detail"].get("no_detail_page"))
