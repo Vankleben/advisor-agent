@@ -36,6 +36,22 @@ CONTENT_SELECTORS = {
 
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
 
+# 二级公共后缀：取注册域名时要连最后三段（如 a.b.edu.cn → b.edu.cn）
+_TWO_PART_TLDS = ("edu.cn", "com.cn", "org.cn", "net.cn", "gov.cn", "ac.cn",
+                  "co.uk", "com.hk", "com.tw", "edu.hk", "ac.uk")
+
+
+def _site_key(netloc: str) -> str:
+    """取域名主体（近似注册域名）：用于判断某链接是否"站外"。
+    此前用硬编码的 tsinghua.edu.cn 判断，换学校就失效。"""
+    host = (netloc or "").split(":")[0].lower().strip(".")
+    parts = host.split(".")
+    if len(parts) <= 2:
+        return host
+    if ".".join(parts[-2:]) in _TWO_PART_TLDS:
+        return ".".join(parts[-3:])
+    return ".".join(parts[-2:])
+
 
 # ---- 站点专用抽取器：整站 JS 渲染、但内容已内嵌在页面脚本字段里的站点 ----
 # 西湖大学教师主页：页面无正文、无外链，服务端把各栏目写进 JS 字符串字段
@@ -125,7 +141,8 @@ def parse_detail(html: str, page_url: str) -> dict:
     external = []
     for a in soup.find_all("a", href=True):
         h = a["href"]
-        if h.startswith("http") and urlparse(h).netloc != domain and "tsinghua.edu.cn" not in h:
+        # "外部链接"按注册域名判断：校内各子站（portal./core. 之类）不算外链
+        if h.startswith("http") and _site_key(urlparse(h).netloc) != _site_key(domain):
             pair = {"url": h, "label": a.get_text(strip=True)}
             if pair not in external:
                 external.append(pair)
