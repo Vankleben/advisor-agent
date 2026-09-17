@@ -150,6 +150,25 @@ def _fetch_common():
         srv.shutdown()
 
 
+@check("fetch_common curl 兜底可用")
+def _curl_transport():
+    import fetch_common as fc
+    assert fc._curl_exe(), "未找到 curl，TLS 指纹被拦的站点将无法兜底"
+    srv, base = _serve()
+    try:
+        r = fc.get(f"{base}/page", timeout=8, transport="curl")
+        assert r.status_code == 200 and "导师名单" in r.text
+        assert callable(r.json) and r.apparent_encoding
+        try:
+            fc.get(f"{base}/missing", timeout=8, transport="curl")
+            raise AssertionError("curl 通道的 404 未抛错")
+        except Exception as e:
+            assert type(e).__name__ == "HTTPError", f"抛出了 {type(e).__name__}"
+        return "curl 通道可取页面、能正确抛 404（供 TLS 指纹被拦的站点兜底）"
+    finally:
+        srv.shutdown()
+
+
 @check("store 本地读取接口")
 def _store():
     import store
