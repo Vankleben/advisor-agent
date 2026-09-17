@@ -18,25 +18,17 @@ import json
 import re
 import sys
 import datetime
-from html import unescape
 from pathlib import Path
-import requests
-from openai import OpenAI
+
+from fetch_common import get, strip_html
+from llm_client import make_client, model_for
+from store import find_card
+from text_norm import flat
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 OUT_DIR = DATA_DIR / "deepdive"
-sys.path.insert(0, str(BASE_DIR))
-from config import PROVIDER, API_KEY
 
-PROVIDERS = {
-    "moonshot": {"base_url": "https://api.moonshot.cn/v1", "model": "moonshot-v1-8k"},
-    "deepseek": {"base_url": "https://api.deepseek.com", "model": "deepseek-chat"},
-}
-P = PROVIDERS[PROVIDER]
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                         "AppleWebKit/537.36 (KHTML, like Gecko) "
-                         "Chrome/120.0 Safari/537.36"}
 MAX_SRC_CHARS = 8000
 _PAGE_SEP = "\n\n@@PAGE@@\n\n"   # 多页抓取的页面分隔符（上层据此拆成多个信源）
 
@@ -69,28 +61,18 @@ DEEP_PROMPT = """你是导师深潜分析员，服务对象是一名想找实验
 # ============ 通用层：抓取与校验 ============
 
 def fetch_text(url: str) -> str:
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=20)
-    except requests.exceptions.SSLError:
-        print(f"⚠️ SSL 证书验证失败({url})，降级跳过验证")
-        r = requests.get(url, headers=HEADERS, timeout=20, verify=False)
-    r.raise_for_status()
-    if not r.encoding or r.encoding.lower() == "iso-8859-1":
-        r.encoding = r.apparent_encoding
-    html = r.text
-    text = re.sub(r"(?is)<(script|style|noscript).*?</\1>", " ", html)
-    text = unescape(re.sub(r"(?s)<[^>]+>", " ", text))
-    text = re.sub(r"\s+", " ", text).strip()
-    # SSL 降级后内容仍很短（被拦截）→ 降级 Chrome headless 渲染
+    """抓正文（UA/SSL 降级/编码修正由 fetch_common 统一处理）；
+    内容过短视为被拦截或 SPA 骨架，依次降级为无头浏览器渲染 / 多页抓取。"""
+    r = get(url, timeout=20)
+    text = strip_html(r.text)
+    # 内容过短（被拦截）→ 降级 Chrome headless 渲染
     if len(text) < 50:
         try:
             from web_fetch import render_url
             print(f"⚠️ 内容过短({len(text)}字符)，降级 Chrome headless 渲染...")
             rendered = render_url(url, max_chars=8000, budget_ms=20000)
             if not rendered.get("error") and len(rendered.get("text", "")) > len(text):
-                text = re.sub(r"(?is)<(script|style|noscript).*?</\1>", " ", rendered.get("text", ""))
-                text = re.sub(r"<[^>]+>", " ", text)
-                text = re.sub(r"\s+", " ", text).strip()
+                text = strip_html(rendered.get("text", ""))
                 print(f"✅ 渲染后获取到 {len(text)} 字符")
         except Exception:
             pass
@@ -114,19 +96,16 @@ def fetch_text(url: str) -> str:
 
 
 def flatten(text: str) -> str:
-    return re.sub(r"\s+", "", text)
+    """比对用白化（唯一实现见 text_norm.flat）。"""
+    return flat(text)
 
 
 def load_card(name: str, site: str = "") -> dict:
-    files = [DATA_DIR / f"cards_{site}.json"] if site else sorted(DATA_DIR.glob("cards_*.json"))
-    for f in files:
-        if not f.exists():
-            continue
-        with open(f, encoding="utf-8") as fp:
-            for c in json.load(fp).get("cards", []):
-                if c.get("name") == name:
-                    return c
-    raise LookupError(f"卡片库中找不到 {name}，请先收录并生成卡片")
+    """按姓名取卡片（读取逻辑见 store.find_card）；找不到时抛 LookupError 由上层决定是否 fallback。"""
+    card = find_card(name, site)
+    if card is None:
+        raise LookupError(f"卡片库中找不到 {name}，请先收录并生成卡片")
+    return card
 
 
 def load_enriched(name: str, site: str = "") -> dict:
@@ -235,7 +214,7 @@ def run_deepdive(client: OpenAI, name: str, site: str = "", url: str = "") -> di
     # 5. LLM 深潜提取 + 反幻觉校验
     prompt = DEEP_PROMPT.replace("{sources}", sources_block)
     resp = client.chat.completions.create(
-        model=P["model"], temperature=0.1,
+        model=model_for("fast"), temperature=0.1,
         response_format={"type": "json_object"},
         messages=[{"role": "user", "content": prompt}])
     report = json.loads(resp.choices[0].message.content)
@@ -262,6 +241,6 @@ if __name__ == "__main__":
     name = args[0]
     manual_url = args[args.index("--url") + 1] if "--url" in args else ""
     site = args[args.index("--site") + 1] if "--site" in args else ""
-    client = OpenAI(api_key=API_KEY, base_url=P["base_url"])
+    client = make_client()
     print(json.dumps(run_deepdive(client, name, site, manual_url),
                      ensure_ascii=False, indent=2))
