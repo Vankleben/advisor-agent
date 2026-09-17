@@ -147,7 +147,7 @@ def verify_report(report: dict, src_texts: list) -> list:
 
 # ============ 主流程 ============
 
-def run_deepdive(client: OpenAI, name: str, site: str = "", url: str = "") -> dict:
+def run_deepdive(client, name: str, site: str = "", url: str = "") -> dict:
     # 1. 尝试加载卡片；若找不到但提供了 url，则跳过卡片（卡片非必需）
     hpc_urls = []
     try:

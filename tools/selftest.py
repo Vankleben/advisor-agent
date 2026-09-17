@@ -169,6 +169,66 @@ def _curl_transport():
         srv.shutdown()
 
 
+@check("注解引用的名字都有定义（版本无关）")
+def _annotation_names():
+    """捕获"删了 import 却留着类型注解"这类错误。
+
+    Python 3.14 起注解延迟求值（PEP 649），本机装 3.14 时这类错误在运行期不报错，
+    但项目实际跑在 conda 环境的 3.11 上，注解会立即求值并抛 NameError。
+    这里做与解释器版本无关的静态检查，避免验证环境与运行环境不一致时漏掉。
+    """
+    import builtins
+    import ast as _ast
+
+    known = set(dir(builtins)) | {"self", "cls"}
+    problems = []
+    files = sorted(BASE_DIR.glob("tools/*.py")) + [BASE_DIR / "main.py", BASE_DIR / "web_server.py"]
+
+    for f in files:
+        tree = _ast.parse(f.read_text(encoding="utf-8"))
+        bound = set(known)
+        for node in _ast.walk(tree):
+            if isinstance(node, _ast.Import):
+                bound |= {(a.asname or a.name.split(".")[0]) for a in node.names}
+            elif isinstance(node, _ast.ImportFrom):
+                bound |= {(a.asname or a.name) for a in node.names}
+            elif isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef, _ast.ClassDef)):
+                bound.add(node.name)
+                if isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef)):
+                    args = (list(node.args.posonlyargs) + list(node.args.args)
+                            + list(node.args.kwonlyargs))
+                    for a in args:
+                        bound.add(a.arg)
+                    if node.args.vararg:
+                        bound.add(node.args.vararg.arg)
+                    if node.args.kwarg:
+                        bound.add(node.args.kwarg.arg)
+            elif isinstance(node, _ast.Name) and isinstance(node.ctx, _ast.Store):
+                bound.add(node.id)
+
+        for node in _ast.walk(tree):
+            anns = []
+            if isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef)):
+                anns = [a.annotation for a in (list(node.args.posonlyargs) + list(node.args.args)
+                                               + list(node.args.kwonlyargs))
+                        if a.annotation is not None]
+                if node.args.vararg and node.args.vararg.annotation:
+                    anns.append(node.args.vararg.annotation)
+                if node.args.kwarg and node.args.kwarg.annotation:
+                    anns.append(node.args.kwarg.annotation)
+                if node.returns is not None:
+                    anns.append(node.returns)
+            elif isinstance(node, _ast.AnnAssign) and node.annotation is not None:
+                anns = [node.annotation]
+            for a in anns:
+                for sub in _ast.walk(a):
+                    if isinstance(sub, _ast.Name) and sub.id not in bound:
+                        problems.append(f"{f.name}:{sub.lineno} 注解引用了未定义的名字 {sub.id!r}")
+
+    assert not problems, "；".join(problems[:4])
+    return f"{len(files)} 个文件里注解引用的名字均有定义"
+
+
 @check("store 本地读取接口")
 def _store():
     import store
