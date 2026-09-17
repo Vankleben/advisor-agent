@@ -104,13 +104,15 @@ def verify_evidence(card: dict, teacher: dict) -> list[str]:
     check("career_stage", (card.get("career_stage") or {}).get("evidence"))
     check("recruitment", (card.get("recruitment") or {}).get("evidence"))
 
-    # 校验 homepage_candidates 的 url 必须来自外链列表
+    # 校验 homepage_candidates 的 url 必须在详情页出现过：外链列表里有，或正文中原样出现。
+    # （部分站点（如西湖大学）整页 JS 渲染、正文里直接写着网址而非 <a href>，
+    #   只查外链列表会把真实链接误判为编造）
     for i, c in enumerate(card.get("homepage_candidates") or []):
         url = c.get("url") if isinstance(c, dict) else c
         if not url:
             continue
-        if url not in external_urls:
-            warnings.append(f"⚠️ homepage_candidates[{i}] 的 url 不在详情页外链列表中：{url[:60]}...")
+        if url not in external_urls and url not in text:
+            warnings.append(f"⚠️ homepage_candidates[{i}] 的 url 不在详情页外链列表/正文中：{url[:60]}...")
 
     return warnings
 
