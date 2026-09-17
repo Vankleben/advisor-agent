@@ -82,8 +82,17 @@ def parse_westlake_detail(html: str, page_url: str) -> dict:
 
     text = "\n".join(p for p in parts if p.strip())
     emails = list(dict.fromkeys(EMAIL_RE.findall(text)))
+    # 该站页面没有 <a href>，主页/GitHub/Scholar 链接是写在正文里的；
+    # 收进外链列表，供 M2 深潜取信源、卡片取 homepage_candidates 使用
+    external, seen = [], set()
+    for m in re.finditer(r"https?://[^\s\"'<>（）()【】]+", text):
+        u = m.group(0).rstrip(".,;:，。；、")
+        if u in seen or "westlake.edu.cn" in u:
+            continue
+        seen.add(u)
+        external.append({"url": u, "label": ""})
     return {"detail_text": text[:3000], "emails": emails,
-            "external_links": [], "fallback": True}
+            "external_links": external[:10], "fallback": True}
 
 
 def _is_westlake_profile(page_url: str) -> bool:
