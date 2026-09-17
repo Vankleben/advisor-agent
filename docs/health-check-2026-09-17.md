@@ -70,3 +70,23 @@ python web_server.py         # 本地 Web 界面
 
 4 个共享模块 → P0 → P1 → main/web_server → 6 组工具改造 → paper_tools 传输层 → 自检 → 文档 → 约定。
 按项目约定**未发 Release**：本次为内部结构治理，用户可见变化只有 M6 的 GitHub 计数修复，不构成"成块的功能更新"。
+
+## 七、补记（同日事后发现的一处启动崩溃）
+
+报告发布后，实际启动 `python main.py` 报错退出：
+
+```
+File "tools/advisor_deepdive.py", line 150, in <module>
+    def run_deepdive(client: OpenAI, ...)
+NameError: name 'OpenAI' is not defined
+```
+
+- **根因**：改造中删掉了 `from openai import OpenAI`，但函数签名里的 `client: OpenAI` 注解留着。
+  **验证环境与运行环境不一致**——验证跑在本机默认的 Python 3.14（PEP 649 起注解延迟求值，不报错），
+  而项目实际运行在 conda `advisor` 的 Python 3.11（注解立即求值）→ 导入即崩，整个 Agent 起不来。
+- **处理**：去掉该注解；自检新增「注解引用的名字都有定义（版本无关）」静态检查（AST 扫描，
+  不依赖解释器版本），并做了反向验证（把错误注解还原回去，自检会精确报出文件名与行号）；
+  `AGENTS.md` 增加硬规则：**验收必须用项目解释器 `D:\conda\envs\advisor\python.exe`（3.11）**。
+- **复验**：3.11 下 24 个模块全部导入、自检 11 项全绿、入口实跑正常；
+  本次新增的抓取/解析路径（西湖适配器、SMART 适配器、西湖详情抽取、curl 兜底、卡片外链校验）也全部在 3.11 下重跑通过。
+- **教训**：凡是"只在 3.14 下过了一遍"的验证都不算数——这也是把自检写成版本无关静态检查的原因。
