@@ -38,11 +38,20 @@ import sys
 import datetime
 from pathlib import Path
 
+from fetch_common import get, strip_html
+from store import load_deepdive_report
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 ARCHIVE = BASE_DIR / "archive"
 TARGETS_FILE = ARCHIVE / "target_advisors.json"
 MONITOR_DIR = BASE_DIR / "data" / "monitor"
 MONITOR_DIR.mkdir(parents=True, exist_ok=True)
+
+# 简报条目的前缀标记：生产者与消费者必须共用同一常量。
+# （此前 monitor 写"新仓库/新动态"、monitor 与 monitor_daily 却判断"新仓库/新推送"，
+#   导致 GitHub 更新永远不计入简报统计。）
+SRC_NEW_PREFIX = "[有新增内容]"
+GH_NEW_PREFIX = "新仓库/新动态"
 
 # 噪音行判定：时间戳、版权、计数器、纯空格/标点/链接
 NOISE_RE = re.compile(
@@ -56,16 +65,7 @@ def _flat(text: str) -> str:
 
 
 def _fetch_text(url: str) -> str:
-    import requests
-    r = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
-                     timeout=20)
-    r.raise_for_status()
-    if not r.encoding or r.encoding.lower() == "iso-8859-1":
-        r.encoding = r.apparent_encoding
-    html = r.text
-    html = re.sub(r"(?is)<(script|style|noscript|header|footer|nav).*?</\1>", " ", html)
-    text = re.sub(r"(?s)<[^>]+>", " ", html)
-    return re.sub(r"\s+", " ", text).strip()
+    return strip_html(get(url, timeout=20).text)
 
 
 def _semantic_diff(old: str, new: str) -> list:
@@ -92,15 +92,12 @@ def _semantic_diff(old: str, new: str) -> list:
     return out
 
 
-def _github_trail(github_id: str) -> list:
-    """GitHub 轨迹：拉该账号最近 push 的仓库，返回 [(repo, pushed_at, html_url)]，最多8个。"""
-    import requests
-    r = requests.get(
-        f"https://api.github.com/users/{github_id}/repos",
-        params={"sort": "pushed", "per_page": 8, "type": "owner"},
-        headers={"User-Agent": "advisor-agent", "Accept": "application/vnd.github+json"},
-        timeout=15)
-    r.raise_for_status()
+def _github_trail(github_id: str) -> dict:
+    """GitHub 轨迹：拉该账号最近 push 的仓库，返回 {"repos": [(repo, pushed_at, html_url)]}，最多8个。"""
+    r = get(f"https://api.github.com/users/{github_id}/repos",
+            params={"sort": "pushed", "per_page": 8, "type": "owner"},
+            headers={"Accept": "application/vnd.github+json", "User-Agent": "advisor-agent"},
+            timeout=15)
     out = []
     for repo in r.json():
         out.append({
@@ -118,19 +115,36 @@ def _nice_name(name: str) -> str:
 
 def _monitor_sources(name: str) -> list:
     """从深潜报告的 sources 里取监测 URL（优先个人主页 cs）。"""
-    rp = BASE_DIR / "data" / "deepdive" / f"{_nice_name(name)}_report.json"
-    if not rp.exists():
-        return []
-    try:
-        return json.loads(rp.read_text(encoding="utf-8")).get("sources", [])
-    except Exception:
-        return []
+    rep = load_deepdive_report(name) or {}
+    return rep.get("sources", [])
 
 
 def _load_targets() -> list:
     if not TARGETS_FILE.exists():
         return []
     return json.loads(TARGETS_FILE.read_text(encoding="utf-8")).get("targets", [])
+
+
+def count_new(entry: dict) -> tuple:
+    """单个老师的新增计数：(主页源新增, 新论文, 新仓库)。判定依据与生产者共用前缀常量。"""
+    n_src = sum(1 for c in entry.get("changes") or [] if str(c).startswith(SRC_NEW_PREFIX))
+    n_arxiv = sum(1 for a in entry.get("arxiv") or [] if isinstance(a, dict))
+    n_gh = sum(1 for g in entry.get("github") or [] if str(g).startswith(GH_NEW_PREFIX))
+    return n_src, n_arxiv, n_gh
+
+
+def has_real_changes(briefing: dict) -> tuple:
+    """简报里是否存在真实新增：(新增总数, 有新增的老师数)。
+
+    供 scan 的 summary 与 monitor_daily 的"今日是否有变化"共用，避免同一判定写两份而漂移。
+    """
+    total = teachers = 0
+    for t in briefing.get("per_teacher") or []:
+        n = sum(count_new(t))
+        if n:
+            total += n
+            teachers += 1
+    return total, teachers
 
 
 def scan(name: str = "") -> dict:
@@ -173,7 +187,7 @@ def scan(name: str = "") -> dict:
                     snap.write_text(text, encoding="utf-8")
                     adds = _semantic_diff(old, text)
                     if adds:
-                        entry["changes"].append(f"[有新增内容] {url}")
+                        entry["changes"].append(f"{SRC_NEW_PREFIX} {url}")
                         entry["changes"].extend(f"  · {a}" for a in adds)
                     else:
                         entry["changes"].append(f"[变化] {url}（仅剩格式/时间戳，无实质）")
@@ -225,7 +239,7 @@ def scan(name: str = "") -> dict:
                                      encoding="utf-8")
                 if new_repos:
                     entry["github"] = [
-                        f"新仓库/新动态: {r['repo']}（最近更新 {r['pushed_at']}）{r['desc']}"
+                        f"{GH_NEW_PREFIX}: {r['repo']}（最近更新 {r['pushed_at']}）{r['desc']}"
                         for r in new_repos]
                 elif g["repos"]:
                     entry["github"] = [f"{len(g['repos'])} 个仓库，最近无新增（最新：{g['repos'][0]['pushed_at']} {g['repos'][0]['repo']}）"]
@@ -235,9 +249,7 @@ def scan(name: str = "") -> dict:
                 entry["github"].append(f"[GitHub 抓取失败] {e}")
 
         briefings["per_teacher"].append(entry)
-        n_new_src = sum(1 for c in entry["changes"] if c.startswith("[有新增内容]"))
-        n_new_arxiv = sum(1 for a in entry["arxiv"] if isinstance(a, dict))
-        n_new_gh = sum(1 for g in entry["github"] if g.startswith("新仓库/新推送"))
+        n_new_src, n_new_arxiv, n_new_gh = count_new(entry)
         if n_new_src or n_new_arxiv or n_new_gh:
             briefings["summary"].append(
                 f"{tname}：{n_new_src} 个主页源有新增 / {n_new_arxiv} 篇新论文 / {n_new_gh} 个仓库有更新")

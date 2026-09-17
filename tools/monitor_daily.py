@@ -20,8 +20,6 @@ import datetime
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(BASE_DIR))
-sys.path.insert(0, str(BASE_DIR / "tools"))
 
 import monitor as mon
 
@@ -32,16 +30,8 @@ def main() -> None:
         print(briefing["error"])
         return
 
-    # 计算是否有真实新增
-    real = 0
-    for t in briefing["per_teacher"]:
-        real += sum(1 for c in t["changes"] if c.startswith("[有新增内容]"))
-        real += sum(1 for a in t["arxiv"] if isinstance(a, dict))
-        real += sum(1 for g in t["github"] if g.startswith("新仓库/新推送"))
-    real_name = sum(1 for t in briefing["per_teacher"]
-                    if any(c.startswith("[有新增内容]") for c in t["changes"])
-                    or any(isinstance(a, dict) for a in t["arxiv"])
-                    or any(g.startswith("新仓库/新推送") for g in t["github"]))
+    # 是否有真实新增：判定逻辑与 monitor.scan 的 summary 共用同一函数，避免两处判定漂移
+    real, real_name = mon.has_real_changes(briefing)
 
     today = datetime.date.today().isoformat()
     out = Path(BASE_DIR / "data" / "monitor" / f"每日简报_{today}.txt")
