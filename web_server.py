@@ -108,7 +108,7 @@ class Handler(BaseHTTPRequestHandler):
             # function calling 循环（复用 main.py 的 TOOLS/DISPATCH，机制同 CLI）
             for _ in range(10):
                 resp = agent.CLIENT.chat.completions.create(
-                    model=agent.P["fast"], messages=messages, tools=agent.TOOLS, temperature=0.3)
+                    model=agent.FAST_MODEL, messages=messages, tools=agent.TOOLS, temperature=0.3)
                 msg = resp.choices[0].message
                 if msg.tool_calls:
                     messages.append(_msg_to_dict(msg))

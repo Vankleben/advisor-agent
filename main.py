@@ -21,14 +21,14 @@ import traceback
 import sys
 import subprocess
 from pathlib import Path
-from openai import OpenAI
 
 BASE_DIR = Path(__file__).resolve().parent   # main.py 在根目录
 DATA_DIR = BASE_DIR / "data"
 PAPERS_DIR = DATA_DIR / "papers"
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "tools"))
-from config import PROVIDER, API_KEY
+from llm_client import make_client, model_for
+from store import find_card, iter_cards, load_deepdive_report
 from paper_tools import (search_papers, search_europepmc, fetch_lab_publications,
                          merge_paper_sources, fetch_fulltext, fetch_paper, search_by_seed)
 import analyze_paper as ap
@@ -42,14 +42,9 @@ import monitor as mon
 import memory as mem
 import chat_history as ch
 
-PROVIDERS = {
-    "moonshot": {"base_url": "https://api.moonshot.cn/v1",
-                 "fast": "moonshot-v1-8k", "long": "moonshot-v1-128k"},
-    "deepseek": {"base_url": "https://api.deepseek.com",
-                 "fast": "deepseek-chat", "long": "deepseek-chat"},
-}
-P = PROVIDERS[PROVIDER]
-CLIENT = OpenAI(api_key=API_KEY, base_url=P["base_url"])
+CLIENT = make_client()
+FAST_MODEL = model_for("fast")      # 短任务：决策卡/路径/对比/深潜
+LONG_MODEL = model_for("long")      # 长文：精读拆解
 
 # ============ 输入层：单行 / 多行 / 文件 ============
 
@@ -131,14 +126,9 @@ def tool_list_teachers(site: str, keyword: str = "", level: str = "") -> str:
 
 
 def tool_get_card(name: str, site: str = "") -> str:
-    files = [DATA_DIR / f"cards_{site}.json"] if site else sorted(DATA_DIR.glob("cards_*.json"))
-    for f in files:
-        if not f.exists():
-            continue
-        with open(f, encoding="utf-8") as fp:
-            for c in json.load(fp)["cards"]:
-                if c.get("name") == name:
-                    return json.dumps(c, ensure_ascii=False)
+    card = find_card(name, site)
+    if card:
+        return json.dumps(card, ensure_ascii=False)
     return json.dumps({"error": f"找不到 {name}，可能未收录"}, ensure_ascii=False)
 
 
@@ -243,27 +233,20 @@ def _find_lab_url(name_cn: str) -> str:
     """从深潜报告/卡片里找该老师的实验室或主页 URL（供论文三源检索自动带上网址）"""
     if not name_cn:
         return ""
-    rp = DATA_DIR / "deepdive" / f"{name_cn}_report.json"
-    if rp.exists():
-        try:
-            srcs = json.loads(rp.read_text(encoding="utf-8")).get("sources") or []
-            for u in srcs:   # 优先实验室/个人主页，而非学校详情页
-                if any(k in u.lower() for k in ("lab", "github.io", "group", "home")):
+    report = load_deepdive_report(name_cn)
+    if report:
+        srcs = report.get("sources") or []
+        for u in srcs:   # 优先实验室/个人主页，而非学校详情页
+            if any(k in u.lower() for k in ("lab", "github.io", "group", "home")):
+                return u
+        if srcs:
+            return srcs[0]
+    for _, c in iter_cards():
+        if c.get("name") == name_cn:
+            for h in (c.get("homepage_candidates") or []):
+                u = h.get("url") if isinstance(h, dict) else h
+                if u:
                     return u
-            if srcs:
-                return srcs[0]
-        except Exception:
-            pass
-    for f in sorted(DATA_DIR.glob("cards_*.json")):
-        try:
-            for c in json.loads(f.read_text(encoding="utf-8")).get("cards", []):
-                if c.get("name") == name_cn:
-                    for h in (c.get("homepage_candidates") or []):
-                        u = h.get("url") if isinstance(h, dict) else h
-                        if u:
-                            return u
-        except Exception:
-            continue
     return ""
 
 
@@ -271,11 +254,11 @@ def _seed_hints(name_cn: str) -> list:
     """从深潜报告里提取代表作线索（英文专名），供种子策略反查作者"""
     if not name_cn:
         return []
-    rp = DATA_DIR / "deepdive" / f"{name_cn}_report.json"
-    if not rp.exists():
+    report = load_deepdive_report(name_cn)
+    if not report:
         return []
     try:
-        blob = rp.read_text(encoding="utf-8")
+        blob = json.dumps(report, ensure_ascii=False)
         cands = set(re.findall(r"[A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]+){1,3}", blob))
         stop = {"Multi-Agent", "Tool-Calling", "GitHub", "HuggingFace", "Top-30",
                 "NeurIPS", "ICLR", "ICML", "ACL", "EMNLP", "CVPR", "ICSE"}
@@ -416,7 +399,7 @@ def tool_paper_decision(paper_id: str) -> str:
         return json.dumps({"error": err}, ensure_ascii=False)
     try:
         text = txt_file.read_text(encoding="utf-8")
-        card = ap.step0_decision_card(CLIENT, P["fast"], text)
+        card = ap.step0_decision_card(CLIENT, FAST_MODEL, text)
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"决策卡生成失败：{e}", "traceback": tb}, ensure_ascii=False)
@@ -430,7 +413,7 @@ def tool_deep_dive(paper_id: str) -> str:
         return json.dumps({"error": err}, ensure_ascii=False)
     try:
         text = txt_file.read_text(encoding="utf-8")
-        analysis = ap.full_analysis(CLIENT, P["long"], text)
+        analysis = ap.full_analysis(CLIENT, LONG_MODEL, text)
         warnings = ap.verify_quotes(analysis, text)
     except Exception as e:
         tb = traceback.format_exc()[-500:]
@@ -497,7 +480,7 @@ def tool_advisor_deepdive(name: str, site: str = "", url: str = "") -> str:
 def tool_path_analysis(name: str) -> str:
     """M4：进组路径分析——基于深潜报告+用户画像，产出需求侧/供给侧/敲门砖方案"""
     try:
-        result = pa.run_path_analysis(CLIENT, P["fast"], name)
+        result = pa.run_path_analysis(CLIENT, FAST_MODEL, name)
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"路径分析失败：{e}", "traceback": tb}, ensure_ascii=False)
@@ -531,7 +514,7 @@ def tool_deep_compare(names) -> str:
     if isinstance(names, str):
         names = [n.strip() for n in names.split(",") if n.strip()]
     try:
-        result = ca.deep_compare(CLIENT, P["fast"], names)
+        result = ca.deep_compare(CLIENT, FAST_MODEL, names)
     except Exception as e:
         tb = traceback.format_exc()[-500:]
         return json.dumps({"error": f"深度对比失败：{e}", "traceback": tb}, ensure_ascii=False)
@@ -760,7 +743,7 @@ def main():
         # function calling 循环：LLM 可能连续调用多个工具才给出回答
         for _ in range(10):
             resp = CLIENT.chat.completions.create(
-                model=P["fast"], messages=messages, tools=TOOLS, temperature=0.3)
+                model=FAST_MODEL, messages=messages, tools=TOOLS, temperature=0.3)
             msg = resp.choices[0].message
 
             if msg.tool_calls:
