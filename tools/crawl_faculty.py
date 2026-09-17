@@ -12,6 +12,7 @@ if hasattr(_sys.stdout, "reconfigure"):
     _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import json
+import re
 import sys
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -111,11 +112,65 @@ def parse_life(html: str, base_url: str) -> list[dict]:
     return records
 
 
+# ---- 适配器 #3：西湖大学工学院（教师数据内嵌在页面 JS 的 teamList 里，无需 LLM 抽取）----
+# 该站导航是 JS 路由（页面无 <a href>），但服务端把整份名录写进了内嵌对象数组：
+#   { imgUrl, name: "某某博士", lab: "实验室名", area: "系名", direct: "研究方向", url: "个人主页", sideline: "学院归属" }
+# 姓名统一带"博士"后缀，这里剥掉以便卡片检索；职称/邮箱名录里没有，由 enrich + 卡片阶段从个人主页提取。
+
+WESTLAKE_CS_AREAS = ("人工智能系", "电子信息工程系", "先进工程科学与技术中心")
+WESTLAKE_CS_KEYWORDS = ("智能", "计算", "数据", "机器学习", "人工智能", "脑机", "信息",
+                        "算法", "视觉", "语言", "机器人", "统计", "模型", "模拟", "仿真",
+                        "建模", "数字")
+
+
+def _js_field(block: str, key: str) -> str:
+    """取内嵌 JS 对象里的字符串字段（值含中文/逗号，不能用 split 解析）。"""
+    m = re.search(rf'{key}\s*:\s*"([^"]*)"', block)
+    return m.group(1).strip() if m else ""
+
+
+def parse_westlake_engineering(html: str, base_url: str, cs_only: bool = True) -> list[dict]:
+    """适配器 #3：西湖大学工学院教师名录（按姓名/系别/实验室/个人主页结构化提取）。
+
+    cs_only=True 时只保留与计算机相关或交叉的：人工智能系、电子信息工程系、
+    先进工程科学与技术中心，以及实验室或研究方向含计算类关键词的跨系教师
+    （材料/化学等纯实验方向不收）。
+    """
+    blocks = [b for b in re.findall(r"\{[^{}]*\}", html)
+              if "name:" in b and "sideline:" in b]
+    records = []
+    for b in blocks:
+        name = _js_field(b, "name")
+        if not name:
+            continue
+        area = _js_field(b, "area")
+        lab = _js_field(b, "lab")
+        direct = _js_field(b, "direct")
+        url = _js_field(b, "url")
+        sideline = _js_field(b, "sideline")
+        if cs_only and not (area in WESTLAKE_CS_AREAS
+                            or any(k in lab + direct for k in WESTLAKE_CS_KEYWORDS)):
+            continue
+        records.append({
+            "name": re.sub(r"博士$", "", name).strip(),
+            "title": None,                      # 名录不含职称，卡片阶段从个人主页提取
+            "section": area or sideline or None,
+            "research": direct or lab or None,
+            "email": None,
+            "detail_url": url or None,
+            "lab": lab,                         # 附加字段，卡片阶段可参考
+            "sideline": sideline,
+        })
+    return records
+
+
 # ============ 站点注册表：加新学校只动这里 ============
 
 SITES = {
     "collegeai": ("https://collegeai.tsinghua.edu.cn/rydw.htm", parse_collegeai),
     "life": ("https://life.tsinghua.edu.cn/szdw/jzyg1.htm", parse_life),
+    "wlcs": ("https://engineering.westlake.edu.cn/Faculty/Directory/",
+             parse_westlake_engineering),
 }
 
 
