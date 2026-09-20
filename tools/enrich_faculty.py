@@ -32,6 +32,10 @@ CONTENT_SELECTORS = {
     "collegeai.tsinghua.edu.cn": [".con", ".v_news_content", ".box0"],
     "life.tsinghua.edu.cn": ["#vsb_content"],
     "smart.org.cn": [".left-page"],       # 深圳医学科学院导师页：整块学者信息区，避开巨长的导航
+    # 北大生科：整页是导航+正文混排，个人页正文（个人介绍/研究方向/论文）在 .teacher_item 内
+    "www.bio.pku.edu.cn": [".teacher_item"],
+    # 清华医学院：个人页正文分两块（.common 教育/工作经历 + .cont 研究领域）
+    "www.med.tsinghua.edu.cn": [".common", ".cont"],
 }
 
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")

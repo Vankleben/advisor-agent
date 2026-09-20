@@ -195,6 +195,66 @@ def parse_smart_fellows(html: str, base_url: str) -> list[dict]:
     return records
 
 
+# ---- 适配器 #5：清华大学医学院·基础医学院（教研系列）----
+# 列表项结构：<li><a href="../../../info/1139/xxxx.htm"><div class="scale">…</div>
+#               <div class="con"><h3>张三 Zhang San</h3></div></a></li>
+# 导航菜单同样是 <li><h3>，用 href 是否含 "/info/" 区分（导航链接不含）。
+# 姓名取 h3 里的中文名（"张三 Zhang San" → "张三"），纯英文名保留全名。
+
+THUMED_PAGES = ["http://www.med.tsinghua.edu.cn/jy/szdw1/jcyxy/jyxl.htm"] + [
+    f"http://www.med.tsinghua.edu.cn/jy/szdw1/jcyxy/jyxl/{n}.htm" for n in range(1, 4)
+]
+
+
+def parse_thumed(html: str, base_url: str) -> list[dict]:
+    """适配器 #5：清华医学院基础医学院教研系列名录（姓名 + 个人页链接）。"""
+    soup = BeautifulSoup(html, "lxml")
+    records = []
+    for li in soup.find_all("li"):
+        h3 = li.find("h3")
+        a = li.find("a", href=True)
+        if not h3 or not a or "/info/" not in a["href"]:
+            continue
+        text = h3.get_text(strip=True)
+        m = re.match(r"[\u4e00-\u9fa5]{2,4}", text)
+        records.append({
+            "name": m.group(0) if m else text,
+            "title": None,                 # 职称在个人页，卡片阶段提取
+            "section": "基础医学院·教研系列",
+            "research": None,
+            "email": None,
+            "detail_url": urljoin(base_url, a["href"]),
+        })
+    return records
+
+
+# ---- 适配器 #6：西湖大学生命科学学院 ----
+# 列表项：<a href="https://www.westlake.edu.cn/faculty/<slug>.html">
+#           <p class="con_ev_name">张三博士</p><p class="con_ev_name">Zhang San, Ph.D.</p></a>
+# 个人主页与工学院同一套模板，正文由 enrich_faculty.parse_westlake_detail 抽取。
+
+
+def parse_westlake_sls(html: str, base_url: str) -> list[dict]:
+    """适配器 #6：西湖大学生命科学学院名录（姓名在 p.con_ev_name，链接指向个人主页）。"""
+    soup = BeautifulSoup(html, "lxml")
+    records = []
+    for a in soup.find_all("a", href=True):
+        if "/faculty/" not in a["href"]:
+            continue                      # 图片链接无姓名节点，跳过
+        names = [p.get_text(strip=True) for p in a.select("p.con_ev_name")]
+        if not names:
+            continue
+        records.append({
+            "name": re.sub(r"(博士|教授)$", "", names[0]).strip(),
+            "title": None,
+            "section": "生命科学学院",
+            "research": None,
+            "email": None,
+            "detail_url": urljoin(base_url, a["href"]),
+        })
+    return records
+
+
 # ============ 站点注册表：加新学校只动这里 ============
 
 SITES = {
@@ -203,6 +263,8 @@ SITES = {
     "wlcs": ("https://engineering.westlake.edu.cn/Faculty/Directory/",
              parse_westlake_engineering),
     "smart": (SMART_FELLOW_PAGES, parse_smart_fellows),
+    "thumed": (THUMED_PAGES, parse_thumed),
+    "wlsls": ("https://sls.westlake.edu.cn/Our_Faculty/", parse_westlake_sls),
 }
 
 
