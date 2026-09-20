@@ -203,6 +203,14 @@ def parse_smart_fellows(html: str, base_url: str) -> list[dict]:
 
 THUMED_PAGES = ["http://www.med.tsinghua.edu.cn/jy/szdw1/jcyxy/jyxl.htm"] + [
     f"http://www.med.tsinghua.edu.cn/jy/szdw1/jcyxy/jyxl/{n}.htm" for n in range(1, 4)
+] + [                                    # 临床医学院·教研系列（2 页）
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/lcyxy/lcjyxl.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/lcyxy/lcjyxl/1.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/lcyxy/lcjyxl/2.htm",
+] + [                                    # 药学院·教研系列（2 页）
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/yxy1/jyxl.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/yxy1/jyxl/1.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/yxy1/jyxl/2.htm",
 ]
 
 # 同一网站的"生物医学工程学院"（医学影像/神经工程/微纳医学与组织工程三个方向）
@@ -215,9 +223,14 @@ THUMED_BME_PAGES = [
 
 
 def parse_thumed(html: str, base_url: str) -> list[dict]:
-    """适配器 #5：清华医学院教研系列名录（姓名 + 个人页链接）。同一模板覆盖基础医学院与生物医学工程学院。"""
-    section = ("生物医学工程学院·教研系列" if "/sygc/" in base_url
-               else "基础医学院·教研系列")
+    """适配器 #5：清华医学院教研系列名录（姓名 + 个人页链接）。同一模板覆盖多个院系。"""
+    section = "基础医学院·教研系列"
+    for key, label in (("/sygc/", "生物医学工程学院·教研系列"),
+                       ("/lcyxy/", "临床医学院·教研系列"),
+                       ("/yxy1/", "药学院·教研系列")):
+        if key in base_url:
+            section = label
+            break
     soup = BeautifulSoup(html, "lxml")
     records = []
     for li in soup.find_all("li"):
@@ -303,6 +316,67 @@ def parse_pkubio(html: str, base_url: str) -> list[dict]:
     return records
 
 
+# ---- 适配器 #8：西湖大学全校导师目录 ----
+# https://www.westlake.edu.cn/about/faculty/ 的 memberList 内嵌了全校导师：
+#   { imgUrl, name: "张三博士", nameEn, school: "生命科学学院", subject: "研究方向</br>实验室", url: "个人主页" }
+# 各学院官网（工学院/生命科学学院/医学院）只列本院部分人，这里是唯一完整来源（304 人）。
+# 按学院关键词筛选：生命科学相关（含兼聘）→ wlls。
+
+WESTLAKE_ALL_URL = "https://www.westlake.edu.cn/about/faculty/"
+WESTLAKE_LIFE_MED = ("生命科学学院", "医学院")
+
+
+def parse_westlake_all(html: str, base_url: str,
+                       school_filter: tuple = WESTLAKE_LIFE_MED) -> list[dict]:
+    """适配器 #8：西湖大学导师总目录（按学院筛选，默认只留生命科学/医学相关，含兼聘）。"""
+    records = []
+    for b in re.findall(r"\{([^{}]*name:\s*\"[^\"]+\"[^{}]*)\}", html):
+        name = _js_field(b, "name")
+        school = _js_field(b, "school")
+        subject = _js_field(b, "subject")
+        url = _js_field(b, "url")
+        if not name or (school_filter and not any(k in school for k in school_filter)):
+            continue
+        records.append({
+            "name": re.sub(r"博士$", "", name).strip(),
+            "title": None,
+            "section": school,
+            "research": subject.replace("<br/>", " ").replace("</br>", " ").strip() or None,
+            "email": None,
+            "detail_url": url or None,
+        })
+    return records
+
+
+# ---- 适配器 #9：正文由 JS 渲染的站点（先渲染取链接，再从 <a> 的文字/href 抽人）----
+# 北大前沿交叉学科研究院名录：requests 拿到的 HTML 只有导航，渲染后 <a> 的文字才是人名，
+# href 指向个人页 /info/<栏目>/<id>.htm。故该站走 render 模式（见 SITES 表第三项）。
+
+def parse_aais_rendered(page: dict, base_url: str) -> list[dict]:
+    """适配器 #9：渲染后页面（dict 含 links）→ 姓名 + 所属院系 + 个人页链接。
+
+    渲染后每条链接的文字形如："张三 所在院系：智能学院"，姓名在首行、院系在其后。"""
+    records = []
+    for link in page.get("links") or []:
+        url = link.get("url") or ""
+        if "/info/" not in url:
+            continue
+        text = re.sub(r"\s+", " ", (link.get("text") or "")).strip()
+        m = re.match(r"([\u4e00-\u9fa5]{2,4})(?=\s|$)", text)
+        if not m:
+            continue                      # 只要"人名 → 个人页"这类链接
+        dept = re.search(r"所在院系：\s*([^\s：]+)", text)
+        records.append({
+            "name": m.group(1),
+            "title": None,
+            "section": dept.group(1) if dept else "前沿交叉学科研究院",
+            "research": None,
+            "email": None,
+            "detail_url": url,
+        })
+    return records
+
+
 # ============ 站点注册表：加新学校只动这里 ============
 
 SITES = {
@@ -315,6 +389,10 @@ SITES = {
     "thubme": (THUMED_BME_PAGES, parse_thumed),
     "wlsls": ("https://sls.westlake.edu.cn/Our_Faculty/", parse_westlake_sls),
     "pkubio": (PKUBIO_BOARD, parse_pkubio),
+    "wlls": (WESTLAKE_ALL_URL, parse_westlake_all),
+    # 第三项 "render" = 该站正文由 JS 渲染，parser 收到的是渲染结果（含 links），不是原始 HTML
+    "pkuais": ("http://www.aais.pku.edu.cn/szdw/swyxkxkyjzx1.htm",
+               parse_aais_rendered, "render"),
 }
 
 
@@ -324,7 +402,8 @@ def main():
     if site not in SITES:
         print(f"未知站点 {site}，可选：{list(SITES)}")
         return
-    urls, parser = SITES[site]
+    urls, parser = SITES[site][:2]
+    render_mode = len(SITES[site]) > 2 and SITES[site][2] == "render"
     if isinstance(urls, str):
         urls = [urls]
 
@@ -338,7 +417,15 @@ def main():
     records = []
     for u in urls:
         try:
-            records += parser(fetch(u), u)
+            if render_mode:
+                from web_fetch import render_url
+                page = render_url(u, max_chars=20000, budget_ms=60000)
+                if page.get("error"):
+                    print(f"⚠️ 渲染失败：{u}（{page['error']}）")
+                    continue
+                records += parser(page, u)
+            else:
+                records += parser(fetch(u), u)
         except Exception as e:
             print(f"⚠️ 页面抓取失败：{u}（{type(e).__name__}: {e}）")
 
