@@ -205,9 +205,19 @@ THUMED_PAGES = ["http://www.med.tsinghua.edu.cn/jy/szdw1/jcyxy/jyxl.htm"] + [
     f"http://www.med.tsinghua.edu.cn/jy/szdw1/jcyxy/jyxl/{n}.htm" for n in range(1, 4)
 ]
 
+# 同一网站的"生物医学工程学院"（医学影像/神经工程/微纳医学与组织工程三个方向）
+THUMED_BME_PAGES = [
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/sygc/jyxl1.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/sygc/jyxl1/yxyx.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/sygc/jyxl1/sjgc.htm",
+    "http://www.med.tsinghua.edu.cn/jy/szdw1/sygc/jyxl1/wnyxyzzgc.htm",
+]
+
 
 def parse_thumed(html: str, base_url: str) -> list[dict]:
-    """适配器 #5：清华医学院基础医学院教研系列名录（姓名 + 个人页链接）。"""
+    """适配器 #5：清华医学院教研系列名录（姓名 + 个人页链接）。同一模板覆盖基础医学院与生物医学工程学院。"""
+    section = ("生物医学工程学院·教研系列" if "/sygc/" in base_url
+               else "基础医学院·教研系列")
     soup = BeautifulSoup(html, "lxml")
     records = []
     for li in soup.find_all("li"):
@@ -220,7 +230,7 @@ def parse_thumed(html: str, base_url: str) -> list[dict]:
         records.append({
             "name": m.group(0) if m else text,
             "title": None,                 # 职称在个人页，卡片阶段提取
-            "section": "基础医学院·教研系列",
+            "section": section,
             "research": None,
             "email": None,
             "detail_url": urljoin(base_url, a["href"]),
@@ -302,6 +312,7 @@ SITES = {
              parse_westlake_engineering),
     "smart": (SMART_FELLOW_PAGES, parse_smart_fellows),
     "thumed": (THUMED_PAGES, parse_thumed),
+    "thubme": (THUMED_BME_PAGES, parse_thumed),
     "wlsls": ("https://sls.westlake.edu.cn/Our_Faculty/", parse_westlake_sls),
     "pkubio": (PKUBIO_BOARD, parse_pkubio),
 }
