@@ -145,8 +145,12 @@ def parse_detail(html: str, page_url: str) -> dict:
     external = []
     for a in soup.find_all("a", href=True):
         h = a["href"]
+        try:
+            host = urlparse(h).netloc
+        except ValueError:
+            continue          # 站内偶有畸形 href（如"实验室网页：www.x.com"），跳过而非中断整轮抓取
         # "外部链接"按注册域名判断：校内各子站（portal./core. 之类）不算外链
-        if h.startswith("http") and _site_key(urlparse(h).netloc) != _site_key(domain):
+        if h.startswith("http") and _site_key(host) != _site_key(domain):
             pair = {"url": h, "label": a.get_text(strip=True)}
             if pair not in external:
                 external.append(pair)
@@ -208,6 +212,9 @@ def main():
                     t["email"] = t["detail"]["emails"][0]
             except requests.RequestException as e:
                 t["detail"] = {"error": str(e)}
+            except Exception as e:
+                # 单页解析异常（畸形 href、编码问题等）不应中断整轮抓取
+                t["detail"] = {"error": f"{type(e).__name__}: {e}"}
         teachers.append(t)
 
         if (i + 1) % 10 == 0:

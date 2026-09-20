@@ -255,6 +255,44 @@ def parse_westlake_sls(html: str, base_url: str) -> list[dict]:
     return records
 
 
+# ---- 适配器 #7：北大生命科学学院·博士生导师 ----
+# 名录条目锚文本把信息都写在链接文字里，形如：
+#   "张三 研究员 具有招生资格 Email：zhangsan (AT) pku.edu.cn 所属实验室：张三实验室 实验室地址：…"
+# 姓名在开头，其后跟职称；"具有招生资格"是招生信号，一并记下供筛选。
+# 此前用 LLM 抽该页会截断（只取到前 73 人）且把详情链接错填成列表页，故改为确定性解析。
+
+PKUBIO_BOARD = "https://www.bio.pku.edu.cn/homes/Index/news_szll_zy/16/16.html"
+
+
+def parse_pkubio(html: str, base_url: str) -> list[dict]:
+    """适配器 #7：北大生科博士生导师名录（姓名/职称/邮箱/实验室 + 个人页链接）。"""
+    soup = BeautifulSoup(html, "lxml")
+    records = []
+    for a in soup.find_all("a", href=True):
+        if "news_cont_jl" not in a["href"]:
+            continue
+        text = a.get_text(" ", strip=True).replace("\u3000", " ")
+        m = re.match(r"([\u4e00-\u9fa5]{2,4}|[A-Za-z][A-Za-z .\-']{2,30})", text)
+        if not m:
+            continue
+        rest = text[m.end():]
+        title = next((t for t in ("副教授", "副研究员", "助理教授", "教授", "研究员", "讲师")
+                      if t in rest), None)
+        email = re.search(r"[a-zA-Z0-9._%+-]+ \(AT\) [a-zA-Z0-9.\-]+", text)
+        lab = re.search(r"所属实验室：\s*(\S+)", text)
+        records.append({
+            "name": m.group(1).strip(),
+            "title": title,
+            "section": "生命科学学院·博士生导师",
+            "research": None,              # 研究方向在个人页，卡片阶段提取
+            "email": email.group(0).replace("(AT)", "@").replace(" ", "") if email else None,
+            "detail_url": urljoin(base_url, a["href"]),
+            "recruiting": "具有招生资格" in text,   # 名录页自带的招生信号
+            "lab": lab.group(1) if lab else None,
+        })
+    return records
+
+
 # ============ 站点注册表：加新学校只动这里 ============
 
 SITES = {
@@ -265,6 +303,7 @@ SITES = {
     "smart": (SMART_FELLOW_PAGES, parse_smart_fellows),
     "thumed": (THUMED_PAGES, parse_thumed),
     "wlsls": ("https://sls.westlake.edu.cn/Our_Faculty/", parse_westlake_sls),
+    "pkubio": (PKUBIO_BOARD, parse_pkubio),
 }
 
 
