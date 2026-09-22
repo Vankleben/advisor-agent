@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="导师情报与论文伴读 Agent" width="100%">
+  <img src="assets/banner.png" alt="Advisor Intelligence & Paper Companion Agent" width="100%">
 </p>
 
 <h1 align="center">Advisor Intelligence & Paper Companion Agent 🎓</h1>
@@ -9,220 +9,219 @@
 
 ---
 
-## 这个 Agent 能帮你做什么？
+## What can this agent do for you?
 
-| 场景 | 怎么用一句话解决 |
+| Scenario | How one sentence solves it |
 |---|---|
-| 想申某校实验室，但官网信息陈旧、招生状态散落各处 | 从一句"某某大学"出发，自动导航官网 → 定位学院 → 抓师资名单 → 生成带招生信号 🟢🟡⚪ 的导师卡片 |
-| 想深入了解某位导师的真实研究方向和招生意向 | 自动抓取个人主页/实验室主页，产出七维度情报（研究轨迹漂移、GitHub 工程足迹、学生毕业去向…） |
-| 几位导师拿不定主意 | 2-5 人七项指标打分对比，每分附证据原文 |
-| 论文读完说不出自己的理解对不对 | 提交你的思考，Agent 对照原文纠错、费曼追问、凝练成可直接用于申请文书的段落 |
-| 想进某个组但不知道"该做什么项目" | 从导师需求侧反推，结合你的技能画像，生成带算力红线检查的"敲门砖项目" |
-| 怕错过目标老师的新动态 | 收藏后定期扫描主页/arXiv/GitHub 变化，输出情报简报；可配每日定时自动跑 |
+| You want to apply to a lab, but the official site is outdated and recruiting status is scattered | Start from a single sentence like "tell me about University X": the agent navigates the official site, locates the school, crawls the faculty roster, and generates advisor cards tagged with recruiting signals 🟢🟡⚪ |
+| You want to know what an advisor really works on, and whether they take students | Automatically fetches personal and lab homepages and produces a seven-dimension profile (research-trajectory shifts, GitHub engineering footprint, where former students ended up, …) |
+| You can't decide between several advisors | Scores 2–5 candidates across seven criteria, every score backed by a verbatim quote from the source |
+| You finished a paper but can't tell whether your understanding is right | Submit your own write-up; the agent checks it against the original text, asks Feynman-style follow-ups, and distills it into paragraphs you can paste into an application |
+| You want into a specific group but don't know what project to build | Works backwards from the advisor's needs and your skill profile to propose a "door-knocking project", with a compute red-line check |
+| You're afraid of missing your target advisor's updates | Bookmark them and the agent periodically scans their homepage / arXiv / GitHub, producing an intelligence brief; can also run daily on a schedule |
 
 ---
 
-## 快速开始
+## Quick start
 
 ```bash
 git clone https://github.com/Vankleben/advisor-agent.git
 cd advisor_agent
 
-# 依赖
+# Dependencies
 pip install openai requests beautifulsoup4 pymupdf
 
-# 配置 API key（支持 deepseek / moonshot）
+# Configure your API key (deepseek / moonshot supported)
 cp config.example.py config.py
-# 编辑 config.py 填入你的 key
+# Edit config.py and fill in your key
 
-# 启动（二选一）
-python main.py          # 终端交互
-python web_server.py    # 浏览器打开 http://127.0.0.1:8080
+# Launch (pick one)
+python main.py          # terminal UI
+python web_server.py    # then open http://127.0.0.1:8080
 ```
 
-> Web 界面零依赖（Python 内置 http.server），支持 markdown 表格渲染、证据折叠展开、工具调用过程可视化，多轮会话自动保持。
+> The web UI has zero dependencies (Python's built-in http.server). It renders markdown tables, lets you expand and collapse evidence, shows tool calls as they happen, and keeps multi-turn sessions alive.
 
-> 终端增强命令：`/m` 多行输入（EOF 结束）；`/f 路径` 读取文件；**`/history` 回看历史会话**（`/history 3` 看第 3 次、`/history 关键词` 搜索）。对话自动存到本地 `archive/chat_history/`，关掉终端不丢，不上传。
+> Terminal extras: `/m` for multi-line input (finish with EOF); `/f <path>` to read a file; **`/history` to review past sessions** (`/history 3` for the third one, `/history <keyword>` to search). Conversations are stored locally under `archive/chat_history/` — closing the terminal loses nothing, and nothing is uploaded.
 
 ---
 
-## 使用示例（真实对话）
+## Examples (real conversations)
 
-启动后直接用中文提问，Agent 自动调用工具。以下都是实际跑通的用法：
+Ask in plain language and the agent picks its own tools. Every example below has actually been run:
 
-### ① 找老师 —— "看看清华人工智能学院有哪些做大模型的老师"
+### ① Finding advisors — "which professors at Tsinghua's AI Institute work on LLMs?"
 
 ```
-你：帮我看看北京大学人工智能学院的老师
+You: show me the faculty at Peking University's School of AI
 
-🔧 fetch_url(https://www.pku.edu.cn)        # 自主导航
-🔧 fetch_url(http://sai.pku.edu.cn)         # 逐层深入
-🔧 add_school('pkusai')                      # 收录+自动建卡
+🔧 fetch_url(https://www.pku.edu.cn)        # navigates by itself
+🔧 fetch_url(http://sai.pku.edu.cn)         # drills down level by level
+🔧 add_school('pkusai')                      # collects the roster and builds cards
 🔧 list_teachers({'site': 'pkusai'})
 
-Agent：北大智能学院共收录 36 位老师：
+Agent: 36 faculty collected from PKU's School of AI:
 
-| 姓名 | 职称 | 方向 | 招生信号 | 职业阶段 |
+| Name | Title | Field | Recruiting | Career stage |
 |---|---|---|---|---|
-| 某助理教授 | 助理教授 | 视觉-语言学习、多模态大模型 | 🟢 | 青年 |
-| 某青年老师 | 助理教授 | 机器人、具身智能 | ⚪ | 青年 |
-| 某讲席教授 | 讲席教授 | 计算机视觉、认知科学 | ⚪ | 资深 |
+| Asst. Prof. A | Assistant Professor | Vision-language learning, multimodal LLMs | 🟢 | Early career |
+| Asst. Prof. B | Assistant Professor | Robotics, embodied AI | ⚪ | Early career |
+| Chair Prof. C | Chair Professor | Computer vision, cognitive science | ⚪ | Senior |
 ...
 ```
 
-> 🟢 明确写了欢迎学生（附原文引用 + 抓取日期）；⚪ 官网无招生信息——**绝不把未知说成欢迎**。
+> 🟢 means the page explicitly welcomes students (with a verbatim quote and the crawl date); ⚪ means the page carries no recruiting information — **the agent never turns "unknown" into "welcome".**
 
-### ② 深挖某位导师 —— "深挖某教授 A"
-
-```
-🔧 advisor_deepdive({'name': '某教授 A'})
-
-Agent：
-【近期研究】<该组研究方向>
-  证据: "The XXX Laboratory ... <原文引句>"  ← 来源1 个人主页
-
-【研究轨迹】持续深耕细胞膜相关结构研究
-【招生意向】...
-【GitHub 足迹】主页未提及，如实标注"无信息"
-
-✅ 反幻觉校验：全部引句在原文中逐字命中
-```
-
-### ③ 横向对比 —— "对比某教授 A和某教授 B"
+### ② Deep dive on one advisor — "dig into Professor A"
 
 ```
-🔧 deep_compare({'names': ['某教授 A', '某教授 B']})
+🔧 advisor_deepdive({'name': 'Professor A'})
 
-Agent：
-| 指标 | 某教授 A | 某教授 B |
+Agent:
+[Recent research] <what the group works on>
+  Evidence: "The XXX Laboratory ... <verbatim quote>"  <- source 1: personal homepage
+
+[Research trajectory] Sustained focus on membrane-related structures
+[Recruiting intentions] ...
+[GitHub footprint] Not mentioned on the homepage — honestly reported as "no information"
+
+✅ Anti-hallucination check: every quote matched the source verbatim
+```
+
+### ③ Side-by-side comparison — "compare Professor A and Professor B"
+
+```
+🔧 deep_compare({'names': ['Professor A', 'Professor B']})
+
+Agent:
+| Criterion | Professor A | Professor B |
 |---|---|---|
-| 方向匹配度 | 3/5（细胞生物学，计算成分低） | 5/5（AI+生物结构） |
-| 招生信号 | ⚪ 1/5 | 🟢 4/5 |
+| Field fit | 3/5 (cell biology, little computational work) | 5/5 (AI + biological structure) |
+| Recruiting signal | ⚪ 1/5 | 🟢 4/5 |
 ...
 
-总结论：主攻某教授 B（AI4Science 与你的兴趣和 ESM-IF1 经历高度匹配），某教授 A作为备选。
+Verdict: go for Professor B (AI4Science matches both your interests and your ESM-IF1 experience); keep Professor A as a fallback.
 ```
 
-### ④ 论文精读 —— 从检索到精读的完整链路
+### ④ Reading a paper — from search to deep read
 
 ```
-你：查一下某位老师近期的论文
-🔧 search_papers({'author_en': 'John Smith'})     # ⭐ 标出末位作者=导师主导
+You: find this professor's recent papers
+🔧 search_papers({'author_en': 'John Smith'})     # ⭐ flags last-author papers = PI-led work
 
-你：第 7 篇先出个决策卡
+You: make a decision card for paper #7
 🔧 paper_decision({'arxiv_id': '2606.09669v2'})
-Agent：定位：代表作 / 匹配度：中 / 建议：速读 / 前置缺口：无
+Agent: Role: representative work / Fit: medium / Recommendation: skim / Prerequisites: none
 
-你：好，精读这篇
+You: ok, deep-read it
 🔧 deep_dive({'arxiv_id': '2606.09669v2'})
-Agent：[七段式拆解：解决目标 → 背景 → 实验设置 → 方法流程
-        → 概念解释（按你的档案：KV cache 一笔带过，新概念讲透）
-        → 结果与局限 → 复现可行性（标注目标设备与预估资源）]
+Agent: [seven-section breakdown: goal -> background -> experimental setup -> method pipeline
+        -> concept explanations tuned to your profile (KV cache in one line, new concepts in depth)
+        -> results and limitations -> reproducibility (target device and estimated resources)]
 
-⚠️ 校验发现 2 条引句未在原文命中，已标注，请注意
+⚠️ The check found 2 quotes missing from the original text; they are flagged — please note
 ```
 
-### ⑤ 思考批改 —— 读完论文，交上你的理解
+### ⑤ Critique — hand in your own understanding after reading
 
 ```
-你：/f my_thinking.txt    # 提交你写的思考
+You: /f my_thinking.txt    # submit what you wrote
 
 🔧 critique_thinking(...)
 
-Agent：
-## 事实纠错
-❌ 你说"先在实验光谱上预训练，再在模拟光谱上微调"——顺序反了
-   原文: "a shared spectral encoder is first pretrained on approximately
-          60 million simulated IR spectra"
-❌ "整体准确率超95%"——论文从未给出这个数字，各任务指标不同
+Agent:
+## Factual corrections
+❌ You wrote "pretrain on experimental spectra first, then fine-tune on simulated spectra" — the order is reversed
+   Original: "a shared spectral encoder is first pretrained on approximately
+             60 million simulated IR spectra"
+❌ "overall accuracy above 95%" — the paper never gives this number; metrics differ per task
 
-## 费曼追问（盲区探测）
-1. 为什么预训练任务选小波重建、指纹对齐、官能团预测这三个？
+## Feynman-style follow-ups (blind-spot probing)
+1. Why these three pretraining tasks: wavelet reconstruction, fingerprint alignment, functional-group prediction?
 ...
 
-## 凝练段落（可直接用于申请文书）
-"这篇论文真正触动我的，是它把模拟到真实的迁移逻辑贯彻到了……"
-
-你不服某条判定？→ 🔧 appeal_grading(...) 逐条复核引文是否真实存在
+## Distilled paragraph (ready to use in an application)
+"What struck me most about this paper is how it carries the simulation-to-reality transfer logic through..."
 ```
 
-### ⑥ 进组规划 —— "我想进某教授 A的组，该做什么？"
+Disagree with a verdict? 🔧 appeal_grading(...) re-checks every quote against the source, one by one.
+
+### ⑥ Path planning — "I want to join Professor A's group. What should I do?"
 
 ```
-🔧 path_analysis({'name': '某教授 A'})
+🔧 path_analysis({'name': 'Professor A'})
 
-Agent：
-【需求侧】组里需要能做图像分析/数据挖掘的人（附深潜报告原句）
-【供给侧】你已具备：YOLO 实战、Python 数据处理；可快速补齐：细胞图像分割
-【敲门砖项目】<该组研究材料的图像分割 demo>
-   → 预估 4-6 周，用现成的分割模型微调即可
-   ✅ 已通过算力红线检查（自动标注目标设备，超出本地硬件的方案会被替换）
+Agent:
+[Demand side] The group needs someone who can do image analysis / data mining (with quotes from the deep-dive report)
+[Supply side] You already have: hands-on YOLO experience, Python data processing; quick to pick up: cell image segmentation
+[Door-knocking project] <an image-segmentation demo on the group's material>
+   -> estimated 4-6 weeks; fine-tuning an off-the-shelf segmentation model is enough
+   ✅ Passed the compute red-line check (target device auto-annotated; plans beyond your local hardware are replaced)
 ```
 
-### ⑦ 持续监测 —— "收藏某教授 B" + 每天自动盯
+### ⑦ Continuous monitoring — bookmark an advisor and watch daily
 
 ```
-你：收藏某教授 B，他的 GitHub 是 example-lab
-🔧 bookmark_advisor({'name': '某教授 B', ...})
+You: bookmark Professor B; their GitHub org is example-lab
+🔧 bookmark_advisor({'name': 'Professor B', ...})
 
-你：看看收藏的老师最近有动态吗？
+You: any updates from the advisors I bookmarked?
 🔧 monitor()
 
-Agent：
-某教授 B：主页无变化 / arXiv 无主题相关新论文 / GitHub 新仓库
-      example-lab/xxx（3 天前更新）
+Agent:
+Professor B: homepage unchanged / no new topic-relevant arXiv papers / new GitHub repository
+      example-lab/xxx (updated 3 days ago)
 
-# 或注册 Windows 计划任务（setup_monitor_task.bat），
-# 每天上午 9 点自动扫描，有实质变化才生成简报
+# Or register a Windows scheduled task (setup_monitor_task.bat):
+# it scans every day at 9am and only writes a brief when something actually changed
 ```
 
 ---
 
-## 核心设计：三层反幻觉校验
+## Core design: three-layer anti-hallucination checks
 
-这个项目最有意思的地方——**不信任 LLM 的输出，只信任原文**：
+The most interesting part of this project — **don't trust the LLM's output, trust only the source**:
 
-| 校验层 | 机制 |
+| Layer | Mechanism |
 |---|---|
-| 卡片层 | 每条 evidence 去空白归一化后必须在官网原文中逐字命中；个人主页 URL 必须来自详情页外链列表（防止 LLM 凭记忆编造主页） |
-| 论文层 | 精读中所有引句归一化后必须在论文全文中找到（免疫 PDF 换行/连字符伪影）；未命中的**如实标注为可疑** |
-| 深潜层 | 每条情报的证据必须在其标注的来源编号原文中命中；来源编号越界也报警 |
+| Card layer | Every `evidence` field must match the official page verbatim after whitespace normalization; a personal-homepage URL must come from the detail page's outbound-link list (so the LLM cannot invent a homepage from memory) |
+| Paper layer | Every quote in a deep read must be found in the full text after normalization (immune to PDF line-break and hyphenation artifacts); any miss is **flagged as suspicious, honestly** |
+| Deep-dive layer | Every claim's evidence must match the text of the source it cites; an out-of-range source index also raises a warning |
 
-实测效果：精读一篇论文时 LLM 改写了原文句子，校验层立即抓出来标红；
-批改模块甚至提供了**申诉通道**——因为批改者自己也可能幻觉。
+In practice: when the LLM rewrote a sentence from a paper, the checker caught it immediately and flagged it. The critique module even ships an **appeal channel** — because the critic can hallucinate too.
 
 ---
 
-## 项目结构
+## Project structure
 
 ```
 advisor_agent/
-├── main.py               # Agent 主循环：18 个 function calling 工具
-├── web_server.py + web/  # 零依赖 Web 聊天界面
-├── tools/                # 各模块实现（爬取/卡片/深潜/精读/批改/监测）
-├── archive/              # 用户画像、错误模式库、已读论文库、目标清单
-└── data/                 # 卡片库、论文全文、深潜报告、监测快照
+├── main.py               # agent loop: 22 function-calling tools
+├── web_server.py + web/  # zero-dependency web chat UI
+├── tools/                # module implementations (crawling / cards / deep dive / paper reading / critique / monitoring)
+├── archive/              # user profile, error-pattern library, read-paper library, target list
+└── data/                 # card library, paper full texts, deep-dive reports, monitoring snapshots
 ```
 
-详见 [docs/code.md](docs/code.md)（开发进度文档）与 [设计审计文档 v0.4](docs/design-audit-v0.4.md)（完整需求设计）。
+See [docs/code.md](docs/code.md) (development log) and [design audit v0.4](docs/design-audit-v0.4.md) (full requirements design). Both are currently written in Chinese.
 
 ---
 
-## 已知限制
+## Known limitations
 
-- 论文检索目前仅 arXiv（Scholar/DBLP 计划中）；
-- 部分高校官网（如浙大、西湖）存在网络层访问限制或强 JS 渲染，需要可用网络环境；已内置 Chrome headless 兜底，但不保证所有站点可达；
-- LLM 输出质量依赖所用模型（默认 deepseek-chat），反幻觉校验能拦住编造，但不能保证 100% 覆盖语义级改写；
-- 单机单用户设计，无多租户/鉴权。
+- Paper search currently covers arXiv only (Scholar and DBLP are planned);
+- Some university sites (e.g. Zhejiang University, Westlake University) sit behind network-level blocks or heavy JS rendering and need a working network environment; a Chrome-headless fallback is built in, but not every site is reachable;
+- Output quality depends on the model behind it (deepseek-chat by default). The anti-hallucination checks stop fabrications, but cannot guarantee 100% coverage of semantic rewrites;
+- Single-machine, single-user design — no multi-tenancy and no authentication.
 
 ---
 
 ## Roadmap
 
-- [ ] Scholar / DBLP 论文源接入
-- [ ] 知识水位自动演化（读过的论文自动更新概念档案）
-- [ ] 监测源扩展（学院新闻页、OpenReview）
-- [ ] 套磁邮件草稿（复用 M5 凝练段落）
+- [ ] Add Scholar / DBLP as paper sources
+- [ ] Automatic knowledge-level evolution (papers you read update your concept profile)
+- [ ] More monitoring sources (department news pages, OpenReview)
+- [ ] Cold-email drafts (reusing the distilled paragraphs from the critique module)
 
 ---
 
