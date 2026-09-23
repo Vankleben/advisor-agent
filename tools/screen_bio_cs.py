@@ -1,0 +1,257 @@
+"""
+M6：生物×计算交叉导师筛选器
+
+从本地卡片库（data/cards_*.json）里筛出"生物/医学 × 计算机"交叉方向的导师，
+再按用户画像打两个维度的分：
+  - crossover 交叉度：用户现有可交付技能能直接上手的程度
+  - access    进组率：非顶尖院校大三学生发邮件申请、对方愿意收的概率
+
+用法：
+    python tools/screen_bio_cs.py --filter     # 只筛不打分（纯本地，不调 LLM）
+    python tools/screen_bio_cs.py --score      # 筛 + 调 LLM 两维打分，落盘 data/
+    python tools/screen_bio_cs.py --score --top 30
+
+设计说明：
+- 画像唯一来源 archive/profile.json（走 user_profile），收藏清单唯一来源
+  archive/target_advisors.json——本文件不硬编码任何姓名。
+- 筛选逻辑只认卡片自带的 research_interests 字段：方向描述里必须同时出现
+  生物词与"计算/AI 是主线"的词，且不含纯湿实验标志词。summary 不参与判定，
+  因为它常把"合作/交叉"写得比实际宽。
+"""
+import argparse
+import json
+import sys
+from datetime import date
+from pathlib import Path
+
+# --- Windows 控制台编码修复：GBK 下 print emoji 会崩溃，强制 stdout/stderr 为 UTF-8 ---
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR / "tools"))
+
+from store import iter_cards            # noqa: E402
+from user_profile import format_profile  # noqa: E402
+
+TARGETS_FILE = BASE_DIR / "archive" / "target_advisors.json"
+OUT_FILE = BASE_DIR / "data" / "bio_cs_screening.json"
+
+# 生物/医学领域词：方向里必须命中至少一个
+BIO_WORDS = [
+    "生物", "生命", "医学", "医", "临床", "细胞", "基因", "基因组", "组学", "神经", "脑",
+    "药物", "疾病", "肿瘤", "癌", "免疫", "微生物", "生态", "动物", "植物", "育种", "农业",
+    "农学", "公共卫生", "流行病", "生理", "病理", "病毒", "疫苗", "抗体", "菌", "水稻",
+    "物种", "演化", "进化", "干细胞", "器官", "核酸", "RNA", "DNA", "代谢", "生物物理",
+    "生物医学", "生物工程", "蛋白", "表型", "行为", "表观", "眼科", "影像",
+]
+
+# "计算/AI 是主线"的词：方向里必须命中至少一个，否则算纯湿实验
+COMPUTE_WORDS = [
+    "机器学习", "深度学习", "人工智能", "计算机视觉", "神经网络", "大模型", "语言模型",
+    "智能体", "数据挖掘", "生物信息", "信息学", "计算生物学", "计算神经", "计算方法",
+    "算法", "建模", "模型", "计算机算法", "模式识别", "图像", "视觉", "检测", "识别",
+    "分割", "预测模型", "模拟", "仿真", "统计", "定量", "智能化", "数字化", "大数据",
+    "三维重构", "重建算法", "信号处理", "自动化分析", "挖掘", "连接组", "connectom",
+]
+
+# 纯湿实验/纯化学标志词：方向里出现即剔除（这些组收 CS 学生进去也使不上劲）
+WET_LAB_WORDS = [
+    "有机合成", "化学生物学", "电生理学以及", "膜片钳", "晶体学及", "X-射线晶体学以及",
+    "质谱鉴定", "化学合成", "探针的开发与应用", "细胞培养", "小鼠模型", "免疫组织化学",
+    "分子克隆", "病毒遗传物质释放", "染色质高级结构", "原位结构生物学", "冷冻电子显微学理论",
+]
+
+# 每项技能对应的研究需求；多轴命中说明交叉面更宽
+SKILL_AXES = {
+    "蛋白质序列-结构计算": [
+        "蛋白", "折叠", "结构预测", "氨基酸", "序列设计", "酶", "结构建模", "生物大分子",
+        "RNA结构", "分子动力学", "AlphaFold", "几何深度学习", "结构基础模型",
+    ],
+    "图像/视频自动分析": [
+        "图像", "视觉", "检测", "分割", "识别", "成像", "影像", "行为", "追踪", "跟踪",
+        "视频", "重建", "超分辨", "表型", "显微", "姿态",
+    ],
+    "LLM/智能体": [
+        "智能体", "Agent", "大模型", "语言模型", "LLM", "知识图谱", "生成式", "问答", "科学发现",
+    ],
+    "模型训练与微调": [
+        "机器学习", "深度学习", "神经网络", "数据挖掘", "算法", "特征", "表征", "分类",
+        "回归", "聚类", "监督学习", "预测",
+    ],
+}
+
+PROMPT = """你是进组可行性评估员。用户在给一位大三 CS 学生筛选"寒假能进组访问/学习"的导师。
+
+【用户画像】
+{profile}
+
+【用户手里真正能交付的东西（打分时以此为准）】
+1. YOLO 目标检测+迁移学习：在高校课题组做过动物行为识别的 CV 部分，mAP50 0.716→0.803，
+   模型已交付课题组试运行；
+2. ESM-IF1 蛋白质逆向折叠：跑通"设计—评分—评估"完整流水线，做过采样温度消融，
+   低温采样序列恢复率 45.8%，代码开源；
+3. LLM Agent + Function Calling：独立设计并开源 22 工具的科研助手 Agent（含引句证据校验）；
+4. HuggingFace 微调全流程、LoRA/QLoRA、知识蒸馏、Transformer/注意力、RLHF 基本流程。
+【用户的硬约束】
+- 学校是民航类院校（非985/211），学术光环弱；
+- 算力只有 RTX3060 12GB + 核显笔记本：能 QLoRA 微调 ≤8B 模型，不能做预训练/多卡；
+- 没有湿实验经验，生物/医学领域知识薄。
+
+【待评估老师】（每位含卡片数据，全部来自其院系官网抓取）
+{teachers}
+
+【打分要求】
+对每位老师打两个分（1-5 的整数）：
+
+A. crossover 交叉度——这位老师组里的活儿，用户现有技能能直接上手的程度。
+   5 = 有能立刻接手的任务（如蛋白序列-结构计算、图像检测分割、行为视频分析、模型微调）
+   4 = 主要任务对口但需补一块领域知识
+   3 = 计算成分真实存在但只是辅助手段
+   2 = 用户只能打下手或做数据工程
+   1 = 基本是湿实验或纯理论，用户进去使不上劲
+
+B. access 进组率——一名非985大三 CS 学生发邮件申请，"愿意收他寒假来学"的概率。
+   5 = 页面明写欢迎本科生/实习生/访问学生，或青年 PI 正在建组缺人
+   4 = 青年 PI + 组里明显缺计算人手
+   3 = 信息不明但方向对口，值得一试
+   2 = 资深大牛、组大，本科生进去大概率被扔给博后带或直接不回
+   1 = 院士/讲席教授且页面无任何招生信息
+
+C. cross_reason / access_reason 各一句话理由，**必须引用卡片里的具体方向词**，
+   不要泛泛而谈。
+D. entry_task 如果用户真的进去了，最可能被派去做的第一件事是什么
+   （要具体，且必须能在他 RTX3060 上跑）。
+
+铁律：只能依据上面给的卡片数据，卡片里没有的信息不要推测；分数必须是 1-5 的整数。
+输出 JSON：{{"scores":[{{"name":"","crossover":0,"access":0,"cross_reason":"",
+"access_reason":"","entry_task":""}}]}}"""
+
+
+def load_target_names() -> set:
+    """读收藏清单姓名（唯一权威版本：archive/target_advisors.json）。"""
+    try:
+        data = json.loads(TARGETS_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    return {t.get("name") for t in (data.get("targets") or []) if t.get("name")}
+
+
+def build_pool() -> list:
+    """从卡片库筛出生物×计算交叉候选人；同名只保留信息最全的那张卡。"""
+    best = {}
+    for site, c in iter_cards():
+        if c.get("skipped"):
+            continue
+        ri = c.get("research_interests")
+        ri_txt = " ".join(str(x) for x in ri) if isinstance(ri, list) else str(ri or "")
+        if not ri_txt:
+            continue
+        if not any(k in ri_txt for k in BIO_WORDS):
+            continue
+        if not any(k in ri_txt for k in COMPUTE_WORDS):
+            continue
+        if any(k in ri_txt for k in WET_LAB_WORDS):
+            continue
+        name = c.get("name")
+        if not name:
+            continue
+        cf = c.get("current_focus") or {}
+        rec = c.get("recruitment") or {}
+        axes = [ax for ax, kws in SKILL_AXES.items() if any(k in ri_txt for k in kws)]
+        item = {
+            "name": name,
+            "site": site,
+            "title": c.get("title"),
+            "stage": (c.get("career_stage") or {}).get("stage"),
+            "recruit": rec.get("level"),
+            "recruit_evidence": rec.get("evidence"),
+            "interests": [str(x) for x in (ri if isinstance(ri, list) else [ri])],
+            "focus": (cf.get("text") if isinstance(cf, dict) else None),
+            "email": c.get("email"),
+            "homepage": [(h.get("url") if isinstance(h, dict) else str(h))
+                         for h in (c.get("homepage_candidates") or [])],
+            "axes": axes,
+        }
+        weight = len(json.dumps(item, ensure_ascii=False))
+        if name not in best or weight > best[name][0]:
+            best[name] = (weight, item)
+    return [v[1] for v in best.values()]
+
+
+def filter_only(pool: list) -> None:
+    """只打印筛选结果，不调 LLM。"""
+    pool.sort(key=lambda r: (-len(r["axes"]), 0 if r["recruit"] == "🟢" else 1))
+    print(f"筛出 {len(pool)} 人（生物×计算交叉，已排除纯湿实验）\n")
+    for r in pool:
+        print(f'{r["site"]:11s}|{r["name"]:7s}|{str(r["title"])[:14]:16s}|招{str(r["recruit"]):3s}'
+              f'|{"+".join(a[:3] for a in r["axes"]):22s}|{" / ".join(r["interests"])[:90]}')
+
+
+def score(pool: list, top: int = 0) -> dict:
+    """调 LLM 打分；按 profile 与卡片内容，不引入任何外部信息。"""
+    from llm_client import make_client, model_for  # 延迟导入：--filter 模式不依赖 LLM 配置
+
+    client = make_client()
+    model = model_for("mid")
+    profile = format_profile()
+    targets = load_target_names()
+    out, batch_size = [], 12
+    for i in range(0, len(pool), batch_size):
+        batch = pool[i:i + batch_size]
+        resp = client.chat.completions.create(
+            model=model,
+            temperature=0.2,
+            response_format={"type": "json_object"},
+            messages=[{"role": "user",
+                       "content": PROMPT.format(profile=profile,
+                                                teachers=json.dumps(batch, ensure_ascii=False,
+                                                                    indent=1))}])
+        got = json.loads(resp.choices[0].message.content).get("scores", [])
+        returned = {g.get("name") for g in got}
+        for g in got:
+            src = next((p for p in batch if p["name"] == g.get("name")), {})
+            g.update({"site": src.get("site"), "title": src.get("title"),
+                      "stage": src.get("stage"), "recruit": src.get("recruit"),
+                      "recruit_evidence": src.get("recruit_evidence"),
+                      "interests": src.get("interests"), "email": src.get("email"),
+                      "axes": src.get("axes"),
+                      "already_target": g.get("name") in targets})
+            out.append(g)
+        missing = [p["name"] for p in batch if p["name"] not in returned]
+        if missing:
+            print(f"  ⚠️ 本批漏评（模型未返回）: {missing}")
+        print(f"  批次 {i // batch_size + 1}/{-(-len(pool) // batch_size)}：{len(got)} 条")
+    out.sort(key=lambda x: (-(x.get("crossover") or 0) - (x.get("access") or 0)))
+    if top:
+        out = out[:top]
+    result = {"generated": date.today().isoformat(), "count": len(out), "scores": out}
+    OUT_FILE.parent.mkdir(exist_ok=True)
+    OUT_FILE.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"\n已写出 {OUT_FILE}")
+    for x in out[:30]:
+        flag = " ★已收藏" if x.get("already_target") else ""
+        print(f'[{x["crossover"]}/{x["access"]}] {x.get("name")} | '
+              f'{str(x.get("title"))[:14]} | {x.get("site")}{flag}')
+        print(f'    交叉: {x.get("cross_reason", "")}')
+        print(f'    进组: {x.get("access_reason", "")}')
+        print(f'    进门任务: {x.get("entry_task", "")}')
+    return result
+
+
+def main():
+    ap = argparse.ArgumentParser(description="生物×计算交叉导师筛选器")
+    ap.add_argument("--filter", action="store_true", help="只筛不打分（不调 LLM）")
+    ap.add_argument("--score", action="store_true", help="筛 + 两维打分（调 LLM）")
+    ap.add_argument("--top", type=int, default=0, help="只保留总分前 N 名")
+    args = ap.parse_args()
+    pool = build_pool()
+    if args.score:
+        score(pool, top=args.top)
+    else:
+        filter_only(pool)
+
+
+if __name__ == "__main__":
+    main()
