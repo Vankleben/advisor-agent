@@ -7,16 +7,21 @@ M6：生物×计算交叉导师筛选器
   - access    进组率：非顶尖院校大三学生发邮件申请、对方愿意收的概率
 
 用法：
-    python tools/screen_bio_cs.py --filter     # 只筛不打分（纯本地，不调 LLM）
-    python tools/screen_bio_cs.py --score      # 筛 + 调 LLM 两维打分，落盘 data/
+    python tools/screen_bio_cs.py --filter            # 只筛不打分（纯本地，不调 LLM）
+    python tools/screen_bio_cs.py --life --filter     # 只看生命科学学院口径
+    python tools/screen_bio_cs.py --life --score      # 生命科学院口径 + 两维打分
+    python tools/screen_bio_cs.py --sites life,pkubio --score
     python tools/screen_bio_cs.py --score --top 30
 
 设计说明：
 - 画像唯一来源 archive/profile.json（走 user_profile），收藏清单唯一来源
-  archive/target_advisors.json——本文件不硬编码任何姓名。
+  archive/target_advisors.json，排除名单唯一来源 archive/advisor_blacklist.json
+  ——本文件不硬编码任何姓名。
 - 筛选逻辑只认卡片自带的 research_interests 字段：方向描述里必须同时出现
   生物词与"计算/AI 是主线"的词，且不含纯湿实验标志词。summary 不参与判定，
   因为它常把"合作/交叉"写得比实际宽。
+- `--life` 把范围收到"生命科学学院"：用户说过"主要还是想要跟生物交叉的老师，
+  生命科学最好"，医学影像/BME/纯 AI 学院的人算交叉但不算生命科学。
 """
 import argparse
 import json
@@ -36,7 +41,13 @@ from store import iter_cards            # noqa: E402
 from user_profile import format_profile  # noqa: E402
 
 TARGETS_FILE = BASE_DIR / "archive" / "target_advisors.json"
+BLACKLIST_FILE = BASE_DIR / "archive" / "advisor_blacklist.json"
 OUT_FILE = BASE_DIR / "data" / "bio_cs_screening.json"
+
+# 站点代号 → 院系性质。LIFE_SCIENCE 是"生命科学学院"口径：
+# 用户明确说过"主要还是想要跟生物交叉的老师，生命科学最好"，
+# 医学影像/BME/纯 AI 学院的人算交叉但不算生命科学，需用 --sites life 排除。
+LIFE_SCIENCE = ("life", "thulife", "pkubio", "wlls", "wlsls")
 
 # 生物/医学领域词：方向里必须命中至少一个
 BIO_WORDS = [
@@ -81,6 +92,15 @@ SKILL_AXES = {
         "回归", "聚类", "监督学习", "预测",
     ],
 }
+
+# 招募原话里出现这些词 = 该组主动要计算机背景的人。
+# 有些组方向写得偏湿实验、会被 WET_LAB_WORDS 滤掉，但招募原话点名要 CS 学生
+# （如"欢迎…计算机科学、机器学习…背景的本科生加入"）——这类恰恰是 CS 学生最容易进的，
+# 必须保住，否则筛选器会把最好的机会滤掉。
+CS_WELCOME_WORDS = [
+    "计算机", "机器学习", "人工智能", "计算生物学", "生物信息", "计算背景", "深度学习",
+    "计算机科学", "AI", "编程", "软件", "算法", "数据科学", "计算神经",
+]
 
 PROMPT = """你是进组可行性评估员。用户在给一位大三 CS 学生筛选"寒假能进组访问/学习"的导师。
 
@@ -138,11 +158,35 @@ def load_target_names() -> set:
     return {t.get("name") for t in (data.get("targets") or []) if t.get("name")}
 
 
-def build_pool() -> list:
-    """从卡片库筛出生物×计算交叉候选人；同名只保留信息最全的那张卡。"""
+def load_blacklist() -> dict:
+    """读用户明确不要的老师（archive/advisor_blacklist.json）→ {姓名: 原因}。
+
+    用户拒掉某个人往往是出于我看不到的理由（听过传闻、方向不合口味等），
+    这里只负责"记住并尊重"，不追问他为什么。
+    """
+    try:
+        data = json.loads(BLACKLIST_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out = {}
+    for item in (data.get("blocked") or []):
+        if isinstance(item, dict) and item.get("name"):
+            out[item["name"]] = item.get("reason") or ""
+    return out
+
+
+def build_pool(sites: tuple = ()) -> list:
+    """从卡片库筛出生物×计算交叉候选人；同名只保留信息最全的那张卡。
+
+    sites 非空时只保留这些站点代号下的卡片（用于"只看生命科学学院"口径）。
+    用户明确排除的人（archive/advisor_blacklist.json）在这里就滤掉，不进入候选。
+    """
+    blocked = load_blacklist()
     best = {}
     for site, c in iter_cards():
         if c.get("skipped"):
+            continue
+        if sites and site not in sites:
             continue
         ri = c.get("research_interests")
         ri_txt = " ".join(str(x) for x in ri) if isinstance(ri, list) else str(ri or "")
@@ -150,15 +194,20 @@ def build_pool() -> list:
             continue
         if not any(k in ri_txt for k in BIO_WORDS):
             continue
-        if not any(k in ri_txt for k in COMPUTE_WORDS):
-            continue
-        if any(k in ri_txt for k in WET_LAB_WORDS):
-            continue
+        rec = c.get("recruitment") or {}
+        ev = rec.get("evidence") or []
+        ev_txt = " ".join(str(x) for x in (ev if isinstance(ev, list) else [ev]))
+        # 招募原话点名要计算机背景的人 → 即便方向偏湿实验也保留（这类组 CS 学生最容易进）
+        cs_welcome = any(w in ev_txt for w in CS_WELCOME_WORDS)
+        if not cs_welcome:
+            if not any(k in ri_txt for k in COMPUTE_WORDS):
+                continue
+            if any(k in ri_txt for k in WET_LAB_WORDS):
+                continue
         name = c.get("name")
-        if not name:
+        if not name or name in blocked:
             continue
         cf = c.get("current_focus") or {}
-        rec = c.get("recruitment") or {}
         axes = [ax for ax, kws in SKILL_AXES.items() if any(k in ri_txt for k in kws)]
         item = {
             "name": name,
@@ -167,6 +216,7 @@ def build_pool() -> list:
             "stage": (c.get("career_stage") or {}).get("stage"),
             "recruit": rec.get("level"),
             "recruit_evidence": rec.get("evidence"),
+            "cs_welcome": cs_welcome,
             "interests": [str(x) for x in (ri if isinstance(ri, list) else [ri])],
             "focus": (cf.get("text") if isinstance(cf, dict) else None),
             "email": c.get("email"),
@@ -183,7 +233,7 @@ def build_pool() -> list:
 def filter_only(pool: list) -> None:
     """只打印筛选结果，不调 LLM。"""
     pool.sort(key=lambda r: (-len(r["axes"]), 0 if r["recruit"] == "🟢" else 1))
-    print(f"筛出 {len(pool)} 人（生物×计算交叉，已排除纯湿实验）\n")
+    print(f"筛出 {len(pool)} 人（生物×计算交叉，已排除纯湿实验与排除名单）\n")
     for r in pool:
         print(f'{r["site"]:11s}|{r["name"]:7s}|{str(r["title"])[:14]:16s}|招{str(r["recruit"]):3s}'
               f'|{"+".join(a[:3] for a in r["axes"]):22s}|{" / ".join(r["interests"])[:90]}')
@@ -245,8 +295,16 @@ def main():
     ap.add_argument("--filter", action="store_true", help="只筛不打分（不调 LLM）")
     ap.add_argument("--score", action="store_true", help="筛 + 两维打分（调 LLM）")
     ap.add_argument("--top", type=int, default=0, help="只保留总分前 N 名")
+    ap.add_argument("--life", action="store_true",
+                    help="只看生命科学学院口径（清华生命/北大生科/西湖生命）")
+    ap.add_argument("--sites", default="",
+                    help="只保留指定站点代号，逗号分隔（如 life,pkubio,wlls）")
     args = ap.parse_args()
-    pool = build_pool()
+
+    sites = LIFE_SCIENCE if args.life else ()
+    if args.sites:
+        sites = tuple(s.strip() for s in args.sites.split(",") if s.strip())
+    pool = build_pool(sites)
     if args.score:
         score(pool, top=args.top)
     else:
