@@ -12,6 +12,10 @@ M6：生物×计算交叉导师筛选器
     python tools/screen_bio_cs.py --life --score      # 生命科学院口径 + 两维打分
     python tools/screen_bio_cs.py --sites life,pkubio --score
     python tools/screen_bio_cs.py --score --top 30
+    python tools/screen_bio_cs.py --sites life,pkubio,slst,sustech --filter --areas 计算机视觉,大模型
+
+口径：2026-09-23 用户定稿为"生命科学院里，与深度学习 / 大模型 / 机器学习 / LLM Agent /
+计算机视觉 之一相关即可"，对应 AREA_TAGS 五个标签（--areas 可按标签筛）。
 
 设计说明：
 - 画像唯一来源 archive/profile.json（走 user_profile），收藏清单唯一来源
@@ -102,6 +106,24 @@ SKILL_AXES = {
         "回归", "聚类", "监督学习", "预测",
     ],
 }
+
+# 用户口径（2026-09-23 第三次收窄）：生命科学院里，**只要与"深度学习 / 大模型 / 机器学习 /
+# LLM Agent / 计算机视觉"其中之一相关就算对口**。这五个标签用于分组呈现与按需筛选。
+AREA_TAGS = {
+    "深度学习": ["深度学习", "神经网络", "卷积", "Transformer", "表征学习", "端到端", "模型训练", "微调"],
+    "大模型": ["大模型", "基础模型", "语言模型", "预训练", "foundation model"],
+    "机器学习": ["机器学习", "人工智能", "统计学习", "聚类", "分类", "预测模型", "数据挖掘", "算法"],
+    "LLM Agent": ["智能体", "Agent", "大语言模型", "工具调用", "Function Calling", "检索增强", "RAG"],
+    "计算机视觉": ["计算机视觉", "视觉", "图像", "影像", "视频", "检测", "识别", "分割", "追踪",
+                   "跟踪", "姿态", "显微成像", "超分辨", "三维重构", "重建"],
+}
+
+# current_focus / 研究方向里的"强 ML 词"。用法见 build_pool 的第三个入口：
+# 研究方向栏没写计算词、但研究焦点明确要做 AI/ML 的人也要收（例如冷冻电镜方法学组做
+# "三维重构 + 人工智能图像处理"——这类组 CS 学生进得去，却会被湿实验词误伤）。
+# 只用强词："识别/重建/成像"这类词在湿实验语境里也常见，用它们会造成大量误收。
+STRONG_ML_WORDS = ["人工智能", "机器学习", "深度学习", "神经网络", "大语言模型", "大模型",
+                   "智能体", "计算机视觉", "表征学习", "基础模型", "AI驱动", "AI 驱动"]
 
 # 招募原话里出现这些词 = 该组主动要计算机背景的人。
 # 有些组方向写得偏湿实验、会被 WET_LAB_WORDS 滤掉，但招募原话点名要 CS 学生
@@ -213,17 +235,23 @@ def build_pool(sites: tuple = ()) -> list:
         rec = c.get("recruitment") or {}
         ev = rec.get("evidence") or []
         ev_txt = " ".join(str(x) for x in (ev if isinstance(ev, list) else [ev]))
-        # 招募原话点名要计算机背景的人 → 即便方向偏湿实验也保留（这类组 CS 学生最容易进）
         cs_welcome = any(w in ev_txt for w in CS_WELCOME_WORDS)
+        cf = c.get("current_focus") or {}
+        focus_txt = str((cf.get("text") if isinstance(cf, dict) else "") or "")
+        strong_ml = [w for w in STRONG_ML_WORDS if w in ri_txt or w in focus_txt]
+        # 招募原话点名要计算机背景的人 → 即便方向偏湿实验也保留（这类组 CS 学生最容易进）
         if not cs_welcome:
-            if not any(k in ri_txt for k in COMPUTE_WORDS):
-                continue
-            if any(k in ri_txt for k in WET_LAB_WORDS):
+            # "计算/AI 是主线"：方向里有计算词且无湿实验标志词
+            compute_main = (any(k in ri_txt for k in COMPUTE_WORDS)
+                            and not any(k in ri_txt for k in WET_LAB_WORDS))
+            # 强 ML 词优先：方向里出现"人工智能/深度学习"这类词时，湿实验标志词不足以剔除
+            # （冷冻电镜方法学、结构计算等组同样写"冷冻电子显微学"，但活是图像处理/建模）
+            if not compute_main and not strong_ml:
                 continue
         name = c.get("name")
         if not name or name in blocked:
             continue
-        cf = c.get("current_focus") or {}
+        areas = [ax for ax, kws in AREA_TAGS.items() if any(k in ri_txt or k in focus_txt for k in kws)]
         axes = [ax for ax, kws in SKILL_AXES.items() if any(k in ri_txt for k in kws)]
         item = {
             "name": name,
@@ -239,6 +267,7 @@ def build_pool(sites: tuple = ()) -> list:
             "homepage": [(h.get("url") if isinstance(h, dict) else str(h))
                          for h in (c.get("homepage_candidates") or [])],
             "axes": axes,
+            "areas": areas,
         }
         weight = len(json.dumps(item, ensure_ascii=False))
         if name not in best or weight > best[name][0]:
@@ -246,13 +275,17 @@ def build_pool(sites: tuple = ()) -> list:
     return [v[1] for v in best.values()]
 
 
-def filter_only(pool: list) -> None:
-    """只打印筛选结果，不调 LLM。"""
-    pool.sort(key=lambda r: (-len(r["axes"]), 0 if r["recruit"] == "🟢" else 1))
+def filter_only(pool: list, areas: tuple = ()) -> None:
+    """只打印筛选结果，不调 LLM。areas 非空时只打印命中这些标签的人。"""
+    if areas:
+        pool = [r for r in pool if set(r.get("areas") or []) & set(areas)]
+    pool.sort(key=lambda r: (-len(r.get("areas") or []), -len(r["axes"]),
+                             0 if r["recruit"] == "🟢" else 1))
     print(f"筛出 {len(pool)} 人（生物×计算交叉，已排除纯湿实验与排除名单）\n")
     for r in pool:
         print(f'{r["site"]:11s}|{r["name"]:7s}|{str(r["title"])[:14]:16s}|招{str(r["recruit"]):3s}'
-              f'|{"+".join(a[:3] for a in r["axes"]):22s}|{" / ".join(r["interests"])[:90]}')
+              f'|{"+".join(a[:4] for a in (r.get("areas") or [])):26s}'
+              f'|{" / ".join(r["interests"])[:80]}')
 
 
 def score(pool: list, top: int = 0) -> dict:
@@ -315,16 +348,20 @@ def main():
                     help="只看生命科学学院口径（清华生命/北大生科/西湖生命）")
     ap.add_argument("--sites", default="",
                     help="只保留指定站点代号，逗号分隔（如 life,pkubio,wlls）")
+    ap.add_argument("--areas", default="",
+                    help="只保留命中这些方向标签的人，逗号分隔；"
+                         "标签取值：深度学习,大模型,机器学习,LLM Agent,计算机视觉")
     args = ap.parse_args()
 
     sites = LIFE_SCIENCE if args.life else ()
     if args.sites:
         sites = tuple(s.strip() for s in args.sites.split(",") if s.strip())
+    areas = tuple(a.strip() for a in args.areas.split(",") if a.strip())
     pool = build_pool(sites)
     if args.score:
         score(pool, top=args.top)
     else:
-        filter_only(pool)
+        filter_only(pool, areas=areas)
 
 
 if __name__ == "__main__":
