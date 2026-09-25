@@ -26,10 +26,10 @@
 
 ```bash
 git clone https://github.com/Vankleben/advisor-agent.git
-cd advisor_agent
+cd advisor-agent
 
 # Dependencies
-pip install openai requests beautifulsoup4 pymupdf
+pip install openai requests beautifulsoup4 pymupdf lxml
 
 # Configure your API key (deepseek / moonshot supported)
 cp config.example.py config.py
