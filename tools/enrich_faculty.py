@@ -177,7 +177,7 @@ def main():
             for t in json.load(f)["teachers"]:
                 if t.get("detail") and not t["detail"].get("error"):
                     done[t["name"]] = t
-        print(f"续传：已有 {len(done)} 条成功记录，跳过")
+        print(f"续传：已有 {len(done)} 条成功记录（仅 detail_url 未变者跳过，链接变了会重抓）")
 
     teachers = []
     total = len(data["teachers"])
@@ -195,8 +195,9 @@ def main():
             json.dump(output, f, ensure_ascii=False, indent=2)
 
     for i, t in enumerate(data["teachers"]):
-        if t["name"] in done:
-            teachers.append(done[t["name"]])
+        prev = done.get(t["name"])
+        if prev is not None and prev.get("detail_url") == t.get("detail_url"):
+            teachers.append(prev)
             continue
 
         url = t.get("detail_url")
