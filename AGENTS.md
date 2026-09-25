@@ -21,11 +21,13 @@
 
 ## 环境与验证（硬规则）
 
-- **项目运行在 conda 环境 `advisor`（Python 3.11）**：`D:\conda\envs\advisor\python.exe`。
-  本机 shell 里默认的 `python` 是 3.14，**不能用它验收**——3.14 起注解延迟求值（PEP 649），
+- **项目运行在 conda 环境 `advisor`（Python 3.11）**：一律用 `conda run -n advisor python ...` 调用，
+  **不要硬编码某个盘符下的 python.exe 路径**（换机器/换电脑会直接失效）；
+  环境不存在时先 `conda create -n advisor python=3.11 -y` 再装 README 里的依赖。
+  shell 里默认的 `python` 可能是 3.14+，**不能用它验收**——3.14 起注解延迟求值（PEP 649），
   "删了 import 却留着类型注解"这类错误在 3.14 不报错、在 3.11 直接 NameError（曾导致 main.py 起不来）。
-- 验证命令一律写全路径：`D:\conda\envs\advisor\python.exe tools/selftest.py`，
-  必要时再用该解释器实跑一次入口：`D:\conda\envs\advisor\python.exe main.py`（喂 `quit` 即可）。
+- 验证命令一律：`conda run -n advisor python tools/selftest.py`，
+  必要时再实跑一次入口：`conda run -n advisor python main.py`（喂 `quit` 即可）。
 - 改完共享层或工具后先跑自检（`tools/selftest.py`，不联网/不调 LLM/不改数据），全绿再提交。
 
 ## 代码结构（硬规则）
@@ -40,6 +42,6 @@
 | 读卡片 / 深潜报告 | `tools/store.py`：`find_card()` / `iter_cards()` / `load_deepdive_report()` | 自己 glob `cards_*.json` 拼路径 |
 | 用户画像 | `tools/user_profile.py`（源头 `archive/profile.json`） | 自己读 profile.json 或硬编码画像 |
 
-- 新增/修改工具后先跑 `python tools/selftest.py`（不联网、不调 LLM、不改数据），全绿再提交；
+- 新增/修改工具后先跑 `conda run -n advisor python tools/selftest.py`（不联网、不调 LLM、不改数据），全绿再提交；
 - 跨模块传消息不要靠"字符串前缀约定"（历史事故：monitor 写"新仓库/新动态"、判定查"新仓库/新推送"，功能静默失效）——要沉淀成模块级常量或结构化字段，并由自检覆盖；
 - 修 bug 时优先找同类重复实现：同一个坑往往不止一处。
