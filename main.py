@@ -741,7 +741,8 @@ def main():
         ch.append(session, "user", user)
 
         # function calling 循环：LLM 可能连续调用多个工具才给出回答
-        for _ in range(10):
+        answered = False
+        for _ in range(30):
             resp = CLIENT.chat.completions.create(
                 model=FAST_MODEL, messages=messages, tools=TOOLS, temperature=0.3)
             msg = resp.choices[0].message
@@ -759,7 +760,11 @@ def main():
                 print(f"\nAgent：{msg.content}\n")
                 ch.append(session, "assistant", msg.content or "")
                 messages.append(msg)
+                answered = True
                 break
+        if not answered:
+            print("\n⚠️ 工具调用已达 30 轮上限，本轮未生成最终回答；"
+                  "已收集的数据已落盘，发\"继续\"可延续本轮任务。\n")
 
 
 if __name__ == "__main__":
