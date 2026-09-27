@@ -42,16 +42,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "tools"))
 
 from store import iter_cards            # noqa: E402
-from user_profile import format_profile  # noqa: E402
+from user_profile import format_hardware, format_profile  # noqa: E402
 
 TARGETS_FILE = BASE_DIR / "archive" / "target_advisors.json"
 BLACKLIST_FILE = BASE_DIR / "archive" / "advisor_blacklist.json"
 OUT_FILE = BASE_DIR / "data" / "bio_cs_screening.json"
 
-# 站点代号 → 院系性质。LIFE_SCIENCE 是"生命科学学院"口径：
-# 用户明确说过"主要还是想要跟生物交叉的老师，生命科学最好"，
-# 医学影像/BME/纯 AI 学院的人算交叉但不算生命科学，需用 --sites life 排除。
-LIFE_SCIENCE = ("life", "thulife", "pkubio", "wlls", "wlsls")
+# 站点代号 → 院系性质。LIFE_SCIENCE 是"生命科学学院"口径（含西湖全校目录，
+# 因为西湖的医学院/应急中心人员只在那份目录里）；医学影像/BME/纯 AI 学院的人
+# 算交叉但不算生命科学，故不在其中。
+# 代号表（2026-09-27 两条工作副本合并后统一，详见 docs/站点代号.md）：
+#   thulife 清华生命（原 life 已并入）｜pkubio 北大生科｜westlake 西湖生科（官方全量）
+#   wlls 西湖全校目录（含医学院/应急中心）｜slst 上科大生命｜sustech_bio 南科大生科（原 sustech 已并入）
+#   fudan_life 复旦生命｜sjtu_life 上交生命｜zjulife 浙大生命（英文站）
+LIFE_SCIENCE = ("thulife", "pkubio", "westlake", "wlls", "slst",
+                "sustech_bio", "fudan_life", "sjtu_life", "zjulife")
 
 # 这些站点本身就是生命科学学院/生科院（而非"全校"或"交叉院"）：学院属性已经保证了
 # "与生物相关"，因此**不再要求方向描述里出现生物词**。
@@ -59,7 +64,9 @@ LIFE_SCIENCE = ("life", "thulife", "pkubio", "wlls", "wlsls")
 # （"超分辨荧光显微镜；深度学习计算成像"、"计算机辅助药物设计"），一个生物词都不写，
 # 且"计算机辅助"不匹配"计算机算法/计算机视觉"这类完整词——于是两类人都被词表滤掉。
 # 按站点判比按词判可靠：学院=生科院时，方向只要命中计算词即可。
-LIFE_SCHOOL_SITES = ("life", "thulife", "pkubio", "slst", "sustech")
+# 注意：wlls（西湖全校）**不在**这里——它是全校目录，仍按词判定。
+LIFE_SCHOOL_SITES = ("thulife", "pkubio", "westlake", "slst", "sustech_bio",
+                     "fudan_life", "sjtu_life", "zjulife")
 
 # 生物/医学领域词：方向里必须命中至少一个（站点在 LIFE_SCHOOL_SITES 里时可豁免）
 BIO_WORDS = [
@@ -151,9 +158,8 @@ PROMPT = """你是进组可行性评估员。用户在给一位大三 CS 学生�
 【用户当前想去的方向（打分时对齐）】
 生命科学学院里做深度学习/计算机视觉/机器学习的老师：图像与视频自动分析（显微成像、行为追踪、
 表型、分割检测）、模型训练与微调、生命科学大模型。**纯湿实验组不算对口**。
-【用户的硬约束】
-- 学校是民航类院校（非985/211），学术光环弱；
-- 算力只有 RTX3060 12GB + 核显笔记本：能 QLoRA 微调 ≤8B 模型，不能做预训练/多卡；
+【用户的硬约束】（取自画像，见下方"用户画像"；算力档位以硬件红线为准）
+{hardware}
 - 没有湿实验经验，生物/医学领域知识薄。
 
 【待评估老师】（每位含卡片数据，全部来自其院系官网抓取）
@@ -179,7 +185,7 @@ B. access 进组率——一名非985大三 CS 学生发邮件申请，"愿意�
 C. cross_reason / access_reason 各一句话理由，**必须引用卡片里的具体方向词**，
    不要泛泛而谈。
 D. entry_task 如果用户真的进去了，最可能被派去做的第一件事是什么
-   （要具体，且必须能在他 RTX3060 上跑）。
+   （要具体，且必须落在【用户的硬约束】允许的算力档位内）。
 
 铁律：只能依据上面给的卡片数据，卡片里没有的信息不要推测；分数必须是 1-5 的整数。
 输出 JSON：{{"scores":[{{"name":"","crossover":0,"access":0,"cross_reason":"",
@@ -295,6 +301,7 @@ def score(pool: list, top: int = 0) -> dict:
     client = make_client()
     model = model_for("mid")
     profile = format_profile()
+    hardware = format_hardware()
     targets = load_target_names()
     out, batch_size = [], 12
     for i in range(0, len(pool), batch_size):
@@ -304,7 +311,7 @@ def score(pool: list, top: int = 0) -> dict:
             temperature=0.2,
             response_format={"type": "json_object"},
             messages=[{"role": "user",
-                       "content": PROMPT.format(profile=profile,
+                       "content": PROMPT.format(profile=profile, hardware=hardware,
                                                 teachers=json.dumps(batch, ensure_ascii=False,
                                                                     indent=1))}])
         got = json.loads(resp.choices[0].message.content).get("scores", [])
